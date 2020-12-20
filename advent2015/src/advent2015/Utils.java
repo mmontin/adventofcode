@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Utils {
 
-	public static final String inputs = "/home/monsieuro/eclipse-workspace/advent2015/inputs/" ;
+	public static final String inputs = "/home/monsieuro/adventofcode/advent2015/inputs/" ;
 	
 	public static List<String> getInputs(int inputNumber) throws IOException {
 		return Files.readAllLines(Paths.get(Utils.inputs + "input" + inputNumber)) ;

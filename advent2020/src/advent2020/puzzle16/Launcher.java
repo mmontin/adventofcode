@@ -20,7 +20,7 @@ public class Launcher {
 		List<Ticket> tickets = new ArrayList<Ticket>();
 
 		BufferedReader br = new BufferedReader(
-				new FileReader("/home/monsieuro/eclipse-workspace/advent2020/inputs/input16"));
+				new FileReader("/home/monsieuro/adventofcode/advent2020/inputs/input16"));
 
 		String currentLine;
 		while (!(currentLine = br.readLine()).isBlank())
@@ -64,11 +64,9 @@ public class Launcher {
 				boolean b = true;
 				for (Integer i : set) {
 					b &= field.inRange(i);
-					if (!b)
-						break;
+					if (!b)	break;
 				}
-				if (b)
-					setFields.add(field);
+				if (b) setFields.add(field);
 			}
 			allPossibleFields.add(setFields);
 		}
