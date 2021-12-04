@@ -42,14 +42,6 @@ class Board {
 	}
 	
 	def count() {
-		grid.fold(0, [v , l | l.fold(v, [w , x | w + x.value ]) ])
-	}
-	
-	override toString() {
-		grid.fold('' , [ s , l |
-			s + l.fold('' , [ r , m |
-				r + m + ' '
-			])+ '\n'
-		])
+		grid.fold(0, [v , l | l.fold(v, [w , x | w + (x.called ? 0 : x.number) ]) ])
 	}
 }

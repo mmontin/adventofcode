@@ -87,29 +87,18 @@ public class Board {
       public Integer apply(final Integer v, final List<Square> l) {
         final Function2<Integer, Square, Integer> _function = new Function2<Integer, Square, Integer>() {
           public Integer apply(final Integer w, final Square x) {
-            int _value = x.value();
-            return Integer.valueOf(((w).intValue() + _value));
+            int _xifexpression = (int) 0;
+            if (x.called) {
+              _xifexpression = 0;
+            } else {
+              _xifexpression = x.number;
+            }
+            return Integer.valueOf(((w).intValue() + _xifexpression));
           }
         };
         return IterableExtensions.<Square, Integer>fold(l, v, _function);
       }
     };
     return IterableExtensions.<List<Square>, Integer>fold(this.grid, Integer.valueOf(0), _function);
-  }
-  
-  public String toString() {
-    final Function2<String, List<Square>, String> _function = new Function2<String, List<Square>, String>() {
-      public String apply(final String s, final List<Square> l) {
-        final Function2<String, Square, String> _function = new Function2<String, Square, String>() {
-          public String apply(final String r, final Square m) {
-            return ((r + m) + " ");
-          }
-        };
-        String _fold = IterableExtensions.<Square, String>fold(l, "", _function);
-        String _plus = (s + _fold);
-        return (_plus + "\n");
-      }
-    };
-    return IterableExtensions.<List<Square>, String>fold(this.grid, "", _function);
   }
 }
