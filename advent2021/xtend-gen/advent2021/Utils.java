@@ -33,7 +33,7 @@ public class Utils {
     }
   }
   
-  public static final String inputs = "/media/monsieuro/Mes Données/Eclipse/adventofcode/advent2021/inputs/";
+  public static final String inputs = "/home/monsieuro/adventofcode/advent2021/inputs/";
   
   public static List<String> getInputs(final int inputNumber) {
     try {

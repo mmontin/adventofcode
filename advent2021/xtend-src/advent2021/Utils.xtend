@@ -11,7 +11,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 class Utils {
 	
-	public static final String inputs = "/media/monsieuro/Mes Données/Eclipse/adventofcode/advent2021/inputs/"
+	public static final String inputs = "/home/monsieuro/adventofcode/advent2021/inputs/"
 		
 	def static getInputs(int inputNumber) {
 		Files.readAllLines(Paths.get(inputs + inputNumber))
