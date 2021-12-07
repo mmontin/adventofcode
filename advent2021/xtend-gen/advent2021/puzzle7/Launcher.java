@@ -18,24 +18,30 @@ public class Launcher {
         return Integer.valueOf(Integer.parseInt(x));
       }
     };
-    List<Integer> input = IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(Utils.getInputs(7).get(0).split(","))), _function));
-    int min1 = Integer.MAX_VALUE;
-    int min2 = Integer.MAX_VALUE;
+    final List<Integer> input = IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(Utils.getInputs(7).get(0).split(","))), _function));
     Integer _get = input.get(0);
     int _size = input.size();
     int _minus = (_size - 1);
     Integer _get_1 = input.get(_minus);
-    IntegerRange _upTo = new IntegerRange((_get).intValue(), (_get_1).intValue());
-    for (final Integer k : _upTo) {
-      {
-        final Function2<Integer, Integer, Integer> _function_1 = new Function2<Integer, Integer, Integer>() {
+    final Function2<Integer, Integer, Integer> _function_1 = new Function2<Integer, Integer, Integer>() {
+      public Integer apply(final Integer min, final Integer k) {
+        final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
           public Integer apply(final Integer v, final Integer e) {
             int _abs = Math.abs(((e).intValue() - (k).intValue()));
             return Integer.valueOf(((v).intValue() + _abs));
           }
         };
-        min1 = Math.min(min1, (IterableExtensions.<Integer, Integer>fold(input, Integer.valueOf(0), _function_1)).intValue());
-        final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
+        return Integer.valueOf(Math.min((min).intValue(), (IterableExtensions.<Integer, Integer>fold(input, Integer.valueOf(0), _function)).intValue()));
+      }
+    };
+    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new IntegerRange((_get).intValue(), (_get_1).intValue()), Integer.valueOf(Integer.MAX_VALUE), _function_1));
+    Integer _get_2 = input.get(0);
+    int _size_1 = input.size();
+    int _minus_1 = (_size_1 - 1);
+    Integer _get_3 = input.get(_minus_1);
+    final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
+      public Integer apply(final Integer min, final Integer k) {
+        final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
           public Integer apply(final Integer v, final Integer e) {
             int _xblockexpression = (int) 0;
             {
@@ -45,11 +51,9 @@ public class Launcher {
             return Integer.valueOf(_xblockexpression);
           }
         };
-        min2 = Math.min(min2, (IterableExtensions.<Integer, Integer>fold(input, Integer.valueOf(0), _function_2)).intValue());
+        return Integer.valueOf(Math.min((min).intValue(), (IterableExtensions.<Integer, Integer>fold(input, Integer.valueOf(0), _function)).intValue()));
       }
-    }
-    String _plus = (Integer.valueOf(min1) + ",");
-    String _plus_1 = (_plus + Integer.valueOf(min2));
-    InputOutput.<String>println(_plus_1);
+    };
+    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new IntegerRange((_get_2).intValue(), (_get_3).intValue()), Integer.valueOf(Integer.MAX_VALUE), _function_2));
   }
 }
