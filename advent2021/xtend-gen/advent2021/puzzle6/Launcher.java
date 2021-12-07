@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -41,12 +42,13 @@ public class Launcher {
     InputOutput.<BigInteger>println(IterableExtensions.<BigInteger, BigInteger>fold(input.values(), BigInteger.valueOf(0), _function_1));
   }
   
-  public static Map<Integer, BigInteger> step(final Map<Integer, BigInteger> input) {
-    Map<Integer, BigInteger> _xblockexpression = null;
-    {
-      final Map<Integer, BigInteger> output = new HashMap<Integer, BigInteger>();
-      final Consumer<Map.Entry<Integer, BigInteger>> _function = new Consumer<Map.Entry<Integer, BigInteger>>() {
-        public void accept(final Map.Entry<Integer, BigInteger> e) {
+  public static HashMap<Integer, BigInteger> step(final Map<Integer, BigInteger> input) {
+    Set<Map.Entry<Integer, BigInteger>> _entrySet = input.entrySet();
+    HashMap<Integer, BigInteger> _hashMap = new HashMap<Integer, BigInteger>();
+    final Function2<HashMap<Integer, BigInteger>, Map.Entry<Integer, BigInteger>, HashMap<Integer, BigInteger>> _function = new Function2<HashMap<Integer, BigInteger>, Map.Entry<Integer, BigInteger>, HashMap<Integer, BigInteger>>() {
+      public HashMap<Integer, BigInteger> apply(final HashMap<Integer, BigInteger> output, final Map.Entry<Integer, BigInteger> e) {
+        HashMap<Integer, BigInteger> _xblockexpression = null;
+        {
           Integer _key = e.getKey();
           boolean _equals = ((_key).intValue() == 0);
           if (_equals) {
@@ -64,8 +66,7 @@ public class Launcher {
             output.merge(Integer.valueOf(8), e.getValue(), _function_1);
           } else {
             Integer _key_1 = e.getKey();
-            Integer _valueOf = Integer.valueOf(1);
-            int _minus = ((_key_1).intValue() - (_valueOf).intValue());
+            int _minus = ((_key_1).intValue() - 1);
             final BiFunction<BigInteger, BigInteger, BigInteger> _function_2 = new BiFunction<BigInteger, BigInteger, BigInteger>() {
               public BigInteger apply(final BigInteger v1, final BigInteger v2) {
                 return v1.add(v2);
@@ -73,11 +74,11 @@ public class Launcher {
             };
             output.merge(Integer.valueOf(_minus), e.getValue(), _function_2);
           }
+          _xblockexpression = output;
         }
-      };
-      input.entrySet().forEach(_function);
-      _xblockexpression = output;
-    }
-    return _xblockexpression;
+        return _xblockexpression;
+      }
+    };
+    return IterableExtensions.<Map.Entry<Integer, BigInteger>, HashMap<Integer, BigInteger>>fold(_entrySet, _hashMap, _function);
   }
 }
