@@ -1,68 +1,95 @@
 package advent2015.puzzle22;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Board {
-  private int shield_counter = 0;
+  public enum Spell {
+    MAGIC_MISSILE,
+    
+    DRAIN,
+    
+    SHIELD,
+    
+    POISON,
+    
+    RECHARGE;
+  }
   
-  private int poison_counter = 0;
+  public static int mana_min_spent_to_win = Integer.MAX_VALUE;
   
-  private int recharge_counter = 0;
+  public static int updateManaMin(final Integer mana) {
+    return Board.mana_min_spent_to_win = Math.min(Board.mana_min_spent_to_win, (mana).intValue());
+  }
   
-  private int boss_hp = 58;
-  
-  private int boss_damage = 9;
-  
-  private int player_hp = 50;
-  
-  private int player_mana = 500;
-  
-  private int player_armor = 0;
+  /**
+   * A list of the game data, in this order :
+   * SHIELD_COUNTER
+   * POISON_COUNTER
+   * RECHARGE_COUNTER
+   * BOSS_HP
+   * BOSS_DMG
+   * PLAYER_HP
+   * PLAYER_MANA
+   * PLAYER_ARMOR
+   */
+  private List<Integer> boardState;
   
   public Board() {
-    this.shield_counter = 0;
-    this.poison_counter = 0;
-    this.recharge_counter = 0;
-    this.boss_hp = 58;
-    this.boss_damage = 9;
-    this.player_hp = 50;
-    this.player_mana = 500;
-    this.player_armor = 0;
+    this.boardState = CollectionLiterals.<Integer>newArrayList(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(58), Integer.valueOf(9), Integer.valueOf(50), Integer.valueOf(500), Integer.valueOf(0));
   }
   
   public Board(final Board other) {
-    this.shield_counter = other.shield_counter;
-    this.poison_counter = other.poison_counter;
-    this.recharge_counter = other.recharge_counter;
-    this.boss_hp = other.boss_hp;
-    this.boss_damage = other.boss_damage;
-    this.player_hp = other.player_hp;
-    this.player_mana = other.player_mana;
-    this.player_armor = other.player_armor;
+    ArrayList<Integer> _arrayList = new ArrayList<Integer>(other.boardState);
+    this.boardState = _arrayList;
   }
   
-  public HashSet<Spells> availableSpells() {
-    HashSet<Spells> _xblockexpression = null;
+  public List<Integer> update(final Integer... vector) {
+    final Function2<ArrayList<Integer>, Integer, ArrayList<Integer>> _function = new Function2<ArrayList<Integer>, Integer, ArrayList<Integer>>() {
+      public ArrayList<Integer> apply(final ArrayList<Integer> l, final Integer i) {
+        ArrayList<Integer> _xblockexpression = null;
+        {
+          Integer _get = Board.this.boardState.get((i).intValue());
+          Integer _get_1 = vector[(i).intValue()];
+          int _plus = ((_get).intValue() + (_get_1).intValue());
+          l.add(Integer.valueOf(_plus));
+          _xblockexpression = l;
+        }
+        return _xblockexpression;
+      }
+    };
+    return this.boardState = IterableExtensions.<Integer, ArrayList<Integer>>fold(new IntegerRange(0, 7), CollectionLiterals.<Integer>newArrayList(), _function);
+  }
+  
+  public HashSet<Board.Spell> availableSpells() {
+    HashSet<Board.Spell> _xblockexpression = null;
     {
-      HashSet<Spells> output = CollectionLiterals.<Spells>newHashSet();
-      if (((this.shield_counter == 0) && (this.player_mana >= 113))) {
-        output.add(Spells.SHIELD);
+      HashSet<Board.Spell> output = CollectionLiterals.<Board.Spell>newHashSet();
+      if ((((this.shield_counter()).intValue() == 0) && ((this.player_mana()).intValue() >= 113))) {
+        output.add(Board.Spell.SHIELD);
       }
-      if (((this.poison_counter == 0) && (this.player_mana >= 173))) {
-        output.add(Spells.POISON);
+      if ((((this.poison_counter()).intValue() == 0) && ((this.player_mana()).intValue() >= 173))) {
+        output.add(Board.Spell.POISON);
       }
-      if (((this.recharge_counter == 0) && (this.player_mana >= 229))) {
-        output.add(Spells.RECHARGE);
+      if ((((this.recharge_counter()).intValue() == 0) && ((this.player_mana()).intValue() >= 229))) {
+        output.add(Board.Spell.RECHARGE);
       }
-      if ((this.player_mana >= 53)) {
-        output.add(Spells.MAGIC_MISSILE);
+      Integer _player_mana = this.player_mana();
+      boolean _greaterEqualsThan = ((_player_mana).intValue() >= 53);
+      if (_greaterEqualsThan) {
+        output.add(Board.Spell.MAGIC_MISSILE);
       }
-      if ((this.player_mana >= 73)) {
-        output.add(Spells.DRAIN);
+      Integer _player_mana_1 = this.player_mana();
+      boolean _greaterEqualsThan_1 = ((_player_mana_1).intValue() >= 73);
+      if (_greaterEqualsThan_1) {
+        output.add(Board.Spell.DRAIN);
       }
       _xblockexpression = output;
     }
@@ -72,115 +99,143 @@ public class Board {
   public boolean initTurn() {
     boolean _xblockexpression = false;
     {
-      if ((this.shield_counter > 0)) {
-        this.player_armor = 7;
-        this.shield_counter--;
-      }
-      if ((this.poison_counter > 0)) {
-        int _boss_hp = this.boss_hp;
-        this.boss_hp = (_boss_hp - 3);
-        this.poison_counter--;
-      }
-      if ((this.recharge_counter > 0)) {
-        int _player_mana = this.player_mana;
-        this.player_mana = (_player_mana + 101);
-        this.recharge_counter--;
-      }
-      boolean _xifexpression = false;
-      if ((this.boss_hp <= 0)) {
-        _xifexpression = true;
+      Integer _shield_counter = this.shield_counter();
+      boolean _greaterThan = ((_shield_counter).intValue() > 0);
+      if (_greaterThan) {
+        Integer _player_armor = this.player_armor();
+        int _minus = (7 - (_player_armor).intValue());
+        this.update(Integer.valueOf((-1)), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(_minus));
       } else {
-        _xifexpression = false;
+        Integer _player_armor_1 = this.player_armor();
+        boolean _greaterThan_1 = ((_player_armor_1).intValue() > 0);
+        if (_greaterThan_1) {
+          Integer _player_armor_2 = this.player_armor();
+          int _minus_1 = (-(_player_armor_2).intValue());
+          this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(_minus_1));
+        }
       }
-      _xblockexpression = _xifexpression;
+      Integer _poison_counter = this.poison_counter();
+      boolean _greaterThan_2 = ((_poison_counter).intValue() > 0);
+      if (_greaterThan_2) {
+        this.update(Integer.valueOf(0), Integer.valueOf((-1)), Integer.valueOf(0), Integer.valueOf((-3)), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0));
+      }
+      Integer _recharge_counter = this.recharge_counter();
+      boolean _greaterThan_3 = ((_recharge_counter).intValue() > 0);
+      if (_greaterThan_3) {
+        this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-1)), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(101), Integer.valueOf(0));
+      }
+      Integer _boss_hp = this.boss_hp();
+      _xblockexpression = ((_boss_hp).intValue() <= 0);
     }
     return _xblockexpression;
   }
   
-  public int step(final boolean turn, final Spells spell) {
-    Integer _xifexpression = null;
-    boolean _initTurn = this.initTurn();
-    if (_initTurn) {
-      _xifexpression = Integer.valueOf(0);
-    } else {
-      Integer _xifexpression_1 = null;
-      if (turn) {
-        int _xblockexpression = (int) 0;
-        {
-          int original_mana = this.player_mana;
-          if (spell != null) {
-            switch (spell) {
-              case DRAIN:
-                int _player_mana = this.player_mana;
-                this.player_mana = (_player_mana - 73);
-                int _player_hp = this.player_hp;
-                this.player_hp = (_player_hp + 2);
-                int _boss_hp = this.boss_hp;
-                this.boss_hp = (_boss_hp - 2);
-                break;
-              case MAGIC_MISSILE:
-                int _player_mana_1 = this.player_mana;
-                this.player_mana = (_player_mana_1 - 53);
-                int _boss_hp_1 = this.boss_hp;
-                this.boss_hp = (_boss_hp_1 - 4);
-                break;
-              case SHIELD:
-                int _player_mana_2 = this.player_mana;
-                this.player_mana = (_player_mana_2 - 113);
-                this.shield_counter = 6;
-                break;
-              case POISON:
-                int _player_mana_3 = this.player_mana;
-                this.player_mana = (_player_mana_3 - 173);
-                this.poison_counter = 6;
-                break;
-              default:
-                {
-                  int _player_mana_4 = this.player_mana;
-                  this.player_mana = (_player_mana_4 - 229);
-                  this.recharge_counter = 5;
-                }
-                break;
-            }
-          } else {
-            {
-              int _player_mana_4 = this.player_mana;
-              this.player_mana = (_player_mana_4 - 229);
-              this.recharge_counter = 5;
-            }
-          }
-          int _xifexpression_2 = (int) 0;
-          if ((this.boss_hp <= 0)) {
-            _xifexpression_2 = 0;
-          } else {
-            _xifexpression_2 = this.step(false, null);
-          }
-          _xblockexpression = ((original_mana - this.player_mana) + _xifexpression_2);
-        }
-        _xifexpression_1 = Integer.valueOf(_xblockexpression);
-      } else {
-        Integer _xblockexpression_1 = null;
-        {
-          int _player_hp = this.player_hp;
-          int _max = Math.max(1, (this.boss_damage - this.player_armor));
-          this.player_hp = (_player_hp - _max);
-          Integer _xifexpression_2 = null;
-          if ((this.player_hp <= 0)) {
-            _xifexpression_2 = Integer.valueOf(Integer.MAX_VALUE);
-          } else {
-            final Function2<Integer, Spells, Integer> _function = new Function2<Integer, Spells, Integer>() {
-              public Integer apply(final Integer v, final Spells s) {
-                return Integer.valueOf(Math.min((v).intValue(), new Board(Board.this).step(true, s)));
-              }
-            };
-            _xifexpression_2 = IterableExtensions.<Spells, Integer>fold(this.availableSpells(), Integer.valueOf(Integer.MAX_VALUE), _function);
-          }
-          _xblockexpression_1 = _xifexpression_2;
-        }
-        _xifexpression_1 = _xblockexpression_1;
-      }
-      _xifexpression = _xifexpression_1;
+  public boolean bossTurn() {
+    boolean _xblockexpression = false;
+    {
+      Integer _boss_damage = this.boss_damage();
+      Integer _player_armor = this.player_armor();
+      int _minus = ((_boss_damage).intValue() - (_player_armor).intValue());
+      int _max = Math.max(1, _minus);
+      int _minus_1 = (-_max);
+      this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(_minus_1), Integer.valueOf(0), Integer.valueOf(0));
+      Integer _player_hp = this.player_hp();
+      _xblockexpression = ((_player_hp).intValue() <= 0);
     }
-    return (_xifexpression).intValue();
+    return _xblockexpression;
+  }
+  
+  public List<Integer> playerTurn(final Board.Spell spell) {
+    List<Integer> _switchResult = null;
+    if (spell != null) {
+      switch (spell) {
+        case MAGIC_MISSILE:
+          _switchResult = this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-4)), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-53)), Integer.valueOf(0));
+          break;
+        case DRAIN:
+          _switchResult = this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-2)), Integer.valueOf(0), Integer.valueOf(2), Integer.valueOf((-73)), Integer.valueOf(0));
+          break;
+        case SHIELD:
+          _switchResult = this.update(Integer.valueOf(6), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-113)), Integer.valueOf(0));
+          break;
+        case POISON:
+          _switchResult = this.update(Integer.valueOf(0), Integer.valueOf(6), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-173)), Integer.valueOf(0));
+          break;
+        default:
+          _switchResult = this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(5), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-229)), Integer.valueOf(0));
+          break;
+      }
+    } else {
+      _switchResult = this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(5), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-229)), Integer.valueOf(0));
+    }
+    return _switchResult;
+  }
+  
+  public void play(final Integer mana_spent_already) {
+    this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-1)), Integer.valueOf(0), Integer.valueOf(0));
+    Integer _player_hp = this.player_hp();
+    boolean _greaterThan = ((_player_hp).intValue() > 0);
+    if (_greaterThan) {
+      boolean _initTurn = this.initTurn();
+      if (_initTurn) {
+        Board.updateManaMin(mana_spent_already);
+      } else {
+        if (((Board.mana_min_spent_to_win - (mana_spent_already).intValue()) >= 53)) {
+          final Consumer<Board.Spell> _function = new Consumer<Board.Spell>() {
+            public void accept(final Board.Spell it) {
+              final Board newBoard = new Board(Board.this);
+              newBoard.playerTurn(it);
+              Integer _player_mana = Board.this.player_mana();
+              int _plus = ((mana_spent_already).intValue() + (_player_mana).intValue());
+              Integer _player_mana_1 = newBoard.player_mana();
+              final int new_mana_spent = (_plus - (_player_mana_1).intValue());
+              boolean _initTurn = newBoard.initTurn();
+              if (_initTurn) {
+                Board.updateManaMin(Integer.valueOf(new_mana_spent));
+              } else {
+                boolean _bossTurn = newBoard.bossTurn();
+                boolean _not = (!_bossTurn);
+                if (_not) {
+                  newBoard.play(Integer.valueOf(new_mana_spent));
+                }
+              }
+            }
+          };
+          this.availableSpells().forEach(_function);
+        }
+      }
+    }
+  }
+  
+  public Integer shield_counter() {
+    return this.boardState.get(0);
+  }
+  
+  public Integer poison_counter() {
+    return this.boardState.get(1);
+  }
+  
+  public Integer recharge_counter() {
+    return this.boardState.get(2);
+  }
+  
+  public Integer boss_hp() {
+    return this.boardState.get(3);
+  }
+  
+  public Integer boss_damage() {
+    return this.boardState.get(4);
+  }
+  
+  public Integer player_hp() {
+    return this.boardState.get(5);
+  }
+  
+  public Integer player_mana() {
+    return this.boardState.get(6);
+  }
+  
+  public Integer player_armor() {
+    return this.boardState.get(7);
   }
 }

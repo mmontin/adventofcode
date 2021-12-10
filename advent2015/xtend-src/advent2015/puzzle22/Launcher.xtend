@@ -4,7 +4,8 @@ class Launcher {
 	
 	def static void main(String[] args) {
 		
-		val Board b = new Board()
-		println(b.availableSpells.fold(Integer::MAX_VALUE)[v, s|Math.min(v, new Board(b).step(true, s))])
+		var time = System.currentTimeMillis
+		new Board().play(0)
+		println('The answer is ' + Board::mana_min_spent_to_win + ' and it took ' + (System.currentTimeMillis - time) + ' ms to compute it.')
 	}
 }
