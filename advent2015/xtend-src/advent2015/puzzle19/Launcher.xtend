@@ -2,61 +2,40 @@ package advent2015.puzzle19
 
 import advent2015.Utils
 import java.util.HashMap
-import java.util.HashSet
+import java.util.List
 import java.util.Map
-import java.util.Set
 
 class Launcher {
-	
-	static val Map<String, Set<String>> transformations = new HashMap
+
+	static Map<String, String> transformations = new HashMap
+	static List<String> patterns
 
 	def static void main(String[] args) {
 
 		val inputs = Utils.getInputs(19)
-		
-		var Set<String> inputSet = new HashSet
-		inputSet.add(inputs.get(0))
+
+		var String molecule = inputs.get(0)
 
 		inputs.remove(0)
 
-		inputs.forEach [ l |
-			val split = l.split(' => ')
-			val left = split.get(0)
-			val right = split.get(1)
-			if (!transformations.containsKey(right))
-				transformations.put(right, new HashSet)
-			transformations.get(right).add(left)
+		inputs.forEach [
+			val split = it.split(' => ')
+			transformations.put(split.get(1), split.get(0))
 		]
-		
-		inputSet = performSet(inputSet)
-		inputSet = performSet(inputSet)
-		inputSet = performSet(inputSet)
-		println(inputSet.size)	
-	}
-	
-	def static performSet(Set<String> samples) {
-		val Set<String> output = new HashSet
-		transformations.entrySet.forEach[e |
-			val left = e.key
-			e.value.forEach[ right |
-				samples.forEach[s | output.addAll(perform(s, left, right))]
-			]
-		]
-		output
-	}
-	
-	def static perform(String sample, String left, String right) {
-		val Set<String> outputs = new HashSet
-		var startingIndex = 0
-		while (startingIndex < sample.length) {
-			var pos = sample.indexOf(left, startingIndex)
-			if (pos == -1)
-				startingIndex = sample.length
-			else {
-				outputs.add(sample.substring(0, pos) + right + sample.substring(pos + left.length))
-				startingIndex += left.length
+
+		patterns = transformations.keySet.toList.sortBy[it.length].reverse
+
+		var result = 0
+
+		while (!molecule.equals('e')) {
+			val mols = molecule
+			val pat = patterns.findFirst[mols.contains(it)]
+			if (pat !== null) {
+				molecule = molecule.replaceAll(pat, transformations.get(pat))
+				result += mols.split(pat, -1).size - 1
 			}
 		}
-		outputs
+
+		println(result)
 	}
 }
