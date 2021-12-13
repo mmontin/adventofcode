@@ -26,11 +26,8 @@ class Launcher {
 			]
 		]
 
-		val maxX = dots.maxBy[x].x
-		val maxY = dots.maxBy[y].y
-
-		for (j : 0 .. maxY) {
-			for (i : 0 .. maxX)
+		for (j : 0 .. dots.maxBy[y].y) {
+			for (i : 0 .. dots.maxBy[x].x)
 				print(dots.contains(new Coordinates(i,j)) ? "0" : " ")
 			println
 		}

@@ -46,20 +46,20 @@ public class Launcher {
     IterableExtensions.<String>drop(input, (index + 1)).forEach(_function_1);
     final Function1<Coordinates, Integer> _function_2 = new Function1<Coordinates, Integer>() {
       public Integer apply(final Coordinates it) {
-        return Integer.valueOf(it.getX());
-      }
-    };
-    final int maxX = IterableExtensions.<Coordinates, Integer>maxBy(dots, _function_2).getX();
-    final Function1<Coordinates, Integer> _function_3 = new Function1<Coordinates, Integer>() {
-      public Integer apply(final Coordinates it) {
         return Integer.valueOf(it.getY());
       }
     };
-    final int maxY = IterableExtensions.<Coordinates, Integer>maxBy(dots, _function_3).getY();
-    IntegerRange _upTo = new IntegerRange(0, maxY);
+    int _y = IterableExtensions.<Coordinates, Integer>maxBy(dots, _function_2).getY();
+    IntegerRange _upTo = new IntegerRange(0, _y);
     for (final Integer j : _upTo) {
       {
-        IntegerRange _upTo_1 = new IntegerRange(0, maxX);
+        final Function1<Coordinates, Integer> _function_3 = new Function1<Coordinates, Integer>() {
+          public Integer apply(final Coordinates it) {
+            return Integer.valueOf(it.getX());
+          }
+        };
+        int _x = IterableExtensions.<Coordinates, Integer>maxBy(dots, _function_3).getX();
+        IntegerRange _upTo_1 = new IntegerRange(0, _x);
         for (final Integer i : _upTo_1) {
           String _xifexpression = null;
           Coordinates _coordinates = new Coordinates((i).intValue(), (j).intValue());
