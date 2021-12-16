@@ -74,7 +74,7 @@ class Building implements Comparable<Building> {
 			distance = previous + 1
 	}
 
-	def step(Set<Building> known_states, Set<Building> visited) {
+	def step(Set<Building> toVisit, Set<Building> visited) {
 
 		val el = newHashSet
 		if(elevator > 1) el.add(elevator - 1)
@@ -92,11 +92,11 @@ class Building implements Comparable<Building> {
 				l1.set(indices.get(i), e)
 				val b = new Building(l1, e, distance + 1)
 				if (b.valid) {
-					if (known_states.contains(b)) {
-						val c = known_states.findFirst[it.equals(b)]
+					if (toVisit.contains(b)) {
+						val c = toVisit.findFirst[it.equals(b)]
 						c.updateDistance(distance)
 					} else if (!visited.contains(b))
-						known_states.add(b)
+						toVisit.add(b)
 				}
 				for (j : i + 1 ..< indices_nb) {
 					val l = new ArrayList(content)
@@ -104,11 +104,11 @@ class Building implements Comparable<Building> {
 					l.set(indices.get(j), e)
 					val a = new Building(l, e, distance + 1)
 					if (a.valid) {
-						if (known_states.contains(a)) {
-							val c = known_states.findFirst[it.equals(a)]
+						if (toVisit.contains(a)) {
+							val c = toVisit.findFirst[it.equals(a)]
 							c.updateDistance(distance)
 						} else if (!visited.contains(a))
-							known_states.add(a)
+							toVisit.add(a)
 					}
 				}
 			}

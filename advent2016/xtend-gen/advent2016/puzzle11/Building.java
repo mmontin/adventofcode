@@ -114,7 +114,7 @@ public class Building implements Comparable<Building> {
     return _xifexpression;
   }
   
-  public void step(final Set<Building> known_states, final Set<Building> visited) {
+  public void step(final Set<Building> toVisit, final Set<Building> visited) {
     final HashSet<Integer> el = CollectionLiterals.<Integer>newHashSet();
     if (((this.elevator).intValue() > 1)) {
       el.add(Integer.valueOf(((this.elevator).intValue() - 1)));
@@ -147,20 +147,20 @@ public class Building implements Comparable<Building> {
           l1.set((indices.get((i).intValue())).intValue(), e);
           final Building b = new Building(l1, e, ((this.distance).intValue() + 1));
           if (b.valid) {
-            boolean _contains = known_states.contains(b);
+            boolean _contains = toVisit.contains(b);
             if (_contains) {
               final Function1<Building, Boolean> _function_1 = new Function1<Building, Boolean>() {
                 public Boolean apply(final Building it) {
                   return Boolean.valueOf(it.equals(b));
                 }
               };
-              final Building c = IterableExtensions.<Building>findFirst(known_states, _function_1);
+              final Building c = IterableExtensions.<Building>findFirst(toVisit, _function_1);
               c.updateDistance((this.distance).intValue());
             } else {
               boolean _contains_1 = visited.contains(b);
               boolean _not = (!_contains_1);
               if (_not) {
-                known_states.add(b);
+                toVisit.add(b);
               }
             }
           }
@@ -172,20 +172,20 @@ public class Building implements Comparable<Building> {
               l.set((indices.get((j).intValue())).intValue(), e);
               final Building a = new Building(l, e, ((this.distance).intValue() + 1));
               if (a.valid) {
-                boolean _contains_2 = known_states.contains(a);
+                boolean _contains_2 = toVisit.contains(a);
                 if (_contains_2) {
                   final Function1<Building, Boolean> _function_2 = new Function1<Building, Boolean>() {
                     public Boolean apply(final Building it) {
                       return Boolean.valueOf(it.equals(a));
                     }
                   };
-                  final Building c_1 = IterableExtensions.<Building>findFirst(known_states, _function_2);
+                  final Building c_1 = IterableExtensions.<Building>findFirst(toVisit, _function_2);
                   c_1.updateDistance((this.distance).intValue());
                 } else {
                   boolean _contains_3 = visited.contains(a);
                   boolean _not_1 = (!_contains_3);
                   if (_not_1) {
-                    known_states.add(a);
+                    toVisit.add(a);
                   }
                 }
               }
