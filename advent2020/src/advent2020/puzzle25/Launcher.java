@@ -28,8 +28,4 @@ public class Launcher {
 		}
 		return nb ;
 	}
-	
-	private static int applyLoop(int nb) {
-		
-	}
 }

@@ -53,18 +53,18 @@ public class Launcher {
 		
 //		Checking valid strings (PART 1)
 		
-//		String rule0 = rules.get(0).getRegularExpression() ;
-//		int numberOfValid = 0 ;
-//		for (String s : inputValues)
-//			numberOfValid += s.matches(rule0) ? 1 : 0 ;
-//		System.out.println(numberOfValid);
+		String rule0 = rules.get(0).getRegularExpression() ;
+		int numberOfValid = 0 ;
+		for (String s : inputValues)
+			numberOfValid += s.matches(rule0) ? 1 : 0 ;
+		System.out.println(numberOfValid);
 		
 		// PART 2
-		int nb = 0 ;
-		for (String s : inputValues) {
-			if (Parser.parse(s)) nb++ ;
-		}
-		System.out.println(nb);
+//		int nb = 0 ;
+//		for (String s : inputValues) {
+//			if (Parser.parse(s)) nb++ ;
+//		}
+//		System.out.println(nb);
 	}
 
 	private static String addToRules(Integer number, String s) {
