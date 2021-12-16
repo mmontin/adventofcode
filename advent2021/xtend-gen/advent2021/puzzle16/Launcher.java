@@ -3,6 +3,7 @@ package advent2021.puzzle16;
 import advent2021.Utils;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -60,10 +61,9 @@ public class Launcher {
             String _substring = Launcher.input.substring(Launcher.i, Launcher.i = (Launcher.i + 4));
             number = (_number + _substring);
           }
-          String _number = number;
           String _substring = Launcher.input.substring(Launcher.i, Launcher.i = (Launcher.i + 4));
-          number = (_number + _substring);
-          _xblockexpression_1 = Long.parseLong(number, 2);
+          String _plus = (number + _substring);
+          _xblockexpression_1 = Long.parseLong(_plus, 2);
         }
         _xifexpression = Long.valueOf(_xblockexpression_1);
       } else {
@@ -78,29 +78,31 @@ public class Launcher {
               values.add(Launcher.decodePacket());
             }
           } else {
-            int nb_sub_packages = Integer.parseInt(Launcher.input.substring(Launcher.i, Launcher.i = (Launcher.i + 11)), 2);
-            ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, nb_sub_packages, true);
-            for (final Integer j : _doubleDotLessThan) {
-              values.add(Launcher.decodePacket());
-            }
+            int _parseInt_1 = Integer.parseInt(Launcher.input.substring(Launcher.i, Launcher.i = (Launcher.i + 11)), 2);
+            final Consumer<Integer> _function = new Consumer<Integer>() {
+              public void accept(final Integer it) {
+                values.add(Launcher.decodePacket());
+              }
+            };
+            new ExclusiveRange(0, _parseInt_1, true).forEach(_function);
           }
           Long _switchResult = null;
           switch (type_id) {
             case 0:
-              final Function2<Long, Long, Long> _function = new Function2<Long, Long, Long>() {
+              final Function2<Long, Long, Long> _function_1 = new Function2<Long, Long, Long>() {
                 public Long apply(final Long x, final Long y) {
                   return Long.valueOf(((x).longValue() + (y).longValue()));
                 }
               };
-              _switchResult = IterableExtensions.<Long>reduce(values, _function);
+              _switchResult = IterableExtensions.<Long>reduce(values, _function_1);
               break;
             case 1:
-              final Function2<Long, Long, Long> _function_1 = new Function2<Long, Long, Long>() {
+              final Function2<Long, Long, Long> _function_2 = new Function2<Long, Long, Long>() {
                 public Long apply(final Long x, final Long y) {
                   return Long.valueOf(((x).longValue() * (y).longValue()));
                 }
               };
-              _switchResult = IterableExtensions.<Long>reduce(values, _function_1);
+              _switchResult = IterableExtensions.<Long>reduce(values, _function_2);
               break;
             case 2:
               _switchResult = IterableExtensions.<Long>min(values);

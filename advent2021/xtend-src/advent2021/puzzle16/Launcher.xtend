@@ -21,22 +21,16 @@ class Launcher {
 		val type_id = Integer::parseInt(input.substring(i,i=i+3),2)
 		if (type_id == 4) {
 			var number = ""
-			while (input.substring(i,i=i+1).equals('1'))
-				number += input.substring(i,i=i+4)
-			number += input.substring(i,i=i+4)
-			Long::parseLong(number,2)
+			while (input.substring(i,i=i+1).equals('1')) number += input.substring(i,i=i+4)
+			Long::parseLong(number + input.substring(i,i=i+4),2)
 		} else {
 			val values = newArrayList
 			if (input.substring(i,i=i+1).equals('0')) {
 				var total_length = Integer::parseInt(input.substring(i,i=i+15),2)
 				var final_index = i + total_length
-				while (i != final_index)
-					values.add(decodePacket)
-			} else {
-				var nb_sub_packages = Integer::parseInt(input.substring(i,i=i+11),2)
-				for (j : 0..<nb_sub_packages)
-					values.add(decodePacket)
-			}
+				while (i != final_index) values.add(decodePacket)
+			} else
+				(0..<Integer::parseInt(input.substring(i,i=i+11),2)).forEach[values.add(decodePacket)]
 			switch (type_id) {
 				case 0 : values.reduce[x , y | x + y]
 				case 1 : values.reduce[x , y | x * y]
