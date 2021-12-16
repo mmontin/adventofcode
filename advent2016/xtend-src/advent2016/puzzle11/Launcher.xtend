@@ -4,20 +4,37 @@ import java.util.Set
 
 class Launcher {
 	
+	static Set<Building> toVisit = newHashSet(new Building(0))
 	static Set<Building> visited = newHashSet
-	static Integer min_depth = Integer::MAX_VALUE
-
+	static int best_score = 0
+	
 	def static void main(String[] args) {
-		process(new Building(),0)
-		println(min_depth)
-	}
 
-	def static void process(Building current, int depth) {
-		if (current.isFinal)
-			min_depth = depth
-		else if (depth < min_depth) {
-			visited.add(current)
-			current.steps.filter[!visited.contains(it)].forEach[process(it,depth+1)]
+		var Building first
+		var time_abs = System.currentTimeMillis
+		var time = System.currentTimeMillis
+		var i = 0
+		
+		while (!(first = toVisit.min).isFinal) {
+			update(first.score)
+			first.step(toVisit,visited)
+			toVisit.remove(first)
+			visited.add(first)
+			if (i++ % 10000 == 0) {
+				var time_1 = System.currentTimeMillis
+				println((time_1 - time) + "ms for the last 10000 states")
+				time = time_1
+				println((i - 1) + " states explored so far in " + ((System.currentTimeMillis - time_abs) / 1000) + " seconds")
+			}
+		}
+		println(i + " states visited in total.")
+		println(first.distance)
+	}
+	
+	def static update(int score_) {
+		if (score_ > best_score) {
+			println("New best score : " + score_)
+			best_score = score_ 
 		}
 	}
 }

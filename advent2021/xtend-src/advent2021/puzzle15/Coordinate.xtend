@@ -21,9 +21,8 @@ class Coordinate {
 	}
 	
 	def updateDistance(Coordinate previous) {
-		if (previous.distance + height < distance) {
+		if (previous.distance + height < distance)
 			distance = previous.distance + height
-		}
 	}
 	
 	def getHeight() {
