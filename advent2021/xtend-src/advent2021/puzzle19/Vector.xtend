@@ -24,11 +24,35 @@ class Vector {
 		new Vector(other.x - x, other.y - y, other.z - z)
 	}
 	
+	override hashCode() {
+		this.x + this.y + this.z
+	}
+	
 	override toString() {
 		'[' + x + ',' + y + ',' + z + ']'
 	}
 	
 	def size2() {
 		x * x + y * y + z * z
+	}
+	
+	def multiplyBy(Matrix m) {
+		val newx = m.coeffs.get(0).get(0) * x + m.coeffs.get(1).get(0) * y + m.coeffs.get(2).get(0) * z
+		val newy = m.coeffs.get(0).get(1) * x + m.coeffs.get(1).get(1) * y + m.coeffs.get(2).get(1) * z
+		val newz = m.coeffs.get(0).get(2) * x + m.coeffs.get(1).get(2) * y + m.coeffs.get(2).get(2) * z
+		x = newx
+		y = newy
+		z = newz
+	}
+	
+	def add(Vector v) {
+		x += v.x
+		y += v.y
+		z += v.z
+	}
+	
+	override equals(Object o) {
+		val v = o as Vector
+		v.x == x && v.y == y && v.z == z
 	}
 }
