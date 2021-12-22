@@ -1,63 +1,47 @@
 package advent2021.puzzle22;
 
 import advent2021.Utils;
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Launcher {
-  private static final Set<Coordinate> ons = CollectionLiterals.<Coordinate>newHashSet();
-  
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        InputOutput.<String>println("next");
-        final String[] split = it.split(",");
-        final String[] split1 = (split[0]).split(" ");
-        final boolean on = (split1[0]).equals("on");
-        final String[] split2 = (split1[1]).split("\\.\\.");
-        final int minx = Integer.parseInt((split2[0]).substring(2));
-        final int maxx = Integer.parseInt(split2[1]);
-        final String[] split3 = (split[1]).split("\\.\\.");
-        final int miny = Integer.parseInt((split3[0]).substring(2));
-        final int maxy = Integer.parseInt(split3[1]);
-        final String[] split4 = (split[2]).split("\\.\\.");
-        final int minz = Integer.parseInt((split4[0]).substring(2));
-        final int maxz = Integer.parseInt(split4[1]);
-        int _max = Math.max((-50), minx);
-        int _min = Math.min(50, maxx);
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer i) {
-            int _max = Math.max((-50), miny);
-            int _min = Math.min(50, maxy);
-            final Consumer<Integer> _function = new Consumer<Integer>() {
-              public void accept(final Integer j) {
-                int _max = Math.max((-50), minz);
-                int _min = Math.min(50, maxz);
-                final Consumer<Integer> _function = new Consumer<Integer>() {
-                  public void accept(final Integer k) {
-                    if (on) {
-                      Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue(), (k).intValue());
-                      Launcher.ons.add(_coordinate);
-                    } else {
-                      Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue(), (k).intValue());
-                      Launcher.ons.remove(_coordinate_1);
-                    }
-                  }
-                };
-                new IntegerRange(_max, _min).forEach(_function);
-              }
-            };
-            new IntegerRange(_max, _min).forEach(_function);
+    Set<Cuboid> cuboids = CollectionLiterals.<Cuboid>newHashSet();
+    List<String> _inputs = Utils.getInputs(22);
+    for (final String s : _inputs) {
+      {
+        final String[] split = s.split(" ");
+        final boolean on = (split[0]).equals("on");
+        String _get = split[1];
+        final Cuboid cuboid = new Cuboid(_get);
+        final Function2<HashSet<Cuboid>, Cuboid, HashSet<Cuboid>> _function = new Function2<HashSet<Cuboid>, Cuboid, HashSet<Cuboid>>() {
+          public HashSet<Cuboid> apply(final HashSet<Cuboid> set, final Cuboid c) {
+            HashSet<Cuboid> _xblockexpression = null;
+            {
+              set.addAll(c.subtract(cuboid));
+              _xblockexpression = set;
+            }
+            return _xblockexpression;
           }
         };
-        new IntegerRange(_max, _min).forEach(_function);
+        cuboids = IterableExtensions.<Cuboid, HashSet<Cuboid>>fold(cuboids, CollectionLiterals.<Cuboid>newHashSet(), _function);
+        if (on) {
+          cuboids.add(cuboid);
+        }
+      }
+    }
+    final Function2<BigInteger, Cuboid, BigInteger> _function = new Function2<BigInteger, Cuboid, BigInteger>() {
+      public BigInteger apply(final BigInteger v, final Cuboid c) {
+        return v.add(c.size());
       }
     };
-    Utils.getInputs(22).forEach(_function);
-    InputOutput.<Integer>println(Integer.valueOf(Launcher.ons.size()));
+    InputOutput.<BigInteger>println(IterableExtensions.<Cuboid, BigInteger>fold(cuboids, BigInteger.ZERO, _function));
   }
 }
