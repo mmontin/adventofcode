@@ -6,93 +6,86 @@ import java.util.HashSet
 import java.util.List
 import java.util.Map
 import java.util.Set
+import java.util.Map.Entry
 
 class Launcher {
-	
+
 	def static void main(String[] args) {
-		
+
 		val data = newArrayList
 		val inputReader = Utils.getInputReader(19)
 		var String tmp_string
 		var List<Vector> map
-		while((tmp_string = inputReader.readLine)!==null) {
-			if (tmp_string.contains("scanner")) map = newArrayList
-			else if (tmp_string.isEmpty) data.add(map)
-			else map.add(new Vector(tmp_string))
+		while ((tmp_string = inputReader.readLine) !== null) {
+			if (tmp_string.contains("scanner"))
+				map = newArrayList
+			else if(tmp_string.isEmpty) data.add(map) else map.add(new Vector(tmp_string))
 		}
-		
-		map = data.get(0)
-		data.remove(0)
-		
-		while (data.size != 1) {
-			val dist1 = map.distances
-			var max = 0
-			var index = 0
-			var Map<Integer,Coordinate> dist2
-			var Set<Integer> inters
-			for (i : 0..<data.size) {
-				val dist_tmp = data.get(i).distances
-				val dist_dup = new HashSet(dist1.keySet)
-				dist_dup.retainAll(dist_tmp.keySet)
-				if (dist_dup.size > max) {
-					max = dist_dup.size
-					index = i
-					dist2 = dist_tmp
-					inters = dist_dup
-				}
-			}
-			dist1.keySet.retainAll(inters)
-			dist2.keySet.retainAll(inters)
-			val y = map.size + data.get(index).size
-			map = collapse(map,dist1,data.get(index),dist2)
-			println(y - map.size)
-			println('----------------')
-			data.remove(index)
-		}
-		
-		println(map.size)
+
+		val data_distances = data.fold(newArrayList) [ l, vectors |
+			l.add(vectors.distances)
+			l
+		]
+
+		val adjacency = (0 ..< data_distances.size).fold(newHashMap) [ m, i |
+			(0 ..< data_distances.size).fold(m) [ m2, j |
+				val newm = new HashMap(data_distances.get(i))
+				newm.keySet.retainAll(data_distances.get(j).keySet)
+				if (newm.size >= 66 && i != j)
+					m2.merge(i,newHashSet(j))[r , s | r.addAll(s) ; r]
+				m2
+			]
+		]
+
+		println(adjacency)
 	}
-	
-	def static collapse(List<Vector> vectors1, HashMap<Integer,Coordinate> dists1, List<Vector> vectors2, Map<Integer,Coordinate> dists2) {
+
+	def static collapse(List<Vector> vectors1, HashMap<Integer, Coordinate> dists1, List<Vector> vectors2,
+		Map<Integer, Coordinate> dists2) {
+
+		val dists1_dup = new HashMap(dists1)
+		dists1_dup.keySet.retainAll(dists2.keySet)
+
 		val mapping = newHashMap
-		dists1.entrySet.forEach[
+		dists1_dup.entrySet.forEach [
 			val coord1 = it.value
 			val coord2 = dists2.get(it.key)
-			mapping.merge(coord1.x,#{coord2.x,coord2.y})[s1 , s2 | val s3 = new HashSet(s2) ; s3.retainAll(s1) ; s3]
-			mapping.merge(coord1.y,#{coord2.x,coord2.y})[s1 , s2 | val s3 = new HashSet(s2) ; s3.retainAll(s1) ; s3]
+			mapping.merge(coord1.x, #{coord2.x, coord2.y})[s1, s2|val s3 = new HashSet(s2); s3.retainAll(s1); s3]
+			mapping.merge(coord1.y, #{coord2.x, coord2.y})[s1, s2|val s3 = new HashSet(s2); s3.retainAll(s1); s3]
 		]
-		
+
+		mapping.keySet.removeIf[mapping.get(it).size != 1]
+
 		val e1 = mapping.entrySet.get(0)
-		val e2 = mapping.entrySet.get(1)
-		
 		val v11 = vectors1.get(e1.key)
-		val v12 = vectors1.get(e2.key)
-		
-		val v11tov12 = v11.to(v12)
-		
 		val v21 = vectors2.get(e1.value.toList.get(0))
-		val v22 = vectors2.get(e2.value.toList.get(0))
-		
-		val v21tov22 = v21.to(v22)
 
-		val transformation = new Matrix(v21tov22,v11tov12)
+		var i = 1
+		var Entry<Integer, Set<Integer>> e2
+		var Vector v12
+		var Vector v22
+		var Vector v11tov12
+		var Vector v21tov22
+		do {
+			e2 = mapping.entrySet.get(i++)
+			v12 = vectors1.get(e2.key)
+			v22 = vectors2.get(e2.value.toList.get(0))
+			v11tov12 = v11.to(v12)
+			v21tov22 = v21.to(v22)
+		} while (v11tov12.containsZ || v11tov12.hasDuplicates || v21tov22.containsZ || v21tov22.hasDuplicates)
 
-		vectors2.forEach[it.multiplyBy(transformation)]
+		val rotation = new Matrix(v21tov22, v11tov12)
+
+		vectors2.forEach[it.multiplyBy(rotation)]
 
 		val translation = v21.to(v11)
-		
 		vectors2.forEach[it.add(translation)]
-
-		val output = new HashSet(vectors1)
-		output.addAll(vectors2)
-
-		output.toList
 	}
-	
+
 	def static distances(List<Vector> vectors) {
-		(0..<vectors.size).fold(newHashMap)[s , i |
-			(i+1..<vectors.size).fold(s)[s1 , j |
-				s1.put(vectors.get(i).to(vectors.get(j)).size2,new Coordinate(i,j))
+		(0 ..< vectors.size).fold(newHashMap) [ s, i |
+			(i + 1 ..< vectors.size).fold(s) [ s1, j |
+				s1.put(vectors.get(i).to(vectors.get(j)).size2, new Coordinate(i, j))
 				s1
 			]
 		]

@@ -1,6 +1,7 @@
 package advent2021.puzzle19;
 
 import advent2021.Utils;
+import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -41,114 +43,132 @@ public class Launcher {
           }
         }
       }
-      map = data.get(0);
-      data.remove(0);
-      while ((data.size() != 1)) {
-        {
-          final HashMap<Integer, Coordinate> dist1 = Launcher.distances(map);
-          int max = 0;
-          int index = 0;
-          Map<Integer, Coordinate> dist2 = null;
-          Set<Integer> inters = null;
-          int _size = data.size();
-          ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
-          for (final Integer i : _doubleDotLessThan) {
-            {
-              final HashMap<Integer, Coordinate> dist_tmp = Launcher.distances(data.get((i).intValue()));
-              Set<Integer> _keySet = dist1.keySet();
-              final HashSet<Integer> dist_dup = new HashSet<Integer>(_keySet);
-              dist_dup.retainAll(dist_tmp.keySet());
-              int _size_1 = dist_dup.size();
-              boolean _greaterThan = (_size_1 > max);
-              if (_greaterThan) {
-                max = dist_dup.size();
-                index = (i).intValue();
-                dist2 = dist_tmp;
-                inters = dist_dup;
-              }
-            }
+      final Function2<ArrayList<HashMap<Integer, Coordinate>>, List<Vector>, ArrayList<HashMap<Integer, Coordinate>>> _function = new Function2<ArrayList<HashMap<Integer, Coordinate>>, List<Vector>, ArrayList<HashMap<Integer, Coordinate>>>() {
+        public ArrayList<HashMap<Integer, Coordinate>> apply(final ArrayList<HashMap<Integer, Coordinate>> l, final List<Vector> vectors) {
+          ArrayList<HashMap<Integer, Coordinate>> _xblockexpression = null;
+          {
+            l.add(Launcher.distances(vectors));
+            _xblockexpression = l;
           }
-          dist1.keySet().retainAll(inters);
-          dist2.keySet().retainAll(inters);
-          int _size_1 = map.size();
-          int _size_2 = data.get(index).size();
-          final int y = (_size_1 + _size_2);
-          map = Launcher.collapse(map, dist1, data.get(index), dist2);
-          int _size_3 = map.size();
-          int _minus = (y - _size_3);
-          InputOutput.<Integer>println(Integer.valueOf(_minus));
-          InputOutput.<String>println("----------------");
-          data.remove(index);
+          return _xblockexpression;
         }
-      }
-      InputOutput.<Integer>println(Integer.valueOf(map.size()));
+      };
+      final ArrayList<HashMap<Integer, Coordinate>> data_distances = IterableExtensions.<List<Vector>, ArrayList<HashMap<Integer, Coordinate>>>fold(data, CollectionLiterals.<HashMap<Integer, Coordinate>>newArrayList(), _function);
+      int _size = data_distances.size();
+      final Function2<HashMap<Integer, HashSet<Integer>>, Integer, HashMap<Integer, HashSet<Integer>>> _function_1 = new Function2<HashMap<Integer, HashSet<Integer>>, Integer, HashMap<Integer, HashSet<Integer>>>() {
+        public HashMap<Integer, HashSet<Integer>> apply(final HashMap<Integer, HashSet<Integer>> m, final Integer i) {
+          int _size = data_distances.size();
+          final Function2<HashMap<Integer, HashSet<Integer>>, Integer, HashMap<Integer, HashSet<Integer>>> _function = new Function2<HashMap<Integer, HashSet<Integer>>, Integer, HashMap<Integer, HashSet<Integer>>>() {
+            public HashMap<Integer, HashSet<Integer>> apply(final HashMap<Integer, HashSet<Integer>> m2, final Integer j) {
+              HashMap<Integer, HashSet<Integer>> _xblockexpression = null;
+              {
+                HashMap<Integer, Coordinate> _get = data_distances.get((i).intValue());
+                final HashMap<Integer, Coordinate> newm = new HashMap<Integer, Coordinate>(_get);
+                newm.keySet().retainAll(data_distances.get((j).intValue()).keySet());
+                if (((newm.size() >= 66) && (!Objects.equal(i, j)))) {
+                  final BiFunction<HashSet<Integer>, HashSet<Integer>, HashSet<Integer>> _function = new BiFunction<HashSet<Integer>, HashSet<Integer>, HashSet<Integer>>() {
+                    public HashSet<Integer> apply(final HashSet<Integer> r, final HashSet<Integer> s) {
+                      HashSet<Integer> _xblockexpression = null;
+                      {
+                        r.addAll(s);
+                        _xblockexpression = r;
+                      }
+                      return _xblockexpression;
+                    }
+                  };
+                  m2.merge(i, CollectionLiterals.<Integer>newHashSet(j), _function);
+                }
+                _xblockexpression = m2;
+              }
+              return _xblockexpression;
+            }
+          };
+          return IterableExtensions.<Integer, HashMap<Integer, HashSet<Integer>>>fold(new ExclusiveRange(0, _size, true), m, _function);
+        }
+      };
+      final HashMap<Integer, HashSet<Integer>> adjacency = IterableExtensions.<Integer, HashMap<Integer, HashSet<Integer>>>fold(new ExclusiveRange(0, _size, true), CollectionLiterals.<Integer, HashSet<Integer>>newHashMap(), _function_1);
+      InputOutput.<HashMap<Integer, HashSet<Integer>>>println(adjacency);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public static List<Vector> collapse(final List<Vector> vectors1, final HashMap<Integer, Coordinate> dists1, final List<Vector> vectors2, final Map<Integer, Coordinate> dists2) {
-    List<Vector> _xblockexpression = null;
-    {
-      final HashMap<Integer, Set<Integer>> mapping = CollectionLiterals.<Integer, Set<Integer>>newHashMap();
-      final Consumer<Map.Entry<Integer, Coordinate>> _function = new Consumer<Map.Entry<Integer, Coordinate>>() {
-        public void accept(final Map.Entry<Integer, Coordinate> it) {
-          final Coordinate coord1 = it.getValue();
-          final Coordinate coord2 = dists2.get(it.getKey());
-          final BiFunction<Set<Integer>, Set<Integer>, Set<Integer>> _function = new BiFunction<Set<Integer>, Set<Integer>, Set<Integer>>() {
-            public Set<Integer> apply(final Set<Integer> s1, final Set<Integer> s2) {
-              HashSet<Integer> _xblockexpression = null;
-              {
-                final HashSet<Integer> s3 = new HashSet<Integer>(s2);
-                s3.retainAll(s1);
-                _xblockexpression = s3;
-              }
-              return _xblockexpression;
+  public static void collapse(final List<Vector> vectors1, final HashMap<Integer, Coordinate> dists1, final List<Vector> vectors2, final Map<Integer, Coordinate> dists2) {
+    final HashMap<Integer, Coordinate> dists1_dup = new HashMap<Integer, Coordinate>(dists1);
+    dists1_dup.keySet().retainAll(dists2.keySet());
+    final HashMap<Integer, Set<Integer>> mapping = CollectionLiterals.<Integer, Set<Integer>>newHashMap();
+    final Consumer<Map.Entry<Integer, Coordinate>> _function = new Consumer<Map.Entry<Integer, Coordinate>>() {
+      public void accept(final Map.Entry<Integer, Coordinate> it) {
+        final Coordinate coord1 = it.getValue();
+        final Coordinate coord2 = dists2.get(it.getKey());
+        final BiFunction<Set<Integer>, Set<Integer>, Set<Integer>> _function = new BiFunction<Set<Integer>, Set<Integer>, Set<Integer>>() {
+          public Set<Integer> apply(final Set<Integer> s1, final Set<Integer> s2) {
+            HashSet<Integer> _xblockexpression = null;
+            {
+              final HashSet<Integer> s3 = new HashSet<Integer>(s2);
+              s3.retainAll(s1);
+              _xblockexpression = s3;
             }
-          };
-          mapping.merge(Integer.valueOf(coord1.x), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(coord2.x), Integer.valueOf(coord2.y))), _function);
-          final BiFunction<Set<Integer>, Set<Integer>, Set<Integer>> _function_1 = new BiFunction<Set<Integer>, Set<Integer>, Set<Integer>>() {
-            public Set<Integer> apply(final Set<Integer> s1, final Set<Integer> s2) {
-              HashSet<Integer> _xblockexpression = null;
-              {
-                final HashSet<Integer> s3 = new HashSet<Integer>(s2);
-                s3.retainAll(s1);
-                _xblockexpression = s3;
-              }
-              return _xblockexpression;
+            return _xblockexpression;
+          }
+        };
+        mapping.merge(Integer.valueOf(coord1.x), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(coord2.x), Integer.valueOf(coord2.y))), _function);
+        final BiFunction<Set<Integer>, Set<Integer>, Set<Integer>> _function_1 = new BiFunction<Set<Integer>, Set<Integer>, Set<Integer>>() {
+          public Set<Integer> apply(final Set<Integer> s1, final Set<Integer> s2) {
+            HashSet<Integer> _xblockexpression = null;
+            {
+              final HashSet<Integer> s3 = new HashSet<Integer>(s2);
+              s3.retainAll(s1);
+              _xblockexpression = s3;
             }
-          };
-          mapping.merge(Integer.valueOf(coord1.y), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(coord2.x), Integer.valueOf(coord2.y))), _function_1);
-        }
-      };
-      dists1.entrySet().forEach(_function);
-      final Map.Entry<Integer, Set<Integer>> e1 = ((Map.Entry<Integer, Set<Integer>>[])Conversions.unwrapArray(mapping.entrySet(), Map.Entry.class))[0];
-      final Map.Entry<Integer, Set<Integer>> e2 = ((Map.Entry<Integer, Set<Integer>>[])Conversions.unwrapArray(mapping.entrySet(), Map.Entry.class))[1];
-      final Vector v11 = vectors1.get((e1.getKey()).intValue());
-      final Vector v12 = vectors1.get((e2.getKey()).intValue());
-      final Vector v11tov12 = v11.to(v12);
-      final Vector v21 = vectors2.get((IterableExtensions.<Integer>toList(e1.getValue()).get(0)).intValue());
-      final Vector v22 = vectors2.get((IterableExtensions.<Integer>toList(e2.getValue()).get(0)).intValue());
-      final Vector v21tov22 = v21.to(v22);
-      final Matrix transformation = new Matrix(v21tov22, v11tov12);
-      final Consumer<Vector> _function_1 = new Consumer<Vector>() {
-        public void accept(final Vector it) {
-          it.multiplyBy(transformation);
-        }
-      };
-      vectors2.forEach(_function_1);
-      final Vector translation = v21.to(v11);
-      final Consumer<Vector> _function_2 = new Consumer<Vector>() {
-        public void accept(final Vector it) {
-          it.add(translation);
-        }
-      };
-      vectors2.forEach(_function_2);
-      final HashSet<Vector> output = new HashSet<Vector>(vectors1);
-      output.addAll(vectors2);
-      _xblockexpression = IterableExtensions.<Vector>toList(output);
-    }
-    return _xblockexpression;
+            return _xblockexpression;
+          }
+        };
+        mapping.merge(Integer.valueOf(coord1.y), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(coord2.x), Integer.valueOf(coord2.y))), _function_1);
+      }
+    };
+    dists1_dup.entrySet().forEach(_function);
+    final Predicate<Integer> _function_1 = new Predicate<Integer>() {
+      public boolean test(final Integer it) {
+        int _size = mapping.get(it).size();
+        return (_size != 1);
+      }
+    };
+    mapping.keySet().removeIf(_function_1);
+    final Map.Entry<Integer, Set<Integer>> e1 = ((Map.Entry<Integer, Set<Integer>>[])Conversions.unwrapArray(mapping.entrySet(), Map.Entry.class))[0];
+    final Vector v11 = vectors1.get((e1.getKey()).intValue());
+    final Vector v21 = vectors2.get((IterableExtensions.<Integer>toList(e1.getValue()).get(0)).intValue());
+    int i = 1;
+    Map.Entry<Integer, Set<Integer>> e2 = null;
+    Vector v12 = null;
+    Vector v22 = null;
+    Vector v11tov12 = null;
+    Vector v21tov22 = null;
+    do {
+      {
+        Set<Map.Entry<Integer, Set<Integer>>> _entrySet = mapping.entrySet();
+        int _plusPlus = i++;
+        e2 = ((Map.Entry<Integer, Set<Integer>>[])Conversions.unwrapArray(_entrySet, Map.Entry.class))[_plusPlus];
+        v12 = vectors1.get((e2.getKey()).intValue());
+        v22 = vectors2.get((IterableExtensions.<Integer>toList(e2.getValue()).get(0)).intValue());
+        v11tov12 = v11.to(v12);
+        v21tov22 = v21.to(v22);
+      }
+    } while((((v11tov12.containsZ() || v11tov12.hasDuplicates()) || v21tov22.containsZ()) || v21tov22.hasDuplicates()));
+    final Matrix rotation = new Matrix(v21tov22, v11tov12);
+    final Consumer<Vector> _function_2 = new Consumer<Vector>() {
+      public void accept(final Vector it) {
+        it.multiplyBy(rotation);
+      }
+    };
+    vectors2.forEach(_function_2);
+    final Vector translation = v21.to(v11);
+    final Consumer<Vector> _function_3 = new Consumer<Vector>() {
+      public void accept(final Vector it) {
+        it.add(translation);
+      }
+    };
+    vectors2.forEach(_function_3);
   }
   
   public static HashMap<Integer, Coordinate> distances(final List<Vector> vectors) {
