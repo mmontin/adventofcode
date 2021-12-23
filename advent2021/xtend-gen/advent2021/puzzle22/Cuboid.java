@@ -45,10 +45,6 @@ public class Cuboid {
     return BigInteger.valueOf(((this.maxx - this.minx) + 1)).multiply(BigInteger.valueOf(((this.maxy - this.miny) + 1))).multiply(BigInteger.valueOf(((this.maxz - this.minz) + 1)));
   }
   
-  public String toString() {
-    return (((((((((((((((((("[" + "(") + Integer.valueOf(this.minx)) + ",") + Integer.valueOf(this.maxx)) + ")") + ",") + "(") + Integer.valueOf(this.miny)) + ",") + Integer.valueOf(this.maxy)) + ")") + ",") + "(") + Integer.valueOf(this.minz)) + ",") + Integer.valueOf(this.maxz)) + ")") + "]");
-  }
-  
   public Set<Cuboid> subtract(final Cuboid other) {
     HashSet<Cuboid> _xifexpression = null;
     if (((((((other.minx > this.maxx) || (other.maxx < this.minx)) || (other.miny > this.maxy)) || (other.maxy < this.miny)) || (other.minz > this.maxz)) || (other.maxz < this.minz))) {

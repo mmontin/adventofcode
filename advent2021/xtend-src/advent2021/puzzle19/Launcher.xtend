@@ -5,8 +5,6 @@ import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Map
-import java.util.Set
-import java.util.Map.Entry
 
 class Launcher {
 
@@ -16,10 +14,10 @@ class Launcher {
 		val inputReader = Utils.getInputReader(19)
 		var String tmp_string
 		var List<Vector> map
-		while ((tmp_string = inputReader.readLine) !== null) {
+		while (!(tmp_string = inputReader.readLine).equals("#")) {
 			if (tmp_string.contains("scanner"))
 				map = newArrayList
-			else if(tmp_string.isEmpty) data.add(map) else map.add(new Vector(tmp_string))
+			else if(tmp_string.isBlank) data.add(map) else map.add(new Vector(tmp_string))
 		}
 
 		val data_distances = data.fold(newArrayList) [ l, vectors |
@@ -37,11 +35,44 @@ class Launcher {
 			]
 		]
 
-		println(adjacency)
+		val processed_indices = newHashSet(0)
+		adjacency.remove(0)
+		val scanners_positions = newHashSet
+		scanners_positions.add(new Vector(0,0,0))
+		
+		while (!adjacency.empty) {
+			val entry = adjacency.entrySet.findFirst[
+				val dup = new HashSet(it.value)
+				dup.retainAll(processed_indices)
+				!dup.isEmpty
+			]
+			entry.value.retainAll(processed_indices)
+			val pivot = entry.value.last
+
+			scanners_positions.add(collapse(data.get(pivot),data_distances.get(pivot),data.get(entry.key),data_distances.get(entry.key)))
+
+			processed_indices.add(entry.key)
+			adjacency.remove(entry.key)
+		}
+		
+		val beacons = data.fold(newHashSet)[set , vectors |
+			set.addAll(vectors)
+			set
+		].toList
+		
+		println("PART 1: " + beacons.size)
+		
+		val scanners = scanners_positions.toList
+		
+		var max_size = 0
+		for (i : 0..<scanners.size)
+			for (j : i+1..<scanners.size)
+				max_size = Math.max(max_size,scanners.get(i).to(scanners.get(j)).sumAbs)
+				
+		println("PART 2: " + max_size)
 	}
 
-	def static collapse(List<Vector> vectors1, HashMap<Integer, Coordinate> dists1, List<Vector> vectors2,
-		Map<Integer, Coordinate> dists2) {
+	def static collapse(List<Vector> vectors1, HashMap<Integer, Coordinate> dists1, List<Vector> vectors2, Map<Integer, Coordinate> dists2) {
 
 		val dists1_dup = new HashMap(dists1)
 		dists1_dup.keySet.retainAll(dists2.keySet)
@@ -60,19 +91,11 @@ class Launcher {
 		val v11 = vectors1.get(e1.key)
 		val v21 = vectors2.get(e1.value.toList.get(0))
 
-		var i = 1
-		var Entry<Integer, Set<Integer>> e2
-		var Vector v12
-		var Vector v22
-		var Vector v11tov12
-		var Vector v21tov22
-		do {
-			e2 = mapping.entrySet.get(i++)
-			v12 = vectors1.get(e2.key)
-			v22 = vectors2.get(e2.value.toList.get(0))
-			v11tov12 = v11.to(v12)
-			v21tov22 = v21.to(v22)
-		} while (v11tov12.containsZ || v11tov12.hasDuplicates || v21tov22.containsZ || v21tov22.hasDuplicates)
+		val	e2 = mapping.entrySet.get(1)
+		val	v12 = vectors1.get(e2.key)
+		val	v22 = vectors2.get(e2.value.toList.get(0))
+		val	v11tov12 = v11.to(v12)
+		val	v21tov22 = v21.to(v22)
 
 		val rotation = new Matrix(v21tov22, v11tov12)
 
@@ -80,6 +103,8 @@ class Launcher {
 
 		val translation = v21.to(v11)
 		vectors2.forEach[it.add(translation)]
+
+		translation
 	}
 
 	def static distances(List<Vector> vectors) {

@@ -37,11 +37,7 @@ class Cuboid {
 	def size() {
 		BigInteger.valueOf(maxx - minx + 1).multiply(BigInteger.valueOf(maxy - miny + 1)).multiply(BigInteger.valueOf(maxz - minz + 1))
 	}
-	
-	override toString() {
-		'[' + '(' + minx + ',' + maxx + ')' + ',' + '(' + miny + ',' + maxy + ')' + ',' + '(' + minz + ',' + maxz + ')' + ']'
-	}
-	
+
 	def Set<Cuboid> subtract(Cuboid other) {
 		if (other.minx > maxx || other.maxx < minx || other.miny > maxy || other.maxy < miny || other.minz > maxz || other.maxz < minz)
 			newHashSet(this)

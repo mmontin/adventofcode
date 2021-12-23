@@ -24,6 +24,10 @@ class Vector {
 		new Vector(other.x - x, other.y - y, other.z - z)
 	}
 	
+	def sumAbs() {
+		Math.abs(x) + Math.abs(y) + Math.abs(z)
+	}
+	
 	override hashCode() {
 		this.x + this.y + this.z
 	}
@@ -50,18 +54,25 @@ class Vector {
 		x += v.x
 		y += v.y
 		z += v.z
+		this
+	}
+	
+	def remove(Vector v) {
+		x -= v.x
+		y -= v.y
+		z -= v.z
+		this
+	}
+	
+	def negate() {
+		x = -x
+		y = -y
+		z = -z
+		this
 	}
 	
 	override equals(Object o) {
 		val v = o as Vector
 		v.x == x && v.y == y && v.z == z
-	}
-	
-	def containsZ() {
-		x == 0 || y == 0 || z == 0
-	}
-	
-	def hasDuplicates() {
-		Math.abs(x) == Math.abs(y) || Math.abs(y) == Math.abs(z) || Math.abs(z) == Math.abs(x)
 	}
 }

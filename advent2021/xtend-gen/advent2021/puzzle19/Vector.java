@@ -25,6 +25,14 @@ public class Vector {
     return new Vector((other.x - this.x), (other.y - this.y), (other.z - this.z));
   }
   
+  public int sumAbs() {
+    int _abs = Math.abs(this.x);
+    int _abs_1 = Math.abs(this.y);
+    int _plus = (_abs + _abs_1);
+    int _abs_2 = Math.abs(this.z);
+    return (_plus + _abs_2);
+  }
+  
   public int hashCode() {
     return ((this.x + this.y) + this.z);
   }
@@ -72,15 +80,41 @@ public class Vector {
     return _xblockexpression;
   }
   
-  public int add(final Vector v) {
-    int _xblockexpression = (int) 0;
+  public Vector add(final Vector v) {
+    Vector _xblockexpression = null;
     {
       int _x = this.x;
       this.x = (_x + v.x);
       int _y = this.y;
       this.y = (_y + v.y);
       int _z = this.z;
-      _xblockexpression = this.z = (_z + v.z);
+      this.z = (_z + v.z);
+      _xblockexpression = this;
+    }
+    return _xblockexpression;
+  }
+  
+  public Vector remove(final Vector v) {
+    Vector _xblockexpression = null;
+    {
+      int _x = this.x;
+      this.x = (_x - v.x);
+      int _y = this.y;
+      this.y = (_y - v.y);
+      int _z = this.z;
+      this.z = (_z - v.z);
+      _xblockexpression = this;
+    }
+    return _xblockexpression;
+  }
+  
+  public Vector negate() {
+    Vector _xblockexpression = null;
+    {
+      this.x = (-this.x);
+      this.y = (-this.y);
+      this.z = (-this.z);
+      _xblockexpression = this;
     }
     return _xblockexpression;
   }
@@ -92,13 +126,5 @@ public class Vector {
       _xblockexpression = (((v.x == this.x) && (v.y == this.y)) && (v.z == this.z));
     }
     return _xblockexpression;
-  }
-  
-  public boolean containsZ() {
-    return (((this.x == 0) || (this.y == 0)) || (this.z == 0));
-  }
-  
-  public boolean hasDuplicates() {
-    return (((Math.abs(this.x) == Math.abs(this.y)) || (Math.abs(this.y) == Math.abs(this.z))) || (Math.abs(this.z) == Math.abs(this.x)));
   }
 }
