@@ -1,46 +1,71 @@
 package advent2021.puzzle15;
 
-import java.util.Set;
+import advent2021.State;
+import java.util.ArrayList;
+import java.util.List;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
-public class Coordinate {
+public class Coordinate extends State {
   private int x;
   
   private int y;
   
-  private int distance;
+  private int manhattan;
   
-  private int height;
+  private boolean finalState;
   
-  public Coordinate(final int x_, final int y_, final int height_) {
+  private int code;
+  
+  public Coordinate(final int x_, final int y_) {
     this.x = x_;
     this.y = y_;
-    int _xifexpression = (int) 0;
-    if (((this.x == 0) && (this.y == 0))) {
-      _xifexpression = 0;
-    } else {
-      _xifexpression = Integer.MAX_VALUE;
+    this.manhattan = (((2 * Launcher.max_indice) - this.x) - this.y);
+    this.finalState = ((this.x == Launcher.max_indice) && (this.y == Launcher.max_indice));
+    final int tmp = (this.y + ((this.x + 1) / 2));
+    this.code = (this.x + (tmp * tmp));
+  }
+  
+  public boolean isGoal() {
+    return this.finalState;
+  }
+  
+  public int minToGoal() {
+    return this.manhattan;
+  }
+  
+  public List<Pair<State, Integer>> neighbours() {
+    List<Pair<State, Integer>> _xblockexpression = null;
+    {
+      final ArrayList<Coordinate> output = CollectionLiterals.<Coordinate>newArrayList();
+      if ((this.x != 0)) {
+        Coordinate _coordinate = new Coordinate((this.x - 1), this.y);
+        output.add(_coordinate);
+      }
+      if ((this.x != Launcher.max_indice)) {
+        Coordinate _coordinate_1 = new Coordinate((this.x + 1), this.y);
+        output.add(_coordinate_1);
+      }
+      if ((this.y != 0)) {
+        Coordinate _coordinate_2 = new Coordinate(this.x, (this.y - 1));
+        output.add(_coordinate_2);
+      }
+      if ((this.y != Launcher.max_indice)) {
+        Coordinate _coordinate_3 = new Coordinate(this.x, (this.y + 1));
+        output.add(_coordinate_3);
+      }
+      final Function1<Coordinate, Pair<State, Integer>> _function = new Function1<Coordinate, Pair<State, Integer>>() {
+        public Pair<State, Integer> apply(final Coordinate it) {
+          Integer _get = Launcher.coordinates.get(it);
+          return new Pair<State, Integer>(((State) it), _get);
+        }
+      };
+      _xblockexpression = ListExtensions.<Coordinate, Pair<State, Integer>>map(output, _function);
     }
-    this.distance = _xifexpression;
-    this.height = height_;
-  }
-  
-  public int getDistance() {
-    return this.distance;
-  }
-  
-  public int updateDistance(final Coordinate previous) {
-    int _xifexpression = (int) 0;
-    if (((previous.distance + this.height) < this.distance)) {
-      _xifexpression = this.distance = (previous.distance + this.height);
-    }
-    return _xifexpression;
-  }
-  
-  public int getHeight() {
-    return this.height;
+    return _xblockexpression;
   }
   
   public boolean equals(final Object o) {
@@ -53,20 +78,6 @@ public class Coordinate {
   }
   
   public int hashCode() {
-    final int tmp = (this.y + ((this.x + 1) / 2));
-    return (this.x + (tmp * tmp));
-  }
-  
-  public Iterable<Coordinate> neighbours(final Set<Coordinate> possible) {
-    final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-      public Boolean apply(final Coordinate it) {
-        return Boolean.valueOf((((it.x == Coordinate.this.x) && ((it.y == (Coordinate.this.y + 1)) || (it.y == (Coordinate.this.y - 1)))) || ((it.y == Coordinate.this.y) && ((it.x == (Coordinate.this.x + 1)) || (it.x == (Coordinate.this.x - 1))))));
-      }
-    };
-    return IterableExtensions.<Coordinate>filter(possible, _function);
-  }
-  
-  public String toString() {
-    return (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
+    return this.code;
   }
 }

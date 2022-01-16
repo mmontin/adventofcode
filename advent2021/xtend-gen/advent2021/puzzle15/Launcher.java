@@ -1,9 +1,10 @@
 package advent2021.puzzle15;
 
+import advent2021.AStar;
 import advent2021.Utils;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -22,84 +23,57 @@ public class Launcher {
   
   public static final int max_value_small = Launcher.input.size();
   
-  public static final int max_value_big = (Launcher.max_value_small * 5);
+  public static final int max_indice = ((Launcher.max_value_small * 5) - 1);
   
-  public static Coordinate final_state;
-  
-  public static final Set<Coordinate> coordinates = IterableExtensions.<Integer, HashSet<Coordinate>>fold(new ExclusiveRange(0, Launcher.max_value_small, true), CollectionLiterals.<Coordinate>newHashSet(), new Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>>() {
-    public HashSet<Coordinate> apply(final HashSet<Coordinate> set1, final Integer i) {
-      final Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>>() {
-        public HashSet<Coordinate> apply(final HashSet<Coordinate> set2, final Integer j) {
-          HashSet<Coordinate> _xblockexpression = null;
+  public static final Map<Coordinate, Integer> coordinates = IterableExtensions.<Integer, HashMap<Coordinate, Integer>>fold(new ExclusiveRange(0, Launcher.max_value_small, true), CollectionLiterals.<Coordinate, Integer>newHashMap(), new Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>>() {
+    public HashMap<Coordinate, Integer> apply(final HashMap<Coordinate, Integer> map1, final Integer i) {
+      final Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>> _function = new Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>>() {
+        public HashMap<Coordinate, Integer> apply(final HashMap<Coordinate, Integer> map2, final Integer j) {
+          HashMap<Coordinate, Integer> _xblockexpression = null;
           {
             Character _get = Launcher.input.get((i).intValue()).get((j).intValue());
             String _plus = (_get + "");
             final int ij = Integer.parseInt(_plus);
-            final Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>>() {
-              public HashSet<Coordinate> apply(final HashSet<Coordinate> set3, final Integer u) {
-                final Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Integer, HashSet<Coordinate>>() {
-                  public HashSet<Coordinate> apply(final HashSet<Coordinate> set4, final Integer v) {
-                    HashSet<Coordinate> _xblockexpression = null;
+            final Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>> _function = new Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>>() {
+              public HashMap<Coordinate, Integer> apply(final HashMap<Coordinate, Integer> map3, final Integer u) {
+                final Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>> _function = new Function2<HashMap<Coordinate, Integer>, Integer, HashMap<Coordinate, Integer>>() {
+                  public HashMap<Coordinate, Integer> apply(final HashMap<Coordinate, Integer> map4, final Integer v) {
+                    HashMap<Coordinate, Integer> _xblockexpression = null;
                     {
                       final int indice = ((ij + (u).intValue()) + (v).intValue());
+                      Coordinate _coordinate = new Coordinate((((u).intValue() * Launcher.max_value_small) + (i).intValue()), (((v).intValue() * Launcher.max_value_small) + (j).intValue()));
                       int _xifexpression = (int) 0;
                       if ((indice >= 10)) {
                         _xifexpression = (indice - 9);
                       } else {
                         _xifexpression = indice;
                       }
-                      final Coordinate coord = new Coordinate((((u).intValue() * Launcher.max_value_small) + (i).intValue()), (((v).intValue() * Launcher.max_value_small) + (j).intValue()), _xifexpression);
-                      if ((((((i).intValue() == (Launcher.max_value_small - 1)) && ((j).intValue() == (Launcher.max_value_small - 1))) && ((u).intValue() == 4)) && ((v).intValue() == 4))) {
-                        Launcher.final_state = coord;
-                      }
-                      set4.add(coord);
-                      _xblockexpression = set4;
+                      map4.put(_coordinate, Integer.valueOf(_xifexpression));
+                      _xblockexpression = map4;
                     }
                     return _xblockexpression;
                   }
                 };
-                return IterableExtensions.<Integer, HashSet<Coordinate>>fold(new ExclusiveRange(0, 5, true), set3, _function);
+                return IterableExtensions.<Integer, HashMap<Coordinate, Integer>>fold(new ExclusiveRange(0, 5, true), map3, _function);
               }
             };
-            _xblockexpression = IterableExtensions.<Integer, HashSet<Coordinate>>fold(new ExclusiveRange(0, 5, true), set2, _function);
+            _xblockexpression = IterableExtensions.<Integer, HashMap<Coordinate, Integer>>fold(new ExclusiveRange(0, 5, true), map2, _function);
           }
           return _xblockexpression;
         }
       };
-      return IterableExtensions.<Integer, HashSet<Coordinate>>fold(new ExclusiveRange(0, Launcher.max_value_small, true), set1, _function);
+      return IterableExtensions.<Integer, HashMap<Coordinate, Integer>>fold(new ExclusiveRange(0, Launcher.max_value_small, true), map1, _function);
     }
   });
   
-  public static final Set<Coordinate> toVisit = new HashSet<Coordinate>(Launcher.coordinates);
-  
   public static void main(final String[] args) {
-    long time = System.currentTimeMillis();
-    Coordinate first = null;
-    while ((!(first = IterableExtensions.<Coordinate, Integer>minBy(Launcher.toVisit, new Function1<Coordinate, Integer>() {
-      public Integer apply(final Coordinate it) {
-        return Integer.valueOf(it.getDistance());
-      }
-    })).equals(Launcher.final_state))) {
-      {
-        int _size = Launcher.toVisit.size();
-        int _modulo = (_size % 1000);
-        boolean _equals = (_modulo == 0);
-        if (_equals) {
-          long time_1 = System.currentTimeMillis();
-          String _plus = (Long.valueOf((time_1 - time)) + "ms for the last 1000 states");
-          InputOutput.<String>println(_plus);
-          time = time_1;
-          int _size_1 = Launcher.toVisit.size();
-          String _plus_1 = (Integer.valueOf(_size_1) + " states remaining");
-          InputOutput.<String>println(_plus_1);
-        }
-        Launcher.toVisit.remove(first);
-        Iterable<Coordinate> _neighbours = first.neighbours(Launcher.toVisit);
-        for (final Coordinate c : _neighbours) {
-          c.updateDistance(first);
-        }
-      }
-    }
-    InputOutput.<Integer>println(Integer.valueOf(Launcher.final_state.getDistance()));
+    final long timer = System.currentTimeMillis();
+    Coordinate _coordinate = new Coordinate(0, 0);
+    InputOutput.<Integer>println(new AStar(_coordinate).run().getMinDistance());
+    long _currentTimeMillis = System.currentTimeMillis();
+    long _minus = (_currentTimeMillis - timer);
+    String _plus = ("Result computed in " + Long.valueOf(_minus));
+    String _plus_1 = (_plus + "ms");
+    InputOutput.<String>println(_plus_1);
   }
 }

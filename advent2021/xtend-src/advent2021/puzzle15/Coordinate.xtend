@@ -1,52 +1,47 @@
 package advent2021.puzzle15
 
-import java.util.Set
+import advent2021.State
 
-class Coordinate {
+class Coordinate extends State {
 
 	int x
 	int y
-	int distance
-	int height
-
-	new(int x_, int y_, int height_) {
+	int manhattan
+	boolean finalState
+	int code
+	
+	new(int x_, int y_) {
 		x = x_
 		y = y_
-		distance = (x == 0 && y == 0) ? 0 : Integer::MAX_VALUE
-		height = height_
+		manhattan = 2 * Launcher.max_indice - x - y
+		finalState = x == Launcher.max_indice && y == Launcher.max_indice
+		val tmp = (y + ((x + 1) / 2))
+		code = x + (tmp * tmp)
 	}
 	
-	def getDistance() {
-		distance
+	override isGoal() {
+		finalState
 	}
 	
-	def updateDistance(Coordinate previous) {
-		if (previous.distance + height < distance)
-			distance = previous.distance + height
+	override minToGoal() {
+		manhattan
 	}
 	
-	def getHeight() {
-		height
+	override neighbours() {
+		val output = newArrayList
+		if (x != 0) output.add(new Coordinate(x-1,y))
+		if (x != Launcher.max_indice) output.add(new Coordinate(x+1,y))
+		if (y != 0) output.add(new Coordinate(x,y-1))
+		if (y != Launcher.max_indice) output.add(new Coordinate(x,y+1))
+		output.map[new Pair(it as State,Launcher.coordinates.get(it))]
 	}
-
+	
 	override equals(Object o) {
 		val other = o as Coordinate
 		this.x == other.x && this.y == other.y
 	}
-
+	
 	override hashCode() {
-		val tmp = (y + ((x + 1) / 2));
-		return x + (tmp * tmp);
-	}
-
-	def neighbours(Set<Coordinate> possible) {
-		possible.filter[
-			(it.x == this.x && (it.y == this.y + 1 || it.y == this.y - 1)) ||
-			(it.y == this.y && (it.x == this.x + 1 || it.x == this.x - 1))
-		]
-	}
-
-	override toString() {
-		'(' + this.x + ',' + this.y + ')'
+		code
 	}
 }
