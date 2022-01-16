@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -12,7 +12,7 @@ public class Launcher {
 		
 		List<Deer> deers = new ArrayList<>() ;
 		
-		for (String s : Utils.getInputs(14)) {
+		for (String s : new InputLoader(2015,14).getInputs()) {
 			String[] split = s.split(" ") ;
 			deers.add(new Deer(split[0], split[3], split[6], split[13])) ;
 		}

@@ -1,6 +1,7 @@
 package adventutils.geometry;
 
 import java.util.HashSet;
+import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
@@ -11,11 +12,14 @@ public class Coordinate {
   
   private final int code;
   
+  private final String representation;
+  
   public Coordinate(final int x_, final int y_) {
     this.x = x_;
     this.y = y_;
     final int tmp = (this.y + ((this.x + 1) / 2));
     this.code = (this.x + (tmp * tmp));
+    this.representation = (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
   }
   
   public Coordinate(final String s) {
@@ -48,6 +52,16 @@ public class Coordinate {
     Coordinate _coordinate_6 = new Coordinate((this.x + 1), this.y);
     Coordinate _coordinate_7 = new Coordinate((this.x + 1), (this.y + 1));
     return CollectionLiterals.<Coordinate>newHashSet(_coordinate, _coordinate_1, _coordinate_2, _coordinate_3, _coordinate_4, _coordinate_5, _coordinate_6, _coordinate_7);
+  }
+  
+  public HashSet<Coordinate> allAroundFilteredNeighbours(final Set<Coordinate> candidates) {
+    HashSet<Coordinate> _xblockexpression = null;
+    {
+      final HashSet<Coordinate> output = this.allAroundUnboundedNeighbours();
+      output.retainAll(candidates);
+      _xblockexpression = output;
+    }
+    return _xblockexpression;
   }
   
   public HashSet<Coordinate> noDiagonalUnboundedNeighbours() {
@@ -84,7 +98,7 @@ public class Coordinate {
   }
   
   public String toString() {
-    return (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
+    return this.representation;
   }
   
   public boolean equals(final Object o) {

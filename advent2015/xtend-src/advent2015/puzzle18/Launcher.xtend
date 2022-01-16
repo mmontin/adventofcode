@@ -1,15 +1,15 @@
 package advent2015.puzzle18
 
+import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.List
-import advent2015.Utils
 
 class Launcher {
 	
 	def static void main(String[] args) {
 		val List<List<Integer>> tiles = new ArrayList	
-		Utils.getInputs(18).forEach[l | 
-			val line = new ArrayList<Integer>
+		new InputLoader(2015,18).getInputs.forEach[l | 
+			val line = newArrayList
 			l.toCharArray.forEach[c | line.add((c + '').equals('#') ? 1 : 0) ]
 			tiles.add(line)
 		]

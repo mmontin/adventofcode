@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		String s = Utils.getInputs(3).get(0) ;
+		String s = new InputLoader(2015,3).getInputs().get(0) ;
 		
 		System.out.println(s.length());
 		

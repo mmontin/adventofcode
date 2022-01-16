@@ -3,7 +3,7 @@ package advent2015.puzzle6;
 import java.io.IOException;
 import java.util.List;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -16,7 +16,7 @@ public class Launcher {
 				data[i][j] = 0;
 		}
 
-		List<String> inputs = Utils.getInputs(6);
+		List<String> inputs = new InputLoader(2015,6).getInputs();
 
 		for (String s : inputs) {
 			String[] split = s.split(" through ");

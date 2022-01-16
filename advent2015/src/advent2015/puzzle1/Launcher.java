@@ -2,12 +2,12 @@ package advent2015.puzzle1;
 
 import java.io.IOException;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		String s = Utils.getInputs(1).get(0) ;
+		String s = new InputLoader(2015,5).getInputs().get(0) ;
 		int i = 0 ;
 		boolean printed = false ;
 		for (int k = 0 ; k < s.length() ; k++) {

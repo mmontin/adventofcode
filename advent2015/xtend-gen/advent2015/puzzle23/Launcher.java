@@ -1,11 +1,9 @@
 package advent2015.puzzle23;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import com.google.common.primitives.UnsignedLong;
 import java.util.List;
-import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
@@ -24,16 +22,7 @@ public class Launcher {
   
   private static UnsignedLong b = UnsignedLong.ZERO;
   
-  private static List<String> instructions = new Function0<List<String>>() {
-    public List<String> apply() {
-      try {
-        List<String> _inputs = Utils.getInputs(23);
-        return _inputs;
-      } catch (Throwable _e) {
-        throw Exceptions.sneakyThrow(_e);
-      }
-    }
-  }.apply();
+  private static List<String> instructions = new InputLoader(Integer.valueOf(2015), Integer.valueOf(23)).getInputs();
   
   public static void main(final String[] args) {
     while (((Launcher.current_instruction >= 0) && (Launcher.current_instruction < Launcher.instructions.size()))) {

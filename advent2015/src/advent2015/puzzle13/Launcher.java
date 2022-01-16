@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -15,7 +15,7 @@ public class Launcher {
 
 	public static void main(String[] args) throws IOException {
 
-		for (String s : Utils.getInputs(13)) {
+		for (String s : new InputLoader(2015, 13).getInputs()) {
 			String[] split = s.split(" ");
 			String name = split[0];
 			Integer value = Integer.parseInt(split[3]);

@@ -1,8 +1,8 @@
 package advent2015.puzzle23
 
-import advent2015.Utils
-import java.util.List
+import adventutils.input.InputLoader
 import com.google.common.primitives.UnsignedLong
+import java.util.List
 
 class Launcher {
 	
@@ -14,7 +14,7 @@ class Launcher {
 	static int current_instruction = 0
 	static UnsignedLong a = UnsignedLong::ONE
 	static UnsignedLong b = UnsignedLong::ZERO
-	static List<String> instructions = Utils.getInputs(23)
+	static List<String> instructions = new InputLoader(2015,23).getInputs
 	
 	def static void main(String[] args) {
 

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -16,7 +16,7 @@ public class Launcher {
 
 		List<Instruction> instructions = new ArrayList<Instruction>() ;
 		
-		for (String s : Utils.getInputs(7)) {
+		for (String s : new InputLoader(2015,7).getInputs()) {
 			String[] split = s.split(" -> ") ;
 			try {
 				circuit.put(split[1], new MyShort(Integer.parseInt(split[0]))) ;

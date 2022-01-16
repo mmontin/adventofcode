@@ -1,6 +1,6 @@
 package advent2015.puzzle17
 
-import advent2015.Utils
+import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.List
 
@@ -10,7 +10,7 @@ class Launcher {
 	static int iterations = 0
 
 	def static void main(String[] args) {
-		println(compute(Utils.getInputs(17).map[x|Integer::parseInt(x)].sort.reverse, 150, 0))
+		println(compute(new InputLoader(2015,17).getInputs.map[x|Integer::parseInt(x)].sort.reverse, 150, 0))
 		println(iterations)
 	}
 

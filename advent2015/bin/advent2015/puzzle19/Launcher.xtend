@@ -1,6 +1,6 @@
 package advent2015.puzzle19
 
-import advent2015.Utils
+import adventutils.input.InputLoader
 import java.util.HashMap
 import java.util.List
 import java.util.Map
@@ -12,7 +12,7 @@ class Launcher {
 
 	def static void main(String[] args) {
 
-		val inputs = Utils.getInputs(19)
+		val inputs = new InputLoader(2015,19).getInputs
 
 		var String molecule = inputs.get(0)
 

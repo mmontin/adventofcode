@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		List<String> inputs = Utils.getInputs(2) ;
+		List<String> inputs = new InputLoader(2015,2).getInputs() ;
 		System.out.println(inputs.stream().reduce(0, ((x , y) -> x + compute(y)), Integer::sum)) ;
 	}
 

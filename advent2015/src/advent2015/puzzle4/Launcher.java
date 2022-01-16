@@ -5,12 +5,12 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
-		String s = Utils.getInputs(4).get(0);
+		String s = new InputLoader(2015,4).getInputs().get(0);
 		MessageDigest m = MessageDigest.getInstance("MD5");
 		Integer counter = 0;
 		String stmp;

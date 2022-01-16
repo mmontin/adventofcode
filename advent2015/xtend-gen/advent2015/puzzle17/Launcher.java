@@ -1,10 +1,9 @@
 package advent2015.puzzle17;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -18,17 +17,13 @@ public class Launcher {
   private static int iterations = 0;
   
   public static void main(final String[] args) {
-    try {
-      final Function1<String, Integer> _function = new Function1<String, Integer>() {
-        public Integer apply(final String x) {
-          return Integer.valueOf(Integer.parseInt(x));
-        }
-      };
-      InputOutput.<Integer>println(Launcher.compute(ListExtensions.<Integer>reverse(IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(Utils.getInputs(17), _function))), Integer.valueOf(150), Integer.valueOf(0)));
-      InputOutput.<Integer>println(Integer.valueOf(Launcher.iterations));
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    final Function1<String, Integer> _function = new Function1<String, Integer>() {
+      public Integer apply(final String x) {
+        return Integer.valueOf(Integer.parseInt(x));
+      }
+    };
+    InputOutput.<Integer>println(Launcher.compute(ListExtensions.<Integer>reverse(IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(new InputLoader(Integer.valueOf(2015), Integer.valueOf(17)).getInputs(), _function))), Integer.valueOf(150), Integer.valueOf(0)));
+    InputOutput.<Integer>println(Integer.valueOf(Launcher.iterations));
   }
   
   public static Integer compute(final List<Integer> candidates, final Integer value, final Integer bucketsUsed) {

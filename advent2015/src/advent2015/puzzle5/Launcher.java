@@ -3,12 +3,12 @@ package advent2015.puzzle5;
 import java.io.IOException;
 import java.util.List;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		List<String> inputs = Utils.getInputs(5);
+		List<String> inputs = new InputLoader(2015,5).getInputs();
 		int count = 0;
 		for (String s : inputs) {
 //			char previous = '0';

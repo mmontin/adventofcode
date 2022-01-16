@@ -1,6 +1,6 @@
 package advent2015.puzzle24
 
-import advent2015.Utils
+import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.List
@@ -12,7 +12,7 @@ class Launcher {
 	static int min_size = Integer::MAX_VALUE
 
 	def static void main(String[] args) {
-		val packages = Utils.getInputs(24).get(0).split(' ').reverse.map[Integer::parseInt(it)].toList
+		val packages = new InputLoader(2015,24).getInputs.get(0).split(' ').reverse.map[Integer::parseInt(it)].toList
 		compute(packages, packages.fold(0)[x, y|x + y] / 4, newHashSet)
 		println(possible_subsets.fold(Long::MAX_VALUE)[min, s|Math.min(min, s.fold(Long.valueOf(1))[v, e|v * e])])
 	}

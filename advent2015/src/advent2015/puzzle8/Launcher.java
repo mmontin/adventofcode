@@ -2,14 +2,16 @@ package advent2015.puzzle8;
 
 import java.io.IOException;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
 
-		System.out.println(Utils.getInputs(8).stream().reduce(0, ((x , y) -> x + y.length() - numberOfChars(y.substring(1,y.length()-1),0)), Integer::sum));
-		System.out.println(Utils.getInputs(8).stream().reduce(0, ((x , y) -> x + toAdd(y)), Integer::sum));
+		InputLoader il = new InputLoader(2015,8) ;
+		
+		System.out.println(il.getInputs().stream().reduce(0, ((x , y) -> x + y.length() - numberOfChars(y.substring(1,y.length()-1),0)), Integer::sum));
+		System.out.println(il.getInputs().stream().reduce(0, ((x , y) -> x + toAdd(y)), Integer::sum));
 	}
 	
 	public static int numberOfChars(String s, int current) {

@@ -2,13 +2,13 @@ package advent2015.puzzle11;
 
 import java.io.IOException;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
 
-		char[] password = Utils.getInputs(11).get(0).toCharArray() ;
+		char[] password = new InputLoader(2015,11).getInputs().get(0).toCharArray() ;
 		
 		do {
 			incrPlus(password) ;

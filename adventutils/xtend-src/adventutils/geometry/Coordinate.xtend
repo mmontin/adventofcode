@@ -1,5 +1,7 @@
 package adventutils.geometry
 
+import java.util.Set
+
 // Unmutable 2D coordinates
 class Coordinate {
 
@@ -9,11 +11,15 @@ class Coordinate {
 	// Since this is unmutable, might as well compute the hashCode once and for all
 	final int code
 
+	// We can do the same for the string representation of this object
+	final String representation
+
 	new(int x_, int y_) {
 		x = x_
 		y = y_
 		val tmp = (y + ((x + 1) / 2))
 		code = x + (tmp * tmp)
+		representation = '(' + x + ',' + y + ')'
 	}
 
 	// Creating a new Coordinate with a string of the form "a,b"
@@ -37,28 +43,38 @@ class Coordinate {
 		new Coordinate(2 * offset - x, y)
 	}
 
+	// Neighbours in the 8 possible surrounding spots
 	def allAroundUnboundedNeighbours() {
 		newHashSet(
-			new Coordinate(this.x - 1, this.y - 1),
-			new Coordinate(this.x - 1, this.y),
-			new Coordinate(this.x - 1, this.y + 1),
-			new Coordinate(this.x, this.y - 1),
-			new Coordinate(this.x, this.y + 1),
-			new Coordinate(this.x + 1, this.y - 1),
-			new Coordinate(this.x + 1, this.y),
-			new Coordinate(this.x + 1, this.y + 1)
+			new Coordinate(x - 1, y - 1),
+			new Coordinate(x - 1, y),
+			new Coordinate(x - 1, y + 1),
+			new Coordinate(x, y - 1),
+			new Coordinate(x, y + 1),
+			new Coordinate(x + 1, y - 1),
+			new Coordinate(x + 1, y),
+			new Coordinate(x + 1, y + 1)
 		)
 	}
+	
+	// Neighbours in the 8 possible surrounding spots, but keeping only those present in candidates
+	def allAroundFilteredNeighbours(Set<Coordinate> candidates) {
+		val output = allAroundUnboundedNeighbours
+		output.retainAll(candidates)
+		output
+	}
 
+	// Neighbours on the 4 closest spots, excluding diagonals
 	def noDiagonalUnboundedNeighbours() {
 		newHashSet(
-			new Coordinate(this.x - 1, this.y),
-			new Coordinate(this.x + 1, this.y),
-			new Coordinate(this.x, this.y - 1),
-			new Coordinate(this.x, this.y + 1)
+			new Coordinate(x - 1, y),
+			new Coordinate(x + 1, y),
+			new Coordinate(x, y - 1),
+			new Coordinate(x, y + 1)
 		)
 	}
 
+	// Neighbours excluding diagonals, and bounded in a square of size higherBound - lowerBound
 	def noDiagonalBoundedNeighbours(int lowerBound, int higherBound) {
 		val output = newHashSet
 		if(x > lowerBound) output.add(new Coordinate(x - 1, y))
@@ -69,12 +85,12 @@ class Coordinate {
 	}
 
 	override toString() {
-		'(' + x + ',' + y + ')'
+		representation
 	}
 
 	override equals(Object o) {
 		val other = o as Coordinate
-		this.x == other.x && this.y == other.y
+		x == other.x && y == other.y
 	}
 
 	override hashCode() {

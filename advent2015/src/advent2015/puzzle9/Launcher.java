@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import advent2015.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -14,7 +14,7 @@ public class Launcher {
 	
 	public static void main(String[] args) throws IOException {
 		
-		for (String s : Utils.getInputs(9)) {
+		for (String s : new InputLoader(2015,9).getInputs()) {
 			String[] split = s.split(" ") ;
 			distances.put(new Pair(Integer.parseInt(split[0]), Integer.parseInt(split[1])), Integer.parseInt(split[2])) ;
 		}
