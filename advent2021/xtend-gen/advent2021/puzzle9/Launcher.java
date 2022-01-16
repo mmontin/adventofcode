@@ -1,5 +1,6 @@
 package advent2021.puzzle9;
 
+import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +33,15 @@ public class Launcher {
     };
     ArrayList<List<Integer>> _fold = IterableExtensions.<String, ArrayList<List<Integer>>>fold(new InputLoader(Integer.valueOf(2021), Integer.valueOf(9)).getInputs(), CollectionLiterals.<List<Integer>>newArrayList(), _function);
     final Area m = new Area(_fold);
-    final Function2<Integer, Coordinates, Integer> _function_1 = new Function2<Integer, Coordinates, Integer>() {
-      public Integer apply(final Integer v, final Coordinates e) {
+    final Function2<Integer, Coordinate, Integer> _function_1 = new Function2<Integer, Coordinate, Integer>() {
+      public Integer apply(final Integer v, final Coordinate e) {
         Integer _get = m.get(e);
         return Integer.valueOf((((v).intValue() + 1) + (_get).intValue()));
       }
     };
-    InputOutput.<Integer>println(IterableExtensions.<Coordinates, Integer>fold(m.lowPoints(), Integer.valueOf(0), _function_1));
-    final Function2<ArrayList<Integer>, Coordinates, ArrayList<Integer>> _function_2 = new Function2<ArrayList<Integer>, Coordinates, ArrayList<Integer>>() {
-      public ArrayList<Integer> apply(final ArrayList<Integer> l, final Coordinates c) {
+    InputOutput.<Integer>println(IterableExtensions.<Coordinate, Integer>fold(m.lowPoints(), Integer.valueOf(0), _function_1));
+    final Function2<ArrayList<Integer>, Coordinate, ArrayList<Integer>> _function_2 = new Function2<ArrayList<Integer>, Coordinate, ArrayList<Integer>>() {
+      public ArrayList<Integer> apply(final ArrayList<Integer> l, final Coordinate c) {
         ArrayList<Integer> _xblockexpression = null;
         {
           l.add(Integer.valueOf(m.floodUpToMaximum(c)));
@@ -49,7 +50,7 @@ public class Launcher {
         return _xblockexpression;
       }
     };
-    final List<Integer> basins = ListExtensions.<Integer>reverse(IterableExtensions.<Integer>sort(IterableExtensions.<Coordinates, ArrayList<Integer>>fold(m.lowPoints(), CollectionLiterals.<Integer>newArrayList(), _function_2)));
+    final List<Integer> basins = ListExtensions.<Integer>reverse(IterableExtensions.<Integer>sort(IterableExtensions.<Coordinate, ArrayList<Integer>>fold(m.lowPoints(), CollectionLiterals.<Integer>newArrayList(), _function_2)));
     Integer _get = basins.get(0);
     Integer _get_1 = basins.get(1);
     int _multiply = ((_get).intValue() * (_get_1).intValue());

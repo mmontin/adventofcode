@@ -1,5 +1,6 @@
 package advent2021.puzzle19;
 
+import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.io.BufferedReader;
@@ -157,6 +158,8 @@ public class Launcher {
         public void accept(final Map.Entry<Integer, Coordinate> it) {
           final Coordinate coord1 = it.getValue();
           final Coordinate coord2 = dists2.get(it.getKey());
+          int _x = coord2.getX();
+          int _y = coord2.getY();
           final BiFunction<Set<Integer>, Set<Integer>, Set<Integer>> _function = new BiFunction<Set<Integer>, Set<Integer>, Set<Integer>>() {
             public Set<Integer> apply(final Set<Integer> s1, final Set<Integer> s2) {
               HashSet<Integer> _xblockexpression = null;
@@ -168,7 +171,9 @@ public class Launcher {
               return _xblockexpression;
             }
           };
-          mapping.merge(Integer.valueOf(coord1.x), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(coord2.x), Integer.valueOf(coord2.y))), _function);
+          mapping.merge(Integer.valueOf(coord1.getX()), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(_x), Integer.valueOf(_y))), _function);
+          int _x_1 = coord2.getX();
+          int _y_1 = coord2.getY();
           final BiFunction<Set<Integer>, Set<Integer>, Set<Integer>> _function_1 = new BiFunction<Set<Integer>, Set<Integer>, Set<Integer>>() {
             public Set<Integer> apply(final Set<Integer> s1, final Set<Integer> s2) {
               HashSet<Integer> _xblockexpression = null;
@@ -180,7 +185,7 @@ public class Launcher {
               return _xblockexpression;
             }
           };
-          mapping.merge(Integer.valueOf(coord1.y), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(coord2.x), Integer.valueOf(coord2.y))), _function_1);
+          mapping.merge(Integer.valueOf(coord1.getY()), Collections.<Integer>unmodifiableSet(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(_x_1), Integer.valueOf(_y_1))), _function_1);
         }
       };
       dists1_dup.entrySet().forEach(_function);

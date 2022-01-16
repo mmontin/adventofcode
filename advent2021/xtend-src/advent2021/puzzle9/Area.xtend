@@ -4,22 +4,23 @@ import java.util.HashSet
 import java.util.List
 import java.util.Map
 import java.util.Set
+import adventutils.geometry.Coordinate
 
 class Area {
 	
-	Map<Coordinates,Integer> map
+	Map<Coordinate,Integer> map
 	
 	new(List<List<Integer>> input) {
 		map = newHashMap ;
 		(0..input.size-1).forEach[i |
 			(0..input.get(0).size-1).forEach[ j |
-				map.put(new Coordinates(i,j), input.get(i).get(j))
+				map.put(new Coordinate(i,j), input.get(i).get(j))
 			]
 		]
 	}
 	
-	def neighbours(Coordinates c) {
-		c.neighbours.filter[map.containsKey(it)]
+	def neighbours(Coordinate c) {
+		c.noDiagonalUnboundedNeighbours.filter[map.containsKey(it)]
 	}
 	
 	def lowPoints() {
@@ -29,23 +30,23 @@ class Area {
 		]
 	}
 	
-	def isLowPoint(Coordinates c) {
+	def isLowPoint(Coordinate c) {
 		neighbours(c).fold(true)[b , v | b && map.get(v) > map.get(c) ]
 	}
 	
-	def get(Coordinates c) {
+	def get(Coordinate c) {
 		map.get(c)
 	}
 	
-	def Set<Coordinates> floodUp(Set<Coordinates> coords) {
+	def Set<Coordinate> floodUp(Set<Coordinate> coords) {
 		coords.fold(new HashSet(coords))[s , cs |
 			s.addAll(neighbours(cs))
 			s
 		].filter[get(it) != 9].toSet
 	}
 	
-	def floodUpToMaximum(Coordinates c) {
-		var Set<Coordinates> input = newHashSet(c)
+	def floodUpToMaximum(Coordinate c) {
+		var Set<Coordinate> input = newHashSet(c)
 		var previousSize = 1
 		var size = 0
 		while (size != previousSize) {

@@ -2,13 +2,14 @@ package advent2021.puzzle13
 
 import adventutils.input.InputLoader
 import java.util.HashSet
+import adventutils.geometry.Coordinate
 
 class Launcher {
 	def static void main(String[] args) {
 		val input = new InputLoader(2021,13).getInputs
 		val index = input.indexOf("")
 
-		val dots = input.take(index).map[new Coordinates(it)].toSet
+		val dots = input.take(index).map[new Coordinate(it)].toSet
 
 		input.drop(index + 1).forEach [
 			var split = it.split(" ").get(2).split("=")
@@ -28,7 +29,7 @@ class Launcher {
 
 		for (j : 0 .. dots.maxBy[y].y) {
 			for (i : 0 .. dots.maxBy[x].x)
-				print(dots.contains(new Coordinates(i,j)) ? "0" : " ")
+				print(dots.contains(new Coordinate(i,j)) ? "0" : " ")
 			println
 		}
 	}

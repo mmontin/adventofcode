@@ -1,5 +1,6 @@
 package advent2021.puzzle11;
 
+import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Launcher {
-  private static HashMap<Coordinates, Integer> data = CollectionLiterals.<Coordinates, Integer>newHashMap();
+  private static HashMap<Coordinate, Integer> data = CollectionLiterals.<Coordinate, Integer>newHashMap();
   
   private static int number_of_occurrences = 0;
   
@@ -26,10 +27,10 @@ public class Launcher {
         final String line = input.get((i).intValue());
         final Consumer<Integer> _function = new Consumer<Integer>() {
           public void accept(final Integer j) {
-            Coordinates _coordinates = new Coordinates((i).intValue(), (j).intValue());
+            Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
             char _charAt = line.charAt((j).intValue());
             String _plus = (Character.valueOf(_charAt) + "");
-            Launcher.data.put(_coordinates, Integer.valueOf(Integer.parseInt(_plus)));
+            Launcher.data.put(_coordinate, Integer.valueOf(Integer.parseInt(_plus)));
           }
         };
         new ExclusiveRange(0, 10, true).forEach(_function);
@@ -38,18 +39,18 @@ public class Launcher {
     new ExclusiveRange(0, 10, true).forEach(_function);
     while ((!IterableExtensions.<Integer>toSet(Launcher.data.values()).equals(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(0))))) {
       {
-        final Consumer<Map.Entry<Coordinates, Integer>> _function_1 = new Consumer<Map.Entry<Coordinates, Integer>>() {
-          public void accept(final Map.Entry<Coordinates, Integer> it) {
-            Coordinates _key = it.getKey();
+        final Consumer<Map.Entry<Coordinate, Integer>> _function_1 = new Consumer<Map.Entry<Coordinate, Integer>>() {
+          public void accept(final Map.Entry<Coordinate, Integer> it) {
+            Coordinate _key = it.getKey();
             Integer _value = it.getValue();
             int _plus = ((_value).intValue() + 1);
             Launcher.data.replace(_key, Integer.valueOf(_plus));
           }
         };
         Launcher.data.entrySet().forEach(_function_1);
-        Coordinates c = null;
-        while (((c = IterableExtensions.<Coordinates>findFirst(Launcher.data.keySet(), new Function1<Coordinates, Boolean>() {
-          public Boolean apply(final Coordinates it) {
+        Coordinate c = null;
+        while (((c = IterableExtensions.<Coordinate>findFirst(Launcher.data.keySet(), new Function1<Coordinate, Boolean>() {
+          public Boolean apply(final Coordinate it) {
             Integer _get = Launcher.data.get(it);
             return Boolean.valueOf(((_get).intValue() >= 10));
           }
@@ -59,25 +60,25 @@ public class Launcher {
               Launcher.number_of_flashes++;
             }
             Launcher.data.replace(c, Integer.valueOf(0));
-            final Function1<Coordinates, Boolean> _function_2 = new Function1<Coordinates, Boolean>() {
-              public Boolean apply(final Coordinates it) {
+            final Function1<Coordinate, Boolean> _function_2 = new Function1<Coordinate, Boolean>() {
+              public Boolean apply(final Coordinate it) {
                 return Boolean.valueOf((Launcher.data.containsKey(it) && ((Launcher.data.get(it)).intValue() != 0)));
               }
             };
-            final Consumer<Coordinates> _function_3 = new Consumer<Coordinates>() {
-              public void accept(final Coordinates it) {
+            final Consumer<Coordinate> _function_3 = new Consumer<Coordinate>() {
+              public void accept(final Coordinate it) {
                 Integer _get = Launcher.data.get(it);
                 int _plus = ((_get).intValue() + 1);
                 Launcher.data.replace(it, Integer.valueOf(_plus));
               }
             };
-            IterableExtensions.<Coordinates>filter(c.neighbours(), _function_2).forEach(_function_3);
+            IterableExtensions.<Coordinate>filter(c.allAroundUnboundedNeighbours(), _function_2).forEach(_function_3);
           }
         }
         Launcher.number_of_occurrences++;
       }
     }
-    InputOutput.<String>println(("Exercice 1: " + Integer.valueOf(Launcher.number_of_flashes)));
-    InputOutput.<String>println(("Exercice 2: " + Integer.valueOf(Launcher.number_of_occurrences)));
+    InputOutput.<String>println(("Exercise 1: " + Integer.valueOf(Launcher.number_of_flashes)));
+    InputOutput.<String>println(("Exercise 2: " + Integer.valueOf(Launcher.number_of_occurrences)));
   }
 }

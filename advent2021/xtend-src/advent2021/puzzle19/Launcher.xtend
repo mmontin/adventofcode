@@ -1,5 +1,6 @@
 package advent2021.puzzle19
 
+import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
 import java.util.HashMap
 import java.util.HashSet

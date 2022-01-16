@@ -1,5 +1,6 @@
 package advent2021.puzzle20;
 
+import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import java.io.BufferedReader;
 import java.util.HashSet;
@@ -79,28 +80,28 @@ public class Launcher {
     {
       final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
         public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.x);
+          return Integer.valueOf(it.getX());
         }
       };
-      int minx = IterableExtensions.<Coordinate, Integer>minBy(input, _function).x;
+      int minx = IterableExtensions.<Coordinate, Integer>minBy(input, _function).getX();
       final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
         public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.x);
+          return Integer.valueOf(it.getX());
         }
       };
-      int maxx = IterableExtensions.<Coordinate, Integer>maxBy(input, _function_1).x;
+      int maxx = IterableExtensions.<Coordinate, Integer>maxBy(input, _function_1).getX();
       final Function1<Coordinate, Integer> _function_2 = new Function1<Coordinate, Integer>() {
         public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.y);
+          return Integer.valueOf(it.getY());
         }
       };
-      int miny = IterableExtensions.<Coordinate, Integer>minBy(input, _function_2).y;
+      int miny = IterableExtensions.<Coordinate, Integer>minBy(input, _function_2).getY();
       final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
         public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.y);
+          return Integer.valueOf(it.getY());
         }
       };
-      int maxy = IterableExtensions.<Coordinate, Integer>maxBy(input, _function_3).y;
+      int maxy = IterableExtensions.<Coordinate, Integer>maxBy(input, _function_3).getY();
       final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
       IntegerRange _upTo = new IntegerRange((minx - 1), (maxx + 1));
       for (final Integer i : _upTo) {

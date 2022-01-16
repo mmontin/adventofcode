@@ -2,11 +2,17 @@ package adventutils.astar
 
 import java.util.List
 
-abstract class State {
+interface State {
 	
-	def abstract boolean isGoal()
-	def abstract int minToGoal()
-	def abstract List<Pair<State,Integer>> neighbours()
-	override abstract boolean equals(Object other)
-	override abstract int hashCode()
+	// Is this state final
+	def boolean isGoal()
+	
+	// Minimal estimation to go from this state to any goal state
+	def int minToGoal()
+	
+	// Possible states that can be reached from this state, along with their distances
+	def List<Pair<State,Integer>> neighbours()
+	
+	override boolean equals(Object other)
+	override int hashCode()
 }

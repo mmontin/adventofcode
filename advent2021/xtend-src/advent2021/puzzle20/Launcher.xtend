@@ -2,6 +2,7 @@ package advent2021.puzzle20
 
 import adventutils.input.InputLoader
 import java.util.Set
+import adventutils.geometry.Coordinate
 
 class Launcher {
 

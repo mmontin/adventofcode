@@ -1,5 +1,6 @@
 package advent2021.puzzle9;
 
+import adventutils.geometry.Coordinate;
 import com.google.common.collect.Iterables;
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +15,10 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Area {
-  private Map<Coordinates, Integer> map;
+  private Map<Coordinate, Integer> map;
   
   public Area(final List<List<Integer>> input) {
-    this.map = CollectionLiterals.<Coordinates, Integer>newHashMap();
+    this.map = CollectionLiterals.<Coordinate, Integer>newHashMap();
     int _size = input.size();
     int _minus = (_size - 1);
     final Consumer<Integer> _function = new Consumer<Integer>() {
@@ -26,8 +27,8 @@ public class Area {
         int _minus = (_size - 1);
         final Consumer<Integer> _function = new Consumer<Integer>() {
           public void accept(final Integer j) {
-            Coordinates _coordinates = new Coordinates((i).intValue(), (j).intValue());
-            Area.this.map.put(_coordinates, input.get((i).intValue()).get((j).intValue()));
+            Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+            Area.this.map.put(_coordinate, input.get((i).intValue()).get((j).intValue()));
           }
         };
         new IntegerRange(0, _minus).forEach(_function);
@@ -36,19 +37,19 @@ public class Area {
     new IntegerRange(0, _minus).forEach(_function);
   }
   
-  public Iterable<Coordinates> neighbours(final Coordinates c) {
-    final Function1<Coordinates, Boolean> _function = new Function1<Coordinates, Boolean>() {
-      public Boolean apply(final Coordinates it) {
+  public Iterable<Coordinate> neighbours(final Coordinate c) {
+    final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
+      public Boolean apply(final Coordinate it) {
         return Boolean.valueOf(Area.this.map.containsKey(it));
       }
     };
-    return IterableExtensions.<Coordinates>filter(c.neighbours(), _function);
+    return IterableExtensions.<Coordinate>filter(c.noDiagonalUnboundedNeighbours(), _function);
   }
   
-  public HashSet<Coordinates> lowPoints() {
-    final Function2<HashSet<Coordinates>, Map.Entry<Coordinates, Integer>, HashSet<Coordinates>> _function = new Function2<HashSet<Coordinates>, Map.Entry<Coordinates, Integer>, HashSet<Coordinates>>() {
-      public HashSet<Coordinates> apply(final HashSet<Coordinates> v, final Map.Entry<Coordinates, Integer> e) {
-        HashSet<Coordinates> _xblockexpression = null;
+  public HashSet<Coordinate> lowPoints() {
+    final Function2<HashSet<Coordinate>, Map.Entry<Coordinate, Integer>, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Map.Entry<Coordinate, Integer>, HashSet<Coordinate>>() {
+      public HashSet<Coordinate> apply(final HashSet<Coordinate> v, final Map.Entry<Coordinate, Integer> e) {
+        HashSet<Coordinate> _xblockexpression = null;
         {
           Boolean _isLowPoint = Area.this.isLowPoint(e.getKey());
           if ((_isLowPoint).booleanValue()) {
@@ -59,47 +60,47 @@ public class Area {
         return _xblockexpression;
       }
     };
-    return IterableExtensions.<Map.Entry<Coordinates, Integer>, HashSet<Coordinates>>fold(this.map.entrySet(), CollectionLiterals.<Coordinates>newHashSet(), _function);
+    return IterableExtensions.<Map.Entry<Coordinate, Integer>, HashSet<Coordinate>>fold(this.map.entrySet(), CollectionLiterals.<Coordinate>newHashSet(), _function);
   }
   
-  public Boolean isLowPoint(final Coordinates c) {
-    final Function2<Boolean, Coordinates, Boolean> _function = new Function2<Boolean, Coordinates, Boolean>() {
-      public Boolean apply(final Boolean b, final Coordinates v) {
+  public Boolean isLowPoint(final Coordinate c) {
+    final Function2<Boolean, Coordinate, Boolean> _function = new Function2<Boolean, Coordinate, Boolean>() {
+      public Boolean apply(final Boolean b, final Coordinate v) {
         return Boolean.valueOf(((b).booleanValue() && (Area.this.map.get(v).compareTo(Area.this.map.get(c)) > 0)));
       }
     };
-    return IterableExtensions.<Coordinates, Boolean>fold(this.neighbours(c), Boolean.valueOf(true), _function);
+    return IterableExtensions.<Coordinate, Boolean>fold(this.neighbours(c), Boolean.valueOf(true), _function);
   }
   
-  public Integer get(final Coordinates c) {
+  public Integer get(final Coordinate c) {
     return this.map.get(c);
   }
   
-  public Set<Coordinates> floodUp(final Set<Coordinates> coords) {
-    HashSet<Coordinates> _hashSet = new HashSet<Coordinates>(coords);
-    final Function2<HashSet<Coordinates>, Coordinates, HashSet<Coordinates>> _function = new Function2<HashSet<Coordinates>, Coordinates, HashSet<Coordinates>>() {
-      public HashSet<Coordinates> apply(final HashSet<Coordinates> s, final Coordinates cs) {
-        HashSet<Coordinates> _xblockexpression = null;
+  public Set<Coordinate> floodUp(final Set<Coordinate> coords) {
+    HashSet<Coordinate> _hashSet = new HashSet<Coordinate>(coords);
+    final Function2<HashSet<Coordinate>, Coordinate, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Coordinate, HashSet<Coordinate>>() {
+      public HashSet<Coordinate> apply(final HashSet<Coordinate> s, final Coordinate cs) {
+        HashSet<Coordinate> _xblockexpression = null;
         {
-          Iterables.<Coordinates>addAll(s, Area.this.neighbours(cs));
+          Iterables.<Coordinate>addAll(s, Area.this.neighbours(cs));
           _xblockexpression = s;
         }
         return _xblockexpression;
       }
     };
-    final Function1<Coordinates, Boolean> _function_1 = new Function1<Coordinates, Boolean>() {
-      public Boolean apply(final Coordinates it) {
+    final Function1<Coordinate, Boolean> _function_1 = new Function1<Coordinate, Boolean>() {
+      public Boolean apply(final Coordinate it) {
         Integer _get = Area.this.get(it);
         return Boolean.valueOf(((_get).intValue() != 9));
       }
     };
-    return IterableExtensions.<Coordinates>toSet(IterableExtensions.<Coordinates>filter(IterableExtensions.<Coordinates, HashSet<Coordinates>>fold(coords, _hashSet, _function), _function_1));
+    return IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate>filter(IterableExtensions.<Coordinate, HashSet<Coordinate>>fold(coords, _hashSet, _function), _function_1));
   }
   
-  public int floodUpToMaximum(final Coordinates c) {
+  public int floodUpToMaximum(final Coordinate c) {
     int _xblockexpression = (int) 0;
     {
-      Set<Coordinates> input = CollectionLiterals.<Coordinates>newHashSet(c);
+      Set<Coordinate> input = CollectionLiterals.<Coordinate>newHashSet(c);
       int previousSize = 1;
       int size = 0;
       while ((size != previousSize)) {
