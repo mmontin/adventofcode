@@ -1,6 +1,6 @@
 package advent2021.puzzle9;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -30,7 +30,7 @@ public class Launcher {
         return _xblockexpression;
       }
     };
-    ArrayList<List<Integer>> _fold = IterableExtensions.<String, ArrayList<List<Integer>>>fold(Utils.getInputs(9), CollectionLiterals.<List<Integer>>newArrayList(), _function);
+    ArrayList<List<Integer>> _fold = IterableExtensions.<String, ArrayList<List<Integer>>>fold(new InputLoader(Integer.valueOf(2021), Integer.valueOf(9)).getInputs(), CollectionLiterals.<List<Integer>>newArrayList(), _function);
     final Area m = new Area(_fold);
     final Function2<Integer, Coordinates, Integer> _function_1 = new Function2<Integer, Coordinates, Integer>() {
       public Integer apply(final Integer v, final Coordinates e) {

@@ -1,6 +1,6 @@
 package advent2021.puzzle12
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -12,7 +12,7 @@ class Launcher {
 	static Set<List<String>> paths = newHashSet	
 	
 	def static void main(String[] args) {
-		Utils.getInputs(12)[it.split("-")].forEach[
+		new InputLoader(2021,12).getInputs()[it.split("-")].forEach[
 			graph.merge(it.get(0), newHashSet(it.get(1)))[v , w | v.addAll(w) v]
 			graph.merge(it.get(1), newHashSet(it.get(0)))[v , w | v.addAll(w) v]
 		]

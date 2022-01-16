@@ -1,4 +1,4 @@
-package advent2021;
+package adventutils.astar;
 
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Pair;

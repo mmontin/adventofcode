@@ -1,6 +1,6 @@
 package advent2021.puzzle16;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -25,7 +25,7 @@ public class Launcher {
             return (s + _replace);
           }
         };
-        String _fold = IterableExtensions.<Character, String>fold(((Iterable<Character>)Conversions.doWrapArray(Utils.getInputReader(16).readLine().toCharArray())), "", _function);
+        String _fold = IterableExtensions.<Character, String>fold(((Iterable<Character>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2021), Integer.valueOf(16)).getInputReader().readLine().toCharArray())), "", _function);
         return _fold;
       } catch (Throwable _e) {
         throw Exceptions.sneakyThrow(_e);

@@ -1,6 +1,6 @@
 package advent2021.puzzle15;
 
-import advent2021.State;
+import adventutils.astar.State;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;

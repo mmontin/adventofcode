@@ -1,10 +1,10 @@
 package advent2021.puzzle16
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 
-	public static final String input = Utils.getInputReader(16).readLine.toCharArray.fold('') [ s, c |
+	public static final String input = new InputLoader(2021,16).getInputReader.readLine.toCharArray.fold('') [ s, c |
 		s + String.format("%4s",Integer::toBinaryString(Integer::parseInt(c + '',16))).replace(" ","0")
 	]
 	

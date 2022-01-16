@@ -1,13 +1,12 @@
 package advent2021.puzzle5;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Launcher {
@@ -23,7 +22,7 @@ public class Launcher {
         s.addPointsOnGrid(points);
       }
     };
-    ListExtensions.<String, Segment>map(Utils.getInputs(5), _function).forEach(_function_1);
+    new InputLoader(Integer.valueOf(2021), Integer.valueOf(5)).<Segment>getInputs(_function).forEach(_function_1);
     final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
       public Integer apply(final Integer v, final Integer n) {
         Integer _xifexpression = null;

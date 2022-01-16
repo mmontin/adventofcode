@@ -1,12 +1,12 @@
 package advent2021.puzzle9
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 
 	def static void main(String[] args) {
 
-		val Area m = new Area(Utils.getInputs(9).fold(newArrayList)[ l , v |
+		val Area m = new Area(new InputLoader(2021,9).getInputs.fold(newArrayList)[ l , v |
 			l.add(v.toCharArray.toList.map[Integer::parseInt(it + '')])
 			l
 		])

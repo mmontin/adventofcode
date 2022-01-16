@@ -1,7 +1,7 @@
 package advent2021.puzzle11
 
+import adventutils.input.InputLoader
 import java.util.HashMap
-import advent2021.Utils
 
 class Launcher {
 
@@ -12,7 +12,8 @@ class Launcher {
 
 	def static void main(String[] args) {
 
-		val input = Utils.getInputs(11)
+		val input = new InputLoader(2021,11).getInputs ;
+		
 		(0 ..< 10).forEach [ i |
 			val line = input.get(i)
 			(0 ..< 10).forEach [ j |

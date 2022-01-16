@@ -1,6 +1,6 @@
 package advent2021.puzzle14;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ public class Launcher {
   
   private static final String sample = "CVKKFSSNNHNPSPPKBHPB";
   
-  private static final Map<String, Set<String>> transformations = IterableExtensions.<String, HashMap<String, Set<String>>>fold(Utils.getInputs(14), CollectionLiterals.<String, Set<String>>newHashMap(), new Function2<HashMap<String, Set<String>>, String, HashMap<String, Set<String>>>() {
+  private static final Map<String, Set<String>> transformations = IterableExtensions.<String, HashMap<String, Set<String>>>fold(new InputLoader(Integer.valueOf(2021), Integer.valueOf(14)).getInputs(), CollectionLiterals.<String, Set<String>>newHashMap(), new Function2<HashMap<String, Set<String>>, String, HashMap<String, Set<String>>>() {
     public HashMap<String, Set<String>> apply(final HashMap<String, Set<String>> trans, final String v) {
       HashMap<String, Set<String>> _xblockexpression = null;
       {

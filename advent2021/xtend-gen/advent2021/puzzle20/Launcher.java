@@ -1,6 +1,6 @@
 package advent2021.puzzle20;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.io.BufferedReader;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +18,7 @@ public class Launcher {
   
   public static void main(final String[] args) {
     try {
-      final BufferedReader ir = Utils.getInputReader(20);
+      final BufferedReader ir = new InputLoader(Integer.valueOf(2021), Integer.valueOf(20)).getInputReader();
       final String first = ir.readLine();
       int _length = first.length();
       ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _length, true);

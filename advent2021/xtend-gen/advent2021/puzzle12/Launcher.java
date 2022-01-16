@@ -1,6 +1,6 @@
 package advent2021.puzzle12;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class Launcher {
         Launcher.graph.merge(it[1], CollectionLiterals.<String>newHashSet(it[0]), _function_1);
       }
     };
-    Utils.<String[]>getInputs(12, _function).forEach(_function_1);
+    new InputLoader(Integer.valueOf(2021), Integer.valueOf(12)).<String[]>getInputs(_function).forEach(_function_1);
     Launcher.paths(CollectionLiterals.<String>newArrayList("start"), "start");
     InputOutput.<Integer>println(Integer.valueOf(Launcher.paths.size()));
     Launcher.paths.clear();

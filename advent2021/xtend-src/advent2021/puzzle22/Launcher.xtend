@@ -1,6 +1,6 @@
 package advent2021.puzzle22
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.math.BigInteger
 import java.util.Set
 
@@ -10,7 +10,7 @@ class Launcher {
 
 		var Set<Cuboid> cuboids = newHashSet
 
-		for (s : Utils.getInputs(22)) {
+		for (s : new InputLoader(2021,22).getInputs) {
 			val split = s.split(" ")
 			val on = split.get(0).equals("on")
 			val cuboid = new Cuboid(split.get(1))

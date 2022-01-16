@@ -1,6 +1,6 @@
 package advent2021.puzzle3;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class Launcher {
         return it.toCharArray();
       }
     };
-    final List<char[]> input = Utils.<char[]>getInputs(3, _function);
+    final List<char[]> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(3)).<char[]>getInputs(_function);
     ArrayList<Launcher.Pair> _arrayList = new ArrayList<Launcher.Pair>();
     final Function2<ArrayList<Launcher.Pair>, char[], ArrayList<Launcher.Pair>> _function_1 = new Function2<ArrayList<Launcher.Pair>, char[], ArrayList<Launcher.Pair>>() {
       public ArrayList<Launcher.Pair> apply(final ArrayList<Launcher.Pair> v, final char[] l) {

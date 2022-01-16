@@ -1,6 +1,6 @@
 package advent2021.puzzle10;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class Launcher {
         return _xblockexpression;
       }
     };
-    final List<BigInteger> output = IterableExtensions.<BigInteger>sort(IterableExtensions.<List<Character>, ArrayList<BigInteger>>fold(Utils.<List<Character>>getInputs(10, _function), CollectionLiterals.<BigInteger>newArrayList(), _function_1));
+    final List<BigInteger> output = IterableExtensions.<BigInteger>sort(IterableExtensions.<List<Character>, ArrayList<BigInteger>>fold(new InputLoader(Integer.valueOf(2021), Integer.valueOf(10)).<List<Character>>getInputs(_function), CollectionLiterals.<BigInteger>newArrayList(), _function_1));
     int _size = output.size();
     int _divide = (_size / 2);
     InputOutput.<BigInteger>println(output.get(_divide));

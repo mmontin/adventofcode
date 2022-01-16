@@ -1,13 +1,13 @@
 package advent2021.puzzle10
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.math.BigInteger
 import java.util.List
 import java.util.Stack
 
 class Launcher {
 	def static void main(String[] args) {
-		val output = Utils.getInputs(10)[it.toCharArray().toList].fold(newArrayList) [ list , input |
+		val output = new InputLoader(2021,10).getInputs[it.toCharArray().toList].fold(newArrayList) [ list , input |
 			var processed = process(input.map[it + ''])
 			if (processed.compareTo(BigInteger.valueOf(0)) > 0)
 				list.add(processed)

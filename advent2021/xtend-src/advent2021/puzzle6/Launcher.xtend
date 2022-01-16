@@ -1,6 +1,6 @@
 package advent2021.puzzle6
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.math.BigInteger
 import java.util.HashMap
 
@@ -8,7 +8,7 @@ class Launcher {
 
 	def static void main(String[] args) {
 		
-		var input = Utils.getInputs(6).get(0).split(',').fold(new HashMap)[fishes , v |
+		var input = new InputLoader(2021,6).getInputs.get(0).split(',').fold(new HashMap)[fishes , v |
 			fishes.merge(Integer::parseInt(v), BigInteger.valueOf(1))[v1, v2|v1 + v2] fishes]
 
 		for (k : 0 ..< 256)	

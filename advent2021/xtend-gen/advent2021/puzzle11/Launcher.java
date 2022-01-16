@@ -1,6 +1,6 @@
 package advent2021.puzzle11;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class Launcher {
   private static int number_of_flashes = 0;
   
   public static void main(final String[] args) {
-    final List<String> input = Utils.getInputs(11);
+    final List<String> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(11)).getInputs();
     final Consumer<Integer> _function = new Consumer<Integer>() {
       public void accept(final Integer i) {
         final String line = input.get((i).intValue());

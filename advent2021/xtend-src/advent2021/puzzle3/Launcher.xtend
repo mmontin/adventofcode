@@ -1,6 +1,6 @@
 package advent2021.puzzle3
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.List
 
@@ -28,7 +28,7 @@ class Launcher {
 
 	def static void main(String[] args) {
 
-		val input = Utils.getInputs(3, [toCharArray])
+		val input = new InputLoader(2021,3).getInputs[toCharArray]
 
 		// Exercice n°1
 		val list = input.fold(new ArrayList<Pair>, [ v, l |

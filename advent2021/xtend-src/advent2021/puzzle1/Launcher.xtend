@@ -1,12 +1,12 @@
 package advent2021.puzzle1
 
-import advent2021.Utils
-import java.util.List
+import adventutils.input.InputLoader
 import java.util.ArrayList
+import java.util.List
 
 class Launcher {
 	def static void main(String[] args) {
-		val input = Utils::getInputs(1, [x|Integer::parseInt(x)])
+		val input = new InputLoader(2021,1).getInputs[x|Integer::parseInt(x)]
 		println(greater(new ArrayList(input)))
 		val newList = new ArrayList<Integer>(input.size-2)
 		for (i : 0..<input.size-2) {

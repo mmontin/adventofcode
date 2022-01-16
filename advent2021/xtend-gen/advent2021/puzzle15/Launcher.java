@@ -1,7 +1,7 @@
 package advent2021.puzzle15;
 
-import advent2021.AStar;
-import advent2021.Utils;
+import adventutils.astar.AStar;
+import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Launcher {
-  public static final List<List<Character>> input = Utils.<List<Character>>getInputs(15, new Function1<String, List<Character>>() {
+  public static final List<List<Character>> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(15)).<List<Character>>getInputs(new Function1<String, List<Character>>() {
     public List<Character> apply(final String it) {
       return IterableExtensions.<Character>toList(((Iterable<Character>)Conversions.doWrapArray(it.toCharArray())));
     }

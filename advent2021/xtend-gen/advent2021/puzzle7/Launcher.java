@@ -1,6 +1,6 @@
 package advent2021.puzzle7;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -18,7 +18,7 @@ public class Launcher {
         return Integer.valueOf(Integer.parseInt(x));
       }
     };
-    final List<Integer> input = IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(Utils.getInputs(7).get(0).split(","))), _function));
+    final List<Integer> input = IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2021), Integer.valueOf(7)).getInputs().get(0).split(","))), _function));
     Integer _get = input.get(0);
     int _size = input.size();
     int _minus = (_size - 1);

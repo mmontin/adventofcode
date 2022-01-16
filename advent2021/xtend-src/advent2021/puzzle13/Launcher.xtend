@@ -1,11 +1,11 @@
 package advent2021.puzzle13
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.util.HashSet
 
 class Launcher {
 	def static void main(String[] args) {
-		val input = Utils.getInputs(13)
+		val input = new InputLoader(2021,13).getInputs
 		val index = input.indexOf("")
 
 		val dots = input.take(index).map[new Coordinates(it)].toSet

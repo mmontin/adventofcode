@@ -1,13 +1,13 @@
 package advent2021.puzzle15
 
-import advent2021.AStar
-import advent2021.Utils
+import adventutils.astar.AStar
+import adventutils.input.InputLoader
 import java.util.List
 import java.util.Map
 
 class Launcher {
 
-	public static final List<List<Character>> input = Utils.getInputs(15)[it.toCharArray.toList]
+	public static final List<List<Character>> input = new InputLoader(2021,15).getInputs[it.toCharArray.toList]
 
 	public static final int max_value_small = input.size
 	public static final int max_indice = max_value_small * 5 - 1

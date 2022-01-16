@@ -1,6 +1,6 @@
 package advent2021.puzzle1;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -15,7 +15,7 @@ public class Launcher {
         return Integer.valueOf(Integer.parseInt(x));
       }
     };
-    final List<Integer> input = Utils.<Integer>getInputs(1, _function);
+    final List<Integer> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(1)).<Integer>getInputs(_function);
     ArrayList<Integer> _arrayList = new ArrayList<Integer>(input);
     InputOutput.<Integer>println(Integer.valueOf(Launcher.greater(_arrayList)));
     int _size = input.size();

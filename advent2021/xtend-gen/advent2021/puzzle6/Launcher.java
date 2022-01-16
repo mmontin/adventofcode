@@ -1,6 +1,6 @@
 package advent2021.puzzle6;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    String[] _split = Utils.getInputs(6).get(0).split(",");
+    String[] _split = new InputLoader(Integer.valueOf(2021), Integer.valueOf(6)).getInputs().get(0).split(",");
     HashMap<Integer, BigInteger> _hashMap = new HashMap<Integer, BigInteger>();
     final Function2<HashMap<Integer, BigInteger>, String, HashMap<Integer, BigInteger>> _function = new Function2<HashMap<Integer, BigInteger>, String, HashMap<Integer, BigInteger>>() {
       public HashMap<Integer, BigInteger> apply(final HashMap<Integer, BigInteger> fishes, final String v) {

@@ -1,6 +1,6 @@
 package advent2021.puzzle4
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.io.BufferedReader
 import java.util.ArrayList
 
@@ -10,7 +10,7 @@ class Launcher {
 		val numbers = new ArrayList<Integer>
 		val boards = new ArrayList<Board>
 
-		val BufferedReader br = Utils.getInputReader(4)
+		val BufferedReader br = new InputLoader(2021,4).getInputReader
 
 		br.readLine().split(",").forEach[s|numbers.add(Integer::parseInt(s))]
 

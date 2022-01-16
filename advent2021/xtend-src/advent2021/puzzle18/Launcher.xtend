@@ -1,6 +1,6 @@
 package advent2021.puzzle18
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.io.BufferedReader
 import java.io.StringReader
 
@@ -8,8 +8,10 @@ class Launcher {
 
 	def static void main(String[] args) {
 
+		val il = new InputLoader(2021,18)
+
 		val sNumbers = newArrayList
-		val br = Utils.getInputReader(18)
+		val br = il.getInputReader
 		while (br.ready) {
 			sNumbers.add(SNumber.createSNumber(br, null))
 			br.read
@@ -22,7 +24,7 @@ class Launcher {
 		for (i : 0 ..< sNumbers.size)
 			for (j : 0 ..< sNumbers.size)
 				if (i != j) {
-					var input = Utils.getInputs(18)
+					var input = il.getInputs
 					max_magnitude = Math.max(
 						max_magnitude,
 						new Pair(

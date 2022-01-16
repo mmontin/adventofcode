@@ -1,6 +1,6 @@
 package advent2021.puzzle19;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class Launcher {
   public static void main(final String[] args) {
     try {
       final ArrayList<List<Vector>> data = CollectionLiterals.<List<Vector>>newArrayList();
-      final BufferedReader inputReader = Utils.getInputReader(19);
+      final BufferedReader inputReader = new InputLoader(Integer.valueOf(2021), Integer.valueOf(19)).getInputReader();
       String tmp_string = null;
       List<Vector> map = null;
       while ((!(tmp_string = inputReader.readLine()).equals("#"))) {

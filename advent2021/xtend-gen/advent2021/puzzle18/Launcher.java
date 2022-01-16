@@ -1,6 +1,6 @@
 package advent2021.puzzle18;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -17,8 +17,9 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public static void main(final String[] args) {
     try {
+      final InputLoader il = new InputLoader(Integer.valueOf(2021), Integer.valueOf(18));
       final ArrayList<SNumber> sNumbers = CollectionLiterals.<SNumber>newArrayList();
-      final BufferedReader br = Utils.getInputReader(18);
+      final BufferedReader br = il.getInputReader();
       while (br.ready()) {
         {
           sNumbers.add(SNumber.createSNumber(br, null));
@@ -41,7 +42,7 @@ public class Launcher {
         for (final Integer j : _doubleDotLessThan_1) {
           boolean _notEquals = (!Objects.equal(i, j));
           if (_notEquals) {
-            List<String> input = Utils.getInputs(18);
+            List<String> input = il.getInputs();
             String _get = input.get((i).intValue());
             StringReader _stringReader = new StringReader(_get);
             BufferedReader _bufferedReader = new BufferedReader(_stringReader);

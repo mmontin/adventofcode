@@ -1,6 +1,6 @@
 package advent2021.puzzle22;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public static void main(final String[] args) {
     Set<Cuboid> cuboids = CollectionLiterals.<Cuboid>newHashSet();
-    List<String> _inputs = Utils.getInputs(22);
+    List<String> _inputs = new InputLoader(Integer.valueOf(2021), Integer.valueOf(22)).getInputs();
     for (final String s : _inputs) {
       {
         final String[] split = s.split(" ");

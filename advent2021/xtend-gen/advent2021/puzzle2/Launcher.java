@@ -1,11 +1,10 @@
 package advent2021.puzzle2;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Launcher {
@@ -18,8 +17,8 @@ public class Launcher {
         return x.split(" ");
       }
     };
-    List<String[]> _map = ListExtensions.<String, String[]>map(Utils.getInputs(2), _function);
-    for (final String[] split : _map) {
+    List<String[]> _inputs = new InputLoader(Integer.valueOf(2021), Integer.valueOf(2)).<String[]>getInputs(_function);
+    for (final String[] split : _inputs) {
       {
         final int v = Integer.parseInt(split[1]);
         String _get = split[0];

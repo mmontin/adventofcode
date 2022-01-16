@@ -1,6 +1,6 @@
 package advent2021.puzzle14
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.util.HashSet
 import java.util.Map
 import java.util.Set
@@ -11,7 +11,7 @@ class Launcher {
 
 	static final String sample = "CVKKFSSNNHNPSPPKBHPB"
 
-	static final Map<String, Set<String>> transformations = Utils.getInputs(14).fold(newHashMap) [ trans, v |
+	static final Map<String, Set<String>> transformations = new InputLoader(2021,14).getInputs.fold(newHashMap) [ trans, v |
 		val split = v.split(" -> ")
 		val left = split.get(0)
 		val right = split.get(1)

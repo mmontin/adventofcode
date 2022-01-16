@@ -1,6 +1,6 @@
 package advent2021.puzzle19
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.util.HashMap
 import java.util.HashSet
 import java.util.List
@@ -11,7 +11,7 @@ class Launcher {
 	def static void main(String[] args) {
 
 		val data = newArrayList
-		val inputReader = Utils.getInputReader(19)
+		val inputReader = new InputLoader(2021,19).getInputReader
 		var String tmp_string
 		var List<Vector> map
 		while (!(tmp_string = inputReader.readLine).equals("#")) {

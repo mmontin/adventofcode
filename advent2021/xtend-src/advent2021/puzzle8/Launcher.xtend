@@ -1,10 +1,11 @@
 package advent2021.puzzle8
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 	def static void main(String[] args) {
-		println(Utils.getInputs(8).fold(0)[v , x | v + (new Decoder(x)).decode1])
-		println(Utils.getInputs(8).fold(Double.valueOf(0))[v , x | v + (new Decoder(x)).decode2])
+		val il = new InputLoader(2021,8)
+		println(il.getInputs.fold(0)[v , x | v + (new Decoder(x)).decode1])
+		println(il.getInputs.fold(Double.valueOf(0))[v , x | v + (new Decoder(x)).decode2])
 	}
 }

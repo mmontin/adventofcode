@@ -1,6 +1,6 @@
 package advent2021.puzzle20
 
-import advent2021.Utils
+import adventutils.input.InputLoader
 import java.util.Set
 
 class Launcher {
@@ -9,7 +9,7 @@ class Launcher {
 
 	def static void main(String[] args) {
 
-		val ir = Utils.getInputReader(20)
+		val ir = new InputLoader(2021,20).getInputReader
 		val first = ir.readLine
 		for (i : 0 ..< first.length)
 			if ((first.charAt(i) + '').equals("#"))

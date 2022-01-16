@@ -1,6 +1,6 @@
 package advent2021.puzzle13;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    final List<String> input = Utils.getInputs(13);
+    final List<String> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(13)).getInputs();
     final int index = input.indexOf("");
     final Function1<String, Coordinates> _function = new Function1<String, Coordinates>() {
       public Coordinates apply(final String it) {

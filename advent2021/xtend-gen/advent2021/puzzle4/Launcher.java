@@ -1,6 +1,6 @@
 package advent2021.puzzle4;
 
-import advent2021.Utils;
+import adventutils.input.InputLoader;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class Launcher {
     try {
       final ArrayList<Integer> numbers = new ArrayList<Integer>();
       final ArrayList<Board> boards = new ArrayList<Board>();
-      final BufferedReader br = Utils.getInputReader(4);
+      final BufferedReader br = new InputLoader(Integer.valueOf(2021), Integer.valueOf(4)).getInputReader();
       final Consumer<String> _function = new Consumer<String>() {
         public void accept(final String s) {
           numbers.add(Integer.valueOf(Integer.parseInt(s)));

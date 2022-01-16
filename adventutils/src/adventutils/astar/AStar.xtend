@@ -1,4 +1,4 @@
-package advent2021
+package adventutils.astar
 
 import java.util.Map
 import java.util.PriorityQueue

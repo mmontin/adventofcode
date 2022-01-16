@@ -1,8 +1,5 @@
 package advent2021.puzzle24
 
-import java.util.List
-import advent2021.Utils
-
 class Launcher {
 	
 	def static void main(String[] args) {
