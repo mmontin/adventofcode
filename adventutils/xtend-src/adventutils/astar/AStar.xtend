@@ -10,8 +10,18 @@ class AStar {
 	Map<State,Integer> fScore
 	Map<State,State> previous
 	State current
+	boolean initialized
+	
+	new() {
+		initialized = false
+	}
 	
 	new(State initial_) {
+		initialize(initial_)
+	}
+	
+	def initialize(State initial_) {
+		initialized = true
 		toVisit = new PriorityQueue<State>[ e1, e2 |
 			Integer::compare(fScore.get(e1), fScore.get(e2))
 		]
@@ -40,6 +50,7 @@ class AStar {
 	}
 	
 	def minPath() {
+		checkInitialize
 		val path = newArrayList(current)
 		var tmp = current
 		while (previous.containsKey(tmp)) {
@@ -50,22 +61,17 @@ class AStar {
 	}
 	
 	def getMinDistance() {
+		checkInitialize
 		gScore.get(current)
 	}
 	
 	def run() {
-		var i = 0
-		var time = System.currentTimeMillis
-		while(!current.isGoal) {
-			current = step()
-			i++
-			if (i%1000==0) {
-				println(i + " last 1000 entries computed in " + (System.currentTimeMillis - time) + "ms")
-				println(toVisit.size)
-				time = System.currentTimeMillis
-			}
-				
-		}
-		this
+		checkInitialize
+		while(!current.isGoal) current = step() ; this
+	}
+	
+	private def checkInitialize() {
+		if (!initialized)
+			throw new NotInitializedException
 	}
 }

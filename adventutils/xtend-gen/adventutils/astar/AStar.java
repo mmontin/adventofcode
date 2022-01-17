@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
@@ -23,20 +23,35 @@ public class AStar {
   
   private State current;
   
+  private boolean initialized;
+  
+  public AStar() {
+    this.initialized = false;
+  }
+  
   public AStar(final State initial_) {
-    final Comparator<State> _function = new Comparator<State>() {
-      public int compare(final State e1, final State e2) {
-        return Integer.compare((AStar.this.fScore.get(e1)).intValue(), (AStar.this.fScore.get(e2)).intValue());
-      }
-    };
-    PriorityQueue<State> _priorityQueue = new PriorityQueue<State>(_function);
-    this.toVisit = _priorityQueue;
-    this.current = initial_;
-    this.gScore = CollectionLiterals.<State, Integer>newHashMap();
-    this.gScore.put(this.current, Integer.valueOf(0));
-    this.fScore = CollectionLiterals.<State, Integer>newHashMap();
-    this.fScore.put(this.current, Integer.valueOf(this.current.minToGoal()));
-    this.previous = CollectionLiterals.<State, State>newHashMap();
+    this.initialize(initial_);
+  }
+  
+  public Map<State, State> initialize(final State initial_) {
+    Map<State, State> _xblockexpression = null;
+    {
+      this.initialized = true;
+      final Comparator<State> _function = new Comparator<State>() {
+        public int compare(final State e1, final State e2) {
+          return Integer.compare((AStar.this.fScore.get(e1)).intValue(), (AStar.this.fScore.get(e2)).intValue());
+        }
+      };
+      PriorityQueue<State> _priorityQueue = new PriorityQueue<State>(_function);
+      this.toVisit = _priorityQueue;
+      this.current = initial_;
+      this.gScore = CollectionLiterals.<State, Integer>newHashMap();
+      this.gScore.put(this.current, Integer.valueOf(0));
+      this.fScore = CollectionLiterals.<State, Integer>newHashMap();
+      this.fScore.put(this.current, Integer.valueOf(this.current.minToGoal()));
+      _xblockexpression = this.previous = CollectionLiterals.<State, State>newHashMap();
+    }
+    return _xblockexpression;
   }
   
   private State step() {
@@ -69,6 +84,7 @@ public class AStar {
   public List<State> minPath() {
     List<State> _xblockexpression = null;
     {
+      this.checkInitialize();
       final ArrayList<State> path = CollectionLiterals.<State>newArrayList(this.current);
       State tmp = this.current;
       while (this.previous.containsKey(tmp)) {
@@ -83,32 +99,33 @@ public class AStar {
   }
   
   public Integer getMinDistance() {
-    return this.gScore.get(this.current);
+    Integer _xblockexpression = null;
+    {
+      this.checkInitialize();
+      _xblockexpression = this.gScore.get(this.current);
+    }
+    return _xblockexpression;
   }
   
   public AStar run() {
     AStar _xblockexpression = null;
     {
-      int i = 0;
-      long time = System.currentTimeMillis();
+      this.checkInitialize();
       while ((!this.current.isGoal())) {
-        {
-          this.current = this.step();
-          i++;
-          if (((i % 1000) == 0)) {
-            String _plus = (Integer.valueOf(i) + " last 1000 entries computed in ");
-            long _currentTimeMillis = System.currentTimeMillis();
-            long _minus = (_currentTimeMillis - time);
-            String _plus_1 = (_plus + Long.valueOf(_minus));
-            String _plus_2 = (_plus_1 + "ms");
-            InputOutput.<String>println(_plus_2);
-            InputOutput.<Integer>println(Integer.valueOf(this.toVisit.size()));
-            time = System.currentTimeMillis();
-          }
-        }
+        this.current = this.step();
       }
       _xblockexpression = this;
     }
     return _xblockexpression;
+  }
+  
+  private void checkInitialize() {
+    try {
+      if ((!this.initialized)) {
+        throw new NotInitializedException();
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }
