@@ -15,35 +15,33 @@ public class Coordinate {
 	}
 	
 	public Coordinate(String s) {
-		int xs = 0 ;
-		int ys = 0 ;
-		int zs = 0 ;
+		this(0,0) ;
 		String tmp = s ;
 		while (tmp.length() != 0) {
 			int offset ;
 			if (tmp.startsWith("ne")) {
-				ys ++ ;
+				y ++ ;
 				offset = 2 ;
 			} else if (tmp.startsWith("sw")) {
-				ys -- ;
+				y -- ;
 				offset = 2 ;
 			} else if (tmp.startsWith("se")) {
-				zs -- ;
+				x ++ ;
+				y -- ;
 				offset = 2 ;
 			} else if (tmp.startsWith("nw")) {
-				zs ++ ;
+				x -- ;
+				y ++ ;
 				offset = 2 ;
 			} else if (tmp.startsWith("e")) {
-				xs ++ ;
+				x ++ ;
 				offset = 1 ;
 			} else {
-				xs -- ;
+				x -- ;
 				offset = 1 ;
 			}
 			tmp = tmp.substring(offset) ;
 		}
-		this.x = xs - zs ;
-		this.y = ys + zs ;
 	}
 	
 	@Override

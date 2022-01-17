@@ -29,15 +29,16 @@ public class Launcher {
 	}
 	
 	private static void step(boolean isInit) {
-		Map<Coordinate,Tile> newTiles = new HashMap<>() ;
+		Map<Coordinate, Tile> newTiles = new HashMap<>();
 		for (Entry<Coordinate, Tile> e : tiles.entrySet()) {
-			boolean color = isInit ? e.getValue().isWhite() : e.getValue().getNextColor() ;
-			Coordinate c = e.getKey() ;
-			newTiles.merge(c, new Tile(color), ((x , y) -> x.setColor(color))) ;
+			boolean color = isInit ? e.getValue().isWhite() : e.getValue().getNextColor();
+			Coordinate c = e.getKey();
+			newTiles.merge(c, new Tile(color), ((x, y) -> x.setColor(color)));
 			if (!color)
-				for (int i : new int[] {-1 , 1})
-					for (int j : new int[] {-1 , 0 , 1} )
-						newTiles.merge(new Coordinate(c.x + i, c.y + j), new Tile(true , 1), ((x , y) -> x.addBlackNeighbour())) ;
+				for (Coordinate coord : new Coordinate[] { new Coordinate(c.x + 1, c.y), new Coordinate(c.x - 1, c.y),
+						new Coordinate(c.x, c.y + 1), new Coordinate(c.x, c.y - 1), new Coordinate(c.x - 1, c.y + 1),
+						new Coordinate(c.x + 1, c.y - 1) })
+					newTiles.merge(coord, new Tile(true, 1), ((x, y) -> x.addBlackNeighbour()));
 		}
 		tiles = newTiles ;
 	}

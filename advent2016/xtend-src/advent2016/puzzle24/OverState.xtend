@@ -22,7 +22,7 @@ class OverState implements State {
 	}
 	
 	override minToGoal() {
-		0
+		currentPosition.manhattanDistanceTo(Launcher.initial)
 	}
 	
 	override neighbours() {

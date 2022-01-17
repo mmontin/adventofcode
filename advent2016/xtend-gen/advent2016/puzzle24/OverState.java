@@ -32,7 +32,7 @@ public class OverState implements State {
   }
   
   public int minToGoal() {
-    return 0;
+    return this.currentPosition.manhattanDistanceTo(Launcher.initial);
   }
   
   public List<Pair<State, Integer>> neighbours() {
