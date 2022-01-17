@@ -6,8 +6,9 @@ import java.util.Map
 
 class Launcher {
 
-	static final Map<String, Integer> registers = newHashMap("a" -> 0, "b" -> 0, "c" -> 1, "d" -> 0)
-	static final List<String> input = new InputLoader(2016,12).getInputs
+	static final Map<String, Integer> registers = newHashMap("a" -> 0, "b" -> 0, "c" -> 0, "d" -> 0)
+
+	static final List<String> input = new InputLoader(2016, 12).getInputs
 
 	def static void main(String[] args) {
 		var pos = 0
@@ -18,19 +19,15 @@ class Launcher {
 				pos++
 			} else {
 				var int value
-				try 
+				try
 					value = Integer::parseInt(split.get(1))
 				catch (NumberFormatException nfe)
 					value = registers.get(split.get(1))
 				if (split.get(0).equals("cpy")) {
-					registers.replace(split.get(2),value)
+					registers.replace(split.get(2), value)
 					pos++
-				} else {
-					if (value != 0)
-						pos += Integer.parseInt(split.get(2))
-					else
-						pos ++
-				}
+				} else
+					pos += value == 0 ? 1 : Integer.parseInt(split.get(2))
 			}
 		}
 		println(registers.get("a"))

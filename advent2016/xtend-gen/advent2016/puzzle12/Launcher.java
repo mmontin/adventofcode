@@ -10,7 +10,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Launcher {
-  private static final Map<String, Integer> registers = CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("a", Integer.valueOf(0)), Pair.<String, Integer>of("b", Integer.valueOf(0)), Pair.<String, Integer>of("c", Integer.valueOf(1)), Pair.<String, Integer>of("d", Integer.valueOf(0)));
+  private static final Map<String, Integer> registers = CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("a", Integer.valueOf(0)), Pair.<String, Integer>of("b", Integer.valueOf(0)), Pair.<String, Integer>of("c", Integer.valueOf(0)), Pair.<String, Integer>of("d", Integer.valueOf(0)));
   
   private static final List<String> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(12)).getInputs();
   
@@ -49,13 +49,14 @@ public class Launcher {
             Launcher.registers.replace(split[2], Integer.valueOf(value));
             pos++;
           } else {
-            if ((value != 0)) {
-              int _pos = pos;
-              int _parseInt = Integer.parseInt(split[2]);
-              pos = (_pos + _parseInt);
+            int _pos = pos;
+            int _xifexpression_1 = (int) 0;
+            if ((value == 0)) {
+              _xifexpression_1 = 1;
             } else {
-              pos++;
+              _xifexpression_1 = Integer.parseInt(split[2]);
             }
+            pos = (_pos + _xifexpression_1);
           }
         }
       }
