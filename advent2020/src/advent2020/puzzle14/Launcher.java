@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -14,7 +14,7 @@ public class Launcher {
 	private static Map<Long, Long> data = new HashMap<>();
 
 	public static void main(String[] args) throws IOException {
-		for (String s : Utils.getInputs(14)) {
+		for (String s : new InputLoader(2020,14).getInputs()) {
 			String[] split = s.split(" = ");
 			if (split[0].equals("mask"))
 				mask = split[1];

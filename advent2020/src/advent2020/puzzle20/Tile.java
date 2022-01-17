@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import advent2020.Utils;
+import adventutils.string.StringUtils;
 
 public class Tile {
 
@@ -41,13 +41,13 @@ public class Tile {
 	public String matchesAny(Tile otherTile) {
 		for (String s : otherTile.borders) {
 			if (matches(s)) return s ;
-			if (matches(Utils.reverse(s))) return Utils.reverse(s) ;
+			if (matches(StringUtils.reverse(s))) return StringUtils.reverse(s) ;
 		}
 		return null ;
 	}
 	
 	public boolean matches(String other) {
-		for (String s : borders) if (s.equals(other) || s.equals(Utils.reverse(other))) return true ;
+		for (String s : borders) if (s.equals(other) || s.equals(StringUtils.reverse(other))) return true ;
 		return false ;
 	}
 
@@ -92,9 +92,9 @@ public class Tile {
 		String east = borders.remove(0) ;
 		String south = borders.remove(0) ;
 		String west = borders.remove(0) ;
-		borders.add(Utils.reverse(west)) ;
+		borders.add(StringUtils.reverse(west)) ;
 		borders.add(north) ;
-		borders.add(Utils.reverse(east)) ;
+		borders.add(StringUtils.reverse(east)) ;
 		borders.add(south) ;
 	}
 	
@@ -104,9 +104,9 @@ public class Tile {
 		String south = borders.remove(0) ;
 		String west = borders.remove(0) ;
 		borders.add(south) ;
-		borders.add(Utils.reverse(east)) ;
+		borders.add(StringUtils.reverse(east)) ;
 		borders.add(north) ;
-		borders.add(Utils.reverse(west)) ;
+		borders.add(StringUtils.reverse(west)) ;
 	}
 	
 	public void initializeSouth() {

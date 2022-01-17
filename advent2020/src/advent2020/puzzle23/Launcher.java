@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 	
@@ -15,7 +15,7 @@ public class Launcher {
 
 		long time = System.currentTimeMillis() ;
 		
-		String input = Utils.getInputs(23).get(0) ;
+		String input = new InputLoader(2020,23).getInputs().get(0) ;
 		
 		Node first = null ;
 		Node current = null ;

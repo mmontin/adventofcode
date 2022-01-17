@@ -5,18 +5,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import advent2020.Utils;
-import advent2020.Utils.MyList;
+import adventutils.input.InputLoader;
+import adventutils.list.AgdaList;
 
 public class Launcher {
 	public static void main(String[] args) throws IOException {
-		List<Integer> input = Utils.getInputs(10).stream().map(x -> Integer.parseInt(x)).collect(Collectors.toList());
+		List<Integer> input = new InputLoader(2020,10).getInputs().stream().map(x -> Integer.parseInt(x)).collect(Collectors.toList());
 		input.sort(Comparator.naturalOrder());
 		Distance d = new Distance(0,1) ;
 		d.update(0, input.get(0));
 		for (int i = 0; i < input.size() - 1; i++) d.update(input.get(i), input.get(i+1));
 		System.out.println(d.result());
-		System.out.println(new MyList<Integer>(input));
+		System.out.println(new AgdaList<Integer>(input));
 	}
 	
 	private static class Distance {

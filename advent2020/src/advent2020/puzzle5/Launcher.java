@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		List<String> inputs = Utils.getInputs(5);
+		List<String> inputs = new InputLoader(2020,5).getInputs();
 		List<Integer> ids = new ArrayList<>() ;
 		for (String s : inputs) ids.add(process(s)) ;
 		Collections.sort(ids);

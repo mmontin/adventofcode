@@ -3,12 +3,12 @@ package advent2020.puzzle3;
 import java.io.IOException;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		List<String> inputs = Utils.getInputs(3);
+		List<String> inputs = new InputLoader(2020,3).getInputs();
 		long un = collisions(1, 1, inputs) ;
 		long deux = collisions(3, 1, inputs) ;
 		long trois = collisions(5, 1, inputs) ;

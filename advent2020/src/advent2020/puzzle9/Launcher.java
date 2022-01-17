@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	private static final int RANGE = 25;
 
 	public static void main(String[] args) throws IOException {
-		List<Long> inputs = Utils.getInputs(9).stream().map(x -> Long.parseLong(x)).collect(Collectors.toList());
+		List<Long> inputs = new InputLoader(2020,9).getInputs().stream().map(x -> Long.parseLong(x)).collect(Collectors.toList());
 		List<Long> toCheck = new ArrayList<>(inputs.subList(0, RANGE));
 		List<Long> toBeChecked = new ArrayList<>(inputs.subList(RANGE, inputs.size()));
 		long key = checkList(toCheck, toBeChecked);

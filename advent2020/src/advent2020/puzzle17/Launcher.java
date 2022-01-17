@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -18,7 +18,7 @@ public class Launcher {
 
 		long time = System.currentTimeMillis() ;
 		
-		List<String> inputs = Utils.getInputs(17) ;
+		List<String> inputs = new InputLoader(2020,17).getInputs() ;
 		for (int i = 0 ; i < inputs.size() ; i++)
 			for (int j = 0 ; j < inputs.get(i).length() ; j++)
 				grid.put(new Triplet(i , j, 0, 0), inputs.get(i).charAt(j) == '#') ;

@@ -3,13 +3,13 @@ package advent2020.puzzle4;
 import java.io.IOException;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
 		
-		List<String> inputs = Utils.getInputs(4) ;
+		List<String> inputs = new InputLoader(2020,4).getInputs() ;
 		int result = 0 ;
 		Passport p = new Passport() ;
 		

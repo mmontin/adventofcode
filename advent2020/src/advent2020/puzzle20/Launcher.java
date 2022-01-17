@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
 		
-		BufferedReader br = Utils.getInputReader(20) ;
+		BufferedReader br = new InputLoader(2020,20).getInputReader() ;
 		
 		// Building the tiles
 		List<Tile> tiles = new ArrayList<Tile>() ;

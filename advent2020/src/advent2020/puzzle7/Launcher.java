@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -15,7 +15,7 @@ public class Launcher {
 	public static void main(String[] args) throws IOException {
 
 		// Populating the data
-		for (String s : Utils.getInputs(7)) {
+		for (String s : new InputLoader(2020,7).getInputs()) {
 			String[] split1 = s.split("bags contain");
 			String color = split1[0].replaceAll("\\s+", "");
 			Bag current = getBag(color);

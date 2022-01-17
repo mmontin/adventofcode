@@ -3,14 +3,14 @@ package advent2020.puzzle25;
 import java.io.IOException;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	private final static int subjectNb = 7 ;
 	
 	public static void main(String[] args) throws IOException {
-		List<String> l = Utils.getInputs(25) ;
+		List<String> l = new InputLoader(2020,25).getInputs() ;
 		
 		int cardKey = Integer.parseInt(l.get(0)) ;
 		int doorKey = Integer.parseInt(l.get(1)) ;

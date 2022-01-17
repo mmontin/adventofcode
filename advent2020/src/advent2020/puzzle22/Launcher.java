@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
+import adventutils.list.AgdaList;
 
 public class Launcher {
 
@@ -14,7 +15,7 @@ public class Launcher {
 
 	
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = Utils.getInputReader(22) ;
+		BufferedReader br = new InputLoader(2020,22).getInputReader() ;
 		br.readLine() ;
 		String line ;
 		while (!(line = br.readLine()).isBlank())
@@ -23,7 +24,7 @@ public class Launcher {
 		while (!(line = br.readLine()).isBlank())
 			joueur2.add(Integer.parseInt(line)) ;
 		br.close();
-		System.out.println("joueur1 = " + new Utils.MyList<>(joueur1));
-		System.out.println("joueur2 = " + new Utils.MyList<>(joueur2));
+		System.out.println("joueur1 = " + new AgdaList<>(joueur1));
+		System.out.println("joueur2 = " + new AgdaList<>(joueur2));
 	}
 }

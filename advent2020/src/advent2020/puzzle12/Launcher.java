@@ -3,13 +3,13 @@ package advent2020.puzzle12;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import advent2020.Utils;
-import advent2020.Utils.MyList;
+import adventutils.input.InputLoader;
+import adventutils.list.AgdaList;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		System.out.println(new MyList<>(Utils.getInputs(12).stream().map(Instruction::new).collect(Collectors.toList())));
+		System.out.println(new AgdaList<>(new InputLoader(2020,12).getInputs().stream().map(Instruction::new).collect(Collectors.toList())));
 	}
 
 	private static enum InstructionType {

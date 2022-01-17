@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -13,7 +13,7 @@ public class Launcher {
 
 		List<Pair> pairs = new ArrayList<Pair>() ;
 		int i = 0 ;
-		for (String s : Utils.getInputs(13).get(1).split(",")) {
+		for (String s : new InputLoader(2020,13).getInputs().get(1).split(",")) {
 			try {
 				int v = Integer.parseInt(s) ;
 				int os = v - (i % v) ;

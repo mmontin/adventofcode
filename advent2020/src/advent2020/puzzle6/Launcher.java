@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -14,7 +14,7 @@ public class Launcher {
 		int total = 0;
 		boolean first = true;
 		Set<Character> set = new HashSet<>();
-		for (String s : Utils.getInputs(6)) {
+		for (String s : new InputLoader(2020,6).getInputs()) {
 			if (s.isBlank()) {
 				total += set.size();
 				set.clear();

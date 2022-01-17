@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		List<Integer> inputs = Utils.getInputs(1).stream()
+		List<Integer> inputs = new InputLoader(2020,1).getInputs().stream()
 				.map(s -> Integer.valueOf(s)).collect(Collectors.toList());
 		for (int i = 0; i < inputs.size(); i++)
 			for (int j = i + 1; j < inputs.size(); j++)

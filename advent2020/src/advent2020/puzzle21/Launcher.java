@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -21,7 +21,7 @@ public class Launcher {
 
 	public static void main(String[] args) throws IOException {
 
-		BufferedReader br = Utils.getInputReader(21);
+		BufferedReader br = new InputLoader(2020,21).getInputReader();
 		String line;
 		while (!((line = br.readLine()) == null)) {
 			String[] split = line.split(" \\(contains ");

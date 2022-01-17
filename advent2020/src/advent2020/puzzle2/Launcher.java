@@ -3,12 +3,12 @@ package advent2020.puzzle2;
 import java.io.IOException;
 import java.util.List;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	public static void main(String[] args) throws IOException {
-		List<String> inputs = Utils.getInputs(2) ;
+		List<String> inputs = new InputLoader(2020,2).getInputs() ;
 		int result = 0 ;
 		for (String input : inputs)
 			if (process(input)) result++ ;

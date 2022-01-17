@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
 	static Map<Coordinate,Tile> tiles = new HashMap<>() ;
 	
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = Utils.getInputReader(24) ;
+		BufferedReader br = new InputLoader(2020,24).getInputReader() ;
 		String line ;
 		while ((line = br.readLine()) != null)
 			tiles.merge(new Coordinate(line), new Tile(false), ((x , y) -> x.flip())) ;

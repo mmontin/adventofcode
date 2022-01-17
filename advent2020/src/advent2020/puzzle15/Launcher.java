@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import advent2020.Utils;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 
@@ -14,7 +14,7 @@ public class Launcher {
 	private static Integer turnNumber = 1 ;
 	
 	public static void main(String[] args) throws IOException {
-		String[] input = Utils.getInputs(15).get(0).split(",");
+		String[] input = new InputLoader(2020,15).getInputs().get(0).split(",");
 		for (int i = 0 ; i < input.length ; i++) {
 			Integer val = Integer.parseInt(input[i]) ;
 			if (i == 0) first = val ;
