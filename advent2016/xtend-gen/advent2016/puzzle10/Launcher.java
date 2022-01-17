@@ -1,6 +1,6 @@
 package advent2016.puzzle10;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -29,7 +29,7 @@ public class Launcher {
         }
       }
     };
-    Utils.getInputs(10).forEach(_function);
+    new InputLoader(Integer.valueOf(2016), Integer.valueOf(10)).getInputs().forEach(_function);
     Bot current = null;
     while (((current = IterableExtensions.<Bot>findFirst(Launcher.bots.values(), new Function1<Bot, Boolean>() {
       public Boolean apply(final Bot it) {

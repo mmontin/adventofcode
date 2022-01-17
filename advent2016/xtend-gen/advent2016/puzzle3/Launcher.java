@@ -1,6 +1,6 @@
 package advent2016.puzzle3;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -30,7 +30,7 @@ public class Launcher {
         return IterableExtensions.<Integer>toList(IterableExtensions.<String, Integer>map(IterableExtensions.<String>filter(((Iterable<String>)Conversions.doWrapArray(it.split(" "))), _function), _function_1));
       }
     };
-    List<List<Integer>> input = Utils.<List<Integer>>getInputs(3, _function);
+    List<List<Integer>> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(3)).<List<Integer>>getInputs(_function);
     final Function2<Integer, List<Integer>, Integer> _function_1 = new Function2<Integer, List<Integer>, Integer>() {
       public Integer apply(final Integer nb, final List<Integer> triangle) {
         Integer _xblockexpression = null;

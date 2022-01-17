@@ -1,6 +1,7 @@
 package advent2016.puzzle1
 
-import advent2016.Utils
+import adventutils.geometry.Coordinate
+import adventutils.input.InputLoader
 import java.util.List
 import java.util.Set
 
@@ -16,14 +17,14 @@ class Launcher {
 	
 	static final List<Direction> directions = newArrayList(Direction.N, Direction.E, Direction.S, Direction.O)
 	
-	static Set<Coordinates> visited = newHashSet
+	static Set<Coordinate> visited = newHashSet
 	
-	static Coordinates position = new Coordinates(0,0)
+	static Coordinate position = new Coordinate(0,0)
 	static Direction direction = Direction.N
 	
 	def static void main(String[] args) {
 		
-		val input = Utils.getInputReader(1).readLine.split(", ").toList
+		val input = new InputLoader(2016,1).getInputReader.readLine.split(", ").toList
 		
 //		input.forEach[
 //			it.substring(0,1).equals('R') ? turnRight : turnLeft
@@ -44,17 +45,17 @@ class Launcher {
 				case Instruction.R : turnRight
 				case Instruction.L : turnLeft
 				default : {
-					visited.add(new Coordinates(position))
+					visited.add(position)
 					advance(1)
 				}
 			}
 			i++
 		}
-		println(position.blocks)
+		println(position.manhattanDistanceToZero)
 	}
 	
 	def static advance(int length) {
-		switch (direction) {
+		position = switch (direction) {
 			case N : position.addX(length)
 			case S : position.addX(-length)
 			case E : position.addY(length)

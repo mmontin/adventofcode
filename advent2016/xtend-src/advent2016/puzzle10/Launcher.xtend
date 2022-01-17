@@ -1,6 +1,6 @@
 package advent2016.puzzle10
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 import java.util.HashMap
 
 class Launcher {
@@ -10,7 +10,7 @@ class Launcher {
 	
 	def static void main(String[] args) {
 
-		Utils.getInputs(10).forEach [
+		new InputLoader(2016,10).getInputs.forEach [
 			val split = it.split(" ")
 			if (split.get(0).equals("value"))
 				find_bot(split.get(5),"bot").addChips(Integer::parseInt(split.get(1)))

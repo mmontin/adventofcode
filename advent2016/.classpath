@@ -9,5 +9,6 @@
 	<classpathentry kind="src" path="xtend-src"/>
 	<classpathentry kind="src" path="xtend-gen"/>
 	<classpathentry kind="lib" path="libraries/commons-codec-1.15.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/adventutils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

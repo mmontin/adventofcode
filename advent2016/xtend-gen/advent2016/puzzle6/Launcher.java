@@ -1,6 +1,6 @@
 package advent2016.puzzle6;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class Launcher {
         return it.toCharArray();
       }
     };
-    final List<char[]> input = Utils.<char[]>getInputs(6, _function);
+    final List<char[]> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(6)).<char[]>getInputs(_function);
     int _size = ((List<Character>)Conversions.doWrapArray(input.get(0))).size();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
     for (final Integer j : _doubleDotLessThan) {

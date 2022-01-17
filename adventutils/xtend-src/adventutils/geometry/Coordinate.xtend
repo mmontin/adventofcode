@@ -31,6 +31,14 @@ class Coordinate {
 		x
 	}
 
+	def addX(int x_) {
+		new Coordinate(x + x_, y)
+	}
+
+	def addY(int y_) {
+		new Coordinate(x , y + y_)
+	}
+
 	def getY() {
 		y
 	}
@@ -82,6 +90,14 @@ class Coordinate {
 		if(y > lowerBound) output.add(new Coordinate(x, y - 1))
 		if(y < higherBound) output.add(new Coordinate(x, y + 1))
 		output
+	}
+
+	def manhattanDistanceTo(Coordinate other) {
+		Math.abs(other.x - x) + Math.abs(other.y - y)
+	}
+	
+	def manhattanDistanceToZero() {
+		manhattanDistanceTo(new Coordinate(0,0))
 	}
 
 	override toString() {

@@ -1,8 +1,8 @@
 package advent2016.puzzle4
 
-import advent2016.Utils
-import java.util.List
+import adventutils.input.InputLoader
 import java.util.Collections
+import java.util.List
 
 class Launcher {
 	
@@ -68,7 +68,7 @@ class Launcher {
 	
 	def static void main(String[] args) {
 		
-		val entries = Utils.getInputs(4)[new Entry(it)]
+		val entries = new InputLoader(2016,4).getInputs[new Entry(it)]
 		
 		println(entries.fold(0)[sum , e | e.verifyChecksum ? sum + e.sector_id : sum])
 		

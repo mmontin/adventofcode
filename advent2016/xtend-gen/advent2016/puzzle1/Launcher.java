@@ -1,6 +1,7 @@
 package advent2016.puzzle1;
 
-import advent2016.Utils;
+import adventutils.geometry.Coordinate;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,15 +36,15 @@ public class Launcher {
   
   private static final List<Launcher.Direction> directions = CollectionLiterals.<Launcher.Direction>newArrayList(Launcher.Direction.N, Launcher.Direction.E, Launcher.Direction.S, Launcher.Direction.O);
   
-  private static Set<Coordinates> visited = CollectionLiterals.<Coordinates>newHashSet();
+  private static Set<Coordinate> visited = CollectionLiterals.<Coordinate>newHashSet();
   
-  private static Coordinates position = new Coordinates(0, 0);
+  private static Coordinate position = new Coordinate(0, 0);
   
   private static Launcher.Direction direction = Launcher.Direction.N;
   
   public static void main(final String[] args) {
     try {
-      final List<String> input = IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(Utils.getInputReader(1).readLine().split(", "))));
+      final List<String> input = IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2016), Integer.valueOf(1)).getInputReader().readLine().split(", "))));
       final Function2<ArrayList<Launcher.Instruction>, String, ArrayList<Launcher.Instruction>> _function = new Function2<ArrayList<Launcher.Instruction>, String, ArrayList<Launcher.Instruction>>() {
         public ArrayList<Launcher.Instruction> apply(final ArrayList<Launcher.Instruction> l, final String v) {
           ArrayList<Launcher.Instruction> _xblockexpression = null;
@@ -83,30 +84,28 @@ public class Launcher {
                 break;
               default:
                 {
-                  Coordinates _coordinates = new Coordinates(Launcher.position);
-                  Launcher.visited.add(_coordinates);
+                  Launcher.visited.add(Launcher.position);
                   Launcher.advance(1);
                 }
                 break;
             }
           } else {
             {
-              Coordinates _coordinates = new Coordinates(Launcher.position);
-              Launcher.visited.add(_coordinates);
+              Launcher.visited.add(Launcher.position);
               Launcher.advance(1);
             }
           }
           i++;
         }
       }
-      InputOutput.<Integer>println(Integer.valueOf(Launcher.position.blocks()));
+      InputOutput.<Integer>println(Integer.valueOf(Launcher.position.manhattanDistanceToZero()));
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public static int advance(final int length) {
-    int _switchResult = (int) 0;
+  public static Coordinate advance(final int length) {
+    Coordinate _switchResult = null;
     final Launcher.Direction direction = Launcher.direction;
     if (direction != null) {
       switch (direction) {
@@ -126,7 +125,7 @@ public class Launcher {
     } else {
       _switchResult = Launcher.position.addY((-length));
     }
-    return _switchResult;
+    return Launcher.position = _switchResult;
   }
   
   public static Launcher.Direction turnRight() {

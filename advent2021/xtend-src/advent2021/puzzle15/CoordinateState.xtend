@@ -5,8 +5,10 @@ import adventutils.geometry.Coordinate
 
 class CoordinateState extends Coordinate implements State {
 	
+	static final Coordinate finalState = new Coordinate(Launcher.max_indice,Launcher.max_indice)
+	
 	int manhattan
-	boolean finalState
+	boolean isFinal
 
 	new(Coordinate c) {
 		this(c.x, c.y)
@@ -14,12 +16,12 @@ class CoordinateState extends Coordinate implements State {
 
 	new(int x_, int y_) {
 		super(x_, y_)
-		manhattan = 2 * Launcher.max_indice - x - y
-		finalState = x == Launcher.max_indice && y == Launcher.max_indice
+		manhattan = manhattanDistanceTo(finalState)
+		isFinal = this.equals(finalState)
 	}
 
 	override isGoal() {
-		finalState
+		isFinal
 	}
 
 	override minToGoal() {

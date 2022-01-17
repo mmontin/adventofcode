@@ -1,12 +1,12 @@
 package advent2016.puzzle3
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 import java.util.List
 
 class Launcher {
 	def static void main(String[] args) {
 
-		var List<List<Integer>> input = Utils.getInputs(3)[it.split(" ").filter[s|!s.isEmpty].map[Integer::parseInt(it)].toList]
+		var List<List<Integer>> input = new InputLoader(2016,3).getInputs[it.split(" ").filter[s|!s.isEmpty].map[Integer::parseInt(it)].toList]
 
 		println(input.fold(0) [ nb, triangle |
 			var c1 = triangle.get(0)

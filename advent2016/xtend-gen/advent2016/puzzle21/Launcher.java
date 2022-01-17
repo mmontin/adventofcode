@@ -1,6 +1,6 @@
 package advent2016.puzzle21;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -12,6 +12,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
+    final InputLoader il = new InputLoader(Integer.valueOf(2016), Integer.valueOf(21));
     final StringBuffer sb = new StringBuffer("abcdefgh");
     final Consumer<String> _function = new Consumer<String>() {
       public void accept(final String it) {
@@ -110,7 +111,7 @@ public class Launcher {
         }
       }
     };
-    Utils.getInputs(21).forEach(_function);
+    il.getInputs().forEach(_function);
     InputOutput.<StringBuffer>println(sb);
     InputOutput.<String>println("--------------");
     final StringBuffer sb2 = new StringBuffer("fbgdceah");
@@ -231,7 +232,7 @@ public class Launcher {
         }
       }
     };
-    ListExtensions.<String>reverse(Utils.getInputs(21)).forEach(_function_1);
+    ListExtensions.<String>reverse(il.getInputs()).forEach(_function_1);
     InputOutput.<StringBuffer>println(sb2);
   }
 }

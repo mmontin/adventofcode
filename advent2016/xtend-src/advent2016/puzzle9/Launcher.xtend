@@ -1,6 +1,6 @@
 package advent2016.puzzle9
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 import java.util.Map
 import java.util.Set
 import java.util.regex.Pattern
@@ -8,7 +8,7 @@ import java.util.regex.Pattern
 class Launcher {
 	def static void main(String[] args) {
 
-		var toProcess = Utils.getInputs(9).get(0)
+		var toProcess = new InputLoader(2016,9).getInputs.get(0)
 
 		val pattern = Pattern.compile("\\([^\\)]*\\)")
 		val matcher = pattern.matcher(toProcess)

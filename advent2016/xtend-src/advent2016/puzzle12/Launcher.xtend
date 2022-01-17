@@ -1,13 +1,13 @@
 package advent2016.puzzle12
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 import java.util.List
 import java.util.Map
 
 class Launcher {
 
 	static final Map<String, Integer> registers = newHashMap("a" -> 0, "b" -> 0, "c" -> 1, "d" -> 0)
-	static final List<String> input = Utils.getInputs(12)
+	static final List<String> input = new InputLoader(2016,12).getInputs
 
 	def static void main(String[] args) {
 		var pos = 0

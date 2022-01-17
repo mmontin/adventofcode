@@ -10,9 +10,11 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class CoordinateState extends Coordinate implements State {
+  private static final Coordinate finalState = new Coordinate(Launcher.max_indice, Launcher.max_indice);
+  
   private int manhattan;
   
-  private boolean finalState;
+  private boolean isFinal;
   
   public CoordinateState(final Coordinate c) {
     this(c.getX(), c.getY());
@@ -20,16 +22,12 @@ public class CoordinateState extends Coordinate implements State {
   
   public CoordinateState(final int x_, final int y_) {
     super(x_, y_);
-    int _x = this.getX();
-    int _minus = ((2 * Launcher.max_indice) - _x);
-    int _y = this.getY();
-    int _minus_1 = (_minus - _y);
-    this.manhattan = _minus_1;
-    this.finalState = ((this.getX() == Launcher.max_indice) && (this.getY() == Launcher.max_indice));
+    this.manhattan = this.manhattanDistanceTo(CoordinateState.finalState);
+    this.isFinal = this.equals(CoordinateState.finalState);
   }
   
   public boolean isGoal() {
-    return this.finalState;
+    return this.isFinal;
   }
   
   public int minToGoal() {

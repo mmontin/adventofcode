@@ -1,11 +1,11 @@
 package advent2016.puzzle2
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 
 	def static void main(String[] args) {
-		val input = Utils.getInputs(2)
+		val input = new InputLoader(2016,2).getInputs
 		
 		val outputs = newArrayList
 		

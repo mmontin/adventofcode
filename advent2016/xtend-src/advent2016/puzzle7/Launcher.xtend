@@ -1,10 +1,10 @@
 package advent2016.puzzle7
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 	def static void main(String[] args) {
-		val input = Utils.getInputs(7)
+		val input = new InputLoader(2016,7).getInputs
 		println(input.fold(0)[v , e |
 			v + (checkTLS(e) ? 1 : 0)
 		])

@@ -1,6 +1,6 @@
 package advent2016.puzzle20
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 	
@@ -8,7 +8,7 @@ class Launcher {
 		
 		val c = new Constellation()
 
-		Utils.getInputs(20).forEach[
+		new InputLoader(2016,20).getInputs.forEach[
 			c.addInterval(new Interval(it))
 		]
 		

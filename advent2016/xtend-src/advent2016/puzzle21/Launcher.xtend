@@ -1,13 +1,15 @@
 package advent2016.puzzle21
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 
 class Launcher {
 	def static void main(String[] args) {
 		
+		val il = new InputLoader(2016,21)
+		
 		val sb = new StringBuffer("abcdefgh")
 		
-		Utils.getInputs(21).forEach[
+		il.getInputs.forEach[
 			val split = it.split(" ")
 			switch (split.get(0)) {
 				case "swap" : {
@@ -74,7 +76,7 @@ class Launcher {
 		
 		val sb2 = new StringBuffer("fbgdceah")
 		
-		Utils.getInputs(21).reverse.forEach[
+		il.getInputs.reverse.forEach[
 			val split = it.split(" ")
 			switch (split.get(0)) {
 				case "swap" : {

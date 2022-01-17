@@ -1,6 +1,6 @@
 package advent2016.puzzle20;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
@@ -14,7 +14,7 @@ public class Launcher {
         c.addInterval(_interval);
       }
     };
-    Utils.getInputs(20).forEach(_function);
+    new InputLoader(Integer.valueOf(2016), Integer.valueOf(20)).getInputs().forEach(_function);
     InputOutput.<Long>println(Long.valueOf(c.firstValid()));
     InputOutput.<Long>println(c.nb_of_valids());
   }

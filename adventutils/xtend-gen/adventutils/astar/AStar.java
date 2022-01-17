@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
@@ -38,26 +39,31 @@ public class AStar {
     this.previous = CollectionLiterals.<State, State>newHashMap();
   }
   
-  private void step() {
-    final Consumer<Pair<State, Integer>> _function = new Consumer<Pair<State, Integer>>() {
-      public void accept(final Pair<State, Integer> it) {
-        final State state = it.getKey();
-        Integer _get = AStar.this.gScore.get(AStar.this.current);
-        Integer _value = it.getValue();
-        final int newGScore = ((_get).intValue() + (_value).intValue());
-        final Integer currentScore = AStar.this.gScore.get(state);
-        if (((currentScore == null) || (newGScore < (currentScore).intValue()))) {
-          AStar.this.previous.put(state, AStar.this.current);
-          AStar.this.toVisit.remove(state);
-          AStar.this.gScore.put(state, Integer.valueOf(newGScore));
-          int _minToGoal = state.minToGoal();
-          int _plus = (newGScore + _minToGoal);
-          AStar.this.fScore.put(state, Integer.valueOf(_plus));
-          AStar.this.toVisit.add(state);
+  private State step() {
+    State _xblockexpression = null;
+    {
+      final Consumer<Pair<State, Integer>> _function = new Consumer<Pair<State, Integer>>() {
+        public void accept(final Pair<State, Integer> it) {
+          final State state = it.getKey();
+          Integer _get = AStar.this.gScore.get(AStar.this.current);
+          Integer _value = it.getValue();
+          final int newGScore = ((_get).intValue() + (_value).intValue());
+          final Integer currentScore = AStar.this.gScore.get(state);
+          if (((currentScore == null) || (newGScore < (currentScore).intValue()))) {
+            AStar.this.previous.put(state, AStar.this.current);
+            AStar.this.toVisit.remove(state);
+            AStar.this.gScore.put(state, Integer.valueOf(newGScore));
+            int _minToGoal = state.minToGoal();
+            int _plus = (newGScore + _minToGoal);
+            AStar.this.fScore.put(state, Integer.valueOf(_plus));
+            AStar.this.toVisit.add(state);
+          }
         }
-      }
-    };
-    this.current.neighbours().forEach(_function);
+      };
+      this.current.neighbours().forEach(_function);
+      _xblockexpression = this.toVisit.poll();
+    }
+    return _xblockexpression;
   }
   
   public List<State> minPath() {
@@ -83,10 +89,22 @@ public class AStar {
   public AStar run() {
     AStar _xblockexpression = null;
     {
+      int i = 0;
+      long time = System.currentTimeMillis();
       while ((!this.current.isGoal())) {
         {
-          this.step();
-          this.current = this.toVisit.poll();
+          this.current = this.step();
+          i++;
+          if (((i % 1000) == 0)) {
+            String _plus = (Integer.valueOf(i) + " last 1000 entries computed in ");
+            long _currentTimeMillis = System.currentTimeMillis();
+            long _minus = (_currentTimeMillis - time);
+            String _plus_1 = (_plus + Long.valueOf(_minus));
+            String _plus_2 = (_plus_1 + "ms");
+            InputOutput.<String>println(_plus_2);
+            InputOutput.<Integer>println(Integer.valueOf(this.toVisit.size()));
+            time = System.currentTimeMillis();
+          }
         }
       }
       _xblockexpression = this;

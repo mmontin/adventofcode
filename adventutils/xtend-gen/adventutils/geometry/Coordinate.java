@@ -30,6 +30,14 @@ public class Coordinate {
     return this.x;
   }
   
+  public Coordinate addX(final int x_) {
+    return new Coordinate((this.x + x_), this.y);
+  }
+  
+  public Coordinate addY(final int y_) {
+    return new Coordinate(this.x, (this.y + y_));
+  }
+  
   public int getY() {
     return this.y;
   }
@@ -95,6 +103,17 @@ public class Coordinate {
       _xblockexpression = output;
     }
     return _xblockexpression;
+  }
+  
+  public int manhattanDistanceTo(final Coordinate other) {
+    int _abs = Math.abs((other.x - this.x));
+    int _abs_1 = Math.abs((other.y - this.y));
+    return (_abs + _abs_1);
+  }
+  
+  public int manhattanDistanceToZero() {
+    Coordinate _coordinate = new Coordinate(0, 0);
+    return this.manhattanDistanceTo(_coordinate);
   }
   
   public String toString() {

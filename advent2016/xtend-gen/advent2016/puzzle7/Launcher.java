@@ -1,6 +1,6 @@
 package advent2016.puzzle7;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -14,7 +14,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    final List<String> input = Utils.getInputs(7);
+    final List<String> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(7)).getInputs();
     final Function2<Integer, String, Integer> _function = new Function2<Integer, String, Integer>() {
       public Integer apply(final Integer v, final String e) {
         int _xifexpression = (int) 0;

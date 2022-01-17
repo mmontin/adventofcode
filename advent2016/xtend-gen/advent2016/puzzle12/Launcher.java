@@ -1,6 +1,6 @@
 package advent2016.puzzle12;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -12,7 +12,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class Launcher {
   private static final Map<String, Integer> registers = CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("a", Integer.valueOf(0)), Pair.<String, Integer>of("b", Integer.valueOf(0)), Pair.<String, Integer>of("c", Integer.valueOf(1)), Pair.<String, Integer>of("d", Integer.valueOf(0)));
   
-  private static final List<String> input = Utils.getInputs(12);
+  private static final List<String> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(12)).getInputs();
   
   public static void main(final String[] args) {
     int pos = 0;

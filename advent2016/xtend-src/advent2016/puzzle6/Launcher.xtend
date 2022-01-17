@@ -1,6 +1,6 @@
 package advent2016.puzzle6
 
-import advent2016.Utils
+import adventutils.input.InputLoader
 import java.util.HashMap
 
 class Launcher {
@@ -8,7 +8,7 @@ class Launcher {
 		var ans1 = ""
 		var ans2 = ""
 		
-		val input = Utils.getInputs(6)[it.toCharArray]
+		val input = new InputLoader(2016,6).getInputs[it.toCharArray]
 		for (j : 0..<input.get(0).size) {
 			val map = new HashMap<Character,Integer>
 			for (i : 0..<input.size) map.merge(input.get(i).get(j),1)[u , v | u + v]

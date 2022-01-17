@@ -1,6 +1,6 @@
 package advent2016.puzzle4;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -130,7 +130,7 @@ public class Launcher {
         return new Launcher.Entry(it);
       }
     };
-    final List<Launcher.Entry> entries = Utils.<Launcher.Entry>getInputs(4, _function);
+    final List<Launcher.Entry> entries = new InputLoader(Integer.valueOf(2016), Integer.valueOf(4)).<Launcher.Entry>getInputs(_function);
     final Function2<Integer, Launcher.Entry, Integer> _function_1 = new Function2<Integer, Launcher.Entry, Integer>() {
       public Integer apply(final Integer sum, final Launcher.Entry e) {
         Integer _xifexpression = null;

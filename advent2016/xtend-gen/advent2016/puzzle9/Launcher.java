@@ -1,6 +1,6 @@
 package advent2016.puzzle9;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -16,7 +16,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    String toProcess = Utils.getInputs(9).get(0);
+    String toProcess = new InputLoader(Integer.valueOf(2016), Integer.valueOf(9)).getInputs().get(0);
     final Pattern pattern = Pattern.compile("\\([^\\)]*\\)");
     final Matcher matcher = pattern.matcher(toProcess);
     final Set<Integer> indexes_to_ignore = CollectionLiterals.<Integer>newHashSet();

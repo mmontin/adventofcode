@@ -11,7 +11,7 @@ class AStar {
 	Map<State,State> previous
 	State current
 	
-	new	(State initial_) {
+	new(State initial_) {
 		toVisit = new PriorityQueue<State>[ e1, e2 |
 			Integer::compare(fScore.get(e1), fScore.get(e2))
 		]
@@ -36,6 +36,7 @@ class AStar {
 				toVisit.add(state)
 			}
 		]
+		toVisit.poll
 	}
 	
 	def minPath() {
@@ -53,9 +54,17 @@ class AStar {
 	}
 	
 	def run() {
+		var i = 0
+		var time = System.currentTimeMillis
 		while(!current.isGoal) {
-			step()
-			current = toVisit.poll
+			current = step()
+			i++
+			if (i%1000==0) {
+				println(i + " last 1000 entries computed in " + (System.currentTimeMillis - time) + "ms")
+				println(toVisit.size)
+				time = System.currentTimeMillis
+			}
+				
 		}
 		this
 	}

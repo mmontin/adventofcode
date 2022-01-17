@@ -1,6 +1,6 @@
 package advent2016.puzzle2;
 
-import advent2016.Utils;
+import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    final List<String> input = Utils.getInputs(2);
+    final List<String> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(2)).getInputs();
     final ArrayList<Integer> outputs = CollectionLiterals.<Integer>newArrayList();
     final Consumer<String> _function = new Consumer<String>() {
       public void accept(final String it) {
