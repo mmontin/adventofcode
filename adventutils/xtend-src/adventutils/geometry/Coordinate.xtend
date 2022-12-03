@@ -42,6 +42,16 @@ class Coordinate {
 	def getY() {
 		y
 	}
+	
+	def Coordinate right(int max) {
+		if (y + 1 == max) new Coordinate(x,0)
+		else addY(1)
+	}
+	
+	def Coordinate down(int max) {
+		if (x + 1 == max) new Coordinate(0,y)
+		else addX(1)
+	}
 
 	def symByY(int offset) {
 		new Coordinate(x, 2 * offset - y)
@@ -98,6 +108,12 @@ class Coordinate {
 	
 	def manhattanDistanceToZero() {
 		manhattanDistanceTo(new Coordinate(0,0))
+	}
+	
+	def distanceSquared(Coordinate other) {
+		val side1 = other.x - x
+		val side2 = other.y - y
+		side1 * side1 + side2 * side2
 	}
 
 	override toString() {

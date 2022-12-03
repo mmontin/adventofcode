@@ -7,7 +7,7 @@ import java.util.Set
 
 class OverState implements State {
 	
-	Coordinate currentPosition
+	protected Coordinate currentPosition
 	Set<Coordinate> toVisit
 	int code
 	
@@ -43,5 +43,9 @@ class OverState implements State {
 	override equals(Object other) {
 		val o = other as OverState
 		currentPosition.equals(o.currentPosition) && toVisit.equals(o.toVisit) 
+	}
+	
+	override toString() {
+		currentPosition.toString
 	}
 }

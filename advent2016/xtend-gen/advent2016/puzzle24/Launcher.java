@@ -1,8 +1,12 @@
 package advent2016.puzzle24;
 
 import adventutils.astar.AStar;
+import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
+import adventutils.graphic.FramedImage;
 import adventutils.input.InputLoader;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +15,8 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Launcher {
@@ -22,11 +28,17 @@ public class Launcher {
   
   public static Map<Set<Coordinate>, Integer> distances = CollectionLiterals.<Set<Coordinate>, Integer>newHashMap();
   
+  public static Map<Pair<Coordinate, Coordinate>, List<State>> paths = CollectionLiterals.<Pair<Coordinate, Coordinate>, List<State>>newHashMap();
+  
+  public static List<List<Integer>> map = CollectionLiterals.<List<Integer>>newArrayList();
+  
   public static void main(final String[] args) {
     int lineNumber = 0;
     List<String> _inputs = new InputLoader(Integer.valueOf(2016), Integer.valueOf(24)).getInputs();
     for (final String line : _inputs) {
       {
+        final ArrayList<Integer> listLine = CollectionLiterals.<Integer>newArrayList();
+        Launcher.map.add(listLine);
         int _length = line.length();
         ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _length, true);
         for (final Integer columnNumber : _doubleDotLessThan) {
@@ -40,6 +52,7 @@ public class Launcher {
             }
             Coordinate _coordinate_1 = new Coordinate(lineNumber, (columnNumber).intValue());
             Launcher.objectives.add(_coordinate_1);
+            listLine.add(Integer.valueOf(FramedImage.GREEN));
           } catch (final Throwable _t) {
             if (_t instanceof NumberFormatException) {
               char _charAt_1 = line.charAt((columnNumber).intValue());
@@ -47,6 +60,9 @@ public class Launcher {
               if (_equals) {
                 Coordinate _coordinate_2 = new Coordinate(lineNumber, (columnNumber).intValue());
                 Launcher.walls.add(_coordinate_2);
+                listLine.add(Integer.valueOf(FramedImage.BLACK));
+              } else {
+                listLine.add(Integer.valueOf(FramedImage.WHITE));
               }
             } else {
               throw Exceptions.sneakyThrow(_t);
@@ -67,12 +83,20 @@ public class Launcher {
           {
             final Coordinate target = ((Coordinate[])Conversions.unwrapArray(Launcher.objectives, Coordinate.class))[(j).intValue()];
             CoordinateState _coordinateState = new CoordinateState(source, target);
-            Launcher.distances.put(CollectionLiterals.<Coordinate>newHashSet(source, target), new AStar(_coordinateState).run().getMinDistance());
+            final AStar astar = new AStar(_coordinateState).run();
+            Launcher.distances.put(CollectionLiterals.<Coordinate>newHashSet(source, target), astar.getMinDistance());
+            final List<State> path = astar.minPath();
+            Pair<Coordinate, Coordinate> _pair = new Pair<Coordinate, Coordinate>(source, target);
+            Launcher.paths.put(_pair, path);
+            Pair<Coordinate, Coordinate> _pair_1 = new Pair<Coordinate, Coordinate>(target, source);
+            Launcher.paths.put(_pair_1, ListExtensions.<State>reverse(new ArrayList<State>(path)));
           }
         }
       }
     }
-    OverState _overState = new OverState(Launcher.initial, Launcher.objectives);
-    InputOutput.<Integer>println(new AStar(_overState).run().getMinDistance());
+    HashSet<Coordinate> _hashSet = new HashSet<Coordinate>(Launcher.objectives);
+    OverState _overState = new OverState(Launcher.initial, _hashSet);
+    final AStar finalAStar = new AStar(_overState).run();
+    InputOutput.<Integer>println(finalAStar.getMinDistance());
   }
 }

@@ -42,6 +42,26 @@ public class Coordinate {
     return this.y;
   }
   
+  public Coordinate right(final int max) {
+    Coordinate _xifexpression = null;
+    if (((this.y + 1) == max)) {
+      _xifexpression = new Coordinate(this.x, 0);
+    } else {
+      _xifexpression = this.addY(1);
+    }
+    return _xifexpression;
+  }
+  
+  public Coordinate down(final int max) {
+    Coordinate _xifexpression = null;
+    if (((this.x + 1) == max)) {
+      _xifexpression = new Coordinate(0, this.y);
+    } else {
+      _xifexpression = this.addX(1);
+    }
+    return _xifexpression;
+  }
+  
   public Coordinate symByY(final int offset) {
     return new Coordinate(this.x, ((2 * offset) - this.y));
   }
@@ -114,6 +134,16 @@ public class Coordinate {
   public int manhattanDistanceToZero() {
     Coordinate _coordinate = new Coordinate(0, 0);
     return this.manhattanDistanceTo(_coordinate);
+  }
+  
+  public int distanceSquared(final Coordinate other) {
+    int _xblockexpression = (int) 0;
+    {
+      final int side1 = (other.x - this.x);
+      final int side2 = (other.y - this.y);
+      _xblockexpression = ((side1 * side1) + (side2 * side2));
+    }
+    return _xblockexpression;
   }
   
   public String toString() {

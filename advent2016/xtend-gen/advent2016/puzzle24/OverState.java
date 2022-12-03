@@ -12,7 +12,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class OverState implements State {
-  private Coordinate currentPosition;
+  protected Coordinate currentPosition;
   
   private Set<Coordinate> toVisit;
   
@@ -80,5 +80,9 @@ public class OverState implements State {
       _xblockexpression = (this.currentPosition.equals(o.currentPosition) && this.toVisit.equals(o.toVisit));
     }
     return _xblockexpression;
+  }
+  
+  public String toString() {
+    return this.currentPosition.toString();
   }
 }

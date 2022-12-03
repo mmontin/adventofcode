@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: adventutils
+Bundle-SymbolicName: adventutils
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-16
+Automatic-Module-Name: adventutils
+Export-Package: adventutils.astar,
+ adventutils.geometry,
+ adventutils.graphic,
+ adventutils.input,
+ adventutils.list,
+ adventutils.string
