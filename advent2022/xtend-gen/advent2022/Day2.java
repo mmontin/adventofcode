@@ -12,12 +12,12 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class Day2 {
   public enum RPC {
     ROCK,
-    
+
     PAPER,
-    
+
     SCISSOR;
   }
-  
+
   public static void main(final String[] args) {
     List<String> _inputs = new InputLoader(Integer.valueOf(2022), Integer.valueOf(2)).getInputs();
     Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(Integer.valueOf(0), Integer.valueOf(0));
@@ -41,7 +41,7 @@ public class Day2 {
     };
     InputOutput.<Pair<Integer, Integer>>print(IterableExtensions.<String, Pair<Integer, Integer>>fold(_inputs, _mappedTo, _function));
   }
-  
+
   public static Day2.RPC toRPC(final String s) {
     Day2.RPC _switchResult = null;
     boolean _matched = false;
@@ -84,7 +84,7 @@ public class Day2 {
     }
     return _switchResult;
   }
-  
+
   public static int value(final Day2.RPC input) {
     int _switchResult = (int) 0;
     if (input != null) {
@@ -104,7 +104,7 @@ public class Day2 {
     }
     return _switchResult;
   }
-  
+
   public static int score(final Day2.RPC you, final Day2.RPC me) {
     int _switchResult = (int) 0;
     Pair<Day2.RPC, Day2.RPC> _mappedTo = Pair.<Day2.RPC, Day2.RPC>of(me, you);
@@ -141,7 +141,7 @@ public class Day2 {
     int _value = Day2.value(me);
     return (_switchResult + _value);
   }
-  
+
   public static int scare(final Day2.RPC you, final String me) {
     int _switchResult = (int) 0;
     boolean _matched = false;

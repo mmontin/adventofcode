@@ -79,7 +79,7 @@ public class Day3 {
     };
     InputOutput.<Integer>println(IterableExtensions.<String, Pair<ArrayList<char[]>, Integer>>fold(inputs, _mappedTo, _function_1).getValue());
   }
-  
+
   public static int toValue(final char c) {
     int _xblockexpression = (int) 0;
     {

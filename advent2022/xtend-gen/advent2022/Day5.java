@@ -13,7 +13,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Day5 {
   private static List<List<String>> distribution;
-  
+
   public static List<List<String>> init() {
     return Day5.distribution = CollectionLiterals.<List<String>>newArrayList(
       CollectionLiterals.<String>newArrayList("S", "P", "W", "N", "J", "Z"), 
@@ -26,7 +26,7 @@ public class Day5 {
       CollectionLiterals.<String>newArrayList("H", "Q", "F", "B", "T", "M", "G", "N"), 
       CollectionLiterals.<String>newArrayList("W", "Q", "B", "P", "C", "G", "D", "R"));
   }
-  
+
   public static void main(final String[] args) {
     final List<String> inputs = new InputLoader(Integer.valueOf(2022), Integer.valueOf(5)).getInputs();
     Day5.init();
@@ -39,7 +39,7 @@ public class Day5 {
         int _parseInt_1 = Integer.parseInt(els[5]);
         final int to = (_parseInt_1 - 1);
         final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer it) {
+          public void accept(final Integer it_1) {
             Day5.move(from, to);
           }
         };
@@ -75,11 +75,11 @@ public class Day5 {
     };
     InputOutput.<String>println(IterableExtensions.<List<String>, String>fold(Day5.distribution, "", _function_3));
   }
-  
+
   public static void move(final int from, final int to) {
     Day5.distribution.get(to).add(0, Day5.distribution.get(from).remove(0));
   }
-  
+
   public static List<String> moveSeveral(final int number, final int from, final int to) {
     List<String> _xblockexpression = null;
     {
