@@ -32,7 +32,7 @@ class Day7 {
 		]
 
 		println(folders.filter[it.size <= 100000].fold(0)[acc, e|acc + e.size])
-		println(folders.sortBy[size].findFirst[it.size >= root.size - 40000000].size)
+		println(folders.filter[it.size >= root.size - 40000000].minBy[size].size)
 	}
 
 	static class Folder {

@@ -118,16 +118,16 @@ public class Day7 {
       }
     };
     InputOutput.<Integer>println(IterableExtensions.<Day7.Folder, Integer>fold(IterableExtensions.<Day7.Folder>filter(Day7.folders, _function_3), Integer.valueOf(0), _function_4));
-    final Function1<Day7.Folder, Integer> _function_5 = new Function1<Day7.Folder, Integer>() {
-      public Integer apply(final Day7.Folder it) {
-        return Integer.valueOf(it.size);
-      }
-    };
-    final Function1<Day7.Folder, Boolean> _function_6 = new Function1<Day7.Folder, Boolean>() {
+    final Function1<Day7.Folder, Boolean> _function_5 = new Function1<Day7.Folder, Boolean>() {
       public Boolean apply(final Day7.Folder it) {
         return Boolean.valueOf((it.size >= (Day7.root.size - 40000000)));
       }
     };
-    InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.<Day7.Folder>findFirst(IterableExtensions.<Day7.Folder, Integer>sortBy(Day7.folders, _function_5), _function_6).size));
+    final Function1<Day7.Folder, Integer> _function_6 = new Function1<Day7.Folder, Integer>() {
+      public Integer apply(final Day7.Folder it) {
+        return Integer.valueOf(it.size);
+      }
+    };
+    InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.<Day7.Folder, Integer>minBy(IterableExtensions.<Day7.Folder>filter(Day7.folders, _function_5), _function_6).size));
   }
 }
