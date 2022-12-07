@@ -3,9 +3,9 @@ package advent2022;
 import adventutils.input.InputLoader;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
@@ -25,6 +25,6 @@ public class Day6 {
         return Boolean.valueOf((_size == nb));
       }
     };
-    return IterableExtensions.<Integer>findFirst(new ExclusiveRange(nb, _size, true), _function);
+    return IterableExtensions.<Integer>findFirst(new IntegerRange(nb, _size), _function);
   }
 }

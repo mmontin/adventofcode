@@ -13,6 +13,6 @@ class Day6 {
 	}
 
 	def static compute(int nb) {
-		(nb..<input.size).findFirst[input.subList(it-nb,it).toSet.size == nb]
+		(nb..input.size).findFirst[input.subList(it-nb,it).toSet.size == nb]
 	}
 }
