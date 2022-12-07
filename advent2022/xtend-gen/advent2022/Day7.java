@@ -3,6 +3,7 @@ package advent2022;
 import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -13,52 +14,32 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Day7 {
-  public static class File {
-    public String name;
-
+  public static class Folder {
     public Day7.Folder parent;
 
     public int size;
 
-    public File(final String _name, final Day7.Folder _parent, final int _size) {
-      this.name = _name;
-      this.parent = _parent;
-      this.size = _size;
-      if ((this.parent != null)) {
-        this.parent.addChild(this);
-      }
-    }
-  }
-
-  public static class Folder extends Day7.File {
-    private List<Day7.File> content;
+    private Map<String, Day7.Folder> content;
 
     public Folder(final String _name, final Day7.Folder _parent) {
-      super(_name, _parent, 0);
-      this.content = CollectionLiterals.<Day7.File>newArrayList();
-    }
-
-    public Folder() {
-      this("root", null);
-    }
-
-    public void addChild(final Day7.File file) {
-      this.content.add(file);
-      if ((file.size != 0)) {
-        this.addSize(file.size);
+      this.parent = _parent;
+      this.size = 0;
+      this.content = CollectionLiterals.<String, Day7.Folder>newHashMap();
+      if ((this.parent != null)) {
+        this.parent.content.put(_name, this);
       }
     }
 
     public void addSize(final int toAdd) {
       int _size = this.size;
       this.size = (_size + toAdd);
-      if ((super.parent != null)) {
-        super.parent.addSize(toAdd);
+      if ((this.parent != null)) {
+        this.parent.addSize(toAdd);
       }
     }
   }
 
-  private static final Day7.Folder root = new Day7.Folder();
+  private static final Day7.Folder root = new Day7.Folder("root", null);
 
   private static Day7.Folder current = Day7.root;
 
@@ -88,28 +69,23 @@ public class Day7 {
         boolean _matched = false;
         if (Objects.equal(_get, "cd")) {
           _matched=true;
+          Day7.Folder _switchResult_1 = null;
           String _get_1 = it[1];
           boolean _matched_1 = false;
           if (Objects.equal(_get_1, "/")) {
             _matched_1=true;
-            Day7.current = Day7.root;
+            _switchResult_1 = Day7.root;
           }
           if (!_matched_1) {
             if (Objects.equal(_get_1, "..")) {
               _matched_1=true;
-              Day7.current = Day7.current.parent;
+              _switchResult_1 = Day7.current.parent;
             }
           }
           if (!_matched_1) {
-            final Function1<Day7.File, Boolean> _function = new Function1<Day7.File, Boolean>() {
-              public Boolean apply(final Day7.File e) {
-                Object _get = it[1];
-                return Boolean.valueOf(Objects.equal(e.name, _get));
-              }
-            };
-            Day7.File _findFirst = IterableExtensions.<Day7.File>findFirst(Day7.current.content, _function);
-            Day7.current = ((Day7.Folder) _findFirst);
+            _switchResult_1 = Day7.current.content.get(it[1]);
           }
+          Day7.current = _switchResult_1;
         }
         if (!_matched) {
           if (Objects.equal(_get, "ls")) {
@@ -126,9 +102,7 @@ public class Day7 {
           }
         }
         if (!_matched) {
-          String _get_3 = it[1];
-          int _parseInt = Integer.parseInt(it[0]);
-          new Day7.File(_get_3, Day7.current, _parseInt);
+          Day7.current.addSize(Integer.parseInt(it[0]));
         }
       }
     };
