@@ -12,7 +12,7 @@ class Day7 {
 	// The folder we are currently in
 	static Folder current = root
 
-	// All folders considers, tracked for convenience
+	// All folders, tracked for convenience
 	static final List<Folder> folders = newArrayList(root)
 
 	def static void main(String[] args) {
@@ -21,7 +21,7 @@ class Day7 {
 		new InputLoader(2022, 7).getInputs.forEach [
 			// Ignoring prompts, which are noise
 			val toProcess = it.startsWith("$") ? it.substring(2) : it
-			// Processing the input to split various elements
+			// Splitting current line into its components
 			val parts = toProcess.split(" ")
 			// Deciding on what to do based on the first token on the line
 			// Thankfully the grammar is LL(1)
