@@ -36,7 +36,7 @@ class Day7 {
 				// Ignoring "ls" as this is noise: what follows is part of current
 				case "ls":
 					return
-				// Create a directory (and assigning current as parent in the process)
+				// Creating a directory (and assigning current as parent in the process)
 				case "dir":
 					folders.add(new Folder(parts.get(1), current))
 				// Gathering the size of a file (the only relevant element)
