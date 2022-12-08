@@ -17,21 +17,21 @@ import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 @SuppressWarnings("all")
 public class FramedImage {
   public static int RED = Color.RED.getRGB();
-  
+
   public static int BLACK = Color.BLACK.getRGB();
-  
+
   public static int WHITE = Color.WHITE.getRGB();
-  
+
   public static int GRAY = Color.GRAY.getRGB();
-  
+
   public static int GREEN = Color.GREEN.getRGB();
-  
+
   private JLabel label;
-  
+
   private JFrame frame;
-  
+
   private BufferedImage image;
-  
+
   public FramedImage(final String frameName, final List<List<Integer>> pixels) {
     JLabel _jLabel = new JLabel();
     this.label = _jLabel;
@@ -44,15 +44,15 @@ public class FramedImage {
     this.setImageFromPixels(pixels);
     this.commit();
   }
-  
+
   public void show() {
     this.frame.setVisible(true);
   }
-  
+
   public void hide() {
     this.frame.setVisible(false);
   }
-  
+
   public void setImageFromPixels(final List<List<Integer>> pixels) {
     final int x = pixels.size();
     final int y = pixels.get(0).size();
@@ -74,7 +74,7 @@ public class FramedImage {
     int _plus_1 = (_size_1 + 50);
     this.frame.setSize(_plus, _plus_1);
   }
-  
+
   public void commit(final int ms) {
     try {
       Thread.sleep(ms);
@@ -83,12 +83,12 @@ public class FramedImage {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public void commit() {
     ImageIcon _imageIcon = new ImageIcon(this.image);
     this.label.setIcon(_imageIcon);
   }
-  
+
   public void scale(final int factor) {
     int _width = this.image.getWidth();
     final int newX = (_width * factor);

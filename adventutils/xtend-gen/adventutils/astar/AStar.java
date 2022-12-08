@@ -14,25 +14,25 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class AStar {
   private PriorityQueue<State> toVisit;
-  
+
   private Map<State, Integer> gScore;
-  
+
   private Map<State, Integer> fScore;
-  
+
   private Map<State, State> previous;
-  
+
   private State current;
-  
+
   private boolean initialized;
-  
+
   public AStar() {
     this.initialized = false;
   }
-  
+
   public AStar(final State initial_) {
     this.initialize(initial_);
   }
-  
+
   public Map<State, State> initialize(final State initial_) {
     Map<State, State> _xblockexpression = null;
     {
@@ -53,7 +53,7 @@ public class AStar {
     }
     return _xblockexpression;
   }
-  
+
   private State step() {
     State _xblockexpression = null;
     {
@@ -80,7 +80,7 @@ public class AStar {
     }
     return _xblockexpression;
   }
-  
+
   public List<State> minPath() {
     List<State> _xblockexpression = null;
     {
@@ -97,7 +97,7 @@ public class AStar {
     }
     return _xblockexpression;
   }
-  
+
   public Integer getMinDistance() {
     Integer _xblockexpression = null;
     {
@@ -106,7 +106,7 @@ public class AStar {
     }
     return _xblockexpression;
   }
-  
+
   public AStar run() {
     AStar _xblockexpression = null;
     {
@@ -118,7 +118,7 @@ public class AStar {
     }
     return _xblockexpression;
   }
-  
+
   private void checkInitialize() {
     try {
       if ((!this.initialized)) {

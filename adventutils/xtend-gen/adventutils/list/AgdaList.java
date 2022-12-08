@@ -11,15 +11,15 @@ public class AgdaList<T extends Object> extends ArrayList<T> {
     String _plus = ("(" + _join);
     return (_plus + " ∷ [])");
   }
-  
+
   public AgdaList(final List<T> list) {
     super(list);
   }
-  
+
   public AgdaList(final Integer size) {
     super((size).intValue());
   }
-  
+
   public AgdaList() {
     super();
   }

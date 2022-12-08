@@ -7,13 +7,13 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 @SuppressWarnings("all")
 public class Coordinate {
   private final int x;
-  
+
   private final int y;
-  
+
   private final int code;
-  
+
   private final String representation;
-  
+
   public Coordinate(final int x_, final int y_) {
     this.x = x_;
     this.y = y_;
@@ -21,27 +21,31 @@ public class Coordinate {
     this.code = (this.x + (tmp * tmp));
     this.representation = (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
   }
-  
+
   public Coordinate(final String s) {
     this(Integer.parseInt(s.split(",")[0]), Integer.parseInt(s.split(",")[1]));
   }
-  
+
+  public Coordinate() {
+    this(0, 0);
+  }
+
   public int getX() {
     return this.x;
   }
-  
+
   public Coordinate addX(final int x_) {
     return new Coordinate((this.x + x_), this.y);
   }
-  
+
   public Coordinate addY(final int y_) {
     return new Coordinate(this.x, (this.y + y_));
   }
-  
+
   public int getY() {
     return this.y;
   }
-  
+
   public Coordinate right(final int max) {
     Coordinate _xifexpression = null;
     if (((this.y + 1) == max)) {
@@ -51,7 +55,7 @@ public class Coordinate {
     }
     return _xifexpression;
   }
-  
+
   public Coordinate down(final int max) {
     Coordinate _xifexpression = null;
     if (((this.x + 1) == max)) {
@@ -61,15 +65,15 @@ public class Coordinate {
     }
     return _xifexpression;
   }
-  
+
   public Coordinate symByY(final int offset) {
     return new Coordinate(this.x, ((2 * offset) - this.y));
   }
-  
+
   public Coordinate symByX(final int offset) {
     return new Coordinate(((2 * offset) - this.x), this.y);
   }
-  
+
   public HashSet<Coordinate> allAroundUnboundedNeighbours() {
     Coordinate _coordinate = new Coordinate((this.x - 1), (this.y - 1));
     Coordinate _coordinate_1 = new Coordinate((this.x - 1), this.y);
@@ -81,7 +85,7 @@ public class Coordinate {
     Coordinate _coordinate_7 = new Coordinate((this.x + 1), (this.y + 1));
     return CollectionLiterals.<Coordinate>newHashSet(_coordinate, _coordinate_1, _coordinate_2, _coordinate_3, _coordinate_4, _coordinate_5, _coordinate_6, _coordinate_7);
   }
-  
+
   public HashSet<Coordinate> allAroundFilteredNeighbours(final Set<Coordinate> candidates) {
     HashSet<Coordinate> _xblockexpression = null;
     {
@@ -91,7 +95,7 @@ public class Coordinate {
     }
     return _xblockexpression;
   }
-  
+
   public HashSet<Coordinate> noDiagonalUnboundedNeighbours() {
     Coordinate _coordinate = new Coordinate((this.x - 1), this.y);
     Coordinate _coordinate_1 = new Coordinate((this.x + 1), this.y);
@@ -99,7 +103,7 @@ public class Coordinate {
     Coordinate _coordinate_3 = new Coordinate(this.x, (this.y + 1));
     return CollectionLiterals.<Coordinate>newHashSet(_coordinate, _coordinate_1, _coordinate_2, _coordinate_3);
   }
-  
+
   public HashSet<Coordinate> noDiagonalBoundedNeighbours(final int lowerBound, final int higherBound) {
     HashSet<Coordinate> _xblockexpression = null;
     {
@@ -124,18 +128,18 @@ public class Coordinate {
     }
     return _xblockexpression;
   }
-  
+
   public int manhattanDistanceTo(final Coordinate other) {
     int _abs = Math.abs((other.x - this.x));
     int _abs_1 = Math.abs((other.y - this.y));
     return (_abs + _abs_1);
   }
-  
+
   public int manhattanDistanceToZero() {
     Coordinate _coordinate = new Coordinate(0, 0);
     return this.manhattanDistanceTo(_coordinate);
   }
-  
+
   public int distanceSquared(final Coordinate other) {
     int _xblockexpression = (int) 0;
     {
@@ -145,11 +149,11 @@ public class Coordinate {
     }
     return _xblockexpression;
   }
-  
+
   public String toString() {
     return this.representation;
   }
-  
+
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {
@@ -158,7 +162,7 @@ public class Coordinate {
     }
     return _xblockexpression;
   }
-  
+
   public int hashCode() {
     return this.code;
   }

@@ -26,6 +26,10 @@ class Coordinate {
 	new(String s) {
 		this(Integer.parseInt(s.split(",").get(0)), Integer.parseInt(s.split(",").get(1)))
 	}
+	
+	new() {
+		this(0,0)
+	}
 
 	def getX() {
 		x
