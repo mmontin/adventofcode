@@ -7,10 +7,12 @@ import java.util.Set
 
 class Day9 {
 
+	// Required for Q1: current head, tail and tail positions
 	static Coordinate head = new Coordinate
 	static Coordinate tail = new Coordinate
 	static Set<Coordinate> tail_positions = newHashSet(tail)
 
+	// Required for Q2: the whole rope, and tail positions
 	static ArrayList<Coordinate> rope = {
 		val ans = newArrayList;
 		(1 .. 10).forEach[ans.add(new Coordinate)]
@@ -23,22 +25,27 @@ class Day9 {
 		new InputLoader(2022, 9).inputs.forEach [
 			val split = it.split(" ")
 			val direction = Coordinate.directionFromString(split.get(0))
-			var step = Integer.parseInt(split.get(1))
-			for (i : 0 ..< step) {
+			(0 ..< Integer.parseInt(split.get(1))).forEach [ i |
+				// For Q1, we move the head and then update the tail
 				head = head.move(direction)
 				tail = newPosition(head, tail)
 				tail_positions.add(tail)
-
+				
+				// For Q2, we move the head and then update each node consecutively
 				rope.set(0, rope.get(0).move(direction))
 				(0 ..< 9).forEach[j|rope.set(j + 1, newPosition(rope.get(j), rope.get(j + 1)))]
 				long_tail_positions.add(rope.get(9))
-			}
+			]
 		]
 
 		println(tail_positions.size)
 		print(long_tail_positions.size)
 	}
 
+	// There are 2 cases here, either the Manhattan distance is 2 or 3
+	// in which case the tail is updated on one of the 4 direct sides of the head
+	// or the distance is 4 in which case the tails remains in diagonal, but closer
+	// Otherwise, the tail remains unchanged
 	def static newPosition(Coordinate _head, Coordinate _tail) {
 		val distance = _head.manhattanDistanceTo(_tail)
 		if (_tail.x == _head.x - 2 && distance < 4)

@@ -44,10 +44,9 @@ public class Day9 {
       public void accept(final String it) {
         final String[] split = it.split(" ");
         final Coordinate.Direction direction = Coordinate.directionFromString(split[0]);
-        int step = Integer.parseInt(split[1]);
-        ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, step, true);
-        for (final Integer i : _doubleDotLessThan) {
-          {
+        int _parseInt = Integer.parseInt(split[1]);
+        final Consumer<Integer> _function = new Consumer<Integer>() {
+          public void accept(final Integer i) {
             Day9.head = Day9.head.move(direction);
             Day9.tail = Day9.newPosition(Day9.head, Day9.tail);
             Day9.tail_positions.add(Day9.tail);
@@ -60,7 +59,8 @@ public class Day9 {
             new ExclusiveRange(0, 9, true).forEach(_function);
             Day9.long_tail_positions.add(Day9.rope.get(9));
           }
-        }
+        };
+        new ExclusiveRange(0, _parseInt, true).forEach(_function);
       }
     };
     new InputLoader(Integer.valueOf(2022), Integer.valueOf(9)).getInputs().forEach(_function);
