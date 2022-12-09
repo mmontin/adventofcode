@@ -2,7 +2,6 @@ package advent2017
 
 import java.util.Map
 import adventutils.input.InputLoader
-import advent2017.Day7.Tower
 
 class Day7 {
 
@@ -54,10 +53,6 @@ class Day7 {
 
 		override int hashCode() {
 			name.hashCode
-		}
-
-		override boolean equals(Object other) {
-			(other as Tower).name == name
 		}
 
 		def update(Tower toPileUp) {

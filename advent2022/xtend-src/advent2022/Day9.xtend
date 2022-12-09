@@ -42,9 +42,9 @@ class Day9 {
 		print(long_tail_positions.size)
 	}
 
-	// There are 2 cases here, either the Manhattan distance is 2 or 3
+	// There are 3 cases here, either the Manhattan distance is 2 or 3
 	// in which case the tail is updated on one of the 4 direct sides of the head
-	// or the distance is 4 in which case the tails remains in diagonal, but closer
+	// or the distance is 4 in which case the tails remains in diagonal, but closer.
 	// Otherwise, the tail remains unchanged
 	def static newPosition(Coordinate _head, Coordinate _tail) {
 		val distance = _head.manhattanDistanceTo(_tail)

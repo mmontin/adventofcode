@@ -1,6 +1,7 @@
 package advent2017
 
 import adventutils.geometry.Coordinate
+import adventutils.geometry.Coordinate.Direction
 
 class Day3 {
 
@@ -31,34 +32,9 @@ class Day3 {
 			currentPosition = currentPosition.move(currentDirection)
 			val neighbours = currentPosition.allAroundFilteredNeighbours(coordinates.keySet)
 			coordinates.put(currentPosition, neighbours.fold(0)[acc, e|acc + coordinates.get(e)])
-			if (neighbours.size <= 2) currentDirection = currentDirection.next
+			if (neighbours.size <= 2) currentDirection = Coordinate.nextDirection(currentDirection)
 		} while (coordinates.get(currentPosition) < input)
 		
 		print(coordinates.get(currentPosition))
-	}
-
-	static enum Direction {
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT
-	}
-
-	def static Direction next(Direction d) {
-		switch d {
-			case UP: Direction.LEFT
-			case LEFT: Direction.DOWN
-			case DOWN: Direction.RIGHT
-			case RIGHT: Direction.UP
-		}
-	}
-
-	def static Coordinate move(Coordinate c, Direction d) {
-		switch d {
-			case UP: c.addY(1)
-			case DOWN: c.addY(-1)
-			case RIGHT: c.addX(1)
-			case LEFT: c.addX(-1)
-		}
 	}
 }

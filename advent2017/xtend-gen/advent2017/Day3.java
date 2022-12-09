@@ -10,16 +10,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Day3 {
-  public enum Direction {
-    UP,
-
-    DOWN,
-
-    LEFT,
-
-    RIGHT;
-  }
-
   private static final int input = 361527;
 
   public static void main(final String[] args) {
@@ -44,10 +34,10 @@ public class Day3 {
     final HashMap<Coordinate, Integer> coordinates = CollectionLiterals.<Coordinate, Integer>newHashMap();
     Coordinate currentPosition = new Coordinate();
     coordinates.put(currentPosition, Integer.valueOf(1));
-    Day3.Direction currentDirection = Day3.Direction.RIGHT;
+    Coordinate.Direction currentDirection = Coordinate.Direction.RIGHT;
     do {
       {
-        currentPosition = Day3.move(currentPosition, currentDirection);
+        currentPosition = currentPosition.move(currentDirection);
         final HashSet<Coordinate> neighbours = currentPosition.allAroundFilteredNeighbours(coordinates.keySet());
         final Function2<Integer, Coordinate, Integer> _function = new Function2<Integer, Coordinate, Integer>() {
           public Integer apply(final Integer acc, final Coordinate e) {
@@ -59,56 +49,10 @@ public class Day3 {
         int _size = neighbours.size();
         boolean _lessEqualsThan = (_size <= 2);
         if (_lessEqualsThan) {
-          currentDirection = Day3.next(currentDirection);
+          currentDirection = Coordinate.nextDirection(currentDirection);
         }
       }
     } while(((coordinates.get(currentPosition)).intValue() < Day3.input));
     InputOutput.<Integer>print(coordinates.get(currentPosition));
-  }
-
-  public static Day3.Direction next(final Day3.Direction d) {
-    Day3.Direction _switchResult = null;
-    if (d != null) {
-      switch (d) {
-        case UP:
-          _switchResult = Day3.Direction.LEFT;
-          break;
-        case LEFT:
-          _switchResult = Day3.Direction.DOWN;
-          break;
-        case DOWN:
-          _switchResult = Day3.Direction.RIGHT;
-          break;
-        case RIGHT:
-          _switchResult = Day3.Direction.UP;
-          break;
-        default:
-          break;
-      }
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate move(final Coordinate c, final Day3.Direction d) {
-    Coordinate _switchResult = null;
-    if (d != null) {
-      switch (d) {
-        case UP:
-          _switchResult = c.addY(1);
-          break;
-        case DOWN:
-          _switchResult = c.addY((-1));
-          break;
-        case RIGHT:
-          _switchResult = c.addX(1);
-          break;
-        case LEFT:
-          _switchResult = c.addX((-1));
-          break;
-        default:
-          break;
-      }
-    }
-    return _switchResult;
   }
 }

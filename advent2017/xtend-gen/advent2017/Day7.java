@@ -1,7 +1,6 @@
 package advent2017;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -57,10 +56,6 @@ public class Day7 {
 
     public int hashCode() {
       return this.name.hashCode();
-    }
-
-    public boolean equals(final Object other) {
-      return Objects.equal(((Day7.Tower) other).name, this.name);
     }
 
     public int update(final Day7.Tower toPileUp) {
