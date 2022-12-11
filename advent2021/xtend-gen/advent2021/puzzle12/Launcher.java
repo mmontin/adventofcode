@@ -15,9 +15,9 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static Map<String, Set<String>> graph = CollectionLiterals.<String, Set<String>>newHashMap();
-  
+
   private static Set<List<String>> paths = CollectionLiterals.<List<String>>newHashSet();
-  
+
   public static void main(final String[] args) {
     final Function1<String, String[]> _function = new Function1<String, String[]>() {
       public String[] apply(final String it) {
@@ -57,7 +57,7 @@ public class Launcher {
     Launcher.paths(CollectionLiterals.<String>newArrayList(), "start");
     InputOutput.<Integer>println(Integer.valueOf(Launcher.paths.size()));
   }
-  
+
   public static void paths(final List<String> visited, final String current) {
     boolean _equals = current.equals("end");
     if (_equals) {
@@ -84,7 +84,7 @@ public class Launcher {
       IterableExtensions.<String>filter(IterableExtensions.<String>filter(Launcher.graph.get(current), _function), _function_1).forEach(_function_2);
     }
   }
-  
+
   public static boolean hasDuplicates(final List<String> l) {
     boolean _xblockexpression = false;
     {

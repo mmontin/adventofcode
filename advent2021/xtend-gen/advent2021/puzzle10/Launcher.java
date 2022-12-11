@@ -47,7 +47,7 @@ public class Launcher {
     int _divide = (_size / 2);
     InputOutput.<BigInteger>println(output.get(_divide));
   }
-  
+
   public static BigInteger process(final List<String> input) {
     BigInteger _xblockexpression = null;
     {

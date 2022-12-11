@@ -11,29 +11,29 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class CoordinateState extends Coordinate implements State {
   private static final Coordinate finalState = new Coordinate(Launcher.max_indice, Launcher.max_indice);
-  
+
   private int manhattan;
-  
+
   private boolean isFinal;
-  
+
   public CoordinateState(final Coordinate c) {
     this(c.getX(), c.getY());
   }
-  
+
   public CoordinateState(final int x_, final int y_) {
     super(x_, y_);
     this.manhattan = this.manhattanDistanceTo(CoordinateState.finalState);
     this.isFinal = this.equals(CoordinateState.finalState);
   }
-  
+
   public boolean isGoal() {
     return this.isFinal;
   }
-  
+
   public int minToGoal() {
     return this.manhattan;
   }
-  
+
   public List<Pair<State, Integer>> neighbours() {
     final Function1<Coordinate, Pair<State, Integer>> _function = new Function1<Coordinate, Pair<State, Integer>>() {
       public Pair<State, Integer> apply(final Coordinate it) {

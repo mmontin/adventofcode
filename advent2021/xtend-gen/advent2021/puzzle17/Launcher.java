@@ -13,13 +13,13 @@ import org.eclipse.xtext.xbase.lib.IntegerRange;
 @SuppressWarnings("all")
 public class Launcher {
   private static final int minX = 281;
-  
+
   private static final int maxX = 311;
-  
+
   private static final int minY = (-74);
-  
+
   private static final int maxY = (-54);
-  
+
   public static void main(final String[] args) {
     int max_velocity_x = Launcher.maxX;
     int max_velocity_y = ((-Launcher.minY) - 1);
@@ -68,7 +68,7 @@ public class Launcher {
     String _plus = ("PART 2: " + Integer.valueOf(_size));
     InputOutput.<String>println(_plus);
   }
-  
+
   public static HashSet<Integer> getYCandidateSteps(final int vy) {
     HashSet<Integer> _xblockexpression = null;
     {
@@ -103,7 +103,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static boolean validXValue(final int vx, final int step) {
     boolean _xblockexpression = false;
     {

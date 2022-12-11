@@ -17,14 +17,14 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public static class Pair {
     private int nbOfZeros;
-    
+
     private int nbOfOnes;
-    
+
     public Pair() {
       this.nbOfZeros = 0;
       this.nbOfOnes = 0;
     }
-    
+
     public Launcher.Pair add(final char c) {
       Launcher.Pair _xblockexpression = null;
       {
@@ -39,7 +39,7 @@ public class Launcher {
       }
       return _xblockexpression;
     }
-    
+
     public int most() {
       int _xifexpression = (int) 0;
       if ((this.nbOfOnes >= this.nbOfZeros)) {
@@ -50,7 +50,7 @@ public class Launcher {
       return _xifexpression;
     }
   }
-  
+
   public static void main(final String[] args) {
     final Function1<String, char[]> _function = new Function1<String, char[]>() {
       public char[] apply(final String it) {
@@ -107,7 +107,7 @@ public class Launcher {
     int _multiply_1 = (_parseInt_2 * _parseInt_3);
     InputOutput.<Integer>println(Integer.valueOf(_multiply_1));
   }
-  
+
   public static char[] helper(final List<char[]> input, final boolean most) {
     char[] _xblockexpression = null;
     {

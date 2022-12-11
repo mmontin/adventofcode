@@ -6,13 +6,13 @@ import java.util.function.BiFunction;
 @SuppressWarnings("all")
 public class Segment {
   private Point p1;
-  
+
   private Point p2;
-  
+
   private int slopeX;
-  
+
   private int slopeY;
-  
+
   public Segment(final String s) {
     final String[] split = s.split(" -> ");
     String _get = split[0];
@@ -33,11 +33,11 @@ public class Segment {
     this.slopeY = (sY / pgcd);
     this.slopeX = (sX / pgcd);
   }
-  
+
   public boolean line() {
     return this.p1.sameLine(this.p2);
   }
-  
+
   public void addPointsOnGrid(final Map<Point, Integer> points) {
     Point p = this.p1;
     while (p.smaller(this.p2)) {
@@ -53,7 +53,7 @@ public class Segment {
       }
     }
   }
-  
+
   private int gcd(final int a, final int b) {
     int _xifexpression = (int) 0;
     if ((b == 0)) {

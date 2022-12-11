@@ -16,7 +16,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static Set<Integer> table = CollectionLiterals.<Integer>newHashSet();
-  
+
   public static void main(final String[] args) {
     try {
       final BufferedReader ir = new InputLoader(Integer.valueOf(2021), Integer.valueOf(20)).getInputReader();
@@ -74,7 +74,7 @@ public class Launcher {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public static HashSet<Coordinate> step(final Set<Coordinate> input, final int flicker) {
     HashSet<Coordinate> _xblockexpression = null;
     {

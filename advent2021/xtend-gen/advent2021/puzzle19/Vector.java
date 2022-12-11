@@ -3,28 +3,28 @@ package advent2021.puzzle19;
 @SuppressWarnings("all")
 public class Vector {
   protected int x;
-  
+
   protected int y;
-  
+
   protected int z;
-  
+
   public Vector(final int x, final int y, final int z) {
     this.x = x;
     this.y = y;
     this.z = z;
   }
-  
+
   public Vector(final String s) {
     this(
       Integer.parseInt(s.split(",")[0]), 
       Integer.parseInt(s.split(",")[1]), 
       Integer.parseInt(s.split(",")[2]));
   }
-  
+
   public Vector to(final Vector other) {
     return new Vector((other.x - this.x), (other.y - this.y), (other.z - this.z));
   }
-  
+
   public int sumAbs() {
     int _abs = Math.abs(this.x);
     int _abs_1 = Math.abs(this.y);
@@ -32,19 +32,19 @@ public class Vector {
     int _abs_2 = Math.abs(this.z);
     return (_plus + _abs_2);
   }
-  
+
   public int hashCode() {
     return ((this.x + this.y) + this.z);
   }
-  
+
   public String toString() {
     return (((((("[" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ",") + Integer.valueOf(this.z)) + "]");
   }
-  
+
   public int size2() {
     return (((this.x * this.x) + (this.y * this.y)) + (this.z * this.z));
   }
-  
+
   public Vector multiplyBy(final Matrix m) {
     Vector _xblockexpression = null;
     {
@@ -79,7 +79,7 @@ public class Vector {
     }
     return _xblockexpression;
   }
-  
+
   public Vector add(final Vector v) {
     Vector _xblockexpression = null;
     {
@@ -93,7 +93,7 @@ public class Vector {
     }
     return _xblockexpression;
   }
-  
+
   public Vector remove(final Vector v) {
     Vector _xblockexpression = null;
     {
@@ -107,7 +107,7 @@ public class Vector {
     }
     return _xblockexpression;
   }
-  
+
   public Vector negate() {
     Vector _xblockexpression = null;
     {
@@ -118,7 +118,7 @@ public class Vector {
     }
     return _xblockexpression;
   }
-  
+
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {

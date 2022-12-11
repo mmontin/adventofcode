@@ -26,9 +26,13 @@ class Coordinate {
 	new(String s) {
 		this(Integer.parseInt(s.split(",").get(0)), Integer.parseInt(s.split(",").get(1)))
 	}
-	
+
+	new(Coordinate c) {
+		this(c.x, c.y)
+	}
+
 	new() {
-		this(0,0)
+		this(0, 0)
 	}
 
 	def getX() {
@@ -40,21 +44,19 @@ class Coordinate {
 	}
 
 	def addY(int y_) {
-		new Coordinate(x , y + y_)
+		new Coordinate(x, y + y_)
 	}
 
 	def getY() {
 		y
 	}
-	
+
 	def Coordinate right(int max) {
-		if (y + 1 == max) new Coordinate(x,0)
-		else addY(1)
+		if(y + 1 == max) new Coordinate(x, 0) else addY(1)
 	}
-	
+
 	def Coordinate down(int max) {
-		if (x + 1 == max) new Coordinate(0,y)
-		else addX(1)
+		if(x + 1 == max) new Coordinate(0, y) else addX(1)
 	}
 
 	def symByY(int offset) {
@@ -78,7 +80,7 @@ class Coordinate {
 			new Coordinate(x + 1, y + 1)
 		)
 	}
-	
+
 	// Neighbours in the 8 possible surrounding spots, but keeping only those present in candidates
 	def allAroundFilteredNeighbours(Set<Coordinate> candidates) {
 		val output = allAroundUnboundedNeighbours
@@ -109,11 +111,11 @@ class Coordinate {
 	def manhattanDistanceTo(Coordinate other) {
 		Math.abs(other.x - x) + Math.abs(other.y - y)
 	}
-	
+
 	def manhattanDistanceToZero() {
-		manhattanDistanceTo(new Coordinate(0,0))
+		manhattanDistanceTo(new Coordinate(0, 0))
 	}
-	
+
 	def distanceSquared(Coordinate other) {
 		val side1 = other.x - x
 		val side2 = other.y - y
@@ -131,5 +133,39 @@ class Coordinate {
 
 	override hashCode() {
 		code
+	}
+
+	static enum Direction {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
+
+	def static Direction directionFromString(String s) {
+		switch s {
+			case "U": Direction.UP
+			case "D": Direction.DOWN
+			case "L": Direction.LEFT
+			default: Direction.RIGHT
+		}
+	}
+
+	def static Direction nextDirection(Direction d) {
+		switch d {
+			case UP: Direction.LEFT
+			case LEFT: Direction.DOWN
+			case DOWN: Direction.RIGHT
+			case RIGHT: Direction.UP
+		}
+	}
+
+	def Coordinate move(Direction d) {
+		switch d {
+			case UP: addY(1)
+			case DOWN: addY(-1)
+			case RIGHT: addX(1)
+			case LEFT: addX(-1)
+		}
 	}
 }

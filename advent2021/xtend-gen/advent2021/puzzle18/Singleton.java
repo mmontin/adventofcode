@@ -6,7 +6,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public class Singleton extends SNumber {
   protected int value;
-  
+
   public Singleton(final BufferedReader br, final Pair parent_) {
     super(parent_);
     try {
@@ -28,12 +28,12 @@ public class Singleton extends SNumber {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public Singleton(final int v, final Pair parent_) {
     super(parent_);
     this.value = v;
   }
-  
+
   public SNumber split() {
     SNumber _xifexpression = null;
     if ((this.parent != null)) {
@@ -53,11 +53,11 @@ public class Singleton extends SNumber {
     }
     return _xifexpression;
   }
-  
+
   public String toString() {
     return (Integer.valueOf(this.value) + "");
   }
-  
+
   public Singleton findFirstToSplit() {
     Singleton _xifexpression = null;
     if ((this.value >= 10)) {
@@ -67,16 +67,16 @@ public class Singleton extends SNumber {
     }
     return _xifexpression;
   }
-  
+
   public Pair findFirstToExplode() {
     return null;
   }
-  
+
   public void updateValue(final boolean right, final int value_) {
     int _value = this.value;
     this.value = (_value + value_);
   }
-  
+
   public int magnitude() {
     return this.value;
   }

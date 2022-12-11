@@ -147,7 +147,7 @@ public class Launcher {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public static Vector collapse(final List<Vector> vectors1, final HashMap<Integer, Coordinate> dists1, final List<Vector> vectors2, final Map<Integer, Coordinate> dists2) {
     Vector _xblockexpression = null;
     {
@@ -222,7 +222,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static HashMap<Integer, Coordinate> distances(final List<Vector> vectors) {
     int _size = vectors.size();
     final Function2<HashMap<Integer, Coordinate>, Integer, HashMap<Integer, Coordinate>> _function = new Function2<HashMap<Integer, Coordinate>, Integer, HashMap<Integer, Coordinate>>() {

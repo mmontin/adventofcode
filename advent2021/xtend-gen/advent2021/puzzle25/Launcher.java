@@ -14,15 +14,15 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 @SuppressWarnings("all")
 public class Launcher {
   private static final List<String> inputStrings = new InputLoader(Integer.valueOf(2021), Integer.valueOf(25)).getInputs();
-  
+
   private static final int max_i = Launcher.inputStrings.size();
-  
+
   private static final int max_j = Launcher.inputStrings.get(0).length();
-  
+
   private static Set<Coordinate> east = CollectionLiterals.<Coordinate>newHashSet();
-  
+
   private static Set<Coordinate> south = CollectionLiterals.<Coordinate>newHashSet();
-  
+
   public static void main(final String[] args) {
     final Consumer<Integer> _function = new Consumer<Integer>() {
       public void accept(final Integer i) {
@@ -56,7 +56,7 @@ public class Launcher {
     } while(Launcher.step());
     InputOutput.<Integer>print(Integer.valueOf(stepNb));
   }
-  
+
   public static boolean step() {
     boolean _xblockexpression = false;
     {

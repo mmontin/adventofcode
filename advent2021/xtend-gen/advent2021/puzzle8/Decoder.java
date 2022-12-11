@@ -31,15 +31,15 @@ public class Decoder {
     CollectionLiterals.<Line>newHashSet(Line.A, Line.C, Line.F), 
     CollectionLiterals.<Line>newHashSet(Line.A, Line.B, Line.C, Line.D, Line.E, Line.F, Line.G), 
     CollectionLiterals.<Line>newHashSet(Line.A, Line.B, Line.C, Line.D, Line.F, Line.G));
-  
+
   private static final Map<Line, ArrayList<Integer>> map = Decoder.listToMap(Decoder.numbers);
-  
+
   private List<Set<Line>> data;
-  
+
   private List<Set<Line>> goal;
-  
+
   private Map<Line, ArrayList<Integer>> dataRev;
-  
+
   public Decoder(final String line) {
     final String[] split = line.split(" \\| ");
     final Function1<String, Set<Line>> _function = new Function1<String, Set<Line>>() {
@@ -56,7 +56,7 @@ public class Decoder {
     this.goal = CollectionLiterals.<Set<Line>>newArrayList(((Set<Line>[])Conversions.unwrapArray(ListExtensions.<String, Set<Line>>map(((List<String>)Conversions.doWrapArray((split[1]).split(" "))), _function_1), Set.class)));
     this.dataRev = Decoder.listToMap(this.data);
   }
-  
+
   public int decode1() {
     final Function1<Set<Line>, Integer> _function = new Function1<Set<Line>, Integer>() {
       public Integer apply(final Set<Line> it) {
@@ -76,7 +76,7 @@ public class Decoder {
     };
     return (int) IterableExtensions.<Integer, Integer>fold(ListExtensions.<Set<Line>, Integer>map(this.goal, _function), Integer.valueOf(0), _function_1);
   }
-  
+
   public double decode2() {
     double _xblockexpression = (double) 0;
     {
@@ -194,7 +194,7 @@ public class Decoder {
     }
     return _xblockexpression;
   }
-  
+
   public static Set<Line> fromString(final String s) {
     final Function1<Character, Line> _function = new Function1<Character, Line>() {
       public Line apply(final Character c) {
@@ -243,7 +243,7 @@ public class Decoder {
     };
     return CollectionLiterals.<Line>newHashSet(((Line[])Conversions.unwrapArray(ListExtensions.<Character, Line>map(((List<Character>)Conversions.doWrapArray(s.toCharArray())), _function), Line.class)));
   }
-  
+
   public static HashMap<Line, ArrayList<Integer>> listToMap(final List<Set<Line>> list) {
     HashMap<Line, ArrayList<Integer>> _hashMap = new HashMap<Line, ArrayList<Integer>>();
     final Function2<HashMap<Line, ArrayList<Integer>>, Line, HashMap<Line, ArrayList<Integer>>> _function = new Function2<HashMap<Line, ArrayList<Integer>>, Line, HashMap<Line, ArrayList<Integer>>>() {

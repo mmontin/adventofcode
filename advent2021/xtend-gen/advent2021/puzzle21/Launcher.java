@@ -9,14 +9,14 @@ import org.eclipse.xtext.xbase.lib.IntegerRange;
 public class Launcher {
   public static class Player {
     private int square;
-    
+
     private int score;
-    
+
     public Player(final int square_) {
       this.square = (square_ - 1);
       this.score = 0;
     }
-    
+
     public int play(final int dice) {
       int _xblockexpression = (int) 0;
       {
@@ -26,17 +26,17 @@ public class Launcher {
       }
       return _xblockexpression;
     }
-    
+
     public int getScore() {
       return this.score;
     }
   }
-  
+
   public static class Result {
     private BigInteger nb1;
-    
+
     private BigInteger nb2;
-    
+
     public Result(final boolean p1) {
       BigInteger _xifexpression = null;
       if (p1) {
@@ -53,7 +53,7 @@ public class Launcher {
       }
       this.nb2 = _xifexpression_1;
     }
-    
+
     public Launcher.Result add(final Launcher.Result r, final int coeff) {
       Launcher.Result _xblockexpression = null;
       {
@@ -64,23 +64,23 @@ public class Launcher {
       }
       return _xblockexpression;
     }
-    
+
     public String toString() {
       return (((("(" + this.nb1) + ",") + this.nb2) + ")");
     }
   }
-  
+
   public static class Game {
     private int square1;
-    
+
     private int score1;
-    
+
     private int square2;
-    
+
     private int score2;
-    
+
     private boolean p1;
-    
+
     public Game(final int square1_, final int score1_, final int square2_, final int score2_, final boolean p1_) {
       this.square1 = square1_;
       this.square2 = square2_;
@@ -88,11 +88,11 @@ public class Launcher {
       this.score2 = score2_;
       this.p1 = p1_;
     }
-    
+
     public Game(final Launcher.Game other) {
       this(other.square1, other.score1, other.square2, other.score2, other.p1);
     }
-    
+
     public Launcher.Result step() {
       Launcher.Result _xifexpression = null;
       if ((this.p1 && (this.score2 > 20))) {
@@ -119,7 +119,7 @@ public class Launcher {
       }
       return _xifexpression;
     }
-    
+
     public Launcher.Game play(final int dice) {
       Launcher.Game _xblockexpression = null;
       {
@@ -138,7 +138,7 @@ public class Launcher {
       return _xblockexpression;
     }
   }
-  
+
   public static void main(final String[] args) {
     final Launcher.Player p1 = new Launcher.Player(10);
     final Launcher.Player p2 = new Launcher.Player(9);

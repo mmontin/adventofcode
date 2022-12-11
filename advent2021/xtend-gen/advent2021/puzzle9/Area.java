@@ -16,7 +16,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Area {
   private Map<Coordinate, Integer> map;
-  
+
   public Area(final List<List<Integer>> input) {
     this.map = CollectionLiterals.<Coordinate, Integer>newHashMap();
     int _size = input.size();
@@ -36,7 +36,7 @@ public class Area {
     };
     new IntegerRange(0, _minus).forEach(_function);
   }
-  
+
   public Iterable<Coordinate> neighbours(final Coordinate c) {
     final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
       public Boolean apply(final Coordinate it) {
@@ -45,7 +45,7 @@ public class Area {
     };
     return IterableExtensions.<Coordinate>filter(c.noDiagonalUnboundedNeighbours(), _function);
   }
-  
+
   public HashSet<Coordinate> lowPoints() {
     final Function2<HashSet<Coordinate>, Map.Entry<Coordinate, Integer>, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Map.Entry<Coordinate, Integer>, HashSet<Coordinate>>() {
       public HashSet<Coordinate> apply(final HashSet<Coordinate> v, final Map.Entry<Coordinate, Integer> e) {
@@ -62,7 +62,7 @@ public class Area {
     };
     return IterableExtensions.<Map.Entry<Coordinate, Integer>, HashSet<Coordinate>>fold(this.map.entrySet(), CollectionLiterals.<Coordinate>newHashSet(), _function);
   }
-  
+
   public Boolean isLowPoint(final Coordinate c) {
     final Function2<Boolean, Coordinate, Boolean> _function = new Function2<Boolean, Coordinate, Boolean>() {
       public Boolean apply(final Boolean b, final Coordinate v) {
@@ -71,11 +71,11 @@ public class Area {
     };
     return IterableExtensions.<Coordinate, Boolean>fold(this.neighbours(c), Boolean.valueOf(true), _function);
   }
-  
+
   public Integer get(final Coordinate c) {
     return this.map.get(c);
   }
-  
+
   public Set<Coordinate> floodUp(final Set<Coordinate> coords) {
     HashSet<Coordinate> _hashSet = new HashSet<Coordinate>(coords);
     final Function2<HashSet<Coordinate>, Coordinate, HashSet<Coordinate>> _function = new Function2<HashSet<Coordinate>, Coordinate, HashSet<Coordinate>>() {
@@ -96,7 +96,7 @@ public class Area {
     };
     return IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate>filter(IterableExtensions.<Coordinate, HashSet<Coordinate>>fold(coords, _hashSet, _function), _function_1));
   }
-  
+
   public int floodUpToMaximum(final Coordinate c) {
     int _xblockexpression = (int) 0;
     {

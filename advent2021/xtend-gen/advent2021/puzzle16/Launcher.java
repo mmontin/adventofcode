@@ -32,18 +32,18 @@ public class Launcher {
       }
     }
   }.apply();
-  
+
   private static int i = 0;
-  
+
   private static int sum = 0;
-  
+
   public static void main(final String[] args) {
     Long _decodePacket = Launcher.decodePacket();
     String _plus = ("PART 2: " + _decodePacket);
     InputOutput.<String>println(_plus);
     InputOutput.<String>println(("PART 1: " + Integer.valueOf(Launcher.sum)));
   }
-  
+
   public static Long decodePacket() {
     Long _xblockexpression = null;
     {

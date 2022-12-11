@@ -22,67 +22,67 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class AmphipodState implements State {
   private static int roomSize = 4;
-  
+
   private static final Map<Integer, Integer> numberToEnergy = CollectionLiterals.<Integer, Integer>newHashMap(
     Pair.<Integer, Integer>of(Integer.valueOf(2), Integer.valueOf(1)), Pair.<Integer, Integer>of(Integer.valueOf(4), Integer.valueOf(10)), Pair.<Integer, Integer>of(Integer.valueOf(6), Integer.valueOf(100)), Pair.<Integer, Integer>of(Integer.valueOf(8), Integer.valueOf(1000)));
-  
+
   private static final Coordinate hallway0 = new Coordinate(0, 0);
-  
+
   private static final Coordinate hallway1 = new Coordinate(0, 1);
-  
+
   private static final Coordinate hallway3 = new Coordinate(0, 3);
-  
+
   private static final Coordinate hallway5 = new Coordinate(0, 5);
-  
+
   private static final Coordinate hallway7 = new Coordinate(0, 7);
-  
+
   private static final Coordinate hallway9 = new Coordinate(0, 9);
-  
+
   private static final Coordinate hallway10 = new Coordinate(0, 10);
-  
+
   private static final Coordinate room12 = new Coordinate(1, 2);
-  
+
   private static final Coordinate room22 = new Coordinate(2, 2);
-  
+
   private static final Coordinate room14 = new Coordinate(1, 4);
-  
+
   private static final Coordinate room24 = new Coordinate(2, 4);
-  
+
   private static final Coordinate room16 = new Coordinate(1, 6);
-  
+
   private static final Coordinate room26 = new Coordinate(2, 6);
-  
+
   private static final Coordinate room18 = new Coordinate(1, 8);
-  
+
   private static final Coordinate room28 = new Coordinate(2, 8);
-  
+
   private static final Coordinate room32 = new Coordinate(3, 2);
-  
+
   private static final Coordinate room42 = new Coordinate(4, 2);
-  
+
   private static final Coordinate room34 = new Coordinate(3, 4);
-  
+
   private static final Coordinate room44 = new Coordinate(4, 4);
-  
+
   private static final Coordinate room36 = new Coordinate(3, 6);
-  
+
   private static final Coordinate room46 = new Coordinate(4, 6);
-  
+
   private static final Coordinate room38 = new Coordinate(3, 8);
-  
+
   private static final Coordinate room48 = new Coordinate(4, 8);
-  
+
   private static final Coordinate cantStop2 = new Coordinate(0, 2);
-  
+
   private static final Coordinate cantStop4 = new Coordinate(0, 4);
-  
+
   private static final Coordinate cantStop6 = new Coordinate(0, 6);
-  
+
   private static final Coordinate cantStop8 = new Coordinate(0, 8);
-  
+
   private static final Set<Coordinate> hallway = CollectionLiterals.<Coordinate>newHashSet(
     AmphipodState.hallway0, AmphipodState.hallway1, AmphipodState.hallway3, AmphipodState.hallway5, AmphipodState.hallway7, AmphipodState.hallway9, AmphipodState.hallway10);
-  
+
   private static final Set<Coordinate> rooms = new Function0<Set<Coordinate>>() {
     public Set<Coordinate> apply() {
       HashSet<Coordinate> _xblockexpression = null;
@@ -97,10 +97,10 @@ public class AmphipodState implements State {
       return _xblockexpression;
     }
   }.apply();
-  
+
   private static final Set<Coordinate> cantStop = CollectionLiterals.<Coordinate>newHashSet(
     AmphipodState.cantStop2, AmphipodState.cantStop4, AmphipodState.cantStop6, AmphipodState.cantStop8);
-  
+
   private static final Set<Coordinate> all = new Function0<Set<Coordinate>>() {
     public Set<Coordinate> apply() {
       HashSet<Coordinate> _xblockexpression = null;
@@ -113,7 +113,7 @@ public class AmphipodState implements State {
       return _xblockexpression;
     }
   }.apply();
-  
+
   private static final Map<Coordinate, Integer> init = new Function0<Map<Coordinate, Integer>>() {
     public Map<Coordinate, Integer> apply() {
       HashMap<Coordinate, Integer> _xifexpression = null;
@@ -149,7 +149,7 @@ public class AmphipodState implements State {
       return _xifexpression;
     }
   }.apply();
-  
+
   public static int distance(final Coordinate c1, final Coordinate c2) {
     int _xifexpression = (int) 0;
     if (((AmphipodState.rooms.contains(c1) && AmphipodState.rooms.contains(c2)) && (c1.getY() != c2.getY()))) {
@@ -166,21 +166,21 @@ public class AmphipodState implements State {
     }
     return _xifexpression;
   }
-  
+
   private final Map<Coordinate, Integer> amphipods;
-  
+
   private final int code;
-  
+
   private final int energyToNormalize;
-  
+
   private final boolean isFinal;
-  
+
   private final int minBound;
-  
+
   public AmphipodState() {
     this(new HashMap<Coordinate, Integer>(AmphipodState.init));
   }
-  
+
   public AmphipodState(final HashMap<Coordinate, Integer> amphipods_) {
     this.amphipods = amphipods_;
     this.energyToNormalize = this.normalize();
@@ -235,11 +235,11 @@ public class AmphipodState implements State {
     };
     this.minBound = (IterableExtensions.<Map.Entry<Coordinate, Integer>, Integer>fold(IterableExtensions.<Map.Entry<Coordinate, Integer>>filter(this.amphipods.entrySet(), _function_2), Integer.valueOf(0), _function_3)).intValue();
   }
-  
+
   public int getEnergy() {
     return this.energyToNormalize;
   }
-  
+
   private boolean isPlaced(final Coordinate c, final Integer value) {
     Boolean _switchResult = null;
     int _x = c.getX();
@@ -266,7 +266,7 @@ public class AmphipodState implements State {
     }
     return (_switchResult).booleanValue();
   }
-  
+
   public void status() {
     final Consumer<Map.Entry<Coordinate, Integer>> _function = new Consumer<Map.Entry<Coordinate, Integer>>() {
       public void accept(final Map.Entry<Coordinate, Integer> it) {
@@ -284,7 +284,7 @@ public class AmphipodState implements State {
     };
     this.amphipods.keySet().forEach(_function_1);
   }
-  
+
   private HashSet<Coordinate> emptyNeighboursOfSet(final Set<Coordinate> setc, final Set<Coordinate> newOnes) {
     HashSet<Coordinate> _xblockexpression = null;
     {
@@ -306,7 +306,7 @@ public class AmphipodState implements State {
     }
     return _xblockexpression;
   }
-  
+
   private HashSet<Coordinate> reachableSpots(final Coordinate c) {
     HashSet<Coordinate> _xblockexpression = null;
     {
@@ -320,7 +320,7 @@ public class AmphipodState implements State {
     }
     return _xblockexpression;
   }
-  
+
   public int normalize() {
     int _xblockexpression = (int) 0;
     {
@@ -368,15 +368,15 @@ public class AmphipodState implements State {
     }
     return _xblockexpression;
   }
-  
+
   public boolean isGoal() {
     return this.isFinal;
   }
-  
+
   public int minToGoal() {
     return this.minBound;
   }
-  
+
   public List<Pair<State, Integer>> neighbours() {
     List<Pair<State, Integer>> _xblockexpression = null;
     {
@@ -427,11 +427,11 @@ public class AmphipodState implements State {
     }
     return _xblockexpression;
   }
-  
+
   public boolean equals(final Object other) {
     return this.amphipods.equals(((AmphipodState) other).amphipods);
   }
-  
+
   public int hashCode() {
     return this.code;
   }

@@ -7,9 +7,9 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public class Pair extends SNumber {
   private SNumber left;
-  
+
   private SNumber right;
-  
+
   public Pair(final BufferedReader br, final Pair parent_) {
     super(parent_);
     try {
@@ -22,7 +22,7 @@ public class Pair extends SNumber {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public Pair(final SNumber s1, final SNumber s2, final Pair parent_) {
     super(parent_);
     this.left = s1;
@@ -30,7 +30,7 @@ public class Pair extends SNumber {
     this.right = s2;
     s2.parent = this;
   }
-  
+
   public Pair(final int v1, final int v2, final Pair parent_) {
     super(parent_);
     Singleton _singleton = new Singleton(v1, this);
@@ -38,7 +38,7 @@ public class Pair extends SNumber {
     Singleton _singleton_1 = new Singleton(v2, this);
     this.right = _singleton_1;
   }
-  
+
   public SNumber update(final SNumber previousSN, final SNumber newSN) {
     SNumber _xifexpression = null;
     boolean _equals = Objects.equal(this.left, previousSN);
@@ -49,7 +49,7 @@ public class Pair extends SNumber {
     }
     return _xifexpression;
   }
-  
+
   public Pair reduce() {
     SNumber toProcess = null;
     do {
@@ -67,7 +67,7 @@ public class Pair extends SNumber {
     } while((toProcess != null));
     return this;
   }
-  
+
   public Singleton findFirstToSplit() {
     Singleton _xblockexpression = null;
     {
@@ -82,7 +82,7 @@ public class Pair extends SNumber {
     }
     return _xblockexpression;
   }
-  
+
   public Pair findFirstToExplode() {
     Pair _xifexpression = null;
     int _numberOfAncestors = this.numberOfAncestors();
@@ -105,7 +105,7 @@ public class Pair extends SNumber {
     }
     return _xifexpression;
   }
-  
+
   public SNumber findFirst(final SNumber nb, final boolean b) {
     SNumber _xifexpression = null;
     SNumber _xifexpression_1 = null;
@@ -134,7 +134,7 @@ public class Pair extends SNumber {
     }
     return _xifexpression;
   }
-  
+
   public SNumber explode() {
     SNumber _xifexpression = null;
     if ((this.parent != null)) {
@@ -157,11 +157,11 @@ public class Pair extends SNumber {
     }
     return _xifexpression;
   }
-  
+
   public String toString() {
     return (((("[" + this.left) + ",") + this.right) + "]");
   }
-  
+
   public void updateValue(final boolean r, final int value) {
     if (r) {
       this.right.updateValue(r, value);
@@ -169,7 +169,7 @@ public class Pair extends SNumber {
       this.left.updateValue(r, value);
     }
   }
-  
+
   public int magnitude() {
     int _magnitude = this.left.magnitude();
     int _multiply = (3 * _magnitude);

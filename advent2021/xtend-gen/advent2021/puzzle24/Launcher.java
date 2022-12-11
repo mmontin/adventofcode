@@ -14,7 +14,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class Launcher {
   private static final List<String> inputStrings = new InputLoader(Integer.valueOf(2021), Integer.valueOf(24)).getInputs();
-  
+
   private static final List<Pair<Integer, Integer>> input = IterableExtensions.<Integer, ArrayList<Pair<Integer, Integer>>>fold(new IntegerRange(0, 13), new ArrayList<Pair<Integer, Integer>>(), new Function2<ArrayList<Pair<Integer, Integer>>, Integer, ArrayList<Pair<Integer, Integer>>>() {
     public ArrayList<Pair<Integer, Integer>> apply(final ArrayList<Pair<Integer, Integer>> l, final Integer i) {
       int _parseInt = Integer.parseInt(Launcher.inputStrings.get((((i).intValue() * 18) + 5)).split(" ")[2]);
@@ -23,9 +23,9 @@ public class Launcher {
       return ListUtils.<Pair<Integer, Integer>, ArrayList<Pair<Integer, Integer>>>cons(_pair, l);
     }
   });
-  
+
   private static int z = 0;
-  
+
   public static int function() {
     int _xblockexpression = (int) 0;
     {
@@ -47,7 +47,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static void main(final String[] args) {
     Launcher.function();
   }

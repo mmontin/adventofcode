@@ -34,7 +34,7 @@ public class Launcher {
     }
     InputOutput.<Integer>println(Integer.valueOf(Launcher.greater(newList)));
   }
-  
+
   private static int greater(final List<Integer> input) {
     int _xblockexpression = (int) 0;
     {

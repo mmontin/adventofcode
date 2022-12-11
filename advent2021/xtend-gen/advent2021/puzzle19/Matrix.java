@@ -3,11 +3,11 @@ package advent2021.puzzle19;
 @SuppressWarnings("all")
 public class Matrix {
   protected int[][] coeffs;
-  
+
   public Matrix(final int[][] coeffs) {
     this.coeffs = coeffs;
   }
-  
+
   public Matrix(final Vector v1, final Vector v2) {
     int _xifexpression = (int) 0;
     if ((v1.x == v2.x)) {

@@ -20,11 +20,11 @@ public class Launcher {
       return IterableExtensions.<Character>toList(((Iterable<Character>)Conversions.doWrapArray(it.toCharArray())));
     }
   });
-  
+
   public static final int max_value_small = Launcher.input.size();
-  
+
   public static final int max_indice = ((Launcher.max_value_small * 5) - 1);
-  
+
   public static final Map<CoordinateState, Integer> coordinates = IterableExtensions.<Integer, HashMap<CoordinateState, Integer>>fold(new ExclusiveRange(0, Launcher.max_value_small, true), CollectionLiterals.<CoordinateState, Integer>newHashMap(), new Function2<HashMap<CoordinateState, Integer>, Integer, HashMap<CoordinateState, Integer>>() {
     public HashMap<CoordinateState, Integer> apply(final HashMap<CoordinateState, Integer> map1, final Integer i) {
       final Function2<HashMap<CoordinateState, Integer>, Integer, HashMap<CoordinateState, Integer>> _function = new Function2<HashMap<CoordinateState, Integer>, Integer, HashMap<CoordinateState, Integer>>() {
@@ -65,7 +65,7 @@ public class Launcher {
       return IterableExtensions.<Integer, HashMap<CoordinateState, Integer>>fold(new ExclusiveRange(0, Launcher.max_value_small, true), map1, _function);
     }
   });
-  
+
   public static void main(final String[] args) {
     final long timer = System.currentTimeMillis();
     CoordinateState _coordinateState = new CoordinateState(0, 0);

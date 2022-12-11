@@ -13,7 +13,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Board {
   private List<List<Square>> grid;
-  
+
   public Board(final BufferedReader br) {
     try {
       br.readLine();
@@ -42,7 +42,7 @@ public class Board {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public void play(final int number) throws CompletedException {
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, 5, true);
     for (final Integer i : _doubleDotLessThan) {
@@ -57,7 +57,7 @@ public class Board {
       throw new CompletedException((_count).intValue(), number);
     }
   }
-  
+
   public boolean completed() {
     boolean _xblockexpression = false;
     {
@@ -81,7 +81,7 @@ public class Board {
     }
     return _xblockexpression;
   }
-  
+
   public Integer count() {
     final Function2<Integer, List<Square>, Integer> _function = new Function2<Integer, List<Square>, Integer>() {
       public Integer apply(final Integer v, final List<Square> l) {

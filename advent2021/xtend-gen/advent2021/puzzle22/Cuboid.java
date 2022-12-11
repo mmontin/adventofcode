@@ -8,17 +8,17 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 @SuppressWarnings("all")
 public class Cuboid {
   private int minx;
-  
+
   private int maxx;
-  
+
   private int miny;
-  
+
   private int maxy;
-  
+
   private int minz;
-  
+
   private int maxz;
-  
+
   public Cuboid(final int minx_, final int maxx_, final int miny_, final int maxy_, final int minz_, final int maxz_) {
     this.minx = minx_;
     this.maxx = maxx_;
@@ -27,7 +27,7 @@ public class Cuboid {
     this.minz = minz_;
     this.maxz = maxz_;
   }
-  
+
   public Cuboid(final String s) {
     final String[] split = s.split(",");
     final String[] split2 = (split[0]).split("\\.\\.");
@@ -40,11 +40,11 @@ public class Cuboid {
     this.minz = Integer.parseInt((split4[0]).substring(2));
     this.maxz = Integer.parseInt(split4[1]);
   }
-  
+
   public BigInteger size() {
     return BigInteger.valueOf(((this.maxx - this.minx) + 1)).multiply(BigInteger.valueOf(((this.maxy - this.miny) + 1))).multiply(BigInteger.valueOf(((this.maxz - this.minz) + 1)));
   }
-  
+
   public Set<Cuboid> subtract(final Cuboid other) {
     HashSet<Cuboid> _xifexpression = null;
     if (((((((other.minx > this.maxx) || (other.maxx < this.minx)) || (other.miny > this.maxy)) || (other.maxy < this.miny)) || (other.minz > this.maxz)) || (other.maxz < this.minz))) {

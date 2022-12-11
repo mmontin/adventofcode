@@ -27,17 +27,17 @@ public abstract class SNumber {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   protected Pair parent = null;
-  
+
   public SNumber(final Pair parent_) {
     this.parent = parent_;
   }
-  
+
   public Pair getParent() {
     return this.parent;
   }
-  
+
   public int numberOfAncestors() {
     int _xifexpression = (int) 0;
     if ((this.parent == null)) {
@@ -48,12 +48,12 @@ public abstract class SNumber {
     }
     return _xifexpression;
   }
-  
+
   public abstract Singleton findFirstToSplit();
-  
+
   public abstract Pair findFirstToExplode();
-  
+
   public abstract void updateValue(final boolean right, final int value);
-  
+
   public abstract int magnitude();
 }

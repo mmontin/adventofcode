@@ -1,11 +1,22 @@
 package adventutils.geometry;
 
+import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
 public class Coordinate {
+  public enum Direction {
+    UP,
+
+    DOWN,
+
+    LEFT,
+
+    RIGHT;
+  }
+
   private final int x;
 
   private final int y;
@@ -24,6 +35,10 @@ public class Coordinate {
 
   public Coordinate(final String s) {
     this(Integer.parseInt(s.split(",")[0]), Integer.parseInt(s.split(",")[1]));
+  }
+
+  public Coordinate(final Coordinate c) {
+    this(c.x, c.y);
   }
 
   public Coordinate() {
@@ -165,5 +180,76 @@ public class Coordinate {
 
   public int hashCode() {
     return this.code;
+  }
+
+  public static Coordinate.Direction directionFromString(final String s) {
+    Coordinate.Direction _switchResult = null;
+    boolean _matched = false;
+    if (Objects.equal(s, "U")) {
+      _matched=true;
+      _switchResult = Coordinate.Direction.UP;
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "D")) {
+        _matched=true;
+        _switchResult = Coordinate.Direction.DOWN;
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "L")) {
+        _matched=true;
+        _switchResult = Coordinate.Direction.LEFT;
+      }
+    }
+    if (!_matched) {
+      _switchResult = Coordinate.Direction.RIGHT;
+    }
+    return _switchResult;
+  }
+
+  public static Coordinate.Direction nextDirection(final Coordinate.Direction d) {
+    Coordinate.Direction _switchResult = null;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          _switchResult = Coordinate.Direction.LEFT;
+          break;
+        case LEFT:
+          _switchResult = Coordinate.Direction.DOWN;
+          break;
+        case DOWN:
+          _switchResult = Coordinate.Direction.RIGHT;
+          break;
+        case RIGHT:
+          _switchResult = Coordinate.Direction.UP;
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
+  }
+
+  public Coordinate move(final Coordinate.Direction d) {
+    Coordinate _switchResult = null;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          _switchResult = this.addY(1);
+          break;
+        case DOWN:
+          _switchResult = this.addY((-1));
+          break;
+        case RIGHT:
+          _switchResult = this.addX(1);
+          break;
+        case LEFT:
+          _switchResult = this.addX((-1));
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
   }
 }

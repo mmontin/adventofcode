@@ -29,14 +29,14 @@ public class Launcher {
         final int offset = Integer.parseInt(split[1]);
         final HashSet<Coordinate> duplicates = new HashSet<Coordinate>(dots);
         final Consumer<Coordinate> _function = new Consumer<Coordinate>() {
-          public void accept(final Coordinate it) {
-            if ((ch.equals("x") && (it.getX() > offset))) {
-              dots.add(it.symByX(offset));
-              dots.remove(it);
+          public void accept(final Coordinate it_1) {
+            if ((ch.equals("x") && (it_1.getX() > offset))) {
+              dots.add(it_1.symByX(offset));
+              dots.remove(it_1);
             } else {
-              if ((ch.equals("y") && (it.getY() > offset))) {
-                dots.add(it.symByY(offset));
-                dots.remove(it);
+              if ((ch.equals("y") && (it_1.getY() > offset))) {
+                dots.add(it_1.symByY(offset));
+                dots.remove(it_1);
               }
             }
           }
