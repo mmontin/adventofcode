@@ -203,7 +203,6 @@ public class Day11 {
           }
         };
         new IntegerRange(0, 7).forEach(_function);
-        InputOutput.<ArrayList<ArrayList<HashMap<Integer, Long>>>>println(output);
         _xblockexpression = output;
       }
       return _xblockexpression;

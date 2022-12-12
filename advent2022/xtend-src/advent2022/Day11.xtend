@@ -31,7 +31,6 @@ class Day11 {
 				]
 			]
 		]
-		println(output)
 		output
 	}
 
