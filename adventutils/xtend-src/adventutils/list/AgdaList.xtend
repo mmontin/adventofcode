@@ -6,7 +6,7 @@ import java.util.List
 class AgdaList<T> extends ArrayList<T> {
 	
 	override toString() {
-		'(' + this.join(" ∷ ") + " ∷ [])"
+		if (isEmpty) "[]" else '(' + this.join(" ∷ ") + " ∷ [])"
 	}
 	
 	new(List<T> list) {

@@ -15,9 +15,9 @@ class Day9 {
 			switch (stream.get(i)) {
 				case "<": if (!inGarbage) inGarbage = true else nbGarbage ++
 				case ">": inGarbage = false
-				case "{": if(!inGarbage) scores.push(scores.isEmpty ? 1 : scores.peek + 1) else nbGarbage ++
-				case "}": if(!inGarbage) totalScore += scores.pop else nbGarbage ++
-				case "!": if(inGarbage) i++
+				case "{": if (!inGarbage) scores.push(scores.isEmpty ? 1 : scores.peek + 1) else nbGarbage ++
+				case "}": if (!inGarbage) totalScore += scores.pop else nbGarbage ++
+				case "!": if (inGarbage) i++
 				default : if (inGarbage) nbGarbage ++
 			}
 			i++
