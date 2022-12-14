@@ -3,7 +3,9 @@ package adventutils.geometry;
 import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
 
 @SuppressWarnings("all")
 public class Coordinate {
@@ -251,5 +253,61 @@ public class Coordinate {
       }
     }
     return _switchResult;
+  }
+
+  public static HashSet<Coordinate> getAllCoordsOnLine(final Coordinate coordinate, final Coordinate coordinate2) {
+    HashSet<Coordinate> _xblockexpression = null;
+    {
+      final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
+      if ((coordinate.x == coordinate2.x)) {
+        Coordinate _xifexpression = null;
+        if ((coordinate.y <= coordinate2.y)) {
+          _xifexpression = coordinate;
+        } else {
+          _xifexpression = coordinate2;
+        }
+        final Coordinate _left = _xifexpression;
+        Coordinate _xifexpression_1 = null;
+        boolean _equals = _left.equals(coordinate);
+        if (_equals) {
+          _xifexpression_1 = coordinate2;
+        } else {
+          _xifexpression_1 = coordinate;
+        }
+        final Coordinate _right = _xifexpression_1;
+        final Consumer<Integer> _function = new Consumer<Integer>() {
+          public void accept(final Integer it) {
+            Coordinate _coordinate = new Coordinate(coordinate.x, (it).intValue());
+            output.add(_coordinate);
+          }
+        };
+        new IntegerRange(_left.y, _right.y).forEach(_function);
+      } else {
+        Coordinate _xifexpression_2 = null;
+        if ((coordinate.x <= coordinate2.x)) {
+          _xifexpression_2 = coordinate;
+        } else {
+          _xifexpression_2 = coordinate2;
+        }
+        final Coordinate _up = _xifexpression_2;
+        Coordinate _xifexpression_3 = null;
+        boolean _equals_1 = _up.equals(coordinate);
+        if (_equals_1) {
+          _xifexpression_3 = coordinate2;
+        } else {
+          _xifexpression_3 = coordinate;
+        }
+        final Coordinate _down = _xifexpression_3;
+        final Consumer<Integer> _function_1 = new Consumer<Integer>() {
+          public void accept(final Integer it) {
+            Coordinate _coordinate = new Coordinate((it).intValue(), coordinate.y);
+            output.add(_coordinate);
+          }
+        };
+        new IntegerRange(_up.x, _down.x).forEach(_function_1);
+      }
+      _xblockexpression = output;
+    }
+    return _xblockexpression;
   }
 }

@@ -168,4 +168,20 @@ class Coordinate {
 			case LEFT: addX(-1)
 		}
 	}
+	
+	// Here it's assumed that both coordinates share one of their values
+	def static getAllCoordsOnLine(Coordinate coordinate, Coordinate coordinate2) {
+		val output = newHashSet
+		if (coordinate.x == coordinate2.x) {
+			val _left = coordinate.y <= coordinate2.y ? coordinate : coordinate2
+			val _right = _left.equals(coordinate) ? coordinate2 : coordinate ;
+			(_left.y.._right.y).forEach[output.add(new Coordinate(coordinate.x,it))]
+		} else { // here coordinate.y == coordinate2.y
+			val _up = coordinate.x <= coordinate2.x ? coordinate : coordinate2
+			val _down = _up.equals(coordinate) ? coordinate2 : coordinate ;
+			(_up.x.._down.x).forEach[output.add(new Coordinate(it,coordinate.y))]
+		}
+		output
+	}
+	
 }
