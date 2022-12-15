@@ -11,17 +11,17 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Coordinates {
   private static final int favourite_nb = 1358;
-  
+
   private final int x;
-  
+
   private final int y;
-  
+
   private final int hCode;
-  
+
   private final boolean passable;
-  
+
   private int distance;
-  
+
   public Coordinates(final int x_, final int y_) {
     this.x = x_;
     this.y = y_;
@@ -45,7 +45,7 @@ public class Coordinates {
     this.passable = _equals;
     this.distance = Integer.MAX_VALUE;
   }
-  
+
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {
@@ -54,11 +54,11 @@ public class Coordinates {
     }
     return _xblockexpression;
   }
-  
+
   public int hashCode() {
     return this.hCode;
   }
-  
+
   public void step(final Set<Coordinates> visited, final Set<Coordinates> toVisit) {
     Coordinates _coordinates = new Coordinates((this.x - 1), this.y);
     Coordinates _coordinates_1 = new Coordinates((this.x + 1), this.y);
@@ -86,15 +86,15 @@ public class Coordinates {
     };
     IterableExtensions.<Coordinates>filter(CollectionLiterals.<Coordinates>newHashSet(_coordinates, _coordinates_1, _coordinates_2, _coordinates_3), _function).forEach(_function_1);
   }
-  
+
   public int getDistance() {
     return this.distance;
   }
-  
+
   public int updateDistance(final int newDistance) {
     return this.distance = Math.min(this.distance, newDistance);
   }
-  
+
   public String toString() {
     return (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
   }

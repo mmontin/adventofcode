@@ -72,7 +72,7 @@ public class Launcher {
     };
     InputOutput.<String>println(Integer.toHexString((IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, _size, true), Integer.valueOf(0), _function_1)).intValue()));
   }
-  
+
   public static int left(final int i) {
     int _switchResult = (int) 0;
     switch (i) {
@@ -89,7 +89,7 @@ public class Launcher {
     }
     return _switchResult;
   }
-  
+
   public static int right(final int i) {
     int _switchResult = (int) 0;
     switch (i) {
@@ -106,7 +106,7 @@ public class Launcher {
     }
     return _switchResult;
   }
-  
+
   public static int up(final int i) {
     int _switchResult = (int) 0;
     switch (i) {
@@ -127,7 +127,7 @@ public class Launcher {
     }
     return _switchResult;
   }
-  
+
   public static int down(final int i) {
     int _switchResult = (int) 0;
     switch (i) {

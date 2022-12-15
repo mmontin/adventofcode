@@ -18,7 +18,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static final String salt = "cuanljph";
-  
+
   private static final MessageDigest md = new Function0<MessageDigest>() {
     public MessageDigest apply() {
       try {
@@ -29,7 +29,7 @@ public class Launcher {
       }
     }
   }.apply();
-  
+
   public static void main(final String[] args) {
     final HashSet<Integer> keys = CollectionLiterals.<Integer>newHashSet();
     final Map<Integer, String> data = CollectionLiterals.<Integer, String>newHashMap();
@@ -71,7 +71,7 @@ public class Launcher {
     }
     InputOutput.<Integer>println(IterableExtensions.<Integer>sort(keys).get(63));
   }
-  
+
   public static String inARow(final String s, final int range) {
     String _xblockexpression = null;
     {

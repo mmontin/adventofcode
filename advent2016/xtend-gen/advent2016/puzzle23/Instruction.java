@@ -9,22 +9,22 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 public class Instruction {
   private enum InstructionType {
     CPY,
-    
+
     INC,
-    
+
     DEC,
-    
+
     JNZ,
-    
+
     TGL;
   }
-  
+
   private Instruction.InstructionType type;
-  
+
   private String arg1;
-  
+
   private String arg2;
-  
+
   public Instruction(final String s) {
     final String[] split = s.split(" ");
     Instruction.InstructionType _switchResult = null;
@@ -63,14 +63,14 @@ public class Instruction {
       this.arg2 = split[2];
     }
   }
-  
+
   public String toString() {
     String _plus = (this.type + " ");
     String _plus_1 = (_plus + this.arg1);
     String _plus_2 = (_plus_1 + " ");
     return (_plus_2 + this.arg2);
   }
-  
+
   public Instruction.InstructionType toggle() {
     Instruction.InstructionType _switchResult = null;
     final Instruction.InstructionType type = this.type;
@@ -97,7 +97,7 @@ public class Instruction {
     }
     return this.type = _switchResult;
   }
-  
+
   public int execute() {
     int _switchResult = (int) 0;
     final Instruction.InstructionType type = this.type;

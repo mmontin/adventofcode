@@ -17,9 +17,9 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static Set<Set<Integer>> possible_subsets = CollectionLiterals.<Set<Integer>>newHashSet();
-  
+
   private static int min_size = Integer.MAX_VALUE;
-  
+
   public static void main(final String[] args) {
     final Function1<String, Integer> _function = new Function1<String, Integer>() {
       public Integer apply(final String it) {
@@ -47,7 +47,7 @@ public class Launcher {
     };
     InputOutput.<Long>println(IterableExtensions.<Set<Integer>, Long>fold(Launcher.possible_subsets, Long.valueOf(Long.MAX_VALUE), _function_2));
   }
-  
+
   public static boolean update(final Set<Integer> packages) {
     boolean _xblockexpression = false;
     {
@@ -68,7 +68,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static void compute(final List<Integer> remaining_candidates, final Integer remaining_weight, final Set<Integer> packages_already_taken) {
     int _size = packages_already_taken.size();
     boolean _lessEqualsThan = (_size <= Launcher.min_size);

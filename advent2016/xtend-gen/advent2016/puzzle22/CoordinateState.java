@@ -12,15 +12,15 @@ public class CoordinateState extends Coordinate implements State {
   public CoordinateState(final Coordinate c) {
     super(c.getX(), c.getY());
   }
-  
+
   public boolean isGoal() {
     return this.equals(Launcher.target);
   }
-  
+
   public int minToGoal() {
     return this.manhattanDistanceTo(Launcher.target);
   }
-  
+
   public List<Pair<State, Integer>> neighbours() {
     final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
       public Boolean apply(final Coordinate it) {

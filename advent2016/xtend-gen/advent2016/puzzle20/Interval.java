@@ -3,15 +3,15 @@ package advent2016.puzzle20;
 @SuppressWarnings("all")
 public class Interval {
   protected long leftBound;
-  
+
   protected long rightBound;
-  
+
   public Interval(final String s) {
     String[] split = s.split("-");
     this.leftBound = Long.parseLong(split[0]);
     this.rightBound = Long.parseLong(split[1]);
   }
-  
+
   public int contains(final long dot) {
     int _xifexpression = (int) 0;
     if ((dot < this.leftBound)) {
@@ -27,7 +27,7 @@ public class Interval {
     }
     return _xifexpression;
   }
-  
+
   public String toString() {
     return (((("[" + Long.valueOf(this.leftBound)) + ",") + Long.valueOf(this.rightBound)) + "]");
   }

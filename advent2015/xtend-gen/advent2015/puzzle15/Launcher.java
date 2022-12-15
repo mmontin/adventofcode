@@ -19,7 +19,7 @@ public class Launcher {
     }
     InputOutput.<Integer>println(Integer.valueOf(max));
   }
-  
+
   public static int valuation(final int x, final int y, final int z, final int t) {
     int _xifexpression = (int) 0;
     if ((((((2 * x) + (9 * y)) + z) + (8 * t)) == 500)) {

@@ -11,11 +11,11 @@ import org.eclipse.xtext.xbase.lib.IntegerRange;
 @SuppressWarnings("all")
 public class Launcher {
   private static final Map<Integer, Boolean> data = CollectionLiterals.<Integer, Boolean>newHashMap();
-  
+
   private static final String input = "10001001100000001";
-  
+
   private static final int disk_size = 35651584;
-  
+
   public static void main(final String[] args) {
     int _length = Launcher.input.length();
     final Consumer<Integer> _function = new Consumer<Integer>() {

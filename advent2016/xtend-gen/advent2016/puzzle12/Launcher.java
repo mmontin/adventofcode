@@ -10,10 +10,10 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Launcher {
-  private static final Map<String, Integer> registers = CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("a", Integer.valueOf(0)), Pair.<String, Integer>of("b", Integer.valueOf(0)), Pair.<String, Integer>of("c", Integer.valueOf(0)), Pair.<String, Integer>of("d", Integer.valueOf(0)));
-  
+  private static final Map<String, Integer> registers = CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("a", Integer.valueOf(0)), Pair.<String, Integer>of("b", Integer.valueOf(0)), Pair.<String, Integer>of("c", Integer.valueOf(1)), Pair.<String, Integer>of("d", Integer.valueOf(0)));
+
   private static final List<String> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(12)).getInputs();
-  
+
   public static void main(final String[] args) {
     int pos = 0;
     while ((pos < Launcher.input.size())) {

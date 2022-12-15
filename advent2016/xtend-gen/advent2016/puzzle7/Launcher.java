@@ -42,7 +42,7 @@ public class Launcher {
     };
     InputOutput.<Integer>println(IterableExtensions.<String, Integer>fold(input, Integer.valueOf(0), _function_1));
   }
-  
+
   public static Boolean checkSSL(final String s) {
     Boolean _xblockexpression = null;
     {
@@ -72,7 +72,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static boolean checkTLS(final String s) {
     boolean _xblockexpression = false;
     {
@@ -93,7 +93,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static ArrayList<String> getSSLPatterns(final String s) {
     ArrayList<String> _xblockexpression = null;
     {
@@ -113,7 +113,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static boolean hasTLSPattern(final String s) {
     boolean _xblockexpression = false;
     {
@@ -129,18 +129,18 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static boolean smallHasSSLPatter(final String s) {
     return (Character.valueOf(s.charAt(0)).equals(Character.valueOf(s.charAt(2))) && 
       (!Character.valueOf(s.charAt(0)).equals(Character.valueOf(s.charAt(1)))));
   }
-  
+
   public static boolean smallHasTLSPattern(final String s) {
     return ((Character.valueOf(s.charAt(0)).equals(Character.valueOf(s.charAt(3))) && 
       Character.valueOf(s.charAt(1)).equals(Character.valueOf(s.charAt(2)))) && 
       (!Character.valueOf(s.charAt(0)).equals(Character.valueOf(s.charAt(1)))));
   }
-  
+
   public static boolean compatible(final String s1, final String s2) {
     return (Character.valueOf(s1.charAt(0)).equals(Character.valueOf(s2.charAt(1))) && 
       Character.valueOf(s2.charAt(0)).equals(Character.valueOf(s1.charAt(1))));

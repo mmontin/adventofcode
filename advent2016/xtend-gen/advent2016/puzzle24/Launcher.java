@@ -21,17 +21,17 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class Launcher {
   public static Set<Coordinate> walls = CollectionLiterals.<Coordinate>newHashSet();
-  
+
   public static Set<Coordinate> objectives = CollectionLiterals.<Coordinate>newHashSet();
-  
+
   public static Coordinate initial;
-  
+
   public static Map<Set<Coordinate>, Integer> distances = CollectionLiterals.<Set<Coordinate>, Integer>newHashMap();
-  
+
   public static Map<Pair<Coordinate, Coordinate>, List<State>> paths = CollectionLiterals.<Pair<Coordinate, Coordinate>, List<State>>newHashMap();
-  
+
   public static List<List<Integer>> map = CollectionLiterals.<List<Integer>>newArrayList();
-  
+
   public static void main(final String[] args) {
     int lineNumber = 0;
     List<String> _inputs = new InputLoader(Integer.valueOf(2016), Integer.valueOf(24)).getInputs();

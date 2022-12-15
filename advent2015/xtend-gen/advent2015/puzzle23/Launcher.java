@@ -9,28 +9,28 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 @SuppressWarnings("all")
 public class Launcher {
   private static final UnsignedLong ZERO = UnsignedLong.ZERO;
-  
+
   private static final UnsignedLong ONE = UnsignedLong.ONE;
-  
+
   private static final UnsignedLong TWO = UnsignedLong.valueOf(2);
-  
+
   private static final UnsignedLong THREE = UnsignedLong.valueOf(3);
-  
+
   private static int current_instruction = 0;
-  
+
   private static UnsignedLong a = UnsignedLong.ONE;
-  
+
   private static UnsignedLong b = UnsignedLong.ZERO;
-  
+
   private static List<String> instructions = new InputLoader(Integer.valueOf(2015), Integer.valueOf(23)).getInputs();
-  
+
   public static void main(final String[] args) {
     while (((Launcher.current_instruction >= 0) && (Launcher.current_instruction < Launcher.instructions.size()))) {
       Launcher.execute(Launcher.instructions.get(Launcher.current_instruction));
     }
     InputOutput.<UnsignedLong>println(Launcher.b);
   }
-  
+
   public static int execute(final String s) {
     int _xblockexpression = (int) 0;
     {
@@ -123,7 +123,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static boolean isEven(final String s) {
     boolean _xifexpression = false;
     boolean _equals = s.substring(0, 1).equals("a");
@@ -134,7 +134,7 @@ public class Launcher {
     }
     return _xifexpression;
   }
-  
+
   public static boolean isOne(final String s) {
     boolean _xifexpression = false;
     boolean _equals = s.substring(0, 1).equals("a");

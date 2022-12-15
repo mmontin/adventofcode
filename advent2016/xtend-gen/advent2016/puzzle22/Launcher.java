@@ -43,17 +43,17 @@ public class Launcher {
       }
     }
   }.apply();
-  
+
   private static int viablePairs = 0;
-  
+
   public static Set<Coordinate> walls = CollectionLiterals.<Coordinate>newHashSet();
-  
+
   public static Coordinate initial;
-  
+
   public static Coordinate dataPosition;
-  
+
   public static Coordinate target;
-  
+
   public static void main(final String[] args) {
     Launcher.initialize();
     InputOutput.<Integer>println(Integer.valueOf(Launcher.viablePairs));
@@ -86,7 +86,7 @@ public class Launcher {
     }
     InputOutput.<Integer>println(Integer.valueOf(totalCost));
   }
-  
+
   public static Coordinate initialize() {
     Coordinate _xblockexpression = null;
     {

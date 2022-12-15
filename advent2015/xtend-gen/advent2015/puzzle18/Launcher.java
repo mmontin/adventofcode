@@ -53,7 +53,7 @@ public class Launcher {
     };
     InputOutput.<Integer>println(IterableExtensions.<List<Integer>, Integer>fold(input, Integer.valueOf(0), _function_1));
   }
-  
+
   public static ArrayList<List<Integer>> step(final List<List<Integer>> input) {
     ArrayList<List<Integer>> _xblockexpression = null;
     {

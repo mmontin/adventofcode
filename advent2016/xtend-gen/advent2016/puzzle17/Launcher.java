@@ -17,7 +17,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static final String input = "rrrbmfta";
-  
+
   private static final MessageDigest md = new Function0<MessageDigest>() {
     public MessageDigest apply() {
       try {
@@ -28,20 +28,20 @@ public class Launcher {
       }
     }
   }.apply();
-  
+
   private static int min_length = Integer.MAX_VALUE;
-  
+
   private static int max_length = 0;
-  
+
   private static String min_path = "";
-  
+
   public static void main(final String[] args) {
     Coordinates _coordinates = new Coordinates(0, 0);
     Launcher.step(_coordinates, "");
     InputOutput.<String>println(("PART 1: " + Launcher.min_path));
     InputOutput.<String>println(("PART 2: " + Integer.valueOf(Launcher.max_length)));
   }
-  
+
   public static void step(final Coordinates current, final String path) {
     boolean _isFinal = current.isFinal();
     if (_isFinal) {
@@ -64,7 +64,7 @@ public class Launcher {
       current.neighbours(Launcher.hashAndCollect((Launcher.input + path))).entrySet().forEach(_function);
     }
   }
-  
+
   public static List<Boolean> hashAndCollect(final String s) {
     List<Boolean> _xblockexpression = null;
     {

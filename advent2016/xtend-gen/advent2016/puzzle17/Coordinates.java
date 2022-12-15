@@ -7,18 +7,18 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 @SuppressWarnings("all")
 public class Coordinates {
   private final int x;
-  
+
   private final int y;
-  
+
   private final int hCode;
-  
+
   public Coordinates(final int x_, final int y_) {
     this.x = x_;
     this.y = y_;
     final int tmp = (this.y + ((this.x + 1) / 2));
     this.hCode = (this.x + (tmp * tmp));
   }
-  
+
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {
@@ -27,11 +27,11 @@ public class Coordinates {
     }
     return _xblockexpression;
   }
-  
+
   public int hashCode() {
     return this.hCode;
   }
-  
+
   public HashMap<String, Coordinates> neighbours(final List<Boolean> bools) {
     HashMap<String, Coordinates> _xblockexpression = null;
     {
@@ -56,11 +56,11 @@ public class Coordinates {
     }
     return _xblockexpression;
   }
-  
+
   public boolean isFinal() {
     return ((this.x == 3) && (this.y == 3));
   }
-  
+
   public String toString() {
     return (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
   }

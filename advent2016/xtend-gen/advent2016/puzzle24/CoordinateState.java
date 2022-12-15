@@ -10,20 +10,20 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class CoordinateState extends Coordinate implements State {
   private Coordinate goal;
-  
+
   public CoordinateState(final Coordinate c, final Coordinate goal_) {
     super(c.getX(), c.getY());
     this.goal = goal_;
   }
-  
+
   public boolean isGoal() {
     return this.equals(this.goal);
   }
-  
+
   public int minToGoal() {
     return this.manhattanDistanceTo(this.goal);
   }
-  
+
   public List<Pair<State, Integer>> neighbours() {
     final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
       public Boolean apply(final Coordinate it) {

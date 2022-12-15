@@ -13,11 +13,11 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class OverState implements State {
   protected Coordinate currentPosition;
-  
+
   private Set<Coordinate> toVisit;
-  
+
   private int code;
-  
+
   public OverState(final Coordinate currentPosition_, final Set<Coordinate> toVisit_) {
     this.currentPosition = currentPosition_;
     this.toVisit = toVisit_;
@@ -26,15 +26,15 @@ public class OverState implements State {
     int _multiply = (_hashCode * _hashCode_1);
     this.code = _multiply;
   }
-  
+
   public boolean isGoal() {
     return (this.toVisit.isEmpty() && this.currentPosition.equals(Launcher.initial));
   }
-  
+
   public int minToGoal() {
     return this.currentPosition.manhattanDistanceTo(Launcher.initial);
   }
-  
+
   public List<Pair<State, Integer>> neighbours() {
     List<Pair<State, Integer>> _xifexpression = null;
     boolean _equals = this.toVisit.equals(CollectionLiterals.<Coordinate>newHashSet(Launcher.initial));
@@ -68,11 +68,11 @@ public class OverState implements State {
     }
     return _xifexpression;
   }
-  
+
   public int hashCode() {
     return this.code;
   }
-  
+
   public boolean equals(final Object other) {
     boolean _xblockexpression = false;
     {
@@ -81,7 +81,7 @@ public class OverState implements State {
     }
     return _xblockexpression;
   }
-  
+
   public String toString() {
     return this.currentPosition.toString();
   }

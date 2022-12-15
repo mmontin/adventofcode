@@ -16,7 +16,7 @@ public class Launcher {
     };
     InputOutput.<Long>println(IterableExtensions.<Integer, Long>fold(new ExclusiveRange(1, _intValue, true), Long.valueOf(20151125L), _function));
   }
-  
+
   public static int intValue(final int row, final int column) {
     return ((((((column + row) - 1) * (column + row)) / 2) - row) + 1);
   }

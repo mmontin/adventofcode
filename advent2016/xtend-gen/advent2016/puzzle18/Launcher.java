@@ -26,7 +26,7 @@ public class Launcher {
         return Boolean.valueOf(_xifexpression);
       }
     });
-  
+
   public static void main(final String[] args) {
     final Function1<Boolean, Boolean> _function = new Function1<Boolean, Boolean>() {
       public Boolean apply(final Boolean it) {
@@ -48,7 +48,7 @@ public class Launcher {
     }
     InputOutput.<Integer>println(Integer.valueOf(sum));
   }
-  
+
   public static List<Boolean> computeRow(final List<Boolean> booleans) {
     int _size = booleans.size();
     final Function2<ArrayList<Boolean>, Integer, ArrayList<Boolean>> _function = new Function2<ArrayList<Boolean>, Integer, ArrayList<Boolean>>() {

@@ -9,13 +9,13 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Constellation {
   private static final long max_value = ((2L * Integer.MAX_VALUE) + 1L);
-  
+
   private List<Interval> content;
-  
+
   public Constellation() {
     this.content = CollectionLiterals.<Interval>newArrayList();
   }
-  
+
   public void addInterval(final Interval itv) {
     int i = 0;
     int res_left = 1;
@@ -55,7 +55,7 @@ public class Constellation {
       this.merge((i - 1));
     }
   }
-  
+
   public void merge(final int index) {
     if ((((index >= 0) && ((index + 1) < this.content.size())) && 
       (this.content.get((index + 1)).leftBound == (this.content.get(index).rightBound + 1)))) {
@@ -64,15 +64,15 @@ public class Constellation {
       this.content.remove((index + 1));
     }
   }
-  
+
   public String toString() {
     return this.content.toString();
   }
-  
+
   public long firstValid() {
     return (this.content.get(0).rightBound + 1);
   }
-  
+
   public Long nb_of_valids() {
     int _size = this.content.size();
     int _minus = (_size - 1);

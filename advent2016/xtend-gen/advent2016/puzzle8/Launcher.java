@@ -20,11 +20,11 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static final int width = 50;
-  
+
   private static final int height = 6;
-  
+
   private static HashMap<Coordinate, Boolean> screen = CollectionLiterals.<Coordinate, Boolean>newHashMap();
-  
+
   public static void main(final String[] args) {
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, Launcher.width, true);
     for (final Integer i : _doubleDotLessThan) {
@@ -43,9 +43,9 @@ public class Launcher {
     ExclusiveRange _doubleDotLessThan_2 = new ExclusiveRange(0, Launcher.height, true);
     for (final Integer i_1 : _doubleDotLessThan_2) {
       final Function2<String, Integer, String> _function_1 = new Function2<String, Integer, String>() {
-        public String apply(final String v, final Integer j) {
+        public String apply(final String v, final Integer j_1) {
           String _xifexpression = null;
-          Coordinate _coordinate = new Coordinate((j).intValue(), (i_1).intValue());
+          Coordinate _coordinate = new Coordinate((j_1).intValue(), (i_1).intValue());
           Boolean _get = Launcher.screen.get(_coordinate);
           if ((_get).booleanValue()) {
             _xifexpression = "Y";
@@ -64,7 +64,7 @@ public class Launcher {
     };
     InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.size(IterableExtensions.<Boolean>filter(Launcher.screen.values(), _function_2))));
   }
-  
+
   public static void step(final String s) {
     final String[] split = s.split(" ");
     int _size = ((List<String>)Conversions.doWrapArray(split)).size();
@@ -86,7 +86,7 @@ public class Launcher {
       }
     }
   }
-  
+
   public static void rectangle(final int x, final int y) {
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, x, true);
     for (final Integer i : _doubleDotLessThan) {
@@ -97,7 +97,7 @@ public class Launcher {
       }
     }
   }
-  
+
   public static void shift_row(final int y, final int offset) {
     Set<Map.Entry<Coordinate, Boolean>> _entrySet = Launcher.screen.entrySet();
     final Function1<Map.Entry<Coordinate, Boolean>, Boolean> _function = new Function1<Map.Entry<Coordinate, Boolean>, Boolean>() {
@@ -130,7 +130,7 @@ public class Launcher {
     };
     entries.forEach(_function_3);
   }
-  
+
   public static void shift_column(final int x, final int offset) {
     Set<Map.Entry<Coordinate, Boolean>> _entrySet = Launcher.screen.entrySet();
     final Function1<Map.Entry<Coordinate, Boolean>, Boolean> _function = new Function1<Map.Entry<Coordinate, Boolean>, Boolean>() {

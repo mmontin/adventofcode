@@ -9,9 +9,9 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static final int target_x = 31;
-  
+
   private static final int target_y = 39;
-  
+
   public static void main(final String[] args) {
     Coordinates start = new Coordinates(1, 1);
     start.updateDistance(0);

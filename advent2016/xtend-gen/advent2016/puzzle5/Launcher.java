@@ -12,7 +12,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static final String input = "abbhdwsy";
-  
+
   private static final MessageDigest md = new Function0<MessageDigest>() {
     public MessageDigest apply() {
       try {
@@ -23,9 +23,9 @@ public class Launcher {
       }
     }
   }.apply();
-  
+
   private static final List<String> ans = CollectionLiterals.<String>newArrayList("", "", "", "", "", "", "", "");
-  
+
   public static void main(final String[] args) {
     long i = 1L;
     while (Launcher.ans.contains("")) {
@@ -35,7 +35,7 @@ public class Launcher {
     }
     InputOutput.<String>println(IterableExtensions.join(Launcher.ans));
   }
-  
+
   public static void md5(final String input) {
     Launcher.md.reset();
     byte[] _digest = Launcher.md.digest(input.getBytes());

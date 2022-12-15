@@ -6,7 +6,7 @@ import java.util.Map
 
 class Launcher {
 
-	static final Map<String, Integer> registers = newHashMap("a" -> 0, "b" -> 0, "c" -> 0, "d" -> 0)
+	static final Map<String, Integer> registers = newHashMap("a" -> 0, "b" -> 0, "c" -> 1, "d" -> 0)
 
 	static final List<String> input = new InputLoader(2016, 12).getInputs
 

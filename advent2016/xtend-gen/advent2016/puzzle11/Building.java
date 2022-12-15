@@ -14,21 +14,21 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Building implements Comparable<Building> {
   private final List<Integer> content;
-  
+
   private final Integer elevator;
-  
+
   private final Integer score;
-  
+
   private final boolean isFinal;
-  
+
   private final String normalForm;
-  
+
   private final boolean valid;
-  
+
   private final Integer hCode;
-  
+
   private Integer distance;
-  
+
   public Building(final List<Integer> content_, final Integer elevator_, final int distance_) {
     this.content = content_;
     this.elevator = elevator_;
@@ -89,23 +89,23 @@ public class Building implements Comparable<Building> {
     int _plus = (_multiply_1 + (this.elevator).intValue());
     this.hCode = Integer.valueOf(_plus);
   }
-  
+
   public Building(final int distance_) {
     this(CollectionLiterals.<Integer>newArrayList(Integer.valueOf(2), Integer.valueOf(2), Integer.valueOf(1), Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(2), Integer.valueOf(1), Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(1), Integer.valueOf(1), Integer.valueOf(1), Integer.valueOf(1)), Integer.valueOf(1), distance_);
   }
-  
+
   public Integer getDistance() {
     return this.distance;
   }
-  
+
   public Integer getScore() {
     return this.score;
   }
-  
+
   public boolean getFinal() {
     return this.isFinal;
   }
-  
+
   public Integer updateDistance(final int previous) {
     Integer _xifexpression = null;
     if (((previous + 1) < (this.distance).intValue())) {
@@ -113,7 +113,7 @@ public class Building implements Comparable<Building> {
     }
     return _xifexpression;
   }
-  
+
   public void step(final Set<Building> toVisit, final Set<Building> visited) {
     final HashSet<Integer> el = CollectionLiterals.<Integer>newHashSet();
     if (((this.elevator).intValue() > 1)) {
@@ -195,7 +195,7 @@ public class Building implements Comparable<Building> {
       }
     }
   }
-  
+
   public boolean equals(final Object other) {
     boolean _xblockexpression = false;
     {
@@ -204,15 +204,15 @@ public class Building implements Comparable<Building> {
     }
     return _xblockexpression;
   }
-  
+
   public int hashCode() {
     return (this.hCode).intValue();
   }
-  
+
   public String toString() {
     return ((("Distance : " + this.distance) + " ; Score : ") + this.score);
   }
-  
+
   public int compareTo(final Building other) {
     int _xifexpression = (int) 0;
     boolean _equals = Objects.equal(other.distance, this.distance);

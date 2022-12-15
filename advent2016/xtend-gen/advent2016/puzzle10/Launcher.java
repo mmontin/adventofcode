@@ -11,9 +11,9 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static HashMap<Integer, Bot> bots = CollectionLiterals.<Integer, Bot>newHashMap();
-  
+
   private static HashMap<Integer, Bin> bins = CollectionLiterals.<Integer, Bin>newHashMap();
-  
+
   public static void main(final String[] args) {
     final Consumer<String> _function = new Consumer<String>() {
       public void accept(final String it) {
@@ -45,7 +45,7 @@ public class Launcher {
     int _multiply_1 = (_multiply * (_firstChip_2).intValue());
     InputOutput.<Integer>println(Integer.valueOf(_multiply_1));
   }
-  
+
   public static Bin find_bot(final String s, final String type) {
     Bin _xblockexpression = null;
     {

@@ -13,7 +13,7 @@ public class Launcher {
     new Item("Warhammer", 25, 6, 0), 
     new Item("Longsword", 40, 7, 0), 
     new Item("Greataxe", 74, 8, 0));
-  
+
   private static List<Item> armors = CollectionLiterals.<Item>newArrayList(
     new Item("noArmmor", 0, 0, 0), 
     new Item("Leather", 13, 0, 1), 
@@ -21,7 +21,7 @@ public class Launcher {
     new Item("Splintmail", 53, 0, 3), 
     new Item("Bandedmail", 75, 0, 4), 
     new Item("Platemail", 102, 0, 5));
-  
+
   private static List<Item> rings = CollectionLiterals.<Item>newArrayList(
     new Item("noRing1", 0, 0, 0), 
     new Item("noRing2", 0, 0, 0), 
@@ -31,7 +31,7 @@ public class Launcher {
     new Item("def1", 20, 0, 1), 
     new Item("def2", 40, 0, 2), 
     new Item("def3", 80, 0, 3));
-  
+
   public static void main(final String[] args) {
     int min_cost = Integer.MAX_VALUE;
     int max_cost = Integer.MIN_VALUE;
@@ -62,7 +62,7 @@ public class Launcher {
     String _plus_1 = (_plus + Integer.valueOf(max_cost));
     InputOutput.<String>println(_plus_1);
   }
-  
+
   public static Player battle(final Player p1, final Player p2) {
     Player _xblockexpression = null;
     {

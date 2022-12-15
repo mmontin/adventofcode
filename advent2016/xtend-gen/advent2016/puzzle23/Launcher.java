@@ -16,11 +16,11 @@ public class Launcher {
       return new Instruction(it);
     }
   }));
-  
+
   public static Map<String, Integer> registers = CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("a", Integer.valueOf(7)), Pair.<String, Integer>of("b", Integer.valueOf(0)), Pair.<String, Integer>of("c", Integer.valueOf(0)), Pair.<String, Integer>of("d", Integer.valueOf(0)));
-  
+
   public static int position = 0;
-  
+
   public static void main(final String[] args) {
     while ((Launcher.position < Launcher.instructions.size())) {
       Launcher.instructions.get(Launcher.position).execute();

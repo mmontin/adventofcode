@@ -14,9 +14,9 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static Map<String, String> transformations = new HashMap<String, String>();
-  
+
   private static List<String> patterns;
-  
+
   public static void main(final String[] args) {
     final List<String> inputs = new InputLoader(Integer.valueOf(2015), Integer.valueOf(19)).getInputs();
     String molecule = inputs.get(0);

@@ -13,22 +13,22 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Board {
   public enum Spell {
     MAGIC_MISSILE,
-    
+
     DRAIN,
-    
+
     SHIELD,
-    
+
     POISON,
-    
+
     RECHARGE;
   }
-  
+
   public static int mana_min_spent_to_win = Integer.MAX_VALUE;
-  
+
   public static int updateManaMin(final Integer mana) {
     return Board.mana_min_spent_to_win = Math.min(Board.mana_min_spent_to_win, (mana).intValue());
   }
-  
+
   /**
    * A list of the game data, in this order :
    * SHIELD_COUNTER
@@ -41,16 +41,16 @@ public class Board {
    * PLAYER_ARMOR
    */
   private List<Integer> boardState;
-  
+
   public Board() {
     this.boardState = CollectionLiterals.<Integer>newArrayList(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(58), Integer.valueOf(9), Integer.valueOf(50), Integer.valueOf(500), Integer.valueOf(0));
   }
-  
+
   public Board(final Board other) {
     ArrayList<Integer> _arrayList = new ArrayList<Integer>(other.boardState);
     this.boardState = _arrayList;
   }
-  
+
   public List<Integer> update(final Integer... vector) {
     final Function2<ArrayList<Integer>, Integer, ArrayList<Integer>> _function = new Function2<ArrayList<Integer>, Integer, ArrayList<Integer>>() {
       public ArrayList<Integer> apply(final ArrayList<Integer> l, final Integer i) {
@@ -67,7 +67,7 @@ public class Board {
     };
     return this.boardState = IterableExtensions.<Integer, ArrayList<Integer>>fold(new IntegerRange(0, 7), CollectionLiterals.<Integer>newArrayList(), _function);
   }
-  
+
   public HashSet<Board.Spell> availableSpells() {
     HashSet<Board.Spell> _xblockexpression = null;
     {
@@ -95,7 +95,7 @@ public class Board {
     }
     return _xblockexpression;
   }
-  
+
   public boolean initTurn() {
     boolean _xblockexpression = false;
     {
@@ -129,7 +129,7 @@ public class Board {
     }
     return _xblockexpression;
   }
-  
+
   public boolean bossTurn() {
     boolean _xblockexpression = false;
     {
@@ -144,7 +144,7 @@ public class Board {
     }
     return _xblockexpression;
   }
-  
+
   public List<Integer> playerTurn(final Board.Spell spell) {
     List<Integer> _switchResult = null;
     if (spell != null) {
@@ -170,7 +170,7 @@ public class Board {
     }
     return _switchResult;
   }
-  
+
   public void play(final Integer mana_spent_already) {
     this.update(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf((-1)), Integer.valueOf(0), Integer.valueOf(0));
     Integer _player_hp = this.player_hp();
@@ -206,35 +206,35 @@ public class Board {
       }
     }
   }
-  
+
   public Integer shield_counter() {
     return this.boardState.get(0);
   }
-  
+
   public Integer poison_counter() {
     return this.boardState.get(1);
   }
-  
+
   public Integer recharge_counter() {
     return this.boardState.get(2);
   }
-  
+
   public Integer boss_hp() {
     return this.boardState.get(3);
   }
-  
+
   public Integer boss_damage() {
     return this.boardState.get(4);
   }
-  
+
   public Integer player_hp() {
     return this.boardState.get(5);
   }
-  
+
   public Integer player_mana() {
     return this.boardState.get(6);
   }
-  
+
   public Integer player_armor() {
     return this.boardState.get(7);
   }

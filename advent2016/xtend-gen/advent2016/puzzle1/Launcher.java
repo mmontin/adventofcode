@@ -18,30 +18,30 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public enum Instruction {
     R,
-    
+
     L,
-    
+
     A;
   }
-  
+
   public enum Direction {
     N,
-    
+
     S,
-    
+
     E,
-    
+
     O;
   }
-  
+
   private static final List<Launcher.Direction> directions = CollectionLiterals.<Launcher.Direction>newArrayList(Launcher.Direction.N, Launcher.Direction.E, Launcher.Direction.S, Launcher.Direction.O);
-  
+
   private static Set<Coordinate> visited = CollectionLiterals.<Coordinate>newHashSet();
-  
+
   private static Coordinate position = new Coordinate(0, 0);
-  
+
   private static Launcher.Direction direction = Launcher.Direction.N;
-  
+
   public static void main(final String[] args) {
     try {
       final List<String> input = IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2016), Integer.valueOf(1)).getInputReader().readLine().split(", "))));
@@ -103,7 +103,7 @@ public class Launcher {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   public static Coordinate advance(final int length) {
     Coordinate _switchResult = null;
     final Launcher.Direction direction = Launcher.direction;
@@ -127,7 +127,7 @@ public class Launcher {
     }
     return Launcher.position = _switchResult;
   }
-  
+
   public static Launcher.Direction turnRight() {
     Launcher.Direction _xblockexpression = null;
     {
@@ -143,7 +143,7 @@ public class Launcher {
     }
     return _xblockexpression;
   }
-  
+
   public static Launcher.Direction turnLeft() {
     Launcher.Direction _xblockexpression = null;
     {

@@ -16,14 +16,14 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 public class Launcher {
   public static class Tuple implements Comparable<Launcher.Tuple> {
     private String s;
-    
+
     private int occurrences;
-    
+
     public Tuple(final String s_, final int occurrences_) {
       this.s = s_;
       this.occurrences = occurrences_;
     }
-    
+
     public int compareTo(final Launcher.Tuple other) {
       int _xifexpression = (int) 0;
       if ((this.occurrences > other.occurrences)) {
@@ -39,21 +39,21 @@ public class Launcher {
       }
       return _xifexpression;
     }
-    
+
     public String toString() {
       return (((("(" + this.s) + ",") + Integer.valueOf(this.occurrences)) + ")");
     }
   }
-  
+
   public static class Entry {
     private static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
-    
+
     private List<String> encrypted_name;
-    
+
     private Integer sector_id;
-    
+
     private String checksum;
-    
+
     public Entry(final String s) {
       final List<String> split = IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(s.split("-"))));
       final String[] split1 = IterableExtensions.<String>last(split).split("\\[");
@@ -63,7 +63,7 @@ public class Launcher {
       int _minus = (_size - 1);
       this.encrypted_name = IterableExtensions.<String>toList(IterableExtensions.<String>take(split, _minus));
     }
-    
+
     public boolean verifyChecksum() {
       boolean _xblockexpression = false;
       {
@@ -104,7 +104,7 @@ public class Launcher {
       }
       return _xblockexpression;
     }
-    
+
     public String decode() {
       final Function1<String, String> _function = new Function1<String, String>() {
         public String apply(final String it) {
@@ -123,7 +123,7 @@ public class Launcher {
       return IterableExtensions.join(ListExtensions.<String, String>map(this.encrypted_name, _function), "-");
     }
   }
-  
+
   public static void main(final String[] args) {
     final Function1<String, Launcher.Entry> _function = new Function1<String, Launcher.Entry>() {
       public Launcher.Entry apply(final String it) {

@@ -1,7 +1,7 @@
 package advent2022
 
 import adventutils.input.InputLoader
-import utils.Interval
+import adventutils.geometry.Interval
 
 class Day4 {
 	def static void main(String[] args) {

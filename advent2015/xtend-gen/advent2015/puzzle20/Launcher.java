@@ -8,7 +8,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static int INPUT = 36000000;
-  
+
   public static void main(final String[] args) {
     int i = 0;
     int result = 0;
@@ -23,7 +23,7 @@ public class Launcher {
     }
     InputOutput.<Integer>println(Integer.valueOf((i - 1)));
   }
-  
+
   public static ArrayList<Integer> divisors(final int number) {
     ArrayList<Integer> _xblockexpression = null;
     {

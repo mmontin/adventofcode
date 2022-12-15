@@ -58,7 +58,7 @@ public class Launcher {
               }
               offset++;
               final Consumer<Integer> _function = new Consumer<Integer>() {
-                public void accept(final Integer it) {
+                public void accept(final Integer it_1) {
                   int _length = sb.length();
                   int _minus = (_length - 1);
                   final char ch2 = sb.charAt(_minus);
@@ -73,7 +73,7 @@ public class Launcher {
               final boolean right = (split[1]).equals("right");
               final int offset_1 = Integer.parseInt(split[2]);
               final Consumer<Integer> _function_1 = new Consumer<Integer>() {
-                public void accept(final Integer it) {
+                public void accept(final Integer it_1) {
                   if (right) {
                     int _length = sb.length();
                     int _minus = (_length - 1);
@@ -182,7 +182,7 @@ public class Launcher {
               }
               int offset = _switchResult_1;
               final Consumer<Integer> _function = new Consumer<Integer>() {
-                public void accept(final Integer it) {
+                public void accept(final Integer it_1) {
                   final char ch = sb2.charAt(0);
                   sb2.deleteCharAt(0);
                   sb2.append(ch);
@@ -194,7 +194,7 @@ public class Launcher {
               final boolean right = (!_equals_4);
               final int offset_1 = Integer.parseInt(split[2]);
               final Consumer<Integer> _function_1 = new Consumer<Integer>() {
-                public void accept(final Integer it) {
+                public void accept(final Integer it_1) {
                   if (right) {
                     int _length = sb2.length();
                     int _minus = (_length - 1);

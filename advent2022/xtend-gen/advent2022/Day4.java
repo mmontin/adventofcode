@@ -1,12 +1,12 @@
 package advent2022;
 
+import adventutils.geometry.Interval;
 import adventutils.input.InputLoader;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
-import utils.Interval;
 
 @SuppressWarnings("all")
 public class Day4 {

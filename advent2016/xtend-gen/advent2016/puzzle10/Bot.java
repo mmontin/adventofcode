@@ -6,13 +6,13 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Bot extends Bin {
   private Bin low;
-  
+
   private Bin high;
-  
+
   public Bot(final int number_) {
     super(number_);
   }
-  
+
   public Bin putLowHigh(final Bin low_, final Bin high_) {
     Bin _xblockexpression = null;
     {
@@ -21,12 +21,12 @@ public class Bot extends Bin {
     }
     return _xblockexpression;
   }
-  
+
   public boolean isFull() {
     int _size = this.chips.size();
     return (_size >= 2);
   }
-  
+
   public void giveAll() {
     final Integer lowest = IterableExtensions.<Integer>min(this.chips);
     final Integer highest = IterableExtensions.<Integer>max(this.chips);
@@ -37,11 +37,11 @@ public class Bot extends Bin {
     this.high.addChips((highest).intValue());
     this.chips.clear();
   }
-  
+
   public boolean equals(final Object o) {
     return (this.number == ((Bot) o).number);
   }
-  
+
   public int hashCode() {
     return this.number;
   }

@@ -13,9 +13,9 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static int minNumber = 20;
-  
+
   private static int iterations = 0;
-  
+
   public static void main(final String[] args) {
     final Function1<String, Integer> _function = new Function1<String, Integer>() {
       public Integer apply(final String x) {
@@ -25,7 +25,7 @@ public class Launcher {
     InputOutput.<Integer>println(Launcher.compute(ListExtensions.<Integer>reverse(IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(new InputLoader(Integer.valueOf(2015), Integer.valueOf(17)).getInputs(), _function))), Integer.valueOf(150), Integer.valueOf(0)));
     InputOutput.<Integer>println(Integer.valueOf(Launcher.iterations));
   }
-  
+
   public static Integer compute(final List<Integer> candidates, final Integer value, final Integer bucketsUsed) {
     int _xifexpression = (int) 0;
     if (((value).intValue() == 0)) {
@@ -85,7 +85,7 @@ public class Launcher {
     }
     return Integer.valueOf(_xifexpression);
   }
-  
+
   public static int update(final Integer bucketsUsed) {
     int _xifexpression = (int) 0;
     if (((bucketsUsed).intValue() == Launcher.minNumber)) {

@@ -8,11 +8,11 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   private static Set<Building> toVisit = CollectionLiterals.<Building>newHashSet(new Building(0));
-  
+
   private static Set<Building> visited = CollectionLiterals.<Building>newHashSet();
-  
+
   private static int best_score = 0;
-  
+
   public static void main(final String[] args) {
     Building first = null;
     long time = System.currentTimeMillis();
