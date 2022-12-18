@@ -141,6 +141,13 @@ class Coordinate {
 		LEFT,
 		RIGHT
 	}
+	
+	def static Direction fromLeftRight(String s) {
+		switch s {
+			case "<" : Direction.LEFT
+			default : Direction.RIGHT
+		}
+	}
 
 	def static Direction directionFromString(String s) {
 		switch s {

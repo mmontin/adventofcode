@@ -22,18 +22,18 @@ class Day15 {
 			beacons.add(beacon)
 		]
 
-		var itvs = findHole(2000000)
+		var itvs = combineRanges(2000000)
 		println(itvs.content.get(0).length)
 		var j = 0
 		while (itvs.content.size < 2)
-			itvs = findHole(j++)
+			itvs = combineRanges(j++)
 		
 			
 		val i = itvs.content.get(0).rightBound + 1
 		println(BigInteger.valueOf(i).multiply(BigInteger.valueOf(4000000)).add(BigInteger.valueOf(j-1)))
 	}
 
-	def static Intervals findHole(int y) {
+	def static Intervals combineRanges(int y) {
 		val intervals = new Intervals
 		sensors.entrySet.forEach[
 			var distance_to_line = Math.abs(it.key.y - y)

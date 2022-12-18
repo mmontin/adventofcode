@@ -34,18 +34,18 @@ public class Day15 {
       }
     };
     new InputLoader(Integer.valueOf(2022), Integer.valueOf(15)).getInputs().forEach(_function);
-    Intervals itvs = Day15.findHole(2000000);
+    Intervals itvs = Day15.combineRanges(2000000);
     InputOutput.<Long>println(Long.valueOf(itvs.content.get(0).length()));
     int j = 0;
     while ((itvs.content.size() < 2)) {
       int _plusPlus = j++;
-      itvs = Day15.findHole(_plusPlus);
+      itvs = Day15.combineRanges(_plusPlus);
     }
     final long i = (itvs.content.get(0).rightBound + 1);
     InputOutput.<BigInteger>println(BigInteger.valueOf(i).multiply(BigInteger.valueOf(4000000)).add(BigInteger.valueOf((j - 1))));
   }
 
-  public static Intervals findHole(final int y) {
+  public static Intervals combineRanges(final int y) {
     Intervals _xblockexpression = null;
     {
       final Intervals intervals = new Intervals();

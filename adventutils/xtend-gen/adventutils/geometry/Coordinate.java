@@ -184,6 +184,19 @@ public class Coordinate {
     return this.code;
   }
 
+  public static Coordinate.Direction fromLeftRight(final String s) {
+    Coordinate.Direction _switchResult = null;
+    boolean _matched = false;
+    if (Objects.equal(s, "<")) {
+      _matched=true;
+      _switchResult = Coordinate.Direction.LEFT;
+    }
+    if (!_matched) {
+      _switchResult = Coordinate.Direction.RIGHT;
+    }
+    return _switchResult;
+  }
+
   public static Coordinate.Direction directionFromString(final String s) {
     Coordinate.Direction _switchResult = null;
     boolean _matched = false;
