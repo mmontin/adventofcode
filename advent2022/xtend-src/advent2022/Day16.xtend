@@ -7,7 +7,6 @@ import java.util.Map
 import adventutils.astar.AStar
 import java.util.Set
 import java.util.HashSet
-import java.util.Collections
 
 class Day16 {
 
@@ -263,23 +262,54 @@ class Day16 {
 
 			val remaining_time = max_duration - time
 			var total_flow = 0
-
-			val remaining_valves = valves_flows.keySet.reject [
-				open_valves.contains(it)
-			].map[valves_flows.get(it)].sortBy[-it].toList
-			remaining_valves.addAll(Collections.nCopies(Math.max(0, remaining_time - remaining_valves.size + 1), 0))
-
-			var open_now = true
 			var current_flow = currentFlow
-			for (i : 0 ..< remaining_time) {
-				total_flow += current_flow
-				if (open_now) {
-					current_flow += remaining_valves.remove(0)
-					current_flow += remaining_valves.remove(0)
-				}
-				open_now = !open_now
-			}
 
+			val remaining_valves = valves_flows.keySet.reject[open_valves.contains(it)].sortBy[-valves_flows.get(it)].
+				toList
+
+			var my_current_position = my_position
+			var el_current_position = el_position
+
+			var i = 0
+			while (i < remaining_time && !remaining_valves.isEmpty) {
+				// adding current flow
+				total_flow += current_flow
+				// handling my action
+				switch (x : my_current_position.value) {
+					case 0: {
+						val to_remove = el_current_position.key
+						val next_target = remaining_valves.findFirst[!to_remove.equals(it)]
+						if(next_target !== null) my_current_position = next_target ->
+							final_valves_distances.get(next_target).values.min
+					}
+					case 1: {
+						remaining_valves.remove(my_current_position.key)
+						current_flow += valves_flows.get(my_current_position.key)
+						my_current_position = my_current_position.key -> 0
+					}
+					default:
+						my_current_position = my_current_position.key -> x - 1
+				}
+				// handling el's action
+				switch (x : el_current_position.value) {
+					case 0: {
+						val to_remove = my_current_position.key
+						val next_target = remaining_valves.findFirst[to_remove.equals(it)]
+						if(next_target !== null) el_current_position = next_target ->
+							final_valves_distances.get(next_target).values.min
+					}
+					case 1: {
+						remaining_valves.remove(el_current_position.key)
+						current_flow += valves_flows.get(el_current_position.key)
+						el_current_position = el_current_position.key -> 0
+					}
+					default:
+						el_current_position = el_current_position.key -> x - 1
+				}				
+				// updating the indice
+				i++
+			}
+			total_flow += (remaining_time - i) * current_flow
 			remaining_time * max_flow_per_unit - total_flow
 		}
 
@@ -444,9 +474,11 @@ class Day16 {
 
 		override equals(Object other) {
 			switch (other) {
-				TunnelEl: other.open_valves.equals(open_valves) && other.time == time &&
-					other.el_position.equals(this.el_position) && other.my_position.equals(my_position)
-				default: false
+				TunnelEl:
+					other.open_valves.equals(open_valves) && other.time == time &&
+						other.el_position.equals(this.el_position) && other.my_position.equals(my_position)
+				default:
+					false
 			}
 		}
 	}

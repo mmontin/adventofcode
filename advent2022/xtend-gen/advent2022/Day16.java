@@ -5,7 +5,6 @@ import adventutils.astar.State;
 import adventutils.input.InputLoader;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -275,6 +274,7 @@ public class Day16 {
       {
         final int remaining_time = (Day16.max_duration - this.time);
         int total_flow = 0;
+        int current_flow = this.currentFlow;
         final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
           public Boolean apply(final String it) {
             return Boolean.valueOf(TunnelEl.this.open_valves.contains(it));
@@ -282,37 +282,100 @@ public class Day16 {
         };
         final Function1<String, Integer> _function_1 = new Function1<String, Integer>() {
           public Integer apply(final String it) {
-            return Day16.valves_flows.get(it);
+            Integer _get = Day16.valves_flows.get(it);
+            return Integer.valueOf((-(_get).intValue()));
           }
         };
-        final Function1<Integer, Integer> _function_2 = new Function1<Integer, Integer>() {
-          public Integer apply(final Integer it) {
-            return Integer.valueOf((-(it).intValue()));
-          }
-        };
-        final List<Integer> remaining_valves = IterableExtensions.<Integer>toList(IterableExtensions.<Integer, Integer>sortBy(IterableExtensions.<String, Integer>map(IterableExtensions.<String>reject(Day16.valves_flows.keySet(), _function), _function_1), _function_2));
-        int _size = remaining_valves.size();
-        int _minus = (remaining_time - _size);
-        int _plus = (_minus + 1);
-        remaining_valves.addAll(Collections.<Integer>nCopies(Math.max(0, _plus), Integer.valueOf(0)));
-        boolean open_now = true;
-        int current_flow = this.currentFlow;
-        ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, remaining_time, true);
-        for (final Integer i : _doubleDotLessThan) {
+        final List<String> remaining_valves = IterableExtensions.<String>toList(IterableExtensions.<String, Integer>sortBy(IterableExtensions.<String>reject(Day16.valves_flows.keySet(), _function), _function_1));
+        Pair<String, Integer> my_current_position = this.my_position;
+        Pair<String, Integer> el_current_position = this.el_position;
+        int i = 0;
+        while (((i < remaining_time) && (!remaining_valves.isEmpty()))) {
           {
             int _tal_flow = total_flow;
             total_flow = (_tal_flow + current_flow);
-            if (open_now) {
-              int _current_flow = current_flow;
-              Integer _remove = remaining_valves.remove(0);
-              current_flow = (_current_flow + (_remove).intValue());
-              int _current_flow_1 = current_flow;
-              Integer _remove_1 = remaining_valves.remove(0);
-              current_flow = (_current_flow_1 + (_remove_1).intValue());
+            Integer _value = my_current_position.getValue();
+            final Integer x = _value;
+            if (x != null) {
+              switch (x) {
+                case 0:
+                  final String to_remove = el_current_position.getKey();
+                  final Function1<String, Boolean> _function_2 = new Function1<String, Boolean>() {
+                    public Boolean apply(final String it) {
+                      boolean _equals = to_remove.equals(it);
+                      return Boolean.valueOf((!_equals));
+                    }
+                  };
+                  final String next_target = IterableExtensions.<String>findFirst(remaining_valves, _function_2);
+                  if ((next_target != null)) {
+                    Integer _min = IterableExtensions.<Integer>min(Day16.final_valves_distances.get(next_target).values());
+                    Pair<String, Integer> _mappedTo = Pair.<String, Integer>of(next_target, _min);
+                    my_current_position = _mappedTo;
+                  }
+                  break;
+                case 1:
+                  remaining_valves.remove(my_current_position.getKey());
+                  int _current_flow = current_flow;
+                  Integer _get = Day16.valves_flows.get(my_current_position.getKey());
+                  current_flow = (_current_flow + (_get).intValue());
+                  String _key = my_current_position.getKey();
+                  Pair<String, Integer> _mappedTo_1 = Pair.<String, Integer>of(_key, Integer.valueOf(0));
+                  my_current_position = _mappedTo_1;
+                  break;
+                default:
+                  String _key_1 = my_current_position.getKey();
+                  Pair<String, Integer> _mappedTo_2 = Pair.<String, Integer>of(_key_1, Integer.valueOf(((x).intValue() - 1)));
+                  my_current_position = _mappedTo_2;
+                  break;
+              }
+            } else {
+              String _key_1 = my_current_position.getKey();
+              Pair<String, Integer> _mappedTo_2 = Pair.<String, Integer>of(_key_1, Integer.valueOf(((x).intValue() - 1)));
+              my_current_position = _mappedTo_2;
             }
-            open_now = (!open_now);
+            Integer _value_1 = el_current_position.getValue();
+            final Integer x_1 = _value_1;
+            if (x_1 != null) {
+              switch (x_1) {
+                case 0:
+                  final String to_remove_1 = my_current_position.getKey();
+                  final Function1<String, Boolean> _function_3 = new Function1<String, Boolean>() {
+                    public Boolean apply(final String it) {
+                      return Boolean.valueOf(to_remove_1.equals(it));
+                    }
+                  };
+                  final String next_target_1 = IterableExtensions.<String>findFirst(remaining_valves, _function_3);
+                  if ((next_target_1 != null)) {
+                    Integer _min_1 = IterableExtensions.<Integer>min(Day16.final_valves_distances.get(next_target_1).values());
+                    Pair<String, Integer> _mappedTo_3 = Pair.<String, Integer>of(next_target_1, _min_1);
+                    el_current_position = _mappedTo_3;
+                  }
+                  break;
+                case 1:
+                  remaining_valves.remove(el_current_position.getKey());
+                  int _current_flow_1 = current_flow;
+                  Integer _get_1 = Day16.valves_flows.get(el_current_position.getKey());
+                  current_flow = (_current_flow_1 + (_get_1).intValue());
+                  String _key_2 = el_current_position.getKey();
+                  Pair<String, Integer> _mappedTo_4 = Pair.<String, Integer>of(_key_2, Integer.valueOf(0));
+                  el_current_position = _mappedTo_4;
+                  break;
+                default:
+                  String _key_3 = el_current_position.getKey();
+                  Pair<String, Integer> _mappedTo_5 = Pair.<String, Integer>of(_key_3, Integer.valueOf(((x_1).intValue() - 1)));
+                  el_current_position = _mappedTo_5;
+                  break;
+              }
+            } else {
+              String _key_3 = el_current_position.getKey();
+              Pair<String, Integer> _mappedTo_5 = Pair.<String, Integer>of(_key_3, Integer.valueOf(((x_1).intValue() - 1)));
+              el_current_position = _mappedTo_5;
+            }
+            i++;
           }
         }
+        int _tal_flow = total_flow;
+        total_flow = (_tal_flow + ((remaining_time - i) * current_flow));
         _xblockexpression = ((remaining_time * Day16.max_flow_per_unit) - total_flow);
       }
       return _xblockexpression;
