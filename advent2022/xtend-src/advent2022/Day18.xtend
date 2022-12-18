@@ -7,23 +7,16 @@ import adventutils.input.InputLoader
 
 class Day18 {
 
-	static final Set<Triplet> elements = {
-		new HashSet(
-			new InputLoader(2022, 18).inputs.map [
-				new Triplet(it)
-			]
-		)
-	}
+	static final Set<Triplet> elements = new HashSet(
+		new InputLoader(2022, 18).inputs.map[new Triplet(it)]
+	)
 
 	static final int min_value = -1
 	static final int max_value = 22
 
 	def static void main(String[] args) {
-		println(elements.fold(0) [ acc, triplet |
-			acc + triplet.face_neighbours.reject[elements.contains(it)].size
-		])
 
-		val toVisit = newHashSet(new Triplet(-1, -1, -1))
+		val toVisit = newHashSet(new Triplet(min_value, min_value, min_value))
 		val exterior = newHashSet
 		while (!toVisit.isEmpty) {
 			val current = toVisit.head
@@ -37,8 +30,10 @@ class Day18 {
 			toVisit.addAll(neighbours)
 		}
 
-		println(elements.fold(0) [acc, triplet |
-			acc + triplet.face_neighbours.filter[exterior.contains(it)].size
+		println(elements.fold(0->0) [ acc, triplet |
+			val current_neighbours = triplet.face_neighbours
+			acc.key + current_neighbours.reject[elements.contains(it)].size ->
+			acc.value + current_neighbours.filter[exterior.contains(it)].size
 		])
 	}
 }

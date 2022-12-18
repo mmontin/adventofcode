@@ -5,6 +5,7 @@ import adventutils.astar.State;
 import adventutils.input.InputLoader;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -254,9 +255,9 @@ public class Day16 {
       this.el_position = _el_position;
       this.time = _time;
       this._hashCode = this.makeHashCode();
-      this._minToGoal = this.makeMinToGoal();
       this._isGoal = (this.time == Day16.max_duration);
       this.currentFlow = (this.makeCurrentFlow()).intValue();
+      this._minToGoal = this.makeMinToGoal();
     }
 
     public Integer makeCurrentFlow() {
@@ -272,55 +273,47 @@ public class Day16 {
     public int makeMinToGoal() {
       int _xblockexpression = (int) 0;
       {
-        final Function2<String, Integer, Boolean> _function = new Function2<String, Integer, Boolean>() {
-          public Boolean apply(final String k, final Integer v) {
-            boolean _contains = TunnelEl.this.open_valves.contains(k);
-            return Boolean.valueOf((!_contains));
+        final int remaining_time = (Day16.max_duration - this.time);
+        int total_flow = 0;
+        final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
+          public Boolean apply(final String it) {
+            return Boolean.valueOf(TunnelEl.this.open_valves.contains(it));
           }
         };
-        final Function1<Map.Entry<String, Integer>, Integer> _function_1 = new Function1<Map.Entry<String, Integer>, Integer>() {
-          public Integer apply(final Map.Entry<String, Integer> it) {
-            Integer _value = it.getValue();
-            return Integer.valueOf((-(_value).intValue()));
+        final Function1<String, Integer> _function_1 = new Function1<String, Integer>() {
+          public Integer apply(final String it) {
+            return Day16.valves_flows.get(it);
           }
         };
-        final Function1<Map.Entry<String, Integer>, Integer> _function_2 = new Function1<Map.Entry<String, Integer>, Integer>() {
-          public Integer apply(final Map.Entry<String, Integer> it) {
-            return it.getValue();
+        final Function1<Integer, Integer> _function_2 = new Function1<Integer, Integer>() {
+          public Integer apply(final Integer it) {
+            return Integer.valueOf((-(it).intValue()));
           }
         };
-        final List<Integer> remaining_valves = IterableExtensions.<Integer>toList(ListExtensions.<Map.Entry<String, Integer>, Integer>map(IterableExtensions.<Map.Entry<String, Integer>, Integer>sortBy(IterableExtensions.<Map.Entry<String, Integer>>toList(MapExtensions.<String, Integer>filter(Day16.valves_flows, _function).entrySet()), _function_1), _function_2));
-        int flow = this.currentFlow;
-        int cumulated_flow = 0;
-        boolean open_valves = true;
-        ExclusiveRange _doubleDotLessThan = new ExclusiveRange(this.time, Day16.max_duration, true);
+        final List<Integer> remaining_valves = IterableExtensions.<Integer>toList(IterableExtensions.<Integer, Integer>sortBy(IterableExtensions.<String, Integer>map(IterableExtensions.<String>reject(Day16.valves_flows.keySet(), _function), _function_1), _function_2));
+        int _size = remaining_valves.size();
+        int _minus = (remaining_time - _size);
+        int _plus = (_minus + 1);
+        remaining_valves.addAll(Collections.<Integer>nCopies(Math.max(0, _plus), Integer.valueOf(0)));
+        boolean open_now = true;
+        int current_flow = this.currentFlow;
+        ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, remaining_time, true);
         for (final Integer i : _doubleDotLessThan) {
           {
-            int _cumulated_flow = cumulated_flow;
-            cumulated_flow = (_cumulated_flow + flow);
-            if (open_valves) {
-              Integer _xifexpression = null;
-              boolean _isEmpty = remaining_valves.isEmpty();
-              if (_isEmpty) {
-                _xifexpression = Integer.valueOf(0);
-              } else {
-                _xifexpression = remaining_valves.remove(0);
-              }
-              final Integer next_value_1 = _xifexpression;
-              Integer _xifexpression_1 = null;
-              boolean _isEmpty_1 = remaining_valves.isEmpty();
-              if (_isEmpty_1) {
-                _xifexpression_1 = Integer.valueOf(0);
-              } else {
-                _xifexpression_1 = remaining_valves.remove(0);
-              }
-              final Integer next_value_2 = _xifexpression_1;
-              flow = ((flow + (next_value_1).intValue()) + (next_value_2).intValue());
+            int _tal_flow = total_flow;
+            total_flow = (_tal_flow + current_flow);
+            if (open_now) {
+              int _current_flow = current_flow;
+              Integer _remove = remaining_valves.remove(0);
+              current_flow = (_current_flow + (_remove).intValue());
+              int _current_flow_1 = current_flow;
+              Integer _remove_1 = remaining_valves.remove(0);
+              current_flow = (_current_flow_1 + (_remove_1).intValue());
             }
-            open_valves = (!open_valves);
+            open_now = (!open_now);
           }
         }
-        _xblockexpression = (((Day16.max_duration - this.time) * Day16.max_flow_per_unit) - cumulated_flow);
+        _xblockexpression = ((remaining_time * Day16.max_flow_per_unit) - total_flow);
       }
       return _xblockexpression;
     }
@@ -594,6 +587,20 @@ public class Day16 {
     public int hashCode() {
       return this._hashCode;
     }
+
+    public boolean equals(final Object other) {
+      boolean _switchResult = false;
+      boolean _matched = false;
+      if (other instanceof Day16.TunnelEl) {
+        _matched=true;
+        _switchResult = (((((Day16.TunnelEl)other).open_valves.equals(this.open_valves) && (((Day16.TunnelEl)other).time == this.time)) && 
+          ((Day16.TunnelEl)other).el_position.equals(this.el_position)) && ((Day16.TunnelEl)other).my_position.equals(this.my_position));
+      }
+      if (!_matched) {
+        _switchResult = false;
+      }
+      return _switchResult;
+    }
   }
 
   private static final Map<String, Integer> valves_flows = CollectionLiterals.<String, Integer>newHashMap();
@@ -685,12 +692,5 @@ public class Day16 {
     Integer _minDistance_1 = new AStar(_tunnelEl).run().getMinDistance();
     int _minus_1 = ((Day16.max_flow_per_unit * (Day16.max_duration - Day16.learning_time)) - (_minDistance_1).intValue());
     InputOutput.<Integer>println(Integer.valueOf(_minus_1));
-    Day16.TunnelEl _tunnelEl_1 = new Day16.TunnelEl();
-    final Consumer<State> _function_1 = new Consumer<State>() {
-      public void accept(final State it) {
-        InputOutput.<State>println(it);
-      }
-    };
-    new AStar(_tunnelEl_1).run().minPath().forEach(_function_1);
   }
 }

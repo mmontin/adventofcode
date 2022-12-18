@@ -7,6 +7,7 @@ import java.util.Map
 import adventutils.astar.AStar
 import java.util.Set
 import java.util.HashSet
+import java.util.Collections
 
 class Day16 {
 
@@ -108,7 +109,6 @@ class Day16 {
 		println(max_flow_per_unit * max_duration - new AStar(new Tunnel).run.minDistance)
 		// For part 2, we run it on the TunnelEl state
 		println(max_flow_per_unit * (max_duration - learning_time) - new AStar(new TunnelEl).run.minDistance)
-		new AStar(new TunnelEl).run.minPath.forEach[println(it)]
 	}
 
 	static class Tunnel implements State {
@@ -250,9 +250,9 @@ class Day16 {
 			time = _time
 
 			_hashCode = makeHashCode
-			_minToGoal = makeMinToGoal
 			_isGoal = time == max_duration
 			currentFlow = makeCurrentFlow
+			_minToGoal = makeMinToGoal
 		}
 
 		def makeCurrentFlow() {
@@ -260,36 +260,27 @@ class Day16 {
 		}
 
 		def makeMinToGoal() {
-			// Here we are going to proceed as before, with the exception
-			// that the ideal path can now have the two most enticing valves
-			// being open every 2 minutes
-			val remaining_valves = valves_flows.filter[k, v|!open_valves.contains(k)].entrySet.toList.sortBy[-value].map [
-				value
-			].toList
 
-			// We collect the current flow, which will be the starting point of the computation
-			var flow = currentFlow
+			val remaining_time = max_duration - time
+			var total_flow = 0
 
-			// We will collect the optimized flow per round, starting from 0
-			var cumulated_flow = 0
+			val remaining_valves = valves_flows.keySet.reject [
+				open_valves.contains(it)
+			].map[valves_flows.get(it)].sortBy[-it].toList
+			remaining_valves.addAll(Collections.nCopies(Math.max(0, remaining_time - remaining_valves.size + 1), 0))
 
-			// This will tell us whether to open valves or not
-			var open_valves = true
-
-			// For each two minutes, we add the current_flow and the new flow
-			// with the two most enticing valve open
-			for (i : time ..< max_duration) {
-				cumulated_flow += flow
-				if (open_valves) {
-					val next_value_1 = remaining_valves.isEmpty ? 0 : remaining_valves.remove(0)
-					val next_value_2 = remaining_valves.isEmpty ? 0 : remaining_valves.remove(0)
-					flow = flow + next_value_1 + next_value_2
+			var open_now = true
+			var current_flow = currentFlow
+			for (i : 0 ..< remaining_time) {
+				total_flow += current_flow
+				if (open_now) {
+					current_flow += remaining_valves.remove(0)
+					current_flow += remaining_valves.remove(0)
 				}
-				open_valves = !open_valves
+				open_now = !open_now
 			}
 
-			// We return the ideal total flow
-			(max_duration - time) * max_flow_per_unit - cumulated_flow
+			remaining_time * max_flow_per_unit - total_flow
 		}
 
 		def makeHashCode() {
@@ -423,8 +414,8 @@ class Day16 {
 						output.add(new TunnelEl(
 							time + my_target.value,
 							next_open_valves,
-							my_target.key->0,
-							el_position.key->el_position.value
+							my_target.key -> 0,
+							el_position.key -> el_position.value
 						) as State -> my_target.value * (max_flow_per_unit - currentFlow))
 					} else {
 						val next_open_valves = new HashSet(open_valves)
@@ -432,8 +423,8 @@ class Day16 {
 						output.add(new TunnelEl(
 							time + el_target.value,
 							next_open_valves,
-							my_position.key->my_position.value,
-							el_target.key->0
+							my_position.key -> my_position.value,
+							el_target.key -> 0
 						) as State -> el_target.value * (max_flow_per_unit - currentFlow))
 					}
 
@@ -449,6 +440,14 @@ class Day16 {
 
 		override hashCode() {
 			_hashCode
+		}
+
+		override equals(Object other) {
+			switch (other) {
+				TunnelEl: other.open_valves.equals(open_valves) && other.time == time &&
+					other.el_position.equals(this.el_position) && other.my_position.equals(my_position)
+				default: false
+			}
 		}
 	}
 }
