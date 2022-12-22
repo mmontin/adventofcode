@@ -166,6 +166,28 @@ class Coordinate {
 			case RIGHT: Direction.UP
 		}
 	}
+	
+	def static Direction clockWise(Direction d) {
+		switch d {
+			case UP: Direction.RIGHT
+			case RIGHT: Direction.DOWN
+			case DOWN: Direction.LEFT
+			case LEFT: Direction.UP
+		}
+	}
+	
+	def static Direction counterClockWise(Direction d) {
+		d.nextDirection
+	}
+	
+	def static int directionValue(Direction d) {
+		switch d {
+			case UP: 3
+			case RIGHT: 0
+			case DOWN: 1
+			case LEFT: 2
+		}
+	}
 
 	def Coordinate move(Direction d) {
 		switch d {
@@ -173,6 +195,15 @@ class Coordinate {
 			case DOWN: addY(-1)
 			case RIGHT: addX(1)
 			case LEFT: addX(-1)
+		}
+	}
+	
+	def Coordinate otherMove(Direction d) {
+		switch d {
+			case UP: addX(-1)
+			case DOWN: addX(1)
+			case RIGHT: addY(1)
+			case LEFT: addY(-1)
 		}
 	}
 	

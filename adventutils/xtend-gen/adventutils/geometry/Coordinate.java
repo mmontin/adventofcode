@@ -245,6 +245,56 @@ public class Coordinate {
     return _switchResult;
   }
 
+  public static Coordinate.Direction clockWise(final Coordinate.Direction d) {
+    Coordinate.Direction _switchResult = null;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          _switchResult = Coordinate.Direction.RIGHT;
+          break;
+        case RIGHT:
+          _switchResult = Coordinate.Direction.DOWN;
+          break;
+        case DOWN:
+          _switchResult = Coordinate.Direction.LEFT;
+          break;
+        case LEFT:
+          _switchResult = Coordinate.Direction.UP;
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
+  }
+
+  public static Coordinate.Direction counterClockWise(final Coordinate.Direction d) {
+    return Coordinate.nextDirection(d);
+  }
+
+  public static int directionValue(final Coordinate.Direction d) {
+    int _switchResult = (int) 0;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          _switchResult = 3;
+          break;
+        case RIGHT:
+          _switchResult = 0;
+          break;
+        case DOWN:
+          _switchResult = 1;
+          break;
+        case LEFT:
+          _switchResult = 2;
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
+  }
+
   public Coordinate move(final Coordinate.Direction d) {
     Coordinate _switchResult = null;
     if (d != null) {
@@ -260,6 +310,29 @@ public class Coordinate {
           break;
         case LEFT:
           _switchResult = this.addX((-1));
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
+  }
+
+  public Coordinate otherMove(final Coordinate.Direction d) {
+    Coordinate _switchResult = null;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          _switchResult = this.addX((-1));
+          break;
+        case DOWN:
+          _switchResult = this.addX(1);
+          break;
+        case RIGHT:
+          _switchResult = this.addY(1);
+          break;
+        case LEFT:
+          _switchResult = this.addY((-1));
           break;
         default:
           break;
