@@ -5,16 +5,24 @@ import java.util.List
 import java.util.HashMap
 import adventutils.input.InputLoader
 import adventutils.astar.State
+import adventutils.astar.AStar
 
 class Day19 {
 
 	static final List<Blueprint> blueprints = new InputLoader(2022, 19).inputs.map[new Blueprint(it)]
 	static final int MAX_TIME = 24
-	static final int MAX_GEODES = (MAX_TIME - 1) * MAX_TIME / 2
 
-	static Blueprint current_blueprint = blueprints.get(0)
+	static Blueprint current_blueprint
 
 	def static void main(String[] args) {
+
+		println((0 ..< blueprints.size).fold(0) [ acc, v |
+			println(v)
+			current_blueprint = blueprints.get(v)
+			val max_number_of_geodes = new AStar(new RobotState).run.minDistance
+			println(max_number_of_geodes)
+			acc - max_number_of_geodes * (v + 1)
+		])
 	}
 
 	// The class represents either
@@ -169,7 +177,11 @@ class Day19 {
 
 			_hashCode = ("" + robots + resources + time).hashCode
 			_isGoal = time == MAX_TIME
-			_minToGoal = (MAX_TIME - time) * (MAX_TIME - time - 1) / 2
+			_minToGoal = - (MAX_TIME - time) * (MAX_TIME - time - 1) / 2
+		}
+
+		new() {
+			this(new Resources(newHashMap("ore" -> 1)), new Resources, 0)
 		}
 
 		override isGoal() {
@@ -183,30 +195,31 @@ class Day19 {
 		override neighbours() {
 			val output = newArrayList
 			val remaining_duration = MAX_TIME - time
-			val durations = current_blueprint.durationsToBuild(resources, robots).filter[k, v|v.key < remaining_duration]
+			val durations = current_blueprint.durationsToBuild(resources, robots).filter [ k, v |
+				v.key < remaining_duration
+			]
 			// If we can craft a geode robot now, we do it
-			if (durations.containsKey("geode") && durations.get("geode").key == 0) 
-				durations.filter[k,v|k.equals("geode")]
+			if (durations.containsKey("geode") && durations.get("geode").key == 0)
+				durations.filter[k, v|k.equals("geode")]
 			// Otherwise we remove from the possibilities the robots that we have enough of
-			else 
-				durations.filter[k,v|k.equals("geode") || current_blueprint.maxRequested(k) > robots.get(k)]
-//			if (durations.isEmpty) {
-//				// Here there's not way to build any other robot in time
-//				output.add(new RobotState(
-//					robots,
-//					resources.add(robots.times(remaining_duration)),
-//					MAX_TIME
-//				) as State -> _minToGoal
-//			} else {
-////				durations.forEach[k,v|
-////					output.add(new RobotsState(
-////						blueprint,
-////						robots.addRobot(k),
-////						resources.add(robots.times(v)).subtract(blueprint.robots_costs.get(k)),
-////						time + v
-////					) as State -> v * (MAX_GEODE - robots.geode))
-////				]
-//			}
+			else
+				durations.filter[k, v|k.equals("geode") || current_blueprint.maxRequested(k) > robots.get(k)]
+
+			if (durations.isEmpty) {
+				output.add(new RobotState(
+					new Resources(robots.content),
+					resources.add(robots.times(remaining_duration)),
+					MAX_TIME
+				) as State -> 0)
+			} else {
+				durations.forEach [ k, v |
+					output.add(new RobotState(
+						robots.addRobot(k),
+						v.value,
+						v.key + time
+					) as State -> (k.equals("geode") ? - MAX_TIME + (v.key + time + 1) : 0))
+				]
+			}
 			output
 		}
 

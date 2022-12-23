@@ -63,7 +63,10 @@ class Day22 {
 		var next_position = current_position.otherMove(current_orientation)
 		if (!tiles.containsKey(next_position)) {
 			// Here there's gonna be 14 cases for the 14 edges of the cube
-			// that need to be glued together
+			// that need to be glued together. The conditions could be made simpler
+			// but knowing exactly which ones are irrelevant is cumbersome and can
+			// very easily lead to errors so might as well put them all down, as
+			// it is still instantaneous regardless. 
 			// A1
 			if (
 				next_position.y == double_face + 1 && 

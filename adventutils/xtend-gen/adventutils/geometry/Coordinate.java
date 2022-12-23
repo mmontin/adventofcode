@@ -341,6 +341,41 @@ public class Coordinate {
     return _switchResult;
   }
 
+  public Set<Coordinate> directedNeighbours(final Coordinate.Direction d) {
+    HashSet<Coordinate> _switchResult = null;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          Coordinate _coordinate = new Coordinate((this.x - 1), (this.y - 1));
+          Coordinate _coordinate_1 = new Coordinate((this.x - 1), this.y);
+          Coordinate _coordinate_2 = new Coordinate((this.x - 1), (this.y + 1));
+          _switchResult = CollectionLiterals.<Coordinate>newHashSet(_coordinate, _coordinate_1, _coordinate_2);
+          break;
+        case DOWN:
+          Coordinate _coordinate_3 = new Coordinate((this.x + 1), (this.y - 1));
+          Coordinate _coordinate_4 = new Coordinate((this.x + 1), this.y);
+          Coordinate _coordinate_5 = new Coordinate((this.x + 1), (this.y + 1));
+          _switchResult = CollectionLiterals.<Coordinate>newHashSet(_coordinate_3, _coordinate_4, _coordinate_5);
+          break;
+        case RIGHT:
+          Coordinate _coordinate_6 = new Coordinate((this.x - 1), (this.y + 1));
+          Coordinate _coordinate_7 = new Coordinate(this.x, (this.y + 1));
+          Coordinate _coordinate_8 = new Coordinate((this.x + 1), (this.y + 1));
+          _switchResult = CollectionLiterals.<Coordinate>newHashSet(_coordinate_6, _coordinate_7, _coordinate_8);
+          break;
+        case LEFT:
+          Coordinate _coordinate_9 = new Coordinate((this.x - 1), (this.y - 1));
+          Coordinate _coordinate_10 = new Coordinate(this.x, (this.y - 1));
+          Coordinate _coordinate_11 = new Coordinate((this.x + 1), (this.y - 1));
+          _switchResult = CollectionLiterals.<Coordinate>newHashSet(_coordinate_9, _coordinate_10, _coordinate_11);
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
+  }
+
   public static HashSet<Coordinate> getAllCoordsOnLine(final Coordinate coordinate, final Coordinate coordinate2) {
     HashSet<Coordinate> _xblockexpression = null;
     {

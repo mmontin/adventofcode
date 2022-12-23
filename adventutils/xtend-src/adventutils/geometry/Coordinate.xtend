@@ -141,11 +141,11 @@ class Coordinate {
 		LEFT,
 		RIGHT
 	}
-	
+
 	def static Direction fromLeftRight(String s) {
 		switch s {
-			case "<" : Direction.LEFT
-			default : Direction.RIGHT
+			case "<": Direction.LEFT
+			default: Direction.RIGHT
 		}
 	}
 
@@ -166,7 +166,7 @@ class Coordinate {
 			case RIGHT: Direction.UP
 		}
 	}
-	
+
 	def static Direction clockWise(Direction d) {
 		switch d {
 			case UP: Direction.RIGHT
@@ -175,11 +175,11 @@ class Coordinate {
 			case LEFT: Direction.UP
 		}
 	}
-	
+
 	def static Direction counterClockWise(Direction d) {
 		d.nextDirection
 	}
-	
+
 	def static int directionValue(Direction d) {
 		switch d {
 			case UP: 3
@@ -197,7 +197,7 @@ class Coordinate {
 			case LEFT: addX(-1)
 		}
 	}
-	
+
 	def Coordinate otherMove(Direction d) {
 		switch d {
 			case UP: addX(-1)
@@ -206,20 +206,33 @@ class Coordinate {
 			case LEFT: addY(-1)
 		}
 	}
-	
+
+	def Set<Coordinate> directedNeighbours(Direction d) {
+		switch d {
+			case UP:
+				newHashSet(new Coordinate(x - 1, y - 1), new Coordinate(x - 1, y), new Coordinate(x - 1, y + 1))
+			case DOWN:
+				newHashSet(new Coordinate(x + 1, y - 1), new Coordinate(x + 1, y), new Coordinate(x + 1, y + 1))
+			case RIGHT:
+				newHashSet(new Coordinate(x - 1, y + 1), new Coordinate(x, y + 1), new Coordinate(x + 1, y + 1))
+			case LEFT:
+				newHashSet(new Coordinate(x - 1, y - 1), new Coordinate(x, y - 1), new Coordinate(x + 1, y - 1))
+		}
+	}
+
 	// Here it's assumed that both coordinates share one of their values
 	def static getAllCoordsOnLine(Coordinate coordinate, Coordinate coordinate2) {
 		val output = newHashSet
 		if (coordinate.x == coordinate2.x) {
 			val _left = coordinate.y <= coordinate2.y ? coordinate : coordinate2
-			val _right = _left.equals(coordinate) ? coordinate2 : coordinate ;
-			(_left.y.._right.y).forEach[output.add(new Coordinate(coordinate.x,it))]
+			val _right = _left.equals(coordinate) ? coordinate2 : coordinate;
+			(_left.y .. _right.y).forEach[output.add(new Coordinate(coordinate.x, it))]
 		} else { // here coordinate.y == coordinate2.y
 			val _up = coordinate.x <= coordinate2.x ? coordinate : coordinate2
-			val _down = _up.equals(coordinate) ? coordinate2 : coordinate ;
-			(_up.x.._down.x).forEach[output.add(new Coordinate(it,coordinate.y))]
+			val _down = _up.equals(coordinate) ? coordinate2 : coordinate;
+			(_up.x .. _down.x).forEach[output.add(new Coordinate(it, coordinate.y))]
 		}
 		output
 	}
-	
+
 }

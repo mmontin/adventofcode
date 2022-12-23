@@ -1,5 +1,6 @@
 package advent2022;
 
+import adventutils.astar.AStar;
 import adventutils.astar.State;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
@@ -10,8 +11,10 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.MapExtensions;
@@ -264,7 +267,11 @@ public class Day19 {
       this.time = _time;
       this._hashCode = ((("" + this.robots) + this.resources) + Integer.valueOf(this.time)).hashCode();
       this._isGoal = (this.time == Day19.MAX_TIME);
-      this._minToGoal = (((Day19.MAX_TIME - this.time) * ((Day19.MAX_TIME - this.time) - 1)) / 2);
+      this._minToGoal = (((-(Day19.MAX_TIME - this.time)) * ((Day19.MAX_TIME - this.time) - 1)) / 2);
+    }
+
+    public RobotState() {
+      this(new Day19.Resources(CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("ore", Integer.valueOf(1)))), new Day19.Resources(), 0);
     }
 
     public boolean isGoal() {
@@ -302,6 +309,38 @@ public class Day19 {
           };
           MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_2);
         }
+        boolean _isEmpty = durations.isEmpty();
+        if (_isEmpty) {
+          Day19.Resources _resources = new Day19.Resources(this.robots.content);
+          Day19.Resources _add = this.resources.add(this.robots.times(remaining_duration));
+          Day19.RobotState _robotState = new Day19.RobotState(_resources, _add, 
+            Day19.MAX_TIME);
+          Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(0));
+          output.add(_mappedTo);
+        } else {
+          final BiConsumer<String, Pair<Integer, Day19.Resources>> _function_3 = new BiConsumer<String, Pair<Integer, Day19.Resources>>() {
+            public void accept(final String k, final Pair<Integer, Day19.Resources> v) {
+              Day19.Resources _addRobot = RobotState.this.robots.addRobot(k);
+              Day19.Resources _value = v.getValue();
+              Integer _key = v.getKey();
+              int _plus = ((_key).intValue() + RobotState.this.time);
+              Day19.RobotState _robotState = new Day19.RobotState(_addRobot, _value, _plus);
+              int _xifexpression = (int) 0;
+              boolean _equals = k.equals("geode");
+              if (_equals) {
+                Integer _key_1 = v.getKey();
+                int _plus_1 = ((_key_1).intValue() + RobotState.this.time);
+                int _plus_2 = (_plus_1 + 1);
+                _xifexpression = ((-Day19.MAX_TIME) + _plus_2);
+              } else {
+                _xifexpression = 0;
+              }
+              Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_xifexpression));
+              output.add(_mappedTo);
+            }
+          };
+          durations.forEach(_function_3);
+        }
         _xblockexpression = output;
       }
       return _xblockexpression;
@@ -333,10 +372,24 @@ public class Day19 {
 
   private static final int MAX_TIME = 24;
 
-  private static final int MAX_GEODES = (((Day19.MAX_TIME - 1) * Day19.MAX_TIME) / 2);
-
-  private static Day19.Blueprint current_blueprint = Day19.blueprints.get(0);
+  private static Day19.Blueprint current_blueprint;
 
   public static void main(final String[] args) {
+    int _size = Day19.blueprints.size();
+    final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
+      public Integer apply(final Integer acc, final Integer v) {
+        int _xblockexpression = (int) 0;
+        {
+          InputOutput.<Integer>println(v);
+          Day19.current_blueprint = Day19.blueprints.get((v).intValue());
+          Day19.RobotState _robotState = new Day19.RobotState();
+          final Integer max_number_of_geodes = new AStar(_robotState).run().getMinDistance();
+          InputOutput.<Integer>println(max_number_of_geodes);
+          _xblockexpression = ((acc).intValue() - ((max_number_of_geodes).intValue() * ((v).intValue() + 1)));
+        }
+        return Integer.valueOf(_xblockexpression);
+      }
+    };
+    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, _size, true), Integer.valueOf(0), _function));
   }
 }
