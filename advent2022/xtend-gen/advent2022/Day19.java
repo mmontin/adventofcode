@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -267,7 +268,7 @@ public class Day19 {
       this.time = _time;
       this._hashCode = ((("" + this.robots) + this.resources) + Integer.valueOf(this.time)).hashCode();
       this._isGoal = (this.time == Day19.MAX_TIME);
-      this._minToGoal = (((-(Day19.MAX_TIME - this.time)) * ((Day19.MAX_TIME - this.time) - 1)) / 2);
+      this._minToGoal = (((Day19.MAX_TIME - this.time) * ((Day19.MAX_TIME - this.time) - 1)) / 2);
     }
 
     public RobotState() {
@@ -320,22 +321,28 @@ public class Day19 {
         } else {
           final BiConsumer<String, Pair<Integer, Day19.Resources>> _function_3 = new BiConsumer<String, Pair<Integer, Day19.Resources>>() {
             public void accept(final String k, final Pair<Integer, Day19.Resources> v) {
-              Day19.Resources _addRobot = RobotState.this.robots.addRobot(k);
+              Day19.Resources _xifexpression = null;
+              boolean _equals = k.equals("geode");
+              if (_equals) {
+                _xifexpression = new Day19.Resources(RobotState.this.robots.content);
+              } else {
+                _xifexpression = RobotState.this.robots.addRobot(k);
+              }
               Day19.Resources _value = v.getValue();
               Integer _key = v.getKey();
               int _plus = ((_key).intValue() + RobotState.this.time);
-              Day19.RobotState _robotState = new Day19.RobotState(_addRobot, _value, _plus);
-              int _xifexpression = (int) 0;
-              boolean _equals = k.equals("geode");
-              if (_equals) {
+              Day19.RobotState _robotState = new Day19.RobotState(_xifexpression, _value, _plus);
+              int _xifexpression_1 = (int) 0;
+              boolean _equals_1 = k.equals("geode");
+              if (_equals_1) {
                 Integer _key_1 = v.getKey();
-                int _plus_1 = ((_key_1).intValue() + RobotState.this.time);
-                int _plus_2 = (_plus_1 + 1);
-                _xifexpression = ((-Day19.MAX_TIME) + _plus_2);
+                int _minus = (Day19.MAX_TIME - (_key_1).intValue());
+                int _minus_1 = (_minus - RobotState.this.time);
+                _xifexpression_1 = (_minus_1 - 1);
               } else {
-                _xifexpression = 0;
+                _xifexpression_1 = 0;
               }
-              Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_xifexpression));
+              Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_xifexpression_1));
               output.add(_mappedTo);
             }
           };
@@ -362,6 +369,17 @@ public class Day19 {
       }
       return _switchResult;
     }
+
+    public String toString() {
+      String _string = this.robots.toString();
+      String _plus = ("[[" + _string);
+      String _plus_1 = (_plus + " ; ");
+      String _string_1 = this.resources.toString();
+      String _plus_2 = (_plus_1 + _string_1);
+      String _plus_3 = (_plus_2 + " ; ");
+      String _plus_4 = (_plus_3 + Integer.valueOf(this.time));
+      return (_plus_4 + "]]");
+    }
   }
 
   private static final List<Day19.Blueprint> blueprints = ListExtensions.<String, Day19.Blueprint>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(19)).getInputs(), new Function1<String, Day19.Blueprint>() {
@@ -375,7 +393,7 @@ public class Day19 {
   private static Day19.Blueprint current_blueprint;
 
   public static void main(final String[] args) {
-    int _size = Day19.blueprints.size();
+    final AStar aStar = new AStar();
     final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
       public Integer apply(final Integer acc, final Integer v) {
         int _xblockexpression = (int) 0;
@@ -383,13 +401,22 @@ public class Day19 {
           InputOutput.<Integer>println(v);
           Day19.current_blueprint = Day19.blueprints.get((v).intValue());
           Day19.RobotState _robotState = new Day19.RobotState();
-          final Integer max_number_of_geodes = new AStar(_robotState).run().getMinDistance();
+          aStar.initialize(_robotState, false);
+          aStar.run();
+          final Integer max_number_of_geodes = aStar.getMinDistance();
+          final List<State> max_path = aStar.minPath();
           InputOutput.<Integer>println(max_number_of_geodes);
-          _xblockexpression = ((acc).intValue() - ((max_number_of_geodes).intValue() * ((v).intValue() + 1)));
+          final Consumer<State> _function = new Consumer<State>() {
+            public void accept(final State it) {
+              InputOutput.<State>println(it);
+            }
+          };
+          max_path.forEach(_function);
+          _xblockexpression = ((acc).intValue() + ((max_number_of_geodes).intValue() * ((v).intValue() + 1)));
         }
         return Integer.valueOf(_xblockexpression);
       }
     };
-    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, _size, true), Integer.valueOf(0), _function));
+    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, 1, true), Integer.valueOf(0), _function));
   }
 }

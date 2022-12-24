@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
@@ -21,29 +22,55 @@ public class AStar {
 
   private Map<State, State> previous;
 
+  private Function2<Integer, Integer, Boolean> compare;
+
   private State current;
 
-  private boolean initialized;
-
   public AStar() {
-    this.initialized = false;
+    this.current = null;
   }
 
-  public AStar(final State initial_) {
-    this.initialize(initial_);
+  public AStar(final State initial_, final boolean isMin) {
+    this.initialize(initial_, isMin);
   }
 
-  public Map<State, State> initialize(final State initial_) {
+  public AStar(final State initial) {
+    this(initial, true);
+  }
+
+  public Map<State, State> initialize(final State initial_, final boolean isMin) {
     Map<State, State> _xblockexpression = null;
     {
-      this.initialized = true;
       final Comparator<State> _function = new Comparator<State>() {
         public int compare(final State e1, final State e2) {
-          return Integer.compare((AStar.this.fScore.get(e1)).intValue(), (AStar.this.fScore.get(e2)).intValue());
+          int _xifexpression = (int) 0;
+          if (isMin) {
+            _xifexpression = Integer.compare((AStar.this.fScore.get(e1)).intValue(), (AStar.this.fScore.get(e2)).intValue());
+          } else {
+            _xifexpression = Integer.compare((AStar.this.fScore.get(e2)).intValue(), (AStar.this.fScore.get(e1)).intValue());
+          }
+          return _xifexpression;
         }
       };
       PriorityQueue<State> _priorityQueue = new PriorityQueue<State>(_function);
       this.toVisit = _priorityQueue;
+      Function2<Integer, Integer, Boolean> _xifexpression = null;
+      if (isMin) {
+        final Function2<Integer, Integer, Boolean> _function_1 = new Function2<Integer, Integer, Boolean>() {
+          public Boolean apply(final Integer p, final Integer q) {
+            return Boolean.valueOf((p.compareTo(q) < 0));
+          }
+        };
+        _xifexpression = _function_1;
+      } else {
+        final Function2<Integer, Integer, Boolean> _function_2 = new Function2<Integer, Integer, Boolean>() {
+          public Boolean apply(final Integer p, final Integer q) {
+            return Boolean.valueOf((q.compareTo(p) < 0));
+          }
+        };
+        _xifexpression = _function_2;
+      }
+      this.compare = _xifexpression;
       this.current = initial_;
       this.gScore = CollectionLiterals.<State, Integer>newHashMap();
       this.gScore.put(this.current, Integer.valueOf(0));
@@ -64,7 +91,7 @@ public class AStar {
           Integer _value = it.getValue();
           final int newGScore = ((_get).intValue() + (_value).intValue());
           final Integer currentScore = AStar.this.gScore.get(state);
-          if (((currentScore == null) || (newGScore < (currentScore).intValue()))) {
+          if (((currentScore == null) || (AStar.this.compare.apply(Integer.valueOf(newGScore), currentScore)).booleanValue())) {
             AStar.this.previous.put(state, AStar.this.current);
             AStar.this.toVisit.remove(state);
             AStar.this.gScore.put(state, Integer.valueOf(newGScore));
@@ -112,7 +139,10 @@ public class AStar {
     {
       this.checkInitialize();
       while ((!this.current.isGoal())) {
-        this.current = this.step();
+        {
+          this.current = this.step();
+          this.checkInitialize();
+        }
       }
       _xblockexpression = this;
     }
@@ -121,7 +151,7 @@ public class AStar {
 
   private void checkInitialize() {
     try {
-      if ((!this.initialized)) {
+      if ((this.current == null)) {
         throw new NotInitializedException();
       }
     } catch (Throwable _e) {

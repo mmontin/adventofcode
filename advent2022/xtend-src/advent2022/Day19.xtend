@@ -6,6 +6,7 @@ import java.util.HashMap
 import adventutils.input.InputLoader
 import adventutils.astar.State
 import adventutils.astar.AStar
+import java.util.PriorityQueue
 
 class Day19 {
 
@@ -15,13 +16,19 @@ class Day19 {
 	static Blueprint current_blueprint
 
 	def static void main(String[] args) {
+		
+		val aStar = new AStar()
 
-		println((0 ..< blueprints.size).fold(0) [ acc, v |
+		println((0 ..< 1).fold(0) [ acc, v |
 			println(v)
 			current_blueprint = blueprints.get(v)
-			val max_number_of_geodes = new AStar(new RobotState).run.minDistance
+			aStar.initialize(new RobotState, false)
+			aStar.run
+			val max_number_of_geodes = aStar.minDistance
+			val max_path = aStar.minPath
 			println(max_number_of_geodes)
-			acc - max_number_of_geodes * (v + 1)
+			max_path.forEach[println(it)]
+			acc + max_number_of_geodes * (v + 1)
 		])
 	}
 
@@ -177,7 +184,7 @@ class Day19 {
 
 			_hashCode = ("" + robots + resources + time).hashCode
 			_isGoal = time == MAX_TIME
-			_minToGoal = - (MAX_TIME - time) * (MAX_TIME - time - 1) / 2
+			_minToGoal = (MAX_TIME - time) * (MAX_TIME - time - 1) / 2
 		}
 
 		new() {
@@ -198,6 +205,7 @@ class Day19 {
 			val durations = current_blueprint.durationsToBuild(resources, robots).filter [ k, v |
 				v.key < remaining_duration
 			]
+
 			// If we can craft a geode robot now, we do it
 			if (durations.containsKey("geode") && durations.get("geode").key == 0)
 				durations.filter[k, v|k.equals("geode")]
@@ -214,10 +222,10 @@ class Day19 {
 			} else {
 				durations.forEach [ k, v |
 					output.add(new RobotState(
-						robots.addRobot(k),
+						(k.equals("geode")) ? new Resources(robots.content) : robots.addRobot(k),
 						v.value,
 						v.key + time
-					) as State -> (k.equals("geode") ? - MAX_TIME + (v.key + time + 1) : 0))
+					) as State -> (k.equals("geode") ? MAX_TIME - v.key - time - 1 : 0))
 				]
 			}
 			output
@@ -232,6 +240,10 @@ class Day19 {
 				RobotState: other.time == time && other.robots.equals(robots) && other.resources.equals(resources)
 				default: false
 			}
+		}
+		
+		override toString() {
+			"[[" + robots.toString + " ; " + resources.toString + " ; " + time + "]]"
 		}
 	}
 }
