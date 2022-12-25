@@ -1,34 +1,31 @@
 package advent2022
 
-import java.util.Map
-import java.util.List
-import java.util.HashMap
-import adventutils.input.InputLoader
-import adventutils.astar.State
 import adventutils.astar.AStar
-import java.util.PriorityQueue
+import adventutils.astar.State
+import adventutils.input.InputLoader
+import java.util.HashMap
+import java.util.List
+import java.util.Map
 
 class Day19 {
 
 	static final List<Blueprint> blueprints = new InputLoader(2022, 19).inputs.map[new Blueprint(it)]
 	static final int MAX_TIME = 24
+	static final int MAX_PRODUCTION = sum(1, MAX_TIME - 1)
 
 	static Blueprint current_blueprint
 
 	def static void main(String[] args) {
-		
+
 		val aStar = new AStar()
 
 		println((0 ..< 1).fold(0) [ acc, v |
 			println(v)
 			current_blueprint = blueprints.get(v)
-			aStar.initialize(new RobotState, false)
+			aStar.initialize(new RobotState)
 			aStar.run
-			val max_number_of_geodes = aStar.minDistance
-			val max_path = aStar.minPath
-			println(max_number_of_geodes)
-			max_path.forEach[println(it)]
-			acc + max_number_of_geodes * (v + 1)
+			aStar.minPath.forEach[println(it)]
+			acc + (MAX_PRODUCTION - aStar.minDistance) * (v + 1)
 		])
 	}
 
@@ -150,7 +147,7 @@ class Day19 {
 			robots_costs.forEach [ key, cost |
 				if ((cost.lacks("ore") || production.has("ore")) && (cost.lacks("clay") || production.has("clay")) &&
 					(cost.lacks("obsidian") || production.has("obsidian"))) {
-					var i = 1
+					var i = 0
 					var current_resources = initial
 					while (!current_resources.contains(cost)) {
 						current_resources = current_resources.add(production)
@@ -165,6 +162,10 @@ class Day19 {
 		def maxRequested(String s) {
 			robots_costs.values.maxBy[it.get(s)].get(s)
 		}
+	}
+
+	def static sum(int lower_bound, int upper_bound) {
+		(upper_bound - lower_bound + 1) * (lower_bound + upper_bound) / 2
 	}
 
 	static class RobotState implements State {
@@ -184,7 +185,7 @@ class Day19 {
 
 			_hashCode = ("" + robots + resources + time).hashCode
 			_isGoal = time == MAX_TIME
-			_minToGoal = (MAX_TIME - time) * (MAX_TIME - time - 1) / 2
+			_minToGoal = 0
 		}
 
 		new() {
@@ -218,14 +219,26 @@ class Day19 {
 					new Resources(robots.content),
 					resources.add(robots.times(remaining_duration)),
 					MAX_TIME
-				) as State -> 0)
+				) as State -> sum(1, MAX_TIME - (time + 1)))
 			} else {
 				durations.forEach [ k, v |
-					output.add(new RobotState(
-						(k.equals("geode")) ? new Resources(robots.content) : robots.addRobot(k),
-						v.value,
-						v.key + time
-					) as State -> (k.equals("geode") ? MAX_TIME - v.key - time - 1 : 0))
+					if (k.equals("geode")) {
+						val new_robots = new Resources(robots.content)
+						val new_resources = v.value.add(new_robots)
+						val new_time = time + v.key + 1
+						output.add(
+							new RobotState(new_robots, new_resources, new_time) as State ->
+								sum(MAX_TIME - (new_time - 1), MAX_TIME - (time + 1))
+						)
+					} else {
+						val new_robots = robots.addRobot(k)
+						val new_resources = v.value.add(new_robots)
+						val new_time = time + v.key + 1
+						output.add(
+							new RobotState(new_robots, new_resources, new_time) as State ->
+								sum(MAX_TIME - new_time, MAX_TIME - (time + 1))
+						)
+					}
 				]
 			}
 			output
@@ -241,7 +254,7 @@ class Day19 {
 				default: false
 			}
 		}
-		
+
 		override toString() {
 			"[[" + robots.toString + " ; " + resources.toString + " ; " + time + "]]"
 		}

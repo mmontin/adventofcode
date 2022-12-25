@@ -219,7 +219,7 @@ public class Day19 {
         final BiConsumer<String, Day19.Resources> _function = new BiConsumer<String, Day19.Resources>() {
           public void accept(final String key, final Day19.Resources cost) {
             if ((((cost.lacks("ore") || production.has("ore")) && (cost.lacks("clay") || production.has("clay"))) && (cost.lacks("obsidian") || production.has("obsidian")))) {
-              int i = 1;
+              int i = 0;
               Day19.Resources current_resources = initial;
               while ((!(current_resources.contains(cost)).booleanValue())) {
                 {
@@ -268,7 +268,7 @@ public class Day19 {
       this.time = _time;
       this._hashCode = ((("" + this.robots) + this.resources) + Integer.valueOf(this.time)).hashCode();
       this._isGoal = (this.time == Day19.MAX_TIME);
-      this._minToGoal = (((Day19.MAX_TIME - this.time) * ((Day19.MAX_TIME - this.time) - 1)) / 2);
+      this._minToGoal = 0;
     }
 
     public RobotState() {
@@ -316,34 +316,34 @@ public class Day19 {
           Day19.Resources _add = this.resources.add(this.robots.times(remaining_duration));
           Day19.RobotState _robotState = new Day19.RobotState(_resources, _add, 
             Day19.MAX_TIME);
-          Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(0));
+          int _sum = Day19.sum(1, (Day19.MAX_TIME - (this.time + 1)));
+          Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_sum));
           output.add(_mappedTo);
         } else {
           final BiConsumer<String, Pair<Integer, Day19.Resources>> _function_3 = new BiConsumer<String, Pair<Integer, Day19.Resources>>() {
             public void accept(final String k, final Pair<Integer, Day19.Resources> v) {
-              Day19.Resources _xifexpression = null;
               boolean _equals = k.equals("geode");
               if (_equals) {
-                _xifexpression = new Day19.Resources(RobotState.this.robots.content);
+                final Day19.Resources new_robots = new Day19.Resources(RobotState.this.robots.content);
+                final Day19.Resources new_resources = v.getValue().add(new_robots);
+                Integer _key = v.getKey();
+                int _plus = (RobotState.this.time + (_key).intValue());
+                final int new_time = (_plus + 1);
+                Day19.RobotState _robotState = new Day19.RobotState(new_robots, new_resources, new_time);
+                int _sum = Day19.sum((Day19.MAX_TIME - (new_time - 1)), (Day19.MAX_TIME - (RobotState.this.time + 1)));
+                Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_sum));
+                output.add(_mappedTo);
               } else {
-                _xifexpression = RobotState.this.robots.addRobot(k);
-              }
-              Day19.Resources _value = v.getValue();
-              Integer _key = v.getKey();
-              int _plus = ((_key).intValue() + RobotState.this.time);
-              Day19.RobotState _robotState = new Day19.RobotState(_xifexpression, _value, _plus);
-              int _xifexpression_1 = (int) 0;
-              boolean _equals_1 = k.equals("geode");
-              if (_equals_1) {
+                final Day19.Resources new_robots_1 = RobotState.this.robots.addRobot(k);
+                final Day19.Resources new_resources_1 = v.getValue().add(new_robots_1);
                 Integer _key_1 = v.getKey();
-                int _minus = (Day19.MAX_TIME - (_key_1).intValue());
-                int _minus_1 = (_minus - RobotState.this.time);
-                _xifexpression_1 = (_minus_1 - 1);
-              } else {
-                _xifexpression_1 = 0;
+                int _plus_1 = (RobotState.this.time + (_key_1).intValue());
+                final int new_time_1 = (_plus_1 + 1);
+                Day19.RobotState _robotState_1 = new Day19.RobotState(new_robots_1, new_resources_1, new_time_1);
+                int _sum_1 = Day19.sum((Day19.MAX_TIME - new_time_1), (Day19.MAX_TIME - (RobotState.this.time + 1)));
+                Pair<State, Integer> _mappedTo_1 = Pair.<State, Integer>of(((State) _robotState_1), Integer.valueOf(_sum_1));
+                output.add(_mappedTo_1);
               }
-              Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_xifexpression_1));
-              output.add(_mappedTo);
             }
           };
           durations.forEach(_function_3);
@@ -390,6 +390,8 @@ public class Day19 {
 
   private static final int MAX_TIME = 24;
 
+  private static final int MAX_PRODUCTION = Day19.sum(1, (Day19.MAX_TIME - 1));
+
   private static Day19.Blueprint current_blueprint;
 
   public static void main(final String[] args) {
@@ -401,22 +403,26 @@ public class Day19 {
           InputOutput.<Integer>println(v);
           Day19.current_blueprint = Day19.blueprints.get((v).intValue());
           Day19.RobotState _robotState = new Day19.RobotState();
-          aStar.initialize(_robotState, false);
+          aStar.initialize(_robotState);
           aStar.run();
-          final Integer max_number_of_geodes = aStar.getMinDistance();
-          final List<State> max_path = aStar.minPath();
-          InputOutput.<Integer>println(max_number_of_geodes);
           final Consumer<State> _function = new Consumer<State>() {
             public void accept(final State it) {
               InputOutput.<State>println(it);
             }
           };
-          max_path.forEach(_function);
-          _xblockexpression = ((acc).intValue() + ((max_number_of_geodes).intValue() * ((v).intValue() + 1)));
+          aStar.minPath().forEach(_function);
+          Integer _minDistance = aStar.getMinDistance();
+          int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
+          int _multiply = (_minus * ((v).intValue() + 1));
+          _xblockexpression = ((acc).intValue() + _multiply);
         }
         return Integer.valueOf(_xblockexpression);
       }
     };
     InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, 1, true), Integer.valueOf(0), _function));
+  }
+
+  public static int sum(final int lower_bound, final int upper_bound) {
+    return ((((upper_bound - lower_bound) + 1) * (lower_bound + upper_bound)) / 2);
   }
 }

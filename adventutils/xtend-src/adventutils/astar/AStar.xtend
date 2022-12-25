@@ -10,26 +10,20 @@ class AStar {
 	Map<State, Integer> gScore
 	Map<State, Integer> fScore
 	Map<State, State> previous
-	Function2<Integer, Integer, Boolean> compare
 	State current
 
 	new() {
 		current = null
 	}
 
-	new(State initial_, boolean isMin) {
-		initialize(initial_, isMin)
-	}
-
 	new(State initial) {
-		this(initial, true)
+		initialize(initial)
 	}
 
-	def initialize(State initial_, boolean isMin) {
+	def initialize(State initial_) {
 		toVisit = new PriorityQueue<State> [ e1, e2 |
-			isMin ? Integer::compare(fScore.get(e1), fScore.get(e2)) : Integer::compare(fScore.get(e2), fScore.get(e1))
+			Integer::compare(fScore.get(e1), fScore.get(e2))
 		]
-		compare = isMin ? [p, q|p < q] : [p, q|q < p]
 		current = initial_
 		gScore = newHashMap
 		gScore.put(current, 0)
@@ -43,7 +37,7 @@ class AStar {
 			val state = it.key
 			val newGScore = gScore.get(current) + it.value
 			val currentScore = gScore.get(state)
-			if (currentScore === null || compare.apply(newGScore, currentScore)) {
+			if (currentScore === null || newGScore < currentScore) {
 				previous.put(state, current)
 				toVisit.remove(state)
 				gScore.put(state, newGScore)
