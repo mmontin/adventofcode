@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.MapExtensions;
@@ -294,21 +294,21 @@ public class Day19 {
             return Boolean.valueOf(((_key).intValue() < remaining_duration));
           }
         };
-        final Map<String, Pair<Integer, Day19.Resources>> durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(Day19.current_blueprint.durationsToBuild(this.resources, this.robots), _function);
+        Map<String, Pair<Integer, Day19.Resources>> durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(Day19.current_blueprint.durationsToBuild(this.resources, this.robots), _function);
         if ((durations.containsKey("geode") && ((durations.get("geode").getKey()).intValue() == 0))) {
           final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function_1 = new Function2<String, Pair<Integer, Day19.Resources>, Boolean>() {
             public Boolean apply(final String k, final Pair<Integer, Day19.Resources> v) {
               return Boolean.valueOf(k.equals("geode"));
             }
           };
-          MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_1);
+          durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_1);
         } else {
           final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function_2 = new Function2<String, Pair<Integer, Day19.Resources>, Boolean>() {
             public Boolean apply(final String k, final Pair<Integer, Day19.Resources> v) {
               return Boolean.valueOf((k.equals("geode") || (Day19.current_blueprint.maxRequested(k).compareTo(RobotState.this.robots.get(k)) > 0)));
             }
           };
-          MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_2);
+          durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_2);
         }
         boolean _isEmpty = durations.isEmpty();
         if (_isEmpty) {
@@ -335,7 +335,7 @@ public class Day19 {
                 output.add(_mappedTo);
               } else {
                 final Day19.Resources new_robots_1 = RobotState.this.robots.addRobot(k);
-                final Day19.Resources new_resources_1 = v.getValue().add(new_robots_1);
+                final Day19.Resources new_resources_1 = v.getValue().add(RobotState.this.robots);
                 Integer _key_1 = v.getKey();
                 int _plus_1 = (RobotState.this.time + (_key_1).intValue());
                 final int new_time_1 = (_plus_1 + 1);
@@ -388,30 +388,33 @@ public class Day19 {
     }
   });
 
-  private static final int MAX_TIME = 24;
+  private static int MAX_TIME;
 
-  private static final int MAX_PRODUCTION = Day19.sum(1, (Day19.MAX_TIME - 1));
+  private static int MAX_PRODUCTION;
+
+  public static int init_max(final int minutes) {
+    int _xblockexpression = (int) 0;
+    {
+      Day19.MAX_TIME = minutes;
+      _xblockexpression = Day19.MAX_PRODUCTION = Day19.sum(1, (Day19.MAX_TIME - 1));
+    }
+    return _xblockexpression;
+  }
 
   private static Day19.Blueprint current_blueprint;
 
   public static void main(final String[] args) {
     final AStar aStar = new AStar();
+    Day19.init_max(24);
+    int _size = Day19.blueprints.size();
     final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
       public Integer apply(final Integer acc, final Integer v) {
         int _xblockexpression = (int) 0;
         {
-          InputOutput.<Integer>println(v);
           Day19.current_blueprint = Day19.blueprints.get((v).intValue());
           Day19.RobotState _robotState = new Day19.RobotState();
           aStar.initialize(_robotState);
-          aStar.run();
-          final Consumer<State> _function = new Consumer<State>() {
-            public void accept(final State it) {
-              InputOutput.<State>println(it);
-            }
-          };
-          aStar.minPath().forEach(_function);
-          Integer _minDistance = aStar.getMinDistance();
+          Integer _minDistance = aStar.run().getMinDistance();
           int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
           int _multiply = (_minus * ((v).intValue() + 1));
           _xblockexpression = ((acc).intValue() + _multiply);
@@ -419,7 +422,24 @@ public class Day19 {
         return Integer.valueOf(_xblockexpression);
       }
     };
-    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, 1, true), Integer.valueOf(0), _function));
+    InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, _size, true), Integer.valueOf(0), _function));
+    Day19.init_max(32);
+    final Function2<Integer, Integer, Integer> _function_1 = new Function2<Integer, Integer, Integer>() {
+      public Integer apply(final Integer acc, final Integer v) {
+        int _xblockexpression = (int) 0;
+        {
+          Day19.current_blueprint = Day19.blueprints.get((v).intValue());
+          Day19.RobotState _robotState = new Day19.RobotState();
+          aStar.initialize(_robotState);
+          Integer _minDistance = aStar.run().getMinDistance();
+          int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
+          _xblockexpression = ((acc).intValue() * _minus);
+        }
+        return Integer.valueOf(_xblockexpression);
+      }
+    };
+    InputOutput.<Integer>println(
+      IterableExtensions.<Integer, Integer>fold(new IntegerRange(0, 2), Integer.valueOf(1), _function_1));
   }
 
   public static int sum(final int lower_bound, final int upper_bound) {

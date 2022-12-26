@@ -10,8 +10,13 @@ import java.util.Map
 class Day19 {
 
 	static final List<Blueprint> blueprints = new InputLoader(2022, 19).inputs.map[new Blueprint(it)]
-	static final int MAX_TIME = 24
-	static final int MAX_PRODUCTION = sum(1, MAX_TIME - 1)
+	static int MAX_TIME
+	static int MAX_PRODUCTION
+
+	static def init_max(int minutes) {
+		MAX_TIME = minutes
+		MAX_PRODUCTION = sum(1, MAX_TIME - 1)
+	}
 
 	static Blueprint current_blueprint
 
@@ -19,13 +24,18 @@ class Day19 {
 
 		val aStar = new AStar()
 
-		println((0 ..< 1).fold(0) [ acc, v |
-			println(v)
+		init_max(24)
+		println((0 ..< blueprints.size).fold(0) [ acc, v |
 			current_blueprint = blueprints.get(v)
 			aStar.initialize(new RobotState)
-			aStar.run
-			aStar.minPath.forEach[println(it)]
-			acc + (MAX_PRODUCTION - aStar.minDistance) * (v + 1)
+			acc + (MAX_PRODUCTION - aStar.run.minDistance) * (v + 1)
+		])
+		
+		init_max(32)
+		println((0..2).fold(1)[acc,v|
+			current_blueprint = blueprints.get(v)
+			aStar.initialize(new RobotState)
+			acc * (MAX_PRODUCTION - aStar.run.minDistance)
 		])
 	}
 
@@ -203,17 +213,17 @@ class Day19 {
 		override neighbours() {
 			val output = newArrayList
 			val remaining_duration = MAX_TIME - time
-			val durations = current_blueprint.durationsToBuild(resources, robots).filter [ k, v |
+			var durations = current_blueprint.durationsToBuild(resources, robots).filter [ k, v |
 				v.key < remaining_duration
 			]
 
 			// If we can craft a geode robot now, we do it
 			if (durations.containsKey("geode") && durations.get("geode").key == 0)
-				durations.filter[k, v|k.equals("geode")]
+				durations = durations.filter[k, v|k.equals("geode")]
 			// Otherwise we remove from the possibilities the robots that we have enough of
-			else
-				durations.filter[k, v|k.equals("geode") || current_blueprint.maxRequested(k) > robots.get(k)]
-
+			else 
+				durations = durations.filter[k, v|k.equals("geode") || current_blueprint.maxRequested(k) > robots.get(k)]
+				
 			if (durations.isEmpty) {
 				output.add(new RobotState(
 					new Resources(robots.content),
@@ -232,7 +242,7 @@ class Day19 {
 						)
 					} else {
 						val new_robots = robots.addRobot(k)
-						val new_resources = v.value.add(new_robots)
+						val new_resources = v.value.add(robots)
 						val new_time = time + v.key + 1
 						output.add(
 							new RobotState(new_robots, new_resources, new_time) as State ->
