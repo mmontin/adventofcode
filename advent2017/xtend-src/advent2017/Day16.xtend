@@ -28,9 +28,7 @@ class Day16 {
 		} while (!initial.toString.equals(input))
 		
 		init ;
-		(0..<1000000000%42).forEach[
-			round
-		]
+		(0..<1000000000%i).forEach[round]
 		println(initial)
 	}
 	
