@@ -39,7 +39,7 @@ public class Day16 {
         Day16.round();
       }
     };
-    new ExclusiveRange(0, (1000000000 % 42), true).forEach(_function);
+    new ExclusiveRange(0, (1000000000 % i), true).forEach(_function);
     InputOutput.<StringBuffer>println(Day16.initial);
   }
 
