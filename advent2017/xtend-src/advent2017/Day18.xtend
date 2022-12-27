@@ -1,10 +1,9 @@
 package advent2017
 
-import java.util.Map
-import java.util.List
 import adventutils.input.InputLoader
+import java.util.List
+import java.util.Map
 import java.util.Stack
-import java.util.Optional
 
 class Day18 {
 

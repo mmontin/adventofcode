@@ -2,13 +2,17 @@ package advent2017
 
 import adventutils.input.InputLoader
 import java.util.ArrayList
+import java.util.List
 
 class Day10 {
 
+	static final String input = new InputLoader(2017, 10).inputs.head
 	static final int LIST_SIZE = 256
 
-	static Link current_link = null 
-	
+	static Link current_link = null
+	static int skip_size
+	static int moved
+
 	def static init() {
 		var chain_head = new Link(0, null)
 		var current = chain_head;
@@ -16,64 +20,58 @@ class Day10 {
 			current = new Link(i, current)
 		current.updateNext(chain_head)
 		current_link = chain_head
-	}
-
-	static int skip_size = 0
-	static int moved = 0
-
-	def static void main(String[] args) {
-		
-		var input = new InputLoader(2017,10).inputs.head
-		
-		init
-		input.split(",").map[Integer.parseInt(it)].forEach [
-			reverse(it)
-			moved += (it + skip_size)% LIST_SIZE
-			skip
-		]
-		var toPrint = current_link
-		for (i : 0 ..< moved)
-			toPrint = toPrint.previous
-		println(toPrint.value * toPrint.next.value)
-		
-		init
-		val second_pass = new ArrayList(input.toCharArray.map[it as int])
-		second_pass.addAll(newArrayList(17,31,73,47,23))
 		skip_size = 0
 		moved = 0
-		(0..<64).forEach[
-			second_pass.forEach[
-				reverse(it)
-				moved += (it + skip_size)% LIST_SIZE
-				skip
-			]
-		]
-		toPrint = current_link
+	}
+	
+	def static move(Link current_link, int moved) {
+		var output = current_link
 		for (i : 0 ..< moved)
-			toPrint = toPrint.previous
-		val numbers = newArrayList ;
-		for (i : 0..15) {
+			output = output.previous
+		output
+	}
+
+	def static firstPart(List<Integer> input) {
+		init
+		input.round
+		var toPrint = move(current_link, moved)
+		toPrint.value * toPrint.next.value
+	}
+
+	def static knotHash(String input) {
+		init
+		val second_pass = new ArrayList(input.toCharArray.map[it as int])
+		second_pass.addAll(newArrayList(17, 31, 73, 47, 23))
+		(0 ..< 64).forEach[second_pass.round]
+		var toPrint = move(current_link,moved)
+		val numbers = newArrayList;
+		for (i : 0 .. 15) {
 			var result = toPrint.value
-			for (j : 0..14) {
+			for (j : 0 .. 14) {
 				toPrint = toPrint.next
 				result = result.bitwiseXor(toPrint.value)
 			}
 			toPrint = toPrint.next
 			numbers.add(result)
 		}
-		print(numbers.map[Integer.toHexString(it)].join(""))
+		numbers
 	}
 
-	def static print() {
-		var current = current_link
-		for (i : 0 ..< LIST_SIZE) {
-			print(current.value + ",")
-			current = current.next
-		}
-		println()
+	def static void main(String[] args) {
+		println(input.split(",").map[Integer.parseInt(it)].firstPart)
+		println(input.knotHash.map[String.format("%02x", it)].join(""))
 	}
 
-	def static reverse(int quantity) {
+	def static round(List<Integer> input) {
+		input.forEach [
+			current_link = current_link.reverse(it)
+			moved += (it + skip_size) % LIST_SIZE
+			current_link = current_link.skip(skip_size)
+			skip_size = (skip_size + 1) % LIST_SIZE
+		]
+	}
+
+	def static reverse(Link current_link, int quantity) {
 		val links = newLinkedList
 		var my_current = current_link;
 		for (i : 0 ..< quantity) {
@@ -87,20 +85,23 @@ class Day10 {
 				before = before.next
 			}
 			before.updateNext(my_current)
-			current_link = my_current
+			my_current
 		} else {
 			links.forEach [
 				var tmp = it.previous
 				it.previous = it.next
 				it.next = tmp
 			]
-			current_link = links.head
+			links.head
 		}
 	}
 
-	def static void skip() {
-		(0 ..< skip_size).forEach[current_link = current_link.next]
-		skip_size = (skip_size + 1) % LIST_SIZE
+	def static skip(Link current_link, int skip_size) {
+		var new_link = current_link
+		for (i : 0 ..< skip_size) {
+			new_link = new_link.next
+		}
+		new_link
 	}
 
 	static class Link {
