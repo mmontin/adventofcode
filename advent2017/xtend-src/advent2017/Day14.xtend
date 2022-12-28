@@ -1,9 +1,8 @@
 package advent2017
 
-import java.util.List
 import adventutils.geometry.Coordinate
+import java.util.List
 import java.util.Set
-import java.util.HashSet
 
 class Day14 {
 
