@@ -90,11 +90,15 @@ class Coordinate {
 
 	// Neighbours on the 4 closest spots, excluding diagonals
 	def noDiagonalUnboundedNeighbours() {
+		noDiagonalUnboundedNeighboursWithDirection.map[key].toSet
+	}
+	
+	def noDiagonalUnboundedNeighboursWithDirection() {
 		newHashSet(
-			new Coordinate(x - 1, y),
-			new Coordinate(x + 1, y),
-			new Coordinate(x, y - 1),
-			new Coordinate(x, y + 1)
+			new Coordinate(x - 1, y) -> Direction.UP,
+			new Coordinate(x + 1, y) -> Direction.DOWN,
+			new Coordinate(x, y - 1) -> Direction.LEFT,
+			new Coordinate(x, y + 1) -> Direction.RIGHT
 		)
 	}
 

@@ -5,7 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Coordinate {
@@ -113,12 +116,25 @@ public class Coordinate {
     return _xblockexpression;
   }
 
-  public HashSet<Coordinate> noDiagonalUnboundedNeighbours() {
+  public Set<Coordinate> noDiagonalUnboundedNeighbours() {
+    final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate>() {
+      public Coordinate apply(final Pair<Coordinate, Coordinate.Direction> it) {
+        return it.getKey();
+      }
+    };
+    return IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(this.noDiagonalUnboundedNeighboursWithDirection(), _function));
+  }
+
+  public HashSet<Pair<Coordinate, Coordinate.Direction>> noDiagonalUnboundedNeighboursWithDirection() {
     Coordinate _coordinate = new Coordinate((this.x - 1), this.y);
+    Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.UP);
     Coordinate _coordinate_1 = new Coordinate((this.x + 1), this.y);
+    Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.DOWN);
     Coordinate _coordinate_2 = new Coordinate(this.x, (this.y - 1));
+    Pair<Coordinate, Coordinate.Direction> _mappedTo_2 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_2, Coordinate.Direction.LEFT);
     Coordinate _coordinate_3 = new Coordinate(this.x, (this.y + 1));
-    return CollectionLiterals.<Coordinate>newHashSet(_coordinate, _coordinate_1, _coordinate_2, _coordinate_3);
+    Pair<Coordinate, Coordinate.Direction> _mappedTo_3 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_3, Coordinate.Direction.RIGHT);
+    return CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(_mappedTo, _mappedTo_1, _mappedTo_2, _mappedTo_3);
   }
 
   public HashSet<Coordinate> noDiagonalBoundedNeighbours(final int lowerBound, final int higherBound) {
