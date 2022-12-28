@@ -45,6 +45,10 @@ class Triplet {
 		newHashSet(incrX, decrX, incrY, decrY, incrZ, decrZ)
 	}
 	
+	def add(Triplet other) {
+		new Triplet(x + other.x, y + other.y, z + other.z)
+	}
+	
 	def incrZ() {
 		new Triplet(x, y, z + 1)
 	}

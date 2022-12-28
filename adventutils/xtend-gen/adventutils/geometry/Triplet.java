@@ -61,6 +61,10 @@ public class Triplet {
     return CollectionLiterals.<Triplet>newHashSet(this.incrX(), this.decrX(), this.incrY(), this.decrY(), this.incrZ(), this.decrZ());
   }
 
+  public Triplet add(final Triplet other) {
+    return new Triplet((this.x + other.x), (this.y + other.y), (this.z + other.z));
+  }
+
   public Triplet incrZ() {
     return new Triplet(this.x, this.y, (this.z + 1));
   }
