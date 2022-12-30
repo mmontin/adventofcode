@@ -2,20 +2,23 @@ package advent2017
 
 import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
-import java.util.HashSet
 import java.util.Map
 import java.util.Set
 
 class Day21 {
 
-	static final Map<StringTile, SetTile> mappings = newHashMap
+	static final Map<SetTile, SetTile> mappings = newHashMap
 	static final SetTile starting_tile = new SetTile(".#./..#/###")
 
 	def static void main(String[] args) {
 		new InputLoader(2017, 21).inputs.forEach [
 			val split = it.split(" => ")
-			mappings.put(new StringTile(split.get(0)), new SetTile(split.get(1)))
+			val target = new SetTile(split.get(1))
+			SetTile.allVariants(split.get(0)).forEach [ variant |
+				mappings.put(variant, target)
+			]
 		]
+		println(mappings.size)
 
 		var current = starting_tile
 		for (i : 0 .. 4) {
@@ -23,7 +26,7 @@ class Day21 {
 			val splitted = current.split
 			val next_size = splitted.values.head.size + 1
 			splitted.forEach [ k, v |
-				var next_tile = mappings.get(mappings.keySet.findFirst[it.contains(v)])
+				var next_tile = mappings.get(v)
 				output.addAll(next_tile.content.map [
 					new Coordinate(it.x + next_size * k.x, it.y + next_size * k.y)
 				])
@@ -31,14 +34,14 @@ class Day21 {
 			current = new SetTile(output, next_size * Math.sqrt(splitted.size) as int)
 		}
 		println(current.content.size)
-		
+
 		for (i : 0 .. 12) {
 			println(i)
 			val output = newHashSet
 			val splitted = current.split
 			val next_size = splitted.values.head.size + 1
 			splitted.forEach [ k, v |
-				var next_tile = mappings.get(mappings.keySet.findFirst[it.contains(v)])
+				var next_tile = mappings.get(v)
 				output.addAll(next_tile.content.map [
 					new Coordinate(it.x + next_size * k.x, it.y + next_size * k.y)
 				])
@@ -52,6 +55,35 @@ class Day21 {
 
 		final Set<Coordinate> content
 		final int size
+
+		def static allVariants(String s) {
+			val content_list = newArrayList;
+			(0 .. 7).forEach[content_list.add(newHashSet)]
+
+			val split = s.split("/").map[toCharArray.map[toString]]
+			val size = split.size
+			for (i : 0 .. size - 1) {
+				for (j : 0 .. size - 1) {
+					if (split.get(i).get(j).equals("#"))
+						content_list.get(0).add(new Coordinate(i, j))
+					if (split.get(i).get(size - 1 - j).equals("#"))
+						content_list.get(1).add(new Coordinate(i, j))
+					if (split.get(size - 1 - i).get(size - 1 - j).equals("#"))
+						content_list.get(2).add(new Coordinate(i, j))
+					if (split.get(size - 1 - i).get(j).equals("#"))
+						content_list.get(3).add(new Coordinate(i, j))
+					if (split.get(j).get(i).equals("#"))
+						content_list.get(4).add(new Coordinate(i, j))
+					if (split.get(size - 1 - j).get(i).equals("#"))
+						content_list.get(5).add(new Coordinate(i, j))
+					if (split.get(size - 1 - j).get(size - 1 - i).equals("#"))
+						content_list.get(6).add(new Coordinate(i, j))
+					if (split.get(j).get(size - 1 - i).equals("#"))
+						content_list.get(7).add(new Coordinate(i, j))
+				}
+			}
+			content_list.map[new SetTile(it, size)]
+		}
 
 		new(String s) {
 			content = newHashSet
@@ -105,68 +137,16 @@ class Day21 {
 			}
 			output
 		}
-	}
-
-	static class StringTile {
-
-		HashSet<Coordinate> original
-		Set<HashSet<Coordinate>> content
-		int size
-
-		new(String s) {
-			content = newHashSet;
-			val content_list = newArrayList
-			original = newHashSet;
-			content_list.add(original)
-			(0 .. 6).forEach[content_list.add(newHashSet)]
-
-			val split = s.split("/").map[toCharArray.map[toString]]
-			size = split.size
-			for (i : 0 .. size - 1) {
-				for (j : 0 .. size - 1) {
-					if (split.get(i).get(j).equals("#"))
-						content_list.get(0).add(new Coordinate(i, j))
-					if (split.get(i).get(size - 1 - j).equals("#"))
-						content_list.get(1).add(new Coordinate(i, j))
-					if (split.get(size - 1 - i).get(size - 1 - j).equals("#"))
-						content_list.get(2).add(new Coordinate(i, j))
-					if (split.get(size - 1 - i).get(j).equals("#"))
-						content_list.get(3).add(new Coordinate(i, j))
-					if (split.get(j).get(i).equals("#"))
-						content_list.get(4).add(new Coordinate(i, j))
-					if (split.get(size - 1 - j).get(i).equals("#"))
-						content_list.get(5).add(new Coordinate(i, j))
-					if (split.get(size - 1 - j).get(size - 1 - i).equals("#"))
-						content_list.get(6).add(new Coordinate(i, j))
-					if (split.get(j).get(size - 1 - i).equals("#"))
-						content_list.get(7).add(new Coordinate(i, j))
-				}
-			}
-
-			content.addAll(content_list)
-		}
-
-		def getOriginal() {
-			original
-		}
-
+		
 		override hashCode() {
-			content.hashCode
-		}
-
-		def contains(SetTile other) {
-			other.size == size && content.contains(other.content)
-		}
-
-		override equals(Object other) {
-			switch other {
-				StringTile: other.content.equals(content) && other.size == size
-				default: false
-			}
+			size 
 		}
 		
-		override toString() {
-			new SetTile(original,size).toString
+		override equals(Object other) {
+			switch other {
+				SetTile : this.content.equals(other.content)
+				default : false
+			}
 		}
 	}
 }

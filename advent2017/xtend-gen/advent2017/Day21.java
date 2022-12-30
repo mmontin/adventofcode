@@ -26,6 +26,94 @@ public class Day21 {
 
     private final int size;
 
+    public static List<Day21.SetTile> allVariants(final String s) {
+      List<Day21.SetTile> _xblockexpression = null;
+      {
+        final ArrayList<HashSet<Coordinate>> content_list = CollectionLiterals.<HashSet<Coordinate>>newArrayList();
+        final Consumer<Integer> _function = new Consumer<Integer>() {
+          public void accept(final Integer it) {
+            content_list.add(CollectionLiterals.<Coordinate>newHashSet());
+          }
+        };
+        new IntegerRange(0, 7).forEach(_function);
+        final Function1<String, List<String>> _function_1 = new Function1<String, List<String>>() {
+          public List<String> apply(final String it) {
+            final Function1<Character, String> _function = new Function1<Character, String>() {
+              public String apply(final Character it_1) {
+                return it_1.toString();
+              }
+            };
+            return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
+          }
+        };
+        final List<List<String>> split = ListExtensions.<String, List<String>>map(((List<String>)Conversions.doWrapArray(s.split("/"))), _function_1);
+        final int size = split.size();
+        IntegerRange _upTo = new IntegerRange(0, (size - 1));
+        for (final Integer i : _upTo) {
+          IntegerRange _upTo_1 = new IntegerRange(0, (size - 1));
+          for (final Integer j : _upTo_1) {
+            {
+              boolean _equals = split.get((i).intValue()).get((j).intValue()).equals("#");
+              if (_equals) {
+                HashSet<Coordinate> _get = content_list.get(0);
+                Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+                _get.add(_coordinate);
+              }
+              boolean _equals_1 = split.get((i).intValue()).get(((size - 1) - (j).intValue())).equals("#");
+              if (_equals_1) {
+                HashSet<Coordinate> _get_1 = content_list.get(1);
+                Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue());
+                _get_1.add(_coordinate_1);
+              }
+              boolean _equals_2 = split.get(((size - 1) - (i).intValue())).get(((size - 1) - (j).intValue())).equals("#");
+              if (_equals_2) {
+                HashSet<Coordinate> _get_2 = content_list.get(2);
+                Coordinate _coordinate_2 = new Coordinate((i).intValue(), (j).intValue());
+                _get_2.add(_coordinate_2);
+              }
+              boolean _equals_3 = split.get(((size - 1) - (i).intValue())).get((j).intValue()).equals("#");
+              if (_equals_3) {
+                HashSet<Coordinate> _get_3 = content_list.get(3);
+                Coordinate _coordinate_3 = new Coordinate((i).intValue(), (j).intValue());
+                _get_3.add(_coordinate_3);
+              }
+              boolean _equals_4 = split.get((j).intValue()).get((i).intValue()).equals("#");
+              if (_equals_4) {
+                HashSet<Coordinate> _get_4 = content_list.get(4);
+                Coordinate _coordinate_4 = new Coordinate((i).intValue(), (j).intValue());
+                _get_4.add(_coordinate_4);
+              }
+              boolean _equals_5 = split.get(((size - 1) - (j).intValue())).get((i).intValue()).equals("#");
+              if (_equals_5) {
+                HashSet<Coordinate> _get_5 = content_list.get(5);
+                Coordinate _coordinate_5 = new Coordinate((i).intValue(), (j).intValue());
+                _get_5.add(_coordinate_5);
+              }
+              boolean _equals_6 = split.get(((size - 1) - (j).intValue())).get(((size - 1) - (i).intValue())).equals("#");
+              if (_equals_6) {
+                HashSet<Coordinate> _get_6 = content_list.get(6);
+                Coordinate _coordinate_6 = new Coordinate((i).intValue(), (j).intValue());
+                _get_6.add(_coordinate_6);
+              }
+              boolean _equals_7 = split.get((j).intValue()).get(((size - 1) - (i).intValue())).equals("#");
+              if (_equals_7) {
+                HashSet<Coordinate> _get_7 = content_list.get(7);
+                Coordinate _coordinate_7 = new Coordinate((i).intValue(), (j).intValue());
+                _get_7.add(_coordinate_7);
+              }
+            }
+          }
+        }
+        final Function1<HashSet<Coordinate>, Day21.SetTile> _function_2 = new Function1<HashSet<Coordinate>, Day21.SetTile>() {
+          public Day21.SetTile apply(final HashSet<Coordinate> it) {
+            return new Day21.SetTile(it, size);
+          }
+        };
+        _xblockexpression = ListExtensions.<HashSet<Coordinate>, Day21.SetTile>map(content_list, _function_2);
+      }
+      return _xblockexpression;
+    }
+
     public SetTile(final String s) {
       this.content = CollectionLiterals.<Coordinate>newHashSet();
       final Function1<String, List<String>> _function = new Function1<String, List<String>>() {
@@ -159,128 +247,26 @@ public class Day21 {
       }
       return _xblockexpression;
     }
-  }
-
-  public static class StringTile {
-    private HashSet<Coordinate> original;
-
-    private Set<HashSet<Coordinate>> content;
-
-    private int size;
-
-    public StringTile(final String s) {
-      this.content = CollectionLiterals.<HashSet<Coordinate>>newHashSet();
-      final ArrayList<HashSet<Coordinate>> content_list = CollectionLiterals.<HashSet<Coordinate>>newArrayList();
-      this.original = CollectionLiterals.<Coordinate>newHashSet();
-      content_list.add(this.original);
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer it) {
-          content_list.add(CollectionLiterals.<Coordinate>newHashSet());
-        }
-      };
-      new IntegerRange(0, 6).forEach(_function);
-      final Function1<String, List<String>> _function_1 = new Function1<String, List<String>>() {
-        public List<String> apply(final String it) {
-          final Function1<Character, String> _function = new Function1<Character, String>() {
-            public String apply(final Character it_1) {
-              return it_1.toString();
-            }
-          };
-          return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
-        }
-      };
-      final List<List<String>> split = ListExtensions.<String, List<String>>map(((List<String>)Conversions.doWrapArray(s.split("/"))), _function_1);
-      this.size = split.size();
-      IntegerRange _upTo = new IntegerRange(0, (this.size - 1));
-      for (final Integer i : _upTo) {
-        IntegerRange _upTo_1 = new IntegerRange(0, (this.size - 1));
-        for (final Integer j : _upTo_1) {
-          {
-            boolean _equals = split.get((i).intValue()).get((j).intValue()).equals("#");
-            if (_equals) {
-              HashSet<Coordinate> _get = content_list.get(0);
-              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-              _get.add(_coordinate);
-            }
-            boolean _equals_1 = split.get((i).intValue()).get(((this.size - 1) - (j).intValue())).equals("#");
-            if (_equals_1) {
-              HashSet<Coordinate> _get_1 = content_list.get(1);
-              Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue());
-              _get_1.add(_coordinate_1);
-            }
-            boolean _equals_2 = split.get(((this.size - 1) - (i).intValue())).get(((this.size - 1) - (j).intValue())).equals("#");
-            if (_equals_2) {
-              HashSet<Coordinate> _get_2 = content_list.get(2);
-              Coordinate _coordinate_2 = new Coordinate((i).intValue(), (j).intValue());
-              _get_2.add(_coordinate_2);
-            }
-            boolean _equals_3 = split.get(((this.size - 1) - (i).intValue())).get((j).intValue()).equals("#");
-            if (_equals_3) {
-              HashSet<Coordinate> _get_3 = content_list.get(3);
-              Coordinate _coordinate_3 = new Coordinate((i).intValue(), (j).intValue());
-              _get_3.add(_coordinate_3);
-            }
-            boolean _equals_4 = split.get((j).intValue()).get((i).intValue()).equals("#");
-            if (_equals_4) {
-              HashSet<Coordinate> _get_4 = content_list.get(4);
-              Coordinate _coordinate_4 = new Coordinate((i).intValue(), (j).intValue());
-              _get_4.add(_coordinate_4);
-            }
-            boolean _equals_5 = split.get(((this.size - 1) - (j).intValue())).get((i).intValue()).equals("#");
-            if (_equals_5) {
-              HashSet<Coordinate> _get_5 = content_list.get(5);
-              Coordinate _coordinate_5 = new Coordinate((i).intValue(), (j).intValue());
-              _get_5.add(_coordinate_5);
-            }
-            boolean _equals_6 = split.get(((this.size - 1) - (j).intValue())).get(((this.size - 1) - (i).intValue())).equals("#");
-            if (_equals_6) {
-              HashSet<Coordinate> _get_6 = content_list.get(6);
-              Coordinate _coordinate_6 = new Coordinate((i).intValue(), (j).intValue());
-              _get_6.add(_coordinate_6);
-            }
-            boolean _equals_7 = split.get((j).intValue()).get(((this.size - 1) - (i).intValue())).equals("#");
-            if (_equals_7) {
-              HashSet<Coordinate> _get_7 = content_list.get(7);
-              Coordinate _coordinate_7 = new Coordinate((i).intValue(), (j).intValue());
-              _get_7.add(_coordinate_7);
-            }
-          }
-        }
-      }
-      this.content.addAll(content_list);
-    }
-
-    public HashSet<Coordinate> getOriginal() {
-      return this.original;
-    }
 
     public int hashCode() {
-      return this.content.hashCode();
-    }
-
-    public boolean contains(final Day21.SetTile other) {
-      return ((other.size == this.size) && this.content.contains(other.content));
+      return this.size;
     }
 
     public boolean equals(final Object other) {
       boolean _switchResult = false;
       boolean _matched = false;
-      if (other instanceof Day21.StringTile) {
+      if (other instanceof Day21.SetTile) {
         _matched=true;
-        _switchResult = (((Day21.StringTile)other).content.equals(this.content) && (((Day21.StringTile)other).size == this.size));
+        _switchResult = this.content.equals(((Day21.SetTile)other).content);
       }
       if (!_matched) {
         _switchResult = false;
       }
       return _switchResult;
     }
-
-    public String toString() {
-      return new Day21.SetTile(this.original, this.size).toString();
-    }
   }
 
-  private static final Map<Day21.StringTile, Day21.SetTile> mappings = CollectionLiterals.<Day21.StringTile, Day21.SetTile>newHashMap();
+  private static final Map<Day21.SetTile, Day21.SetTile> mappings = CollectionLiterals.<Day21.SetTile, Day21.SetTile>newHashMap();
 
   private static final Day21.SetTile starting_tile = new Day21.SetTile(".#./..#/###");
 
@@ -288,14 +274,18 @@ public class Day21 {
     final Consumer<String> _function = new Consumer<String>() {
       public void accept(final String it) {
         final String[] split = it.split(" => ");
-        String _get = split[0];
-        Day21.StringTile _stringTile = new Day21.StringTile(_get);
-        String _get_1 = split[1];
-        Day21.SetTile _setTile = new Day21.SetTile(_get_1);
-        Day21.mappings.put(_stringTile, _setTile);
+        String _get = split[1];
+        final Day21.SetTile target = new Day21.SetTile(_get);
+        final Consumer<Day21.SetTile> _function = new Consumer<Day21.SetTile>() {
+          public void accept(final Day21.SetTile variant) {
+            Day21.mappings.put(variant, target);
+          }
+        };
+        Day21.SetTile.allVariants(split[0]).forEach(_function);
       }
     };
     new InputLoader(Integer.valueOf(2017), Integer.valueOf(21)).getInputs().forEach(_function);
+    InputOutput.<Integer>println(Integer.valueOf(Day21.mappings.size()));
     Day21.SetTile current = Day21.starting_tile;
     IntegerRange _upTo = new IntegerRange(0, 4);
     for (final Integer i : _upTo) {
@@ -305,13 +295,8 @@ public class Day21 {
         final int next_size = (IterableExtensions.<Day21.SetTile>head(splitted.values()).size + 1);
         final BiConsumer<Coordinate, Day21.SetTile> _function_1 = new BiConsumer<Coordinate, Day21.SetTile>() {
           public void accept(final Coordinate k, final Day21.SetTile v) {
-            final Function1<Day21.StringTile, Boolean> _function = new Function1<Day21.StringTile, Boolean>() {
-              public Boolean apply(final Day21.StringTile it) {
-                return Boolean.valueOf(it.contains(v));
-              }
-            };
-            Day21.SetTile next_tile = Day21.mappings.get(IterableExtensions.<Day21.StringTile>findFirst(Day21.mappings.keySet(), _function));
-            final Function1<Coordinate, Coordinate> _function_1 = new Function1<Coordinate, Coordinate>() {
+            Day21.SetTile next_tile = Day21.mappings.get(v);
+            final Function1<Coordinate, Coordinate> _function = new Function1<Coordinate, Coordinate>() {
               public Coordinate apply(final Coordinate it) {
                 int _x = it.getX();
                 int _x_1 = k.getX();
@@ -324,7 +309,7 @@ public class Day21 {
                 return new Coordinate(_plus, _plus_1);
               }
             };
-            Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function_1));
+            Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function));
           }
         };
         splitted.forEach(_function_1);
@@ -344,13 +329,8 @@ public class Day21 {
         final int next_size = (IterableExtensions.<Day21.SetTile>head(splitted.values()).size + 1);
         final BiConsumer<Coordinate, Day21.SetTile> _function_1 = new BiConsumer<Coordinate, Day21.SetTile>() {
           public void accept(final Coordinate k, final Day21.SetTile v) {
-            final Function1<Day21.StringTile, Boolean> _function = new Function1<Day21.StringTile, Boolean>() {
-              public Boolean apply(final Day21.StringTile it) {
-                return Boolean.valueOf(it.contains(v));
-              }
-            };
-            Day21.SetTile next_tile = Day21.mappings.get(IterableExtensions.<Day21.StringTile>findFirst(Day21.mappings.keySet(), _function));
-            final Function1<Coordinate, Coordinate> _function_1 = new Function1<Coordinate, Coordinate>() {
+            Day21.SetTile next_tile = Day21.mappings.get(v);
+            final Function1<Coordinate, Coordinate> _function = new Function1<Coordinate, Coordinate>() {
               public Coordinate apply(final Coordinate it) {
                 int _x = it.getX();
                 int _x_1 = k.getX();
@@ -363,7 +343,7 @@ public class Day21 {
                 return new Coordinate(_plus, _plus_1);
               }
             };
-            Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function_1));
+            Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function));
           }
         };
         splitted.forEach(_function_1);
