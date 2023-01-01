@@ -10,6 +10,7 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -23,32 +24,40 @@ public class Day23 {
   });
 
   public static void main(final String[] args) {
-    try {
-      Pair<String, Long> _mappedTo = Pair.<String, Long>of("a", Long.valueOf(1L));
-      final HashMap<String, Long> registers = CollectionLiterals.<String, Long>newHashMap(_mappedTo);
-      int position = 0;
-      int nb_of_mul = 0;
-      while (((position >= 0) && (position < Day23.commands.size()))) {
-        {
-          String _plus = (Integer.valueOf(position) + " ; ");
-          List<String> _get = Day23.commands.get(position);
-          String _plus_1 = (_plus + _get);
-          String _plus_2 = (_plus_1 + " : ");
-          String _plus_3 = (_plus_2 + registers);
-          InputOutput.<String>println(_plus_3);
-          Thread.sleep(1000);
-          Pair<Boolean, Integer> current = Day23.executeThisCommand(Day23.commands.get(position), registers, Integer.valueOf(position));
-          position = (current.getValue()).intValue();
-          Boolean _key = current.getKey();
-          if ((_key).booleanValue()) {
-            nb_of_mul++;
-          }
+    final HashMap<String, Long> registers = CollectionLiterals.<String, Long>newHashMap();
+    int position = 0;
+    int nb_of_mul = 0;
+    while (((position >= 0) && (position < Day23.commands.size()))) {
+      {
+        Pair<Boolean, Integer> current = Day23.executeThisCommand(Day23.commands.get(position), registers, Integer.valueOf(position));
+        position = (current.getValue()).intValue();
+        Boolean _key = current.getKey();
+        if ((_key).booleanValue()) {
+          nb_of_mul++;
         }
       }
-      InputOutput.<Integer>println(Integer.valueOf(nb_of_mul));
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
     }
+    InputOutput.<Integer>println(Integer.valueOf(nb_of_mul));
+    int x = 108400;
+    int non_prime = 0;
+    int f = 0;
+    do {
+      {
+        f = 1;
+        double _sqrt = Math.sqrt(x);
+        IntegerRange _upTo = new IntegerRange(2, ((int) _sqrt));
+        for (final Integer d : _upTo) {
+          if (((x % (d).intValue()) == 0)) {
+            f = 0;
+          }
+        }
+        if ((f == 0)) {
+          non_prime++;
+        }
+        x = (x + 17);
+      }
+    } while((x <= 125400));
+    InputOutput.<Integer>println(Integer.valueOf(non_prime));
   }
 
   public static Pair<Boolean, Integer> executeThisCommand(final List<String> l, final Map<String, Long> registers, final Integer position) {

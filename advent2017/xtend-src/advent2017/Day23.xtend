@@ -5,24 +5,36 @@ import java.util.List
 import java.util.Map
 
 class Day23 {
-	
+
 	static final List<List<String>> commands = new InputLoader(2017, 23).inputs.map[it.split(" ").toList]
-	
+
 	def static void main(String[] args) {
-		
-		val registers = newHashMap("a" -> 1L)
+
+		val registers = newHashMap
 		var position = 0
 		var nb_of_mul = 0
 		while (position >= 0 && position < commands.size) {
-			println(position + " ; " + commands.get(position) + " : " + registers)
-			Thread.sleep(1000)
 			var current = executeThisCommand(commands.get(position), registers, position)
 			position = current.value
-			if (current.key) nb_of_mul ++
+			if(current.key) nb_of_mul++
 		}
 		println(nb_of_mul)
+
+		var x = 108400
+		var non_prime = 0
+		var int f
+		do {
+			f = 1
+			for (d : 2 .. Math.sqrt(x) as int)
+				if (x % d == 0)
+					f = 0
+			if (f == 0) non_prime ++
+			x = x + 17
+		} while (x <= 125400)
+		println(non_prime)
+		
 	}
-	
+
 	def static executeThisCommand(List<String> l, Map<String, Long> registers, Integer position) {
 		var int new_position = position
 		var is_mul = false
@@ -40,7 +52,7 @@ class Day23 {
 		}
 		is_mul -> new_position + 1
 	}
-	
+
 	def static getMeAValue(Map<String, Long> registers, String s) {
 		try
 			Long.parseLong(s)
