@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.xtend.XTEND_CONTAINER"/>
 	<classpathentry excluding="advent2020/puzzle18/MAlonzo/|advent2020/puzzle22/MAlonzo/" kind="src" path="src"/>
+	<classpathentry excluding="advent2020/puzzle18/MAlonzo/|advent2020/puzzle22/MAlonzo/" kind="src" path="xtend-gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-13">
 		<attributes>
 			<attribute name="module" value="true"/>
