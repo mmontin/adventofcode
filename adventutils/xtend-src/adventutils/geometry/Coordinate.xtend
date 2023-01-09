@@ -24,7 +24,7 @@ class Coordinate {
 
 	// Creating a new Coordinate with a string of the form "a,b"
 	new(String s) {
-		this(Integer.parseInt(s.split(",").get(0)), Integer.parseInt(s.split(",").get(1)))
+		this(Integer.parseInt(s.split(",").get(0).trim), Integer.parseInt(s.split(",").get(1).trim))
 	}
 
 	new(Coordinate c) {

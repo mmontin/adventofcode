@@ -39,7 +39,7 @@ public class Coordinate {
   }
 
   public Coordinate(final String s) {
-    this(Integer.parseInt(s.split(",")[0]), Integer.parseInt(s.split(",")[1]));
+    this(Integer.parseInt((s.split(",")[0]).trim()), Integer.parseInt((s.split(",")[1]).trim()));
   }
 
   public Coordinate(final Coordinate c) {

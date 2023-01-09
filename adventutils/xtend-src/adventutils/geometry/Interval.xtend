@@ -35,6 +35,10 @@ class Interval {
 	def length() {
 		rightBound - leftBound
 	}
+	
+	def isUnity() {
+		length == 0
+	}
 
 	override toString() {
 		'[' + leftBound + ',' + rightBound + ']'

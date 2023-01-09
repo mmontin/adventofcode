@@ -48,6 +48,11 @@ public class Interval {
     return (this.rightBound - this.leftBound);
   }
 
+  public boolean isUnity() {
+    long _length = this.length();
+    return (_length == 0);
+  }
+
   public String toString() {
     return (((("[" + Long.valueOf(this.leftBound)) + ",") + Long.valueOf(this.rightBound)) + "]");
   }
