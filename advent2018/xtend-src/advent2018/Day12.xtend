@@ -38,7 +38,7 @@ class Day12 {
 		var next_min = current_state.min
 		var diff = next_min - i_min
 		// The answer is the current sum plus whatever shifting has
-		// been done in the remaining steps
+		// been done in the remaining steps * the number of states
 		var current_sum = current_state.reduce[x,y|x+y]
 		println(current_sum as long + diff * (50000000000L - (i+1)) * current_state.size)
 	}
