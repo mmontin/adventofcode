@@ -2,7 +2,6 @@ package adventutils.astar
 
 import java.util.Map
 import java.util.PriorityQueue
-import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 class AStar {
 

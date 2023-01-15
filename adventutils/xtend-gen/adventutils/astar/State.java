@@ -1,6 +1,5 @@
 package adventutils.astar;
 
-import java.util.List;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
@@ -9,7 +8,7 @@ public interface State {
 
   int minToGoal();
 
-  List<Pair<State, Integer>> neighbours();
+  Iterable<Pair<State, Integer>> neighbours();
 
   boolean equals(final Object other);
 

@@ -3,7 +3,7 @@ package adventutils.geometry
 import java.util.Set
 
 // Unmutable 2D coordinates
-class Coordinate {
+class Coordinate implements Comparable<Coordinate> {
 
 	final int x
 	final int y
@@ -92,7 +92,7 @@ class Coordinate {
 	def noDiagonalUnboundedNeighbours() {
 		noDiagonalUnboundedNeighboursWithDirection.map[key].toSet
 	}
-	
+
 	def noDiagonalUnboundedNeighboursWithDirection() {
 		newHashSet(
 			new Coordinate(x - 1, y) -> Direction.UP,
@@ -237,6 +237,13 @@ class Coordinate {
 			(_up.x .. _down.x).forEach[output.add(new Coordinate(it, coordinate.y))]
 		}
 		output
+	}
+
+	override compareTo(Coordinate other) {
+		switch (value : x.compareTo(other.x)) {
+			case 0: y.compareTo(other.y)
+			default: value
+		}
 	}
 
 }

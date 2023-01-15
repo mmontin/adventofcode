@@ -11,7 +11,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
-public class Coordinate {
+public class Coordinate implements Comparable<Coordinate> {
   public enum Direction {
     UP,
 
@@ -446,5 +446,20 @@ public class Coordinate {
       _xblockexpression = output;
     }
     return _xblockexpression;
+  }
+
+  public int compareTo(final Coordinate other) {
+    int _switchResult = (int) 0;
+    int _compareTo = Integer.valueOf(this.x).compareTo(Integer.valueOf(other.x));
+    final int value = _compareTo;
+    switch (value) {
+      case 0:
+        _switchResult = Integer.valueOf(this.y).compareTo(Integer.valueOf(other.y));
+        break;
+      default:
+        _switchResult = value;
+        break;
+    }
+    return _switchResult;
   }
 }
