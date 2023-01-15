@@ -1,8 +1,7 @@
 package advent2021.puzzle15;
 
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
-import java.util.List;
+import adventutils.pathfinding.State;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
@@ -34,7 +33,7 @@ public class CoordinateState extends Coordinate implements State {
     return this.manhattan;
   }
 
-  public List<Pair<State, Integer>> neighbours() {
+  public Iterable<Pair<State, Integer>> neighbours() {
     final Function1<Coordinate, Pair<State, Integer>> _function = new Function1<Coordinate, Pair<State, Integer>>() {
       public Pair<State, Integer> apply(final Coordinate it) {
         CoordinateState _coordinateState = new CoordinateState(it);

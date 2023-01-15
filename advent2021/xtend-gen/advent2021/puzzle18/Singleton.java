@@ -34,7 +34,7 @@ public class Singleton extends SNumber {
     this.value = v;
   }
 
-  public SNumber split() {
+  public Object split() {
     SNumber _xifexpression = null;
     if ((this.parent != null)) {
       SNumber _xblockexpression = null;

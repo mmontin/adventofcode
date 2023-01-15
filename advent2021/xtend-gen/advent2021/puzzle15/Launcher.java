@@ -1,7 +1,7 @@
 package advent2021.puzzle15;
 
-import adventutils.astar.AStar;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

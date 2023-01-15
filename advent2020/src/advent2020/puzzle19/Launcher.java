@@ -19,7 +19,7 @@ public class Launcher {
 	static {
 		try {
 			String currentLine ;
-			br = new BufferedReader(new FileReader("/home/monsieuro/adventofcode/advent2020/inputs/input19")) ;
+			br = new BufferedReader(new FileReader("/home/monsieuro/adventofcode/advent2020/inputs/19")) ;
 			while (!(currentLine = br.readLine()).isEmpty()) inputRules.add(currentLine) ;
 			while (!(currentLine = br.readLine()).isEmpty()) inputValues.add(currentLine) ;
 		} catch (IOException e) {

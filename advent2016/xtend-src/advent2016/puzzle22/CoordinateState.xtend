@@ -1,7 +1,7 @@
 package advent2016.puzzle22
 
 import adventutils.geometry.Coordinate
-import adventutils.astar.State
+import adventutils.pathfinding.State
 
 class CoordinateState extends Coordinate implements State {
 	

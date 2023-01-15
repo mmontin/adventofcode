@@ -1,6 +1,6 @@
 package advent2016.puzzle24
 
-import adventutils.astar.State
+import adventutils.pathfinding.State
 import adventutils.geometry.Coordinate
 import java.util.HashSet
 import java.util.Set

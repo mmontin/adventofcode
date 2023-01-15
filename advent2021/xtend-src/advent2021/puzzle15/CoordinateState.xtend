@@ -1,6 +1,6 @@
 package advent2021.puzzle15
 
-import adventutils.astar.State
+import adventutils.pathfinding.State
 import adventutils.geometry.Coordinate
 
 class CoordinateState extends Coordinate implements State {

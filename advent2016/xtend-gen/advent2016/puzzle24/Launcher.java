@@ -1,10 +1,10 @@
 package advent2016.puzzle24;
 
-import adventutils.astar.AStar;
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
 import adventutils.graphic.FramedImage;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -83,9 +83,9 @@ public class Launcher {
           {
             final Coordinate target = ((Coordinate[])Conversions.unwrapArray(Launcher.objectives, Coordinate.class))[(j).intValue()];
             CoordinateState _coordinateState = new CoordinateState(source, target);
-            final AStar astar = new AStar(_coordinateState).run();
-            Launcher.distances.put(CollectionLiterals.<Coordinate>newHashSet(source, target), astar.getMinDistance());
-            final List<State> path = astar.minPath();
+            final AStar pathfinding = new AStar(_coordinateState).run();
+            Launcher.distances.put(CollectionLiterals.<Coordinate>newHashSet(source, target), pathfinding.getMinDistance());
+            final List<State> path = pathfinding.minPath();
             Pair<Coordinate, Coordinate> _pair = new Pair<Coordinate, Coordinate>(source, target);
             Launcher.paths.put(_pair, path);
             Pair<Coordinate, Coordinate> _pair_1 = new Pair<Coordinate, Coordinate>(target, source);

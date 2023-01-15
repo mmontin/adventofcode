@@ -4,7 +4,7 @@ import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
 import java.util.Map
 import java.util.Set
-import adventutils.astar.AStar
+import adventutils.pathfinding.AStar
 
 class Launcher {
 	
@@ -36,10 +36,10 @@ class Launcher {
 		initialize
 		println(viablePairs)
 		var totalCost = 0
-		val astar = new AStar
+		val pathfinding = new AStar
 		while (!dataPosition.equals(new Coordinate(0,0))) {
-			astar.initialize(new CoordinateState(initial))
-			totalCost += (astar.run.minDistance + 1)
+			pathfinding.initialize(new CoordinateState(initial))
+			totalCost += (pathfinding.run.minDistance + 1)
 			target = new Coordinate(target.x-1, target.y)
 			dataPosition = new Coordinate(target.x + 1, target.y)
 			initial = new Coordinate(dataPosition.x + 1, target.y)

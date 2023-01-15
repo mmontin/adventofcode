@@ -1,7 +1,7 @@
 package advent2021.puzzle23;
 
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
+import adventutils.pathfinding.State;
 import com.google.common.base.Objects;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -377,7 +377,7 @@ public class AmphipodState implements State {
     return this.minBound;
   }
 
-  public List<Pair<State, Integer>> neighbours() {
+  public Iterable<Pair<State, Integer>> neighbours() {
     List<Pair<State, Integer>> _xblockexpression = null;
     {
       final HashMap<AmphipodState, Integer> output = CollectionLiterals.<AmphipodState, Integer>newHashMap();

@@ -1,8 +1,8 @@
 package advent2017;
 
-import adventutils.astar.AStar;
-import adventutils.astar.State;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -169,7 +169,7 @@ public class Day24 {
       return this.minToGoal;
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       return this.neighbours;
     }
 

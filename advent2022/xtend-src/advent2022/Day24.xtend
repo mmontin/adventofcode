@@ -4,10 +4,10 @@ import adventutils.geometry.Coordinate
 import adventutils.geometry.Coordinate.Direction
 import adventutils.input.InputLoader
 import java.util.List
-import adventutils.astar.State
+import adventutils.pathfinding.State
 import java.util.Map
 import java.util.Set
-import adventutils.astar.AStar
+import adventutils.pathfinding.AStar
 
 class Day24 {
 

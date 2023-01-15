@@ -1,12 +1,11 @@
 package advent2022;
 
-import adventutils.astar.AStar;
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,10 +42,10 @@ public class Day24 {
       return this.position.manhattanDistanceTo(Day24.PositionTimed.current_arrival);
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       List<Pair<State, Integer>> _xblockexpression = null;
       {
-        final HashSet<Coordinate> squares = this.position.noDiagonalUnboundedNeighbours();
+        final Set<Coordinate> squares = this.position.noDiagonalUnboundedNeighbours();
         squares.add(this.position);
         final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
           public Boolean apply(final Coordinate it) {

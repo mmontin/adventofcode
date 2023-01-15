@@ -1,8 +1,8 @@
 package advent2022;
 
-import adventutils.astar.AStar;
-import adventutils.astar.State;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ public class Day16 {
       return 1;
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       final Function1<String, Pair<State, Integer>> _function = new Function1<String, Pair<State, Integer>>() {
         public Pair<State, Integer> apply(final String v) {
           Day16.StringState _stringState = new Day16.StringState(v);
@@ -165,7 +165,7 @@ public class Day16 {
       return _xblockexpression;
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       ArrayList<Pair<State, Integer>> _xblockexpression = null;
       {
         final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
@@ -398,7 +398,7 @@ public class Day16 {
       return this._minToGoal;
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       ArrayList<Pair<State, Integer>> _xblockexpression = null;
       {
         final int remaining_duration = (Day16.max_duration - this.time);

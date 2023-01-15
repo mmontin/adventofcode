@@ -1,11 +1,11 @@
 package advent2017
 
-import adventutils.astar.State
+import adventutils.pathfinding.State
 import java.util.Set
 import java.util.List
 import java.util.HashSet
 import adventutils.input.InputLoader
-import adventutils.astar.AStar
+import adventutils.pathfinding.AStar
 
 class Day24 {
 

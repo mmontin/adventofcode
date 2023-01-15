@@ -1,8 +1,8 @@
 package advent2016.puzzle22;
 
-import adventutils.astar.AStar;
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
 import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,13 +58,13 @@ public class Launcher {
     Launcher.initialize();
     InputOutput.<Integer>println(Integer.valueOf(Launcher.viablePairs));
     int totalCost = 0;
-    final AStar astar = new AStar();
+    final AStar pathfinding = new AStar();
     while ((!Launcher.dataPosition.equals(new Coordinate(0, 0)))) {
       {
         CoordinateState _coordinateState = new CoordinateState(Launcher.initial);
-        astar.initialize(_coordinateState);
+        pathfinding.initialize(_coordinateState);
         int _talCost = totalCost;
-        Integer _minDistance = astar.run().getMinDistance();
+        Integer _minDistance = pathfinding.run().getMinDistance();
         int _plus = ((_minDistance).intValue() + 1);
         totalCost = (_talCost + _plus);
         int _x = Launcher.target.getX();

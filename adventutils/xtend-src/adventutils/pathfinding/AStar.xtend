@@ -1,4 +1,4 @@
-package adventutils.astar
+package adventutils.pathfinding
 
 import java.util.Map
 import java.util.PriorityQueue
@@ -75,4 +75,8 @@ class AStar {
 	private def checkInitialize() {
 		if(current === null) throw new NotInitializedException
 	}
+}
+
+class NotInitializedException extends Exception {
+	
 }

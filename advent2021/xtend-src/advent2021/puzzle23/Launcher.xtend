@@ -1,6 +1,6 @@
 package advent2021.puzzle23
 
-import adventutils.astar.AStar
+import adventutils.pathfinding.AStar
 
 class Launcher {
 	def static void main(String[] args) {

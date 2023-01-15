@@ -3,8 +3,8 @@ package advent2022
 import java.util.Map
 import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
-import adventutils.astar.State
-import adventutils.astar.AStar
+import adventutils.pathfinding.State
+import adventutils.pathfinding.AStar
 import java.util.ArrayList
 
 class Day12 {

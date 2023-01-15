@@ -1,8 +1,8 @@
 package advent2022;
 
-import adventutils.astar.AStar;
-import adventutils.astar.State;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -283,7 +283,7 @@ public class Day19 {
       return this._minToGoal;
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       ArrayList<Pair<State, Integer>> _xblockexpression = null;
       {
         final ArrayList<Pair<State, Integer>> output = CollectionLiterals.<Pair<State, Integer>>newArrayList();

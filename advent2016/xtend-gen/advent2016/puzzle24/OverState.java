@@ -1,7 +1,7 @@
 package advent2016.puzzle24;
 
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
+import adventutils.pathfinding.State;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class OverState implements State {
     return this.currentPosition.manhattanDistanceTo(Launcher.initial);
   }
 
-  public List<Pair<State, Integer>> neighbours() {
+  public Iterable<Pair<State, Integer>> neighbours() {
     List<Pair<State, Integer>> _xifexpression = null;
     boolean _equals = this.toVisit.equals(CollectionLiterals.<Coordinate>newHashSet(Launcher.initial));
     if (_equals) {

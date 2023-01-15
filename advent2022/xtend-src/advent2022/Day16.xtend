@@ -1,10 +1,10 @@
 package advent2022
 
-import adventutils.astar.State
+import adventutils.pathfinding.State
 import adventutils.input.InputLoader
 import java.util.List
 import java.util.Map
-import adventutils.astar.AStar
+import adventutils.pathfinding.AStar
 import java.util.Set
 import java.util.HashSet
 

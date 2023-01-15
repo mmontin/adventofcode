@@ -1,7 +1,7 @@
 package advent2016.puzzle24
 
-import adventutils.astar.AStar
-import adventutils.astar.State
+import adventutils.pathfinding.AStar
+import adventutils.pathfinding.State
 import adventutils.geometry.Coordinate
 import adventutils.graphic.FramedImage
 import adventutils.input.InputLoader
@@ -49,9 +49,9 @@ class Launcher {
 			val source = objectives.get(i)
 			for (j : i+1..<objectives.size) {
 				val target = objectives.get(j)
-				val astar = new AStar(new CoordinateState(source,target)).run
-				distances.put(newHashSet(source,target),astar.minDistance)
-				val path = astar.minPath
+				val pathfinding = new AStar(new CoordinateState(source,target)).run
+				distances.put(newHashSet(source,target),pathfinding.minDistance)
+				val path = pathfinding.minPath
 				paths.put(new Pair(source,target),path)
 				paths.put(new Pair(target,source),new ArrayList(path).reverse)
 			}

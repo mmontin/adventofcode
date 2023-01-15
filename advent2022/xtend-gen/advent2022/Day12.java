@@ -1,9 +1,9 @@
 package advent2022;
 
-import adventutils.astar.AStar;
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class Day12 {
       return this.manhattanDistanceTo(Day12.target);
     }
 
-    public List<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<State, Integer>> neighbours() {
       final Function1<Coordinate, Day12.CoordinateElevated> _function = new Function1<Coordinate, Day12.CoordinateElevated>() {
         public Day12.CoordinateElevated apply(final Coordinate it) {
           int _x = it.getX();

@@ -1,8 +1,7 @@
 package advent2016.puzzle22;
 
-import adventutils.astar.State;
 import adventutils.geometry.Coordinate;
-import java.util.List;
+import adventutils.pathfinding.State;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -21,7 +20,7 @@ public class CoordinateState extends Coordinate implements State {
     return this.manhattanDistanceTo(Launcher.target);
   }
 
-  public List<Pair<State, Integer>> neighbours() {
+  public Iterable<Pair<State, Integer>> neighbours() {
     final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
       public Boolean apply(final Coordinate it) {
         return Boolean.valueOf((((!Launcher.walls.contains(it)) && 
