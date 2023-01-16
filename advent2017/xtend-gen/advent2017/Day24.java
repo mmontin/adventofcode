@@ -216,7 +216,7 @@ public class Day24 {
     final AStar computation = new AStar(_bridge).run();
     final Function1<Day24.Element, Boolean> _function = new Function1<Day24.Element, Boolean>() {
       public Boolean apply(final Day24.Element it) {
-        State _last = IterableExtensions.<State>last(computation.minPath());
+        State _last = IterableExtensions.<State>last(computation.getMinPath());
         boolean _contains = ((Day24.Bridge) _last).remaining.contains(it);
         return Boolean.valueOf((!_contains));
       }
@@ -234,7 +234,7 @@ public class Day24 {
     computation.run();
     final Function1<Day24.Element, Boolean> _function_2 = new Function1<Day24.Element, Boolean>() {
       public Boolean apply(final Day24.Element it) {
-        State _last = IterableExtensions.<State>last(computation.minPath());
+        State _last = IterableExtensions.<State>last(computation.getMinPath());
         boolean _contains = ((Day24.Bridge) _last).remaining.contains(it);
         return Boolean.valueOf((!_contains));
       }

@@ -78,7 +78,7 @@ public class AStar {
     return _xblockexpression;
   }
 
-  public List<State> minPath() {
+  public List<State> getMinPath() {
     List<State> _xblockexpression = null;
     {
       this.checkInitialize();
@@ -93,6 +93,10 @@ public class AStar {
       _xblockexpression = ListExtensions.<State>reverse(path);
     }
     return _xblockexpression;
+  }
+
+  public Map<State, Integer> getValuations() {
+    return this.gScore;
   }
 
   public Integer getMinDistance() {

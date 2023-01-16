@@ -47,7 +47,7 @@ class AStar {
 		toVisit.poll
 	}
 
-	def minPath() {
+	def getMinPath() {
 		checkInitialize
 		val path = newArrayList(current)
 		var tmp = current
@@ -56,6 +56,10 @@ class AStar {
 			path.add(tmp)
 		}
 		path.reverse
+	}
+	
+	def getValuations() {
+		gScore
 	}
 
 	def getMinDistance() {

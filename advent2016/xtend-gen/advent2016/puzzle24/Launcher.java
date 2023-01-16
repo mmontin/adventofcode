@@ -85,7 +85,7 @@ public class Launcher {
             CoordinateState _coordinateState = new CoordinateState(source, target);
             final AStar pathfinding = new AStar(_coordinateState).run();
             Launcher.distances.put(CollectionLiterals.<Coordinate>newHashSet(source, target), pathfinding.getMinDistance());
-            final List<State> path = pathfinding.minPath();
+            final List<State> path = pathfinding.getMinPath();
             Pair<Coordinate, Coordinate> _pair = new Pair<Coordinate, Coordinate>(source, target);
             Launcher.paths.put(_pair, path);
             Pair<Coordinate, Coordinate> _pair_1 = new Pair<Coordinate, Coordinate>(target, source);
