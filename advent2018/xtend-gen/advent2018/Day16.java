@@ -167,42 +167,38 @@ public class Day16 {
         case "addr":
           Integer _get = registry.get(a);
           Integer _get_1 = registry.get(b);
-          int _plus = ((_get).intValue() + (_get_1).intValue());
-          _switchResult = registry.set(c, Integer.valueOf(_plus));
+          _switchResult = Integer.valueOf(((_get).intValue() + (_get_1).intValue()));
           break;
         case "addi":
           Integer _get_2 = registry.get(a);
-          int _plus_1 = ((_get_2).intValue() + b);
-          _switchResult = registry.set(c, Integer.valueOf(_plus_1));
+          _switchResult = Integer.valueOf(((_get_2).intValue() + b));
           break;
         case "mulr":
           Integer _get_3 = registry.get(a);
           Integer _get_4 = registry.get(b);
-          int _multiply = ((_get_3).intValue() * (_get_4).intValue());
-          _switchResult = registry.set(c, Integer.valueOf(_multiply));
+          _switchResult = Integer.valueOf(((_get_3).intValue() * (_get_4).intValue()));
           break;
         case "muli":
           Integer _get_5 = registry.get(a);
-          int _multiply_1 = ((_get_5).intValue() * b);
-          _switchResult = registry.set(c, Integer.valueOf(_multiply_1));
+          _switchResult = Integer.valueOf(((_get_5).intValue() * b));
           break;
         case "borr":
-          _switchResult = registry.set(c, Integer.valueOf(((registry.get(a)).intValue() | (registry.get(b)).intValue())));
+          _switchResult = Integer.valueOf(((registry.get(a)).intValue() | (registry.get(b)).intValue()));
           break;
         case "bori":
-          _switchResult = registry.set(c, Integer.valueOf(((registry.get(a)).intValue() | b)));
+          _switchResult = Integer.valueOf(((registry.get(a)).intValue() | b));
           break;
         case "banr":
-          _switchResult = registry.set(c, Integer.valueOf(((registry.get(a)).intValue() & (registry.get(b)).intValue())));
+          _switchResult = Integer.valueOf(((registry.get(a)).intValue() & (registry.get(b)).intValue()));
           break;
         case "bani":
-          _switchResult = registry.set(c, Integer.valueOf(((registry.get(a)).intValue() & b)));
+          _switchResult = Integer.valueOf(((registry.get(a)).intValue() & b));
           break;
         case "setr":
-          _switchResult = registry.set(c, registry.get(a));
+          _switchResult = registry.get(a);
           break;
         case "seti":
-          _switchResult = registry.set(c, Integer.valueOf(a));
+          _switchResult = Integer.valueOf(a);
           break;
         case "gtir":
           int _xifexpression = (int) 0;
@@ -213,7 +209,7 @@ public class Day16 {
           } else {
             _xifexpression = 0;
           }
-          _switchResult = registry.set(c, Integer.valueOf(_xifexpression));
+          _switchResult = Integer.valueOf(_xifexpression);
           break;
         case "gtri":
           int _xifexpression_1 = (int) 0;
@@ -224,7 +220,7 @@ public class Day16 {
           } else {
             _xifexpression_1 = 0;
           }
-          _switchResult = registry.set(c, Integer.valueOf(_xifexpression_1));
+          _switchResult = Integer.valueOf(_xifexpression_1);
           break;
         case "gtrr":
           int _xifexpression_2 = (int) 0;
@@ -236,7 +232,7 @@ public class Day16 {
           } else {
             _xifexpression_2 = 0;
           }
-          _switchResult = registry.set(c, Integer.valueOf(_xifexpression_2));
+          _switchResult = Integer.valueOf(_xifexpression_2);
           break;
         case "eqir":
           int _xifexpression_3 = (int) 0;
@@ -247,7 +243,7 @@ public class Day16 {
           } else {
             _xifexpression_3 = 0;
           }
-          _switchResult = registry.set(c, Integer.valueOf(_xifexpression_3));
+          _switchResult = Integer.valueOf(_xifexpression_3);
           break;
         case "eqri":
           int _xifexpression_4 = (int) 0;
@@ -258,7 +254,7 @@ public class Day16 {
           } else {
             _xifexpression_4 = 0;
           }
-          _switchResult = registry.set(c, Integer.valueOf(_xifexpression_4));
+          _switchResult = Integer.valueOf(_xifexpression_4);
           break;
         case "eqrr":
           int _xifexpression_5 = (int) 0;
@@ -270,10 +266,10 @@ public class Day16 {
           } else {
             _xifexpression_5 = 0;
           }
-          _switchResult = registry.set(c, Integer.valueOf(_xifexpression_5));
+          _switchResult = Integer.valueOf(_xifexpression_5);
           break;
       }
     }
-    return _switchResult;
+    return registry.set(c, _switchResult);
   }
 }

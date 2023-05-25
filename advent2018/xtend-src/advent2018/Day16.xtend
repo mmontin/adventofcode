@@ -3,7 +3,6 @@ package advent2018
 import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.List
-import java.util.Map
 import java.util.Set
 
 class Day16 {
@@ -57,19 +56,19 @@ class Day16 {
 			after = br.readLine
 			br.readLine
 		}
-		
+
 		val assigned = newHashSet
-		
+
 		var next = rules.values.findFirst[it.size == 1]
 		while (next !== null) {
 			val current_next = next.head
-			rules.values.forEach[v|
-				if (v.size > 1) v.remove(current_next)
+			rules.values.forEach [ v |
+				if(v.size > 1) v.remove(current_next)
 			]
 			assigned.add(current_next)
 			next = rules.values.findFirst[it.size == 1 && !assigned.contains(it.head)]
 		}
-		
+
 		println(i)
 
 		val all_commands = newArrayList(after)
@@ -80,13 +79,13 @@ class Day16 {
 		}
 
 		br.close
-		
-		var initial_state = newArrayList(0,0,0,0)
+
+		var initial_state = newArrayList(0, 0, 0, 0)
 		for (c : all_commands) {
 			val indices = c.split(" ").map[Integer.parseInt(it)]
-			execute(rules.get(indices.get(0)).head,indices.get(1), indices.get(2), indices.get(3),initial_state)
+			execute(rules.get(indices.get(0)).head, indices.get(1), indices.get(2), indices.get(3), initial_state)
 		}
-		
+
 		println(initial_state.get(0))
 	}
 
@@ -108,23 +107,23 @@ class Day16 {
 	}
 
 	def static execute(String instr, int a, int b, int c, List<Integer> registry) {
-		switch instr {
-			case "addr": registry.set(c, registry.get(a) + registry.get(b))
-			case "addi": registry.set(c, registry.get(a) + b)
-			case "mulr": registry.set(c, registry.get(a) * registry.get(b))
-			case "muli": registry.set(c, registry.get(a) * b)
-			case "borr": registry.set(c, registry.get(a).bitwiseOr(registry.get(b)))
-			case "bori": registry.set(c, registry.get(a).bitwiseOr(b))
-			case "banr": registry.set(c, registry.get(a).bitwiseAnd(registry.get(b)))
-			case "bani": registry.set(c, registry.get(a).bitwiseAnd(b))
-			case "setr": registry.set(c, registry.get(a))
-			case "seti": registry.set(c, a)
-			case "gtir": registry.set(c, a > registry.get(b) ? 1 : 0)
-			case "gtri": registry.set(c, registry.get(a) > b ? 1 : 0)
-			case "gtrr": registry.set(c, registry.get(a) > registry.get(b) ? 1 : 0)
-			case "eqir": registry.set(c, a == registry.get(b) ? 1 : 0)
-			case "eqri": registry.set(c, registry.get(a) == b ? 1 : 0)
-			case "eqrr": registry.set(c, registry.get(a) == registry.get(b) ? 1 : 0)
-		}
+		registry.set(c, switch instr {
+			case "addr": registry.get(a) + registry.get(b)
+			case "addi": registry.get(a) + b
+			case "mulr": registry.get(a) * registry.get(b)
+			case "muli": registry.get(a) * b
+			case "borr": registry.get(a).bitwiseOr(registry.get(b))
+			case "bori": registry.get(a).bitwiseOr(b)
+			case "banr": registry.get(a).bitwiseAnd(registry.get(b))
+			case "bani": registry.get(a).bitwiseAnd(b)
+			case "setr": registry.get(a)
+			case "seti": a
+			case "gtir": a > registry.get(b) ? 1 : 0
+			case "gtri": registry.get(a) > b ? 1 : 0
+			case "gtrr": registry.get(a) > registry.get(b) ? 1 : 0
+			case "eqir": a == registry.get(b) ? 1 : 0
+			case "eqri": registry.get(a) == b ? 1 : 0
+			case "eqrr": registry.get(a) == registry.get(b) ? 1 : 0
+		})
 	}
 }
