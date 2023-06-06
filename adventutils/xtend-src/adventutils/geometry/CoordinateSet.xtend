@@ -17,8 +17,8 @@ class CoordinateSet extends HashSet<Coordinate> {
 			val minY = this.minBy[y].y
 			val maxY = this.maxBy[y].y
 			var output = ""
-			for (i : minX..maxX) {
-				for (j : minY.. maxY)
+			for (i : minX-1..maxX+1) {
+				for (j : minY-1.. maxY+1)
 					output += (this.contains(new Coordinate(i,j)) ? "#" : ".")
 				output += "\n"
 			}

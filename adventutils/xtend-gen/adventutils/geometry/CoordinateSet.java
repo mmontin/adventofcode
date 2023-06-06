@@ -45,10 +45,10 @@ public class CoordinateSet extends HashSet<Coordinate> {
         };
         final int maxY = IterableExtensions.<Coordinate, Integer>maxBy(this, _function_3).getY();
         String output = "";
-        IntegerRange _upTo = new IntegerRange(minX, maxX);
+        IntegerRange _upTo = new IntegerRange((minX - 1), (maxX + 1));
         for (final Integer i : _upTo) {
           {
-            IntegerRange _upTo_1 = new IntegerRange(minY, maxY);
+            IntegerRange _upTo_1 = new IntegerRange((minY - 1), (maxY + 1));
             for (final Integer j : _upTo_1) {
               String _output = output;
               String _xifexpression_1 = null;
