@@ -1,10 +1,13 @@
 package advent2018
 
+import adventutils.Either
 import adventutils.geometry.Coordinate
+import adventutils.geometry.Coordinate.Direction
 import adventutils.geometry.CoordinateSet
 import adventutils.input.InputLoader
+import java.util.List
+import java.util.Optional
 import java.util.Set
-import adventutils.geometry.Coordinate.Direction
 
 class Day17 {
 
@@ -30,6 +33,8 @@ class Day17 {
 		output
 	}
 
+	static int flows = 0
+
 	static final int maxX = walls.maxBy[x].x
 
 	static final Set<Coordinate> water = new CoordinateSet
@@ -37,20 +42,20 @@ class Day17 {
 	static final Coordinate source = new Coordinate(0, 500)
 
 	def static void main(String[] args) {
-		flow(source)
-		//myPrint
+		flowDown(source)
+//		myPrint
 		println(water.size)
-	}				
+	}
 
 	def static myPrint() {
 		val minX = walls.minBy[x].x
 		val maxX = walls.maxBy[x].x
 		val minY = walls.minBy[y].y
 		val maxY = walls.maxBy[y].y
-		// println(minX + " " + maxX + " " + minY + " " + maxY)
+		println(minX + " " + maxX + " " + minY + " " + maxY)
 		var output = ""
-		for (i : 0 .. 100) {
-			for (j : 450 .. 550) {
+		for (i : minX - 1 .. maxX) {
+			for (j : minY .. maxY) {
 				val newCoord = new Coordinate(i, j)
 				output += {
 					val isWall = walls.contains(newCoord)
@@ -64,76 +69,98 @@ class Day17 {
 					else if(isWater) "|" else "."
 				}
 			}
-			output += "\n"				
+			output += "\n"
 		}
 		println(output)
 	}
 
-	def static boolean flow(Coordinate source) {
-		myPrint()
-		val nextSource = goDown(source)
+	// Returns true if the bottom has been reached, false otherwise
+	//
+	// Side effect : fills all water from the source
+	def static boolean flowDown(Coordinate source) {
 
-		if (nextSource.value.equals(source)) {
-			true
-		} else if (!nextSource.key) {
+		if (flows % 50 == 0) {
+			println("--------------------")
+			println("Flowing down")
+			println(source)
+			println(water.size)
+			println("--------------------")
+		}
+		flows ++
+
+		val downs = goDown(source)
+		if (!downs.isPresent)
+			// we reached the bottom
 			false
-		} else {
-			val left = goSideways(nextSource.value, true)
-			val right = goSideways(nextSource.value, false)
-			water.addAll(left.value)
-			water.addAll(right.value)
-			
-			// A wall on both sides
-			if (left.key && right.key) {
-				walls.addAll(left.value)
-				walls.addAll(right.value)
-				flow(source)
-			// A single wall on the right
-			} else if (!left.key && right.key) {
-				if (flow(left.value.get(0))) flow(source) else false
-			// A single wall on the left
-			} else if (left.key && !right.key) {
-				if (flow(right.value.get(0))) flow(source) else false
-			// No wall on either side
-			} else {
-				val fLeft = flow(left.value.get(0))
-				val fRight = flow(right.value.get(0))
-				if (fLeft && fRight) flow(source) else false			
-			}
+		else {
+			val downStream = downs.get
+			var i = 0
+			var finished = false
+			while (i < downStream.size && !finished)
+				finished = !flowBothSides(downStream.get(i++))
+			i >= downStream.size ? true : !finished
 		}
 	}
 
+	def static boolean flowBothSides(Coordinate source) {
+		var lefts = flowOneSide(source, true)
+		var rights = flowOneSide(source, false)
+		var wallOnLeft = lefts.isRight
+		var wallOnRight = rights.isRight
 
-	// Returns the coordinate reached by going down as much as possible
-	// adds the coordinates as being reachable by water in the process
-	// Also returns true if something has been reached, false otherwise
+		if (wallOnLeft && wallOnRight) {
+			walls.addAll(lefts.getRight)
+			walls.addAll(rights.getRight)
+			walls.add(source)
+			true
+		} else if (wallOnLeft)
+			flowDown(rights.getLeft) ? flowBothSides(source) : false
+		else if (wallOnRight)
+			flowDown(lefts.getLeft) ? flowBothSides(source) : false
+		else {
+			val resLeft = flowDown(lefts.getLeft)
+			val resRight = flowDown(rights.getLeft)
+			resLeft && resRight ? flowBothSides(source) : false
+		}
+	}
+
+	// Returns the list of coordinates reached by going down until a wall,
+	// was found, or Empty when the bottom was reached instead.
+	//
+	// Side effect : each tile reached by water is added to the water set.
 	def static goDown(Coordinate source) {
-		var current = source
-		var next = current.otherMove(Direction.DOWN)
+		val output = newArrayList
+		var next = source.otherMove(Direction.DOWN)
 		while (!walls.contains(next) && next.x < maxX) {
-			current = next
-			water.add(current)
-			next = current.otherMove(Direction.DOWN)
+			output.add(0, next)
+			next = next.otherMove(Direction.DOWN)
 		}
-		if (next.x == maxX && !walls.contains(next)) {
+		water.addAll(output)
+		walls.contains(next)
+			? Optional.of(output)
+			: {
 			water.add(next)
-			false -> current
-		} else
-			true -> current
+			Optional.empty
+		}
 	}
 
-	def static goSideways(Coordinate source, boolean left) {
-		var current = source
-		val reached = newArrayList(source)
-		var next = current.otherMove(left ? Direction.LEFT : Direction.RIGHT)
+	// Returns the list of coordinates reached up to reaching a wall, 
+	// or the first coordinate reached with no wall beneath
+	//
+	// Side effect : each tile reached by water is added to the water set
+	def static Either<Coordinate, List<Coordinate>> flowOneSide(Coordinate source, boolean left) {
+		val reached = newArrayList
+		var next = source.otherMove(left ? Direction.LEFT : Direction.RIGHT)
 		while (!walls.contains(next) && walls.contains(next.otherMove(Direction.DOWN))) {
-			current = next
-			reached.add(current)
-			next = current.otherMove(left ? Direction.LEFT : Direction.RIGHT)
+			reached.add(next)
+			next = next.otherMove(left ? Direction.LEFT : Direction.RIGHT)
 		}
-		(walls.contains(next) ?	true : {
-			reached.add(0, next)
-			false 
-		}) -> reached
+		water.addAll(reached)
+		walls.contains(next)
+			? Either.fromRight(reached)
+			: {
+			water.add(next);
+			Either.fromLeft(next)
+		}
 	}
 }
