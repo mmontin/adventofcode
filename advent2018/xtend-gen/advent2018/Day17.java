@@ -5,7 +5,7 @@ import adventutils.geometry.Coordinate;
 import adventutils.geometry.CoordinateSet;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -70,7 +70,11 @@ public class Day17 {
 
   public static void main(final String[] args) {
     Day17.flowDown(Day17.source);
-    InputOutput.<Integer>println(Integer.valueOf(Day17.water.size()));
+    int _size = Day17.water.size();
+    int _minus = (_size - 2);
+    InputOutput.<Integer>println(Integer.valueOf(_minus));
+    Day17.walls.retainAll(Day17.water);
+    InputOutput.<Integer>println(Integer.valueOf(Day17.walls.size()));
   }
 
   public static String myPrint() {
@@ -79,31 +83,24 @@ public class Day17 {
       final Function1<Coordinate, Integer> _function = (Coordinate it) -> {
         return Integer.valueOf(it.getX());
       };
-      final int minX = IterableExtensions.<Coordinate, Integer>minBy(Day17.walls, _function).getX();
+      final int minX = IterableExtensions.<Coordinate, Integer>minBy(Day17.water, _function).getX();
       final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
         return Integer.valueOf(it.getX());
       };
-      final int maxX = IterableExtensions.<Coordinate, Integer>maxBy(Day17.walls, _function_1).getX();
+      final int maxX = IterableExtensions.<Coordinate, Integer>maxBy(Day17.water, _function_1).getX();
       final Function1<Coordinate, Integer> _function_2 = (Coordinate it) -> {
         return Integer.valueOf(it.getY());
       };
-      final int minY = IterableExtensions.<Coordinate, Integer>minBy(Day17.walls, _function_2).getY();
+      final int minY = IterableExtensions.<Coordinate, Integer>minBy(Day17.water, _function_2).getY();
       final Function1<Coordinate, Integer> _function_3 = (Coordinate it) -> {
         return Integer.valueOf(it.getY());
       };
-      final int maxY = IterableExtensions.<Coordinate, Integer>maxBy(Day17.walls, _function_3).getY();
-      String _plus = (Integer.valueOf(minX) + " ");
-      String _plus_1 = (_plus + Integer.valueOf(maxX));
-      String _plus_2 = (_plus_1 + " ");
-      String _plus_3 = (_plus_2 + Integer.valueOf(minY));
-      String _plus_4 = (_plus_3 + " ");
-      String _plus_5 = (_plus_4 + Integer.valueOf(maxY));
-      InputOutput.<String>println(_plus_5);
+      final int maxY = IterableExtensions.<Coordinate, Integer>maxBy(Day17.water, _function_3).getY();
       String output = "";
-      IntegerRange _upTo = new IntegerRange((minX - 1), maxX);
+      IntegerRange _upTo = new IntegerRange((minX - 1), (maxX + 1));
       for (final Integer i : _upTo) {
         {
-          IntegerRange _upTo_1 = new IntegerRange(minY, maxY);
+          IntegerRange _upTo_1 = new IntegerRange((minY - 1), (maxY + 1));
           for (final Integer j : _upTo_1) {
             {
               final Coordinate newCoord = new Coordinate((i).intValue(), (j).intValue());
@@ -154,14 +151,6 @@ public class Day17 {
   public static boolean flowDown(final Coordinate source) {
     boolean _xblockexpression = false;
     {
-      if (((Day17.flows % 50) == 0)) {
-        InputOutput.<String>println("--------------------");
-        InputOutput.<String>println("Flowing down");
-        InputOutput.<Coordinate>println(source);
-        InputOutput.<Integer>println(Integer.valueOf(Day17.water.size()));
-        InputOutput.<String>println("--------------------");
-      }
-      Day17.flows++;
       final Optional<ArrayList<Coordinate>> downs = Day17.goDown(source);
       boolean _xifexpression = false;
       boolean _isPresent = downs.isPresent();
@@ -197,69 +186,6 @@ public class Day17 {
     return _xblockexpression;
   }
 
-  public static boolean flowBothSides(final Coordinate source) {
-    boolean _xblockexpression = false;
-    {
-      Either<Coordinate, List<Coordinate>> lefts = Day17.flowOneSide(source, true);
-      Either<Coordinate, List<Coordinate>> rights = Day17.flowOneSide(source, false);
-      boolean wallOnLeft = lefts.isRight();
-      boolean wallOnRight = rights.isRight();
-      boolean _xifexpression = false;
-      if ((wallOnLeft && wallOnRight)) {
-        boolean _xblockexpression_1 = false;
-        {
-          Day17.walls.addAll(lefts.getRight());
-          Day17.walls.addAll(rights.getRight());
-          Day17.walls.add(source);
-          _xblockexpression_1 = true;
-        }
-        _xifexpression = _xblockexpression_1;
-      } else {
-        boolean _xifexpression_1 = false;
-        if (wallOnLeft) {
-          boolean _xifexpression_2 = false;
-          boolean _flowDown = Day17.flowDown(rights.getLeft());
-          if (_flowDown) {
-            _xifexpression_2 = Day17.flowBothSides(source);
-          } else {
-            _xifexpression_2 = false;
-          }
-          _xifexpression_1 = _xifexpression_2;
-        } else {
-          boolean _xifexpression_3 = false;
-          if (wallOnRight) {
-            boolean _xifexpression_4 = false;
-            boolean _flowDown_1 = Day17.flowDown(lefts.getLeft());
-            if (_flowDown_1) {
-              _xifexpression_4 = Day17.flowBothSides(source);
-            } else {
-              _xifexpression_4 = false;
-            }
-            _xifexpression_3 = _xifexpression_4;
-          } else {
-            boolean _xblockexpression_2 = false;
-            {
-              final boolean resLeft = Day17.flowDown(lefts.getLeft());
-              final boolean resRight = Day17.flowDown(rights.getLeft());
-              boolean _xifexpression_5 = false;
-              if ((resLeft && resRight)) {
-                _xifexpression_5 = Day17.flowBothSides(source);
-              } else {
-                _xifexpression_5 = false;
-              }
-              _xblockexpression_2 = _xifexpression_5;
-            }
-            _xifexpression_3 = _xblockexpression_2;
-          }
-          _xifexpression_1 = _xifexpression_3;
-        }
-        _xifexpression = _xifexpression_1;
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return _xblockexpression;
-  }
-
   public static Optional<ArrayList<Coordinate>> goDown(final Coordinate source) {
     Optional<ArrayList<Coordinate>> _xblockexpression = null;
     {
@@ -271,28 +197,40 @@ public class Day17 {
           next = next.otherMove(Coordinate.Direction.DOWN);
         }
       }
-      Day17.water.addAll(output);
       Optional<ArrayList<Coordinate>> _xifexpression = null;
       boolean _contains = Day17.walls.contains(next);
       if (_contains) {
-        _xifexpression = Optional.<ArrayList<Coordinate>>of(output);
-      } else {
         Optional<ArrayList<Coordinate>> _xblockexpression_1 = null;
         {
-          Day17.water.add(next);
-          _xblockexpression_1 = Optional.<ArrayList<Coordinate>>empty();
+          final boolean alreadyHandled = Day17.water.contains(output.get(0));
+          Day17.water.addAll(output);
+          Optional<ArrayList<Coordinate>> _xifexpression_1 = null;
+          if (alreadyHandled) {
+            _xifexpression_1 = Optional.<ArrayList<Coordinate>>empty();
+          } else {
+            _xifexpression_1 = Optional.<ArrayList<Coordinate>>of(output);
+          }
+          _xblockexpression_1 = _xifexpression_1;
         }
         _xifexpression = _xblockexpression_1;
+      } else {
+        Optional<ArrayList<Coordinate>> _xblockexpression_2 = null;
+        {
+          Day17.water.addAll(output);
+          Day17.water.add(next);
+          _xblockexpression_2 = Optional.<ArrayList<Coordinate>>empty();
+        }
+        _xifexpression = _xblockexpression_2;
       }
       _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
   }
 
-  public static Either<Coordinate, List<Coordinate>> flowOneSide(final Coordinate source, final boolean left) {
-    Either<Coordinate, List<Coordinate>> _xblockexpression = null;
+  public static Either<Coordinate, Set<Coordinate>> getOneSide(final Coordinate source, final boolean left) {
+    Either<Coordinate, Set<Coordinate>> _xblockexpression = null;
     {
-      final ArrayList<Coordinate> reached = CollectionLiterals.<Coordinate>newArrayList();
+      final HashSet<Coordinate> reached = CollectionLiterals.<Coordinate>newHashSet();
       Coordinate.Direction _xifexpression = null;
       if (left) {
         _xifexpression = Coordinate.Direction.LEFT;
@@ -313,19 +251,65 @@ public class Day17 {
         }
       }
       Day17.water.addAll(reached);
-      Either<Coordinate, List<Coordinate>> _xifexpression_1 = null;
+      Either<Coordinate, Set<Coordinate>> _xifexpression_1 = null;
       boolean _contains = Day17.walls.contains(next);
       if (_contains) {
-        _xifexpression_1 = Either.<Coordinate, List<Coordinate>>fromRight(reached);
+        _xifexpression_1 = Either.<Coordinate, Set<Coordinate>>fromRight(reached);
       } else {
-        Either<Coordinate, List<Coordinate>> _xblockexpression_1 = null;
+        Either<Coordinate, Set<Coordinate>> _xblockexpression_1 = null;
         {
           Day17.water.add(next);
-          _xblockexpression_1 = Either.<Coordinate, List<Coordinate>>fromLeft(next);
+          _xblockexpression_1 = Either.<Coordinate, Set<Coordinate>>fromLeft(next);
         }
         _xifexpression_1 = _xblockexpression_1;
       }
       _xblockexpression = _xifexpression_1;
+    }
+    return _xblockexpression;
+  }
+
+  public static Optional<Set<Coordinate>> flowOneSide(final Coordinate source, final boolean left) {
+    Optional<Set<Coordinate>> _xblockexpression = null;
+    {
+      Either<Coordinate, Set<Coordinate>> reached = Day17.getOneSide(source, left);
+      Optional<Set<Coordinate>> _xifexpression = null;
+      boolean _isRight = reached.isRight();
+      if (_isRight) {
+        _xifexpression = Optional.<Set<Coordinate>>of(reached.getRight());
+      } else {
+        Optional<Set<Coordinate>> _xifexpression_1 = null;
+        boolean _flowDown = Day17.flowDown(reached.getLeft());
+        if (_flowDown) {
+          _xifexpression_1 = Day17.flowOneSide(source, left);
+        } else {
+          _xifexpression_1 = Optional.<Set<Coordinate>>empty();
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+
+  public static boolean flowBothSides(final Coordinate source) {
+    boolean _xblockexpression = false;
+    {
+      Optional<Set<Coordinate>> leftFlow = Day17.flowOneSide(source, true);
+      Optional<Set<Coordinate>> rightFlow = Day17.flowOneSide(source, false);
+      boolean _xifexpression = false;
+      if ((leftFlow.isPresent() && rightFlow.isPresent())) {
+        boolean _xblockexpression_1 = false;
+        {
+          Day17.walls.addAll(leftFlow.get());
+          Day17.walls.addAll(rightFlow.get());
+          Day17.walls.add(source);
+          _xblockexpression_1 = true;
+        }
+        _xifexpression = _xblockexpression_1;
+      } else {
+        _xifexpression = false;
+      }
+      _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
   }
