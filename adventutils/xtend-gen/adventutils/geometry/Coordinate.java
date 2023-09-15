@@ -162,6 +162,15 @@ public class Coordinate implements Comparable<Coordinate> {
     return _xblockexpression;
   }
 
+  public Iterable<Coordinate> allAroundBoundedNeighbours(final Coordinate upperLeft, final Coordinate bottomRight) {
+    final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
+      public Boolean apply(final Coordinate c) {
+        return Boolean.valueOf(((((c.x >= upperLeft.x) && (c.x < bottomRight.x)) && (c.y >= upperLeft.y)) && (c.y < bottomRight.y)));
+      }
+    };
+    return IterableExtensions.<Coordinate>filter(this.allAroundUnboundedNeighbours(), _function);
+  }
+
   public int manhattanDistanceTo(final Coordinate other) {
     int _abs = Math.abs((other.x - this.x));
     int _abs_1 = Math.abs((other.y - this.y));

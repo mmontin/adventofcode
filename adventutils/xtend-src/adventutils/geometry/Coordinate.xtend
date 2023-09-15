@@ -112,6 +112,12 @@ class Coordinate implements Comparable<Coordinate> {
 		output
 	}
 
+	def allAroundBoundedNeighbours(Coordinate upperLeft, Coordinate bottomRight) {
+		allAroundUnboundedNeighbours.filter [ c |
+			c.x >= upperLeft.x && c.x < bottomRight.x && c.y >= upperLeft.y && c.y < bottomRight.y
+		]
+	}
+
 	def manhattanDistanceTo(Coordinate other) {
 		Math.abs(other.x - x) + Math.abs(other.y - y)
 	}
