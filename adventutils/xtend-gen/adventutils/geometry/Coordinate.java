@@ -222,6 +222,31 @@ public class Coordinate implements Comparable<Coordinate> {
     return _switchResult;
   }
 
+  public static Coordinate.Direction directionFromPole(final String s) {
+    Coordinate.Direction _switchResult = null;
+    boolean _matched = false;
+    if (Objects.equal(s, "N")) {
+      _matched=true;
+      _switchResult = Coordinate.Direction.UP;
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "S")) {
+        _matched=true;
+        _switchResult = Coordinate.Direction.DOWN;
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "W")) {
+        _matched=true;
+        _switchResult = Coordinate.Direction.LEFT;
+      }
+    }
+    if (!_matched) {
+      _switchResult = Coordinate.Direction.RIGHT;
+    }
+    return _switchResult;
+  }
+
   public static Coordinate.Direction directionFromString(final String s) {
     Coordinate.Direction _switchResult = null;
     boolean _matched = false;

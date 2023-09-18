@@ -1,13 +1,11 @@
 package advent2018;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -21,24 +19,6 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Day16 {
-  private static final Set<String> instructions = CollectionLiterals.<String>newHashSet(
-    "addr", 
-    "addi", 
-    "mulr", 
-    "muli", 
-    "borr", 
-    "bori", 
-    "banr", 
-    "bani", 
-    "setr", 
-    "seti", 
-    "gtir", 
-    "gtri", 
-    "gtrr", 
-    "eqir", 
-    "eqri", 
-    "eqrr");
-
   public static void main(final String[] args) {
     try {
       final BufferedReader br = new InputLoader(Integer.valueOf(2018), Integer.valueOf(16)).getInputReader();
@@ -111,17 +91,18 @@ public class Day16 {
         }
       }
       br.close();
-      ArrayList<Integer> initial_state = CollectionLiterals.<Integer>newArrayList(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0));
+      ArrayList<Integer> _newArrayList = CollectionLiterals.<Integer>newArrayList(Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0));
+      MiniLang engine = new MiniLang(_newArrayList);
       for (final String c : all_commands) {
         {
           final Function1<String, Integer> _function_1 = (String it) -> {
             return Integer.valueOf(Integer.parseInt(it));
           };
           final List<Integer> indices = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(c.split(" "))), _function_1);
-          Day16.execute(IterableExtensions.<String>head(rules.get(indices.get(0))), (indices.get(1)).intValue(), (indices.get(2)).intValue(), (indices.get(3)).intValue(), initial_state);
+          engine.execute(IterableExtensions.<String>head(rules.get(indices.get(0))), (indices.get(1)).intValue(), (indices.get(2)).intValue(), (indices.get(3)).intValue());
         }
       }
-      InputOutput.<Integer>println(initial_state.get(0));
+      InputOutput.<Integer>println(engine.registry.get(0));
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -146,8 +127,9 @@ public class Day16 {
         HashSet<String> _xblockexpression_1 = null;
         {
           final ArrayList<Integer> input = new ArrayList<Integer>(before);
-          Day16.execute(v, (a).intValue(), (b).intValue(), (c).intValue(), input);
-          boolean _equals = input.equals(after);
+          final MiniLang engine = new MiniLang(input);
+          engine.execute(v, (a).intValue(), (b).intValue(), (c).intValue());
+          boolean _equals = engine.registry.equals(after);
           if (_equals) {
             acc.add(v);
           }
@@ -155,121 +137,8 @@ public class Day16 {
         }
         return _xblockexpression_1;
       };
-      _xblockexpression = IterableExtensions.<String, HashSet<String>>fold(Day16.instructions, CollectionLiterals.<String>newHashSet(), _function);
+      _xblockexpression = IterableExtensions.<String, HashSet<String>>fold(MiniLang.instructions, CollectionLiterals.<String>newHashSet(), _function);
     }
     return _xblockexpression;
-  }
-
-  public static Integer execute(final String instr, final int a, final int b, final int c, final List<Integer> registry) {
-    Integer _switchResult = null;
-    if (instr != null) {
-      switch (instr) {
-        case "addr":
-          Integer _get = registry.get(a);
-          Integer _get_1 = registry.get(b);
-          _switchResult = Integer.valueOf(((_get).intValue() + (_get_1).intValue()));
-          break;
-        case "addi":
-          Integer _get_2 = registry.get(a);
-          _switchResult = Integer.valueOf(((_get_2).intValue() + b));
-          break;
-        case "mulr":
-          Integer _get_3 = registry.get(a);
-          Integer _get_4 = registry.get(b);
-          _switchResult = Integer.valueOf(((_get_3).intValue() * (_get_4).intValue()));
-          break;
-        case "muli":
-          Integer _get_5 = registry.get(a);
-          _switchResult = Integer.valueOf(((_get_5).intValue() * b));
-          break;
-        case "borr":
-          _switchResult = Integer.valueOf(((registry.get(a)).intValue() | (registry.get(b)).intValue()));
-          break;
-        case "bori":
-          _switchResult = Integer.valueOf(((registry.get(a)).intValue() | b));
-          break;
-        case "banr":
-          _switchResult = Integer.valueOf(((registry.get(a)).intValue() & (registry.get(b)).intValue()));
-          break;
-        case "bani":
-          _switchResult = Integer.valueOf(((registry.get(a)).intValue() & b));
-          break;
-        case "setr":
-          _switchResult = registry.get(a);
-          break;
-        case "seti":
-          _switchResult = Integer.valueOf(a);
-          break;
-        case "gtir":
-          int _xifexpression = (int) 0;
-          Integer _get_6 = registry.get(b);
-          boolean _greaterThan = (a > (_get_6).intValue());
-          if (_greaterThan) {
-            _xifexpression = 1;
-          } else {
-            _xifexpression = 0;
-          }
-          _switchResult = Integer.valueOf(_xifexpression);
-          break;
-        case "gtri":
-          int _xifexpression_1 = (int) 0;
-          Integer _get_7 = registry.get(a);
-          boolean _greaterThan_1 = ((_get_7).intValue() > b);
-          if (_greaterThan_1) {
-            _xifexpression_1 = 1;
-          } else {
-            _xifexpression_1 = 0;
-          }
-          _switchResult = Integer.valueOf(_xifexpression_1);
-          break;
-        case "gtrr":
-          int _xifexpression_2 = (int) 0;
-          Integer _get_8 = registry.get(a);
-          Integer _get_9 = registry.get(b);
-          boolean _greaterThan_2 = (_get_8.compareTo(_get_9) > 0);
-          if (_greaterThan_2) {
-            _xifexpression_2 = 1;
-          } else {
-            _xifexpression_2 = 0;
-          }
-          _switchResult = Integer.valueOf(_xifexpression_2);
-          break;
-        case "eqir":
-          int _xifexpression_3 = (int) 0;
-          Integer _get_10 = registry.get(b);
-          boolean _equals = (a == (_get_10).intValue());
-          if (_equals) {
-            _xifexpression_3 = 1;
-          } else {
-            _xifexpression_3 = 0;
-          }
-          _switchResult = Integer.valueOf(_xifexpression_3);
-          break;
-        case "eqri":
-          int _xifexpression_4 = (int) 0;
-          Integer _get_11 = registry.get(a);
-          boolean _equals_1 = ((_get_11).intValue() == b);
-          if (_equals_1) {
-            _xifexpression_4 = 1;
-          } else {
-            _xifexpression_4 = 0;
-          }
-          _switchResult = Integer.valueOf(_xifexpression_4);
-          break;
-        case "eqrr":
-          int _xifexpression_5 = (int) 0;
-          Integer _get_12 = registry.get(a);
-          Integer _get_13 = registry.get(b);
-          boolean _equals_2 = Objects.equal(_get_12, _get_13);
-          if (_equals_2) {
-            _xifexpression_5 = 1;
-          } else {
-            _xifexpression_5 = 0;
-          }
-          _switchResult = Integer.valueOf(_xifexpression_5);
-          break;
-      }
-    }
-    return registry.set(c, _switchResult);
   }
 }

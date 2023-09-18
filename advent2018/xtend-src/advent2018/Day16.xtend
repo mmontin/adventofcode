@@ -3,28 +3,8 @@ package advent2018
 import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.List
-import java.util.Set
 
 class Day16 {
-
-	static final Set<String> instructions = newHashSet(
-		"addr",
-		"addi",
-		"mulr",
-		"muli",
-		"borr",
-		"bori",
-		"banr",
-		"bani",
-		"setr",
-		"seti",
-		"gtir",
-		"gtri",
-		"gtrr",
-		"eqir",
-		"eqri",
-		"eqrr"
-	)
 
 	def static void main(String[] args) {
 		val br = new InputLoader(2018, 16).inputReader
@@ -80,13 +60,14 @@ class Day16 {
 
 		br.close
 
-		var initial_state = newArrayList(0, 0, 0, 0)
+		var engine = new MiniLang(newArrayList(0, 0, 0, 0))
+
 		for (c : all_commands) {
 			val indices = c.split(" ").map[Integer.parseInt(it)]
-			execute(rules.get(indices.get(0)).head, indices.get(1), indices.get(2), indices.get(3), initial_state)
+			engine.execute(rules.get(indices.get(0)).head, indices.get(1), indices.get(2), indices.get(3))
 		}
 
-		println(initial_state.get(0))
+		println(engine.registry.get(0))
 	}
 
 	def static stringToList(String s) {
@@ -97,33 +78,13 @@ class Day16 {
 		val a = command.get(1)
 		val b = command.get(2)
 		val c = command.get(3)
-		instructions.fold(newHashSet) [ acc, v |
+		MiniLang.instructions.fold(newHashSet) [ acc, v |
 			val input = new ArrayList(before)
-			execute(v, a, b, c, input)
-			if (input.equals(after))
+			val engine = new MiniLang(input)
+			engine.execute(v, a, b, c)
+			if (engine.registry.equals(after))
 				acc.add(v)
 			acc
 		]
-	}
-
-	def static execute(String instr, int a, int b, int c, List<Integer> registry) {
-		registry.set(c, switch instr {
-			case "addr": registry.get(a) + registry.get(b)
-			case "addi": registry.get(a) + b
-			case "mulr": registry.get(a) * registry.get(b)
-			case "muli": registry.get(a) * b
-			case "borr": registry.get(a).bitwiseOr(registry.get(b))
-			case "bori": registry.get(a).bitwiseOr(b)
-			case "banr": registry.get(a).bitwiseAnd(registry.get(b))
-			case "bani": registry.get(a).bitwiseAnd(b)
-			case "setr": registry.get(a)
-			case "seti": a
-			case "gtir": a > registry.get(b) ? 1 : 0
-			case "gtri": registry.get(a) > b ? 1 : 0
-			case "gtrr": registry.get(a) > registry.get(b) ? 1 : 0
-			case "eqir": a == registry.get(b) ? 1 : 0
-			case "eqri": registry.get(a) == b ? 1 : 0
-			case "eqrr": registry.get(a) == registry.get(b) ? 1 : 0
-		})
 	}
 }
