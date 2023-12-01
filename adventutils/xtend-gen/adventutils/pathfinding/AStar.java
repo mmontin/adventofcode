@@ -15,7 +15,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class AStar {
   private PriorityQueue<State> toVisit;
 
-  private Map<State, Integer> gScore;
+  public Map<State, Integer> gScore;
 
   private Map<State, Integer> fScore;
 

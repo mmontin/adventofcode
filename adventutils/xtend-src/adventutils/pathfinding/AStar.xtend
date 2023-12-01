@@ -6,7 +6,7 @@ import java.util.PriorityQueue
 class AStar {
 
 	PriorityQueue<State> toVisit
-	Map<State, Integer> gScore
+	public Map<State, Integer> gScore
 	Map<State, Integer> fScore
 	Map<State, State> previous
 	State current

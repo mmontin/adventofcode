@@ -2,13 +2,21 @@ package advent2018;
 
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.NotInitializedException;
 import adventutils.pathfinding.State;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
@@ -47,115 +55,113 @@ public class Day20 {
       };
       return IterableExtensions.<Day20.MyCoordinate, Pair<State, Integer>>map(this.friends, _function);
     }
+
+    @Override
+    public String toString() {
+      String _string = super.toString();
+      String _plus = (_string + " : ");
+      int _size = this.friends.size();
+      return (_plus + Integer.valueOf(_size));
+    }
   }
-
-  private static List<Day20.MyCoordinate> discovered = CollectionLiterals.<Day20.MyCoordinate>newArrayList();
-
-  private static String input = new InputLoader(Integer.valueOf(2018), Integer.valueOf(20)).getInputs().get(0);
 
   public static void main(final String[] args) {
     final Day20.MyCoordinate start = new Day20.MyCoordinate(0, 0);
-    Day20.discovered.add(start);
-    Pair<Day20.MyCoordinate, Integer> _mappedTo = Pair.<Day20.MyCoordinate, Integer>of(start, Integer.valueOf(0));
-    Day20.populate(_mappedTo);
-    InputOutput.<Integer>println(Integer.valueOf(Day20.discovered.size()));
-  }
-
-  public static Pair<Day20.MyCoordinate, Integer> populate(final Pair<Day20.MyCoordinate, Integer> pair) {
-    Pair<Day20.MyCoordinate, Integer> _xifexpression = null;
-    Integer _value = pair.getValue();
-    int _length = Day20.input.length();
-    boolean _greaterEqualsThan = ((_value).intValue() >= _length);
-    if (_greaterEqualsThan) {
-      _xifexpression = pair;
-    } else {
-      Pair<Day20.MyCoordinate, Integer> _switchResult = null;
-      char _charAt = Day20.input.charAt((pair.getValue()).intValue());
-      String _plus = (Character.valueOf(_charAt) + "");
-      final String s = _plus;
+    final List<Day20.MyCoordinate> discovered = CollectionLiterals.<Day20.MyCoordinate>newArrayList(start);
+    final Stack<Set<Day20.MyCoordinate>> current_stack = new Stack<Set<Day20.MyCoordinate>>();
+    current_stack.push(CollectionLiterals.<Day20.MyCoordinate>newHashSet(start));
+    final Function1<Character, String> _function = (Character x) -> {
+      return (x + "");
+    };
+    final Consumer<String> _function_1 = (String s) -> {
       if (s != null) {
         switch (s) {
           case "(":
-            Day20.MyCoordinate _key = pair.getKey();
-            Integer _value_1 = pair.getValue();
-            int _plus_1 = ((_value_1).intValue() + 1);
-            Pair<Day20.MyCoordinate, Integer> _mappedTo = Pair.<Day20.MyCoordinate, Integer>of(_key, Integer.valueOf(_plus_1));
-            _switchResult = Day20.populate(Day20.populate(_mappedTo));
+            final HashSet<Day20.MyCoordinate> new_last = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
+            new_last.addAll(current_stack.peek());
+            current_stack.push(new_last);
             break;
           case "|":
-            Day20.MyCoordinate _key_1 = pair.getKey();
-            Integer _value_2 = pair.getValue();
-            int _plus_2 = ((_value_2).intValue() + 1);
-            Pair<Day20.MyCoordinate, Integer> _mappedTo_1 = Pair.<Day20.MyCoordinate, Integer>of(_key_1, Integer.valueOf(_plus_2));
-            _switchResult = Day20.populate(Day20.populate(_mappedTo_1));
+            final Set<Day20.MyCoordinate> last = current_stack.pop();
+            final Set<Day20.MyCoordinate> before_last = current_stack.pop();
+            current_stack.push(last);
+            current_stack.push(before_last);
             break;
           case ")":
-            Day20.MyCoordinate _key_2 = pair.getKey();
-            Integer _value_3 = pair.getValue();
-            int _plus_3 = ((_value_3).intValue() + 1);
-            _switchResult = Pair.<Day20.MyCoordinate, Integer>of(_key_2, Integer.valueOf(_plus_3));
+            final Set<Day20.MyCoordinate> last_1 = current_stack.pop();
+            current_stack.peek().addAll(last_1);
             break;
           default:
-            Pair<Day20.MyCoordinate, Integer> _xblockexpression = null;
             {
               final Coordinate.Direction direction = Coordinate.directionFromPole(s);
-              final Coordinate next_coord = pair.getKey().otherMove(direction);
-              final int index = Day20.discovered.indexOf(next_coord);
-              Day20.MyCoordinate _xifexpression_1 = null;
-              if ((index == (-1))) {
-                Day20.MyCoordinate _xblockexpression_1 = null;
-                {
-                  int _x = next_coord.getX();
-                  int _y = next_coord.getY();
-                  final Day20.MyCoordinate tmp = new Day20.MyCoordinate(_x, _y);
-                  Day20.discovered.add(tmp);
-                  _xblockexpression_1 = tmp;
+              final HashSet<Day20.MyCoordinate> next_coords = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
+              final Consumer<Day20.MyCoordinate> _function_2 = (Day20.MyCoordinate c) -> {
+                final Coordinate next_coord = c.otherMove(direction);
+                final int index = discovered.indexOf(next_coord);
+                Day20.MyCoordinate _xifexpression = null;
+                if ((index == (-1))) {
+                  Day20.MyCoordinate _xblockexpression = null;
+                  {
+                    int _x = next_coord.getX();
+                    int _y = next_coord.getY();
+                    final Day20.MyCoordinate tmp = new Day20.MyCoordinate(_x, _y);
+                    discovered.add(tmp);
+                    _xblockexpression = tmp;
+                  }
+                  _xifexpression = _xblockexpression;
+                } else {
+                  _xifexpression = discovered.get(index);
                 }
-                _xifexpression_1 = _xblockexpression_1;
-              } else {
-                _xifexpression_1 = Day20.discovered.get(index);
-              }
-              final Day20.MyCoordinate my_next_coord = _xifexpression_1;
-              my_next_coord.addFriend(pair.getKey());
-              Integer _value_4 = pair.getValue();
-              int _plus_4 = ((_value_4).intValue() + 1);
-              Pair<Day20.MyCoordinate, Integer> _mappedTo_2 = Pair.<Day20.MyCoordinate, Integer>of(my_next_coord, Integer.valueOf(_plus_4));
-              _xblockexpression = Day20.populate(_mappedTo_2);
+                final Day20.MyCoordinate my_next_coord = _xifexpression;
+                my_next_coord.addFriend(c);
+                next_coords.add(my_next_coord);
+              };
+              current_stack.pop().forEach(_function_2);
+              current_stack.push(next_coords);
             }
-            _switchResult = _xblockexpression;
             break;
         }
       } else {
-        Pair<Day20.MyCoordinate, Integer> _xblockexpression = null;
         {
           final Coordinate.Direction direction = Coordinate.directionFromPole(s);
-          final Coordinate next_coord = pair.getKey().otherMove(direction);
-          final int index = Day20.discovered.indexOf(next_coord);
-          Day20.MyCoordinate _xifexpression_1 = null;
-          if ((index == (-1))) {
-            Day20.MyCoordinate _xblockexpression_1 = null;
-            {
-              int _x = next_coord.getX();
-              int _y = next_coord.getY();
-              final Day20.MyCoordinate tmp = new Day20.MyCoordinate(_x, _y);
-              Day20.discovered.add(tmp);
-              _xblockexpression_1 = tmp;
+          final HashSet<Day20.MyCoordinate> next_coords = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
+          final Consumer<Day20.MyCoordinate> _function_2 = (Day20.MyCoordinate c) -> {
+            final Coordinate next_coord = c.otherMove(direction);
+            final int index = discovered.indexOf(next_coord);
+            Day20.MyCoordinate _xifexpression = null;
+            if ((index == (-1))) {
+              Day20.MyCoordinate _xblockexpression = null;
+              {
+                int _x = next_coord.getX();
+                int _y = next_coord.getY();
+                final Day20.MyCoordinate tmp = new Day20.MyCoordinate(_x, _y);
+                discovered.add(tmp);
+                _xblockexpression = tmp;
+              }
+              _xifexpression = _xblockexpression;
+            } else {
+              _xifexpression = discovered.get(index);
             }
-            _xifexpression_1 = _xblockexpression_1;
-          } else {
-            _xifexpression_1 = Day20.discovered.get(index);
-          }
-          final Day20.MyCoordinate my_next_coord = _xifexpression_1;
-          my_next_coord.addFriend(pair.getKey());
-          Integer _value_4 = pair.getValue();
-          int _plus_4 = ((_value_4).intValue() + 1);
-          Pair<Day20.MyCoordinate, Integer> _mappedTo_2 = Pair.<Day20.MyCoordinate, Integer>of(my_next_coord, Integer.valueOf(_plus_4));
-          _xblockexpression = Day20.populate(_mappedTo_2);
+            final Day20.MyCoordinate my_next_coord = _xifexpression;
+            my_next_coord.addFriend(c);
+            next_coords.add(my_next_coord);
+          };
+          current_stack.pop().forEach(_function_2);
+          current_stack.push(next_coords);
         }
-        _switchResult = _xblockexpression;
       }
-      _xifexpression = _switchResult;
+    };
+    ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2018), Integer.valueOf(20)).getInputs().get(0).toCharArray())), _function).forEach(_function_1);
+    InputOutput.<Integer>println(Integer.valueOf(discovered.size()));
+    final AStar searcher = new AStar(start);
+    try {
+      searcher.run();
+    } catch (final Throwable _t) {
+      if (_t instanceof NotInitializedException) {
+        InputOutput.<Integer>println(IterableExtensions.<Integer>max(searcher.gScore.values()));
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
     }
-    return _xifexpression;
   }
 }
