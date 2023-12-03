@@ -64,11 +64,10 @@ public class Day1 {
     String _xblockexpression = null;
     {
       int i = 0;
-      final int sLength = s.length();
       String res = null;
       while ((res == null)) {
         {
-          final String currentString = s.substring(i, sLength);
+          final String currentString = s.substring(i);
           final Function1<Pair<String, String>, Boolean> _function = new Function1<Pair<String, String>, Boolean>() {
             public Boolean apply(final Pair<String, String> x) {
               return Boolean.valueOf((currentString.startsWith(x.getKey()) || (withLetters && currentString.startsWith(x.getValue()))));

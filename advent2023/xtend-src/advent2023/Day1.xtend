@@ -32,10 +32,9 @@ class Day1 {
 
 	def static findFirst(String s, boolean withLetters, Set<Pair<String, String>> candidates) {
 		var i = 0
-		val sLength = s.length
 		var String res = null
 		while (res === null) {
-			val currentString = s.substring(i,sLength)
+			val currentString = s.substring(i)
 			val element = candidates.findFirst [ x |
 				currentString.startsWith(x.key) || (withLetters && currentString.startsWith(x.value))
 			]
