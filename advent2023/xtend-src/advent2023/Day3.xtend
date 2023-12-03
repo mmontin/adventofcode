@@ -1,7 +1,10 @@
 package advent2023
 
+import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
+import java.util.HashSet
 import java.util.List
+import java.util.Map
 import java.util.regex.Pattern
 
 class Day3 {
@@ -11,6 +14,8 @@ class Day3 {
 	static final int maxY = grid.get(0).length
 	static final Pattern number = Pattern.compile("\\d+")
 
+	static final Map<Coordinate, List<Integer>> gears = newHashMap
+
 	def static void main(String[] args) {
 
 		// Adding some padding to symmetrize the process
@@ -18,46 +23,64 @@ class Day3 {
 		grid.add(emptyLine)
 		grid.add(0, emptyLine)
 
-		var sum = 0
-
-		for (i : 1 .. maxX) {
+		println((1 .. maxX).fold(0) [ sum, i |
 			val matcher = number.matcher(grid.get(i))
+			var current = 0
 			while (matcher.find()) {
-				val matched = matcher.group
+				val matched = Integer.parseInt(matcher.group)
 				val prev = matcher.start - 1
 				val end = matcher.end
-				if (hasSymbol(prev, end, grid.get(i - 1)) || 
-					hasSymbol(prev, end, grid.get(i + 1)) ||
-					isSymbol(prev, grid.get(i)) || 
-					isSymbol(end, grid.get(i))) 
-					sum += Integer.parseInt(matched)
-				
+				val upper = hasSymbol(prev, end, grid.get(i - 1), i - 1)
+				val lower = hasSymbol(prev, end, grid.get(i + 1), i + 1)
+				val left = isSymbol(prev, grid.get(i), i)
+				val right = isSymbol(end, grid.get(i), i)
+				val allGears = newHashSet
+				allGears.addAll(upper.value)
+				allGears.addAll(lower.value)
+				allGears.addAll(left.value)
+				allGears.addAll(right.value)
+				if(upper.key || lower.key || left.key || right.key) current += matched
+				allGears.forEach [ g |
+					gears.merge(g, newArrayList(matched)) [ o, n |
+						o.addAll(n)
+						o
+					]
+				]
 			}
-		}
+			sum + current
+		])
 
-		println(sum)
+		println(gears.entrySet.fold(0) [acc, v|
+			if (v.value.size == 2)
+				acc + (v.value.get(0) * v.value.get(1))
+			else
+				acc
+		])
 	}
 
-	def static boolean hasSymbol(int i, int j, String s) {
-		(i .. j).fold(false) [ acc, e |
-			acc || isSymbol(e, s)
+	def static Pair<Boolean, HashSet<Coordinate>> hasSymbol(int i, int j, String s, int x) {
+		(i .. j).fold(false -> newHashSet) [ acc, e |
+			val sub = isSymbol(e, s, x)
+			acc.value.addAll(sub.value)
+			(acc.key || sub.key) -> acc.value
 		]
 	}
 
-	def static boolean isSymbol(int i, String s) {
+	def static Pair<Boolean, HashSet<Coordinate>> isSymbol(int i, String s, int x) {
 		switch i {
-			case i < 0: false
-			case i >= s.length: false
-			default: isSymbol(s.charAt(i))
-		}
-	}
-
-	def static boolean isSymbol(Character c) {
-		val cAsInt = c as int
-		switch cAsInt {
-			case (cAsInt >= 49 && cAsInt <= 57): false
-			case 46: false
-			default: true
+			case i < 0:
+				false -> newHashSet
+			case i >= s.length:
+				false -> newHashSet
+			default: {
+				val cAsInt = (s.charAt(i)) as int
+				switch cAsInt {
+					case (cAsInt >= 49 && cAsInt <= 57): false -> newHashSet
+					case 42: true -> newHashSet(new Coordinate(x, i))
+					case 46: false -> newHashSet
+					default: true -> newHashSet
+				}
+			}
 		}
 	}
 }

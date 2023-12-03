@@ -1,7 +1,6 @@
 package advent2023;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
@@ -25,51 +24,43 @@ public class Day2 {
   public static void main(final String[] args) {
     List<String> _inputs = new InputLoader(Integer.valueOf(2023), Integer.valueOf(2)).getInputs();
     Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(Integer.valueOf(0), Integer.valueOf(0));
-    final Function2<Pair<Integer, Integer>, String, Pair<Integer, Integer>> _function = new Function2<Pair<Integer, Integer>, String, Pair<Integer, Integer>>() {
-      public Pair<Integer, Integer> apply(final Pair<Integer, Integer> v, final String e) {
-        Pair<Integer, Integer> _xblockexpression = null;
-        {
-          final String[] split1 = e.split(": ");
-          final int id = Integer.parseInt((split1[0]).split("Game ")[1]);
-          final String[] split2 = (split1[1]).split("; ");
-          final Function1<String, String[]> _function = new Function1<String, String[]>() {
-            public String[] apply(final String x) {
-              return x.split(", ");
-            }
-          };
-          final List<String[]> finalSplit = ListExtensions.<String, String[]>map(((List<String>)Conversions.doWrapArray(split2)), _function);
-          Integer _key = v.getKey();
-          int _xifexpression = (int) 0;
-          final Function2<Boolean, String[], Boolean> _function_1 = new Function2<Boolean, String[], Boolean>() {
-            public Boolean apply(final Boolean res, final String[] game) {
-              return Boolean.valueOf(((res).booleanValue() && Day2.gamePossible(((List<String>)Conversions.doWrapArray(game)))));
-            }
-          };
-          Boolean _fold = IterableExtensions.<String[], Boolean>fold(finalSplit, Boolean.valueOf(true), _function_1);
-          if ((boolean) _fold) {
-            _xifexpression = id;
-          } else {
-            _xifexpression = 0;
-          }
-          final int left = ((_key).intValue() + _xifexpression);
-          final Function2<ArrayList<String>, String[], ArrayList<String>> _function_2 = new Function2<ArrayList<String>, String[], ArrayList<String>>() {
-            public ArrayList<String> apply(final ArrayList<String> l, final String[] el) {
-              ArrayList<String> _xblockexpression = null;
-              {
-                CollectionExtensions.<String>addAll(l, el);
-                _xblockexpression = l;
-              }
-              return _xblockexpression;
-            }
-          };
-          final ArrayList<String> joined = IterableExtensions.<String[], ArrayList<String>>fold(finalSplit, CollectionLiterals.<String>newArrayList(), _function_2);
-          Integer _value = v.getValue();
-          int _gamePower = Day2.gamePower(joined);
-          final int right = ((_value).intValue() + _gamePower);
-          _xblockexpression = Pair.<Integer, Integer>of(Integer.valueOf(left), Integer.valueOf(right));
+    final Function2<Pair<Integer, Integer>, String, Pair<Integer, Integer>> _function = (Pair<Integer, Integer> v, String e) -> {
+      Pair<Integer, Integer> _xblockexpression = null;
+      {
+        final String[] split1 = e.split(": ");
+        final int id = Integer.parseInt((split1[0]).split("Game ")[1]);
+        final String[] split2 = (split1[1]).split("; ");
+        final Function1<String, String[]> _function_1 = (String x) -> {
+          return x.split(", ");
+        };
+        final List<String[]> finalSplit = ListExtensions.<String, String[]>map(((List<String>)Conversions.doWrapArray(split2)), _function_1);
+        Integer _key = v.getKey();
+        int _xifexpression = (int) 0;
+        final Function2<Boolean, String[], Boolean> _function_2 = (Boolean res, String[] game) -> {
+          return Boolean.valueOf(((res).booleanValue() && Day2.gamePossible(((List<String>)Conversions.doWrapArray(game)))));
+        };
+        Boolean _fold = IterableExtensions.<String[], Boolean>fold(finalSplit, Boolean.valueOf(true), _function_2);
+        if ((boolean) _fold) {
+          _xifexpression = id;
+        } else {
+          _xifexpression = 0;
         }
-        return _xblockexpression;
+        final int left = ((_key).intValue() + _xifexpression);
+        final Function2<ArrayList<String>, String[], ArrayList<String>> _function_3 = (ArrayList<String> l, String[] el) -> {
+          ArrayList<String> _xblockexpression_1 = null;
+          {
+            CollectionExtensions.<String>addAll(l, el);
+            _xblockexpression_1 = l;
+          }
+          return _xblockexpression_1;
+        };
+        final ArrayList<String> joined = IterableExtensions.<String[], ArrayList<String>>fold(finalSplit, CollectionLiterals.<String>newArrayList(), _function_3);
+        Integer _value = v.getValue();
+        int _gamePower = Day2.gamePower(joined);
+        final int right = ((_value).intValue() + _gamePower);
+        _xblockexpression = Pair.<Integer, Integer>of(Integer.valueOf(left), Integer.valueOf(right));
       }
+      return _xblockexpression;
     };
     InputOutput.<Pair<Integer, Integer>>println(IterableExtensions.<String, Pair<Integer, Integer>>fold(_inputs, _mappedTo, _function));
   }
@@ -85,27 +76,23 @@ public class Day2 {
           final String[] lastSplit = data.split(" ");
           final int quantity = Integer.parseInt(lastSplit[0]);
           String _get = lastSplit[1];
-          boolean _matched = false;
-          if (Objects.equal(_get, "blue")) {
-            _matched=true;
-            if ((quantity > minBlue)) {
-              minBlue = quantity;
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(_get, "red")) {
-              _matched=true;
-              if ((quantity > minRed)) {
-                minRed = quantity;
-              }
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(_get, "green")) {
-              _matched=true;
-              if ((quantity > minGreen)) {
-                minGreen = quantity;
-              }
+          if (_get != null) {
+            switch (_get) {
+              case "blue":
+                if ((quantity > minBlue)) {
+                  minBlue = quantity;
+                }
+                break;
+              case "red":
+                if ((quantity > minRed)) {
+                  minRed = quantity;
+                }
+                break;
+              case "green":
+                if ((quantity > minGreen)) {
+                  minGreen = quantity;
+                }
+                break;
             }
           }
         }
@@ -126,24 +113,20 @@ public class Day2 {
           final String[] lastSplit = data.split(" ");
           final int quantity = Integer.parseInt(lastSplit[0]);
           String _get = lastSplit[1];
-          boolean _matched = false;
-          if (Objects.equal(_get, "blue")) {
-            _matched=true;
-            int _blue = blue;
-            blue = (_blue + quantity);
-          }
-          if (!_matched) {
-            if (Objects.equal(_get, "red")) {
-              _matched=true;
-              int _red = red;
-              red = (_red + quantity);
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(_get, "green")) {
-              _matched=true;
-              int _green = green;
-              green = (_green + quantity);
+          if (_get != null) {
+            switch (_get) {
+              case "blue":
+                int _blue = blue;
+                blue = (_blue + quantity);
+                break;
+              case "red":
+                int _red = red;
+                red = (_red + quantity);
+                break;
+              case "green":
+                int _green = green;
+                green = (_green + quantity);
+                break;
             }
           }
         }
