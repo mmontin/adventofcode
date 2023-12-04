@@ -18,7 +18,6 @@ class Day3 {
 
 	def static void main(String[] args) {
 
-		// Adding some padding to symmetrize the process
 		val emptyLine = ".".repeat(maxY)
 		grid.add(emptyLine)
 		grid.add(0, emptyLine)
@@ -50,11 +49,8 @@ class Day3 {
 			sum + current
 		])
 
-		println(gears.entrySet.fold(0) [acc, v|
-			if (v.value.size == 2)
-				acc + (v.value.get(0) * v.value.get(1))
-			else
-				acc
+		println(gears.entrySet.filter[x|x.value.size == 2].fold(0) [ acc, v |
+			acc + (v.value.get(0) * v.value.get(1))
 		])
 	}
 
@@ -67,20 +63,13 @@ class Day3 {
 	}
 
 	def static Pair<Boolean, HashSet<Coordinate>> isSymbol(int i, String s, int x) {
-		switch i {
-			case i < 0:
-				false -> newHashSet
-			case i >= s.length:
-				false -> newHashSet
-			default: {
-				val cAsInt = (s.charAt(i)) as int
-				switch cAsInt {
-					case (cAsInt >= 49 && cAsInt <= 57): false -> newHashSet
-					case 42: true -> newHashSet(new Coordinate(x, i))
-					case 46: false -> newHashSet
-					default: true -> newHashSet
-				}
+		try
+			switch cAsInt : s.charAt(i) as int {
+				case (cAsInt >= 49 && cAsInt <= 57) || cAsInt == 46 : false -> newHashSet
+				case 42 : true -> newHashSet(new Coordinate(x, i))
+				default : true -> newHashSet
 			}
-		}
+		catch (IndexOutOfBoundsException _)
+			false -> newHashSet
 	}
 }
