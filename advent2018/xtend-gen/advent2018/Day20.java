@@ -70,8 +70,8 @@ public class Day20 {
     final List<Day20.MyCoordinate> discovered = CollectionLiterals.<Day20.MyCoordinate>newArrayList(start);
     final Stack<Set<Day20.MyCoordinate>> current_stack = new Stack<Set<Day20.MyCoordinate>>();
     current_stack.push(CollectionLiterals.<Day20.MyCoordinate>newHashSet(start));
-    final Function1<Character, String> _function = (Character x) -> {
-      return (x + "");
+    final Function1<Character, String> _function = (Character it) -> {
+      return (it + "");
     };
     final Consumer<String> _function_1 = (String s) -> {
       if (s != null) {

@@ -20,7 +20,7 @@ class Day20 {
 		val Stack<Set<MyCoordinate>> current_stack = new Stack
 		current_stack.push(newHashSet(start))
 
-		new InputLoader(2018, 20).inputs.get(0).toCharArray.map[x|x + ''].forEach [ s |
+		new InputLoader(2018, 20).inputs.get(0).toCharArray.map[it + ''].forEach [ s |
 			switch (s) {
 				case "(": {
 					val new_last = newHashSet
@@ -62,7 +62,7 @@ class Day20 {
 		val AStar searcher = new AStar(start)
 		try
 			searcher.run
-		catch (NotInitializedException nie) // Throws this exception when all states are done since none is the goal
+		catch (NotInitializedException _) // Throws this exception when all states are done since none is the goal
 			println(searcher.gScore.values.max)
 	}
 

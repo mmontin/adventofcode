@@ -44,6 +44,12 @@ public class Interval {
     return (other.contains(this.leftBound) || other.contains(this.rightBound));
   }
 
+  public Interval intersection(final Interval other) {
+    long _max = Math.max(this.leftBound, other.leftBound);
+    long _min = Math.min(this.rightBound, other.rightBound);
+    return new Interval(_max, _min);
+  }
+
   public long length() {
     return (this.rightBound - this.leftBound);
   }
@@ -51,6 +57,11 @@ public class Interval {
   public boolean isUnity() {
     long _length = this.length();
     return (_length == 0);
+  }
+
+  public boolean isEmpty() {
+    long _length = this.length();
+    return (_length < 0);
   }
 
   public String toString() {

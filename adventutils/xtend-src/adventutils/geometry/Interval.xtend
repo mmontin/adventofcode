@@ -1,7 +1,7 @@
 package adventutils.geometry
 
 class Interval {
-	
+
 	public long leftBound
 	public long rightBound
 
@@ -9,7 +9,7 @@ class Interval {
 		leftBound = lb
 		rightBound = rb
 	}
-	
+
 	new(String s) {
 		this(Long.parseLong(s.split("-").get(0)), Long.parseLong(s.split("-").get(1)))
 	}
@@ -19,25 +19,36 @@ class Interval {
 			-1
 		else if(dot > rightBound) 1 else 0
 	}
-	
+
 	def contains(long dot) {
 		position(dot) == 0
 	}
-		
+
 	def boolean includedIn(Interval other) {
 		other.contains(leftBound) && other.contains(rightBound)
 	}
-	
+
 	def boolean overlapsWith(Interval other) {
 		other.contains(leftBound) || other.contains(rightBound)
+	}
+
+	def Interval intersection(Interval other) {
+		new Interval(
+			Math.max(this.leftBound, other.leftBound),
+			Math.min(this.rightBound, other.rightBound)
+		)
 	}
 
 	def length() {
 		rightBound - leftBound
 	}
-	
+
 	def isUnity() {
 		length == 0
+	}
+
+	def isEmpty() {
+		length < 0
 	}
 
 	override toString() {
