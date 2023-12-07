@@ -5,30 +5,27 @@ import java.util.ArrayList
 import java.util.List
 
 class Day7 {
+
 	def static void main(String[] args) {
-		val sorted = new ArrayList(new InputLoader(2023, 7).inputs.map [
+		val inputs = new InputLoader(2023, 7).inputs
+		process(inputs, false)
+		process(inputs, true)
+	}
+
+	def static void process(List<String> inputs, boolean joker) {
+		println(new ArrayList(inputs.map [
 			val split = it.split(" ")
 			val hand = split.get(0).toCharArray.map[it + ""].toList
 			val bet = Integer.parseInt(split.get(1))
-			val spread = hand.spread(false);
+			val spread = hand.spread(joker)
 			(spread -> hand) -> bet
-		]).sortInplace[x, y|comparePair(x.key, y.key, false)]
-
-		println((1 .. sorted.size).fold(0L) [ res, i |
-			res + (i as long) * (sorted.get(i - 1).value as long)
-		])
-
-		val sorted2 = new ArrayList(new InputLoader(2023, 7).inputs.map [
-			val split = it.split(" ")
-			val hand = split.get(0).toCharArray.map[it + ""].toList
-			val bet = Integer.parseInt(split.get(1))
-			val spread = hand.spread(true);
-			(spread -> hand) -> bet
-		]).sortInplace[x, y|comparePair(x.key, y.key, true)]
-
-		println((1 .. sorted2.size).fold(0L) [ res, i |
-			res + (i as long) * (sorted2.get(i - 1).value as long)
-		])
+		]).sortInplace [ x, y |
+			comparePair(x.key, y.key, joker)
+		].fold(0 -> 1) [ acc, el |
+			val count = acc.key
+			val i = acc.value
+			count + i * el.value -> i + 1
+		].key)
 	}
 
 	def static int toInt(HAND hand) {

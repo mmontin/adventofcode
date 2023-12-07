@@ -11,7 +11,6 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -19,6 +18,12 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class Day7 {
   public static void main(final String[] args) {
+    final List<String> inputs = new InputLoader(Integer.valueOf(2023), Integer.valueOf(7)).getInputs();
+    Day7.process(inputs, false);
+    Day7.process(inputs, true);
+  }
+
+  public static void process(final List<String> inputs, final boolean joker) {
     final Function1<String, Pair<Pair<HAND, List<String>>, Integer>> _function = new Function1<String, Pair<Pair<HAND, List<String>>, Integer>>() {
       public Pair<Pair<HAND, List<String>>, Integer> apply(final String it) {
         Pair<Pair<HAND, List<String>>, Integer> _xblockexpression = null;
@@ -31,64 +36,36 @@ public class Day7 {
           };
           final List<String> hand = IterableExtensions.<String>toList(ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray((split[0]).toCharArray())), _function));
           final int bet = Integer.parseInt(split[1]);
-          final HAND spread = Day7.spread(hand, false);
+          final HAND spread = Day7.spread(hand, joker);
           Pair<HAND, List<String>> _mappedTo = Pair.<HAND, List<String>>of(spread, hand);
           _xblockexpression = Pair.<Pair<HAND, List<String>>, Integer>of(_mappedTo, Integer.valueOf(bet));
         }
         return _xblockexpression;
       }
     };
-    List<Pair<Pair<HAND, List<String>>, Integer>> _map = ListExtensions.<String, Pair<Pair<HAND, List<String>>, Integer>>map(new InputLoader(Integer.valueOf(2023), Integer.valueOf(7)).getInputs(), _function);
+    List<Pair<Pair<HAND, List<String>>, Integer>> _map = ListExtensions.<String, Pair<Pair<HAND, List<String>>, Integer>>map(inputs, _function);
     final Comparator<Pair<Pair<HAND, List<String>>, Integer>> _function_1 = new Comparator<Pair<Pair<HAND, List<String>>, Integer>>() {
       public int compare(final Pair<Pair<HAND, List<String>>, Integer> x, final Pair<Pair<HAND, List<String>>, Integer> y) {
-        return Day7.comparePair(x.getKey(), y.getKey(), false);
+        return Day7.comparePair(x.getKey(), y.getKey(), joker);
       }
     };
-    final List<Pair<Pair<HAND, List<String>>, Integer>> sorted = ListExtensions.<Pair<Pair<HAND, List<String>>, Integer>>sortInplace(new ArrayList<Pair<Pair<HAND, List<String>>, Integer>>(_map), _function_1);
-    int _size = sorted.size();
-    final Function2<Long, Integer, Long> _function_2 = new Function2<Long, Integer, Long>() {
-      public Long apply(final Long res, final Integer i) {
-        Integer _value = sorted.get(((i).intValue() - 1)).getValue();
-        long _multiply = (((long) (i).intValue()) * ((long) (_value).intValue()));
-        return Long.valueOf(((res).longValue() + _multiply));
-      }
-    };
-    InputOutput.<Long>println(IterableExtensions.<Integer, Long>fold(new IntegerRange(1, _size), Long.valueOf(0L), _function_2));
-    final Function1<String, Pair<Pair<HAND, List<String>>, Integer>> _function_3 = new Function1<String, Pair<Pair<HAND, List<String>>, Integer>>() {
-      public Pair<Pair<HAND, List<String>>, Integer> apply(final String it) {
-        Pair<Pair<HAND, List<String>>, Integer> _xblockexpression = null;
+    List<Pair<Pair<HAND, List<String>>, Integer>> _sortInplace = ListExtensions.<Pair<Pair<HAND, List<String>>, Integer>>sortInplace(new ArrayList<Pair<Pair<HAND, List<String>>, Integer>>(_map), _function_1);
+    Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(Integer.valueOf(0), Integer.valueOf(1));
+    final Function2<Pair<Integer, Integer>, Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>> _function_2 = new Function2<Pair<Integer, Integer>, Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>>() {
+      public Pair<Integer, Integer> apply(final Pair<Integer, Integer> acc, final Pair<Pair<HAND, List<String>>, Integer> el) {
+        Pair<Integer, Integer> _xblockexpression = null;
         {
-          final String[] split = it.split(" ");
-          final Function1<Character, String> _function = new Function1<Character, String>() {
-            public String apply(final Character it_1) {
-              return (it_1 + "");
-            }
-          };
-          final List<String> hand = IterableExtensions.<String>toList(ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray((split[0]).toCharArray())), _function));
-          final int bet = Integer.parseInt(split[1]);
-          final HAND spread = Day7.spread(hand, true);
-          Pair<HAND, List<String>> _mappedTo = Pair.<HAND, List<String>>of(spread, hand);
-          _xblockexpression = Pair.<Pair<HAND, List<String>>, Integer>of(_mappedTo, Integer.valueOf(bet));
+          final Integer count = acc.getKey();
+          final Integer i = acc.getValue();
+          Integer _value = el.getValue();
+          int _multiply = ((i).intValue() * (_value).intValue());
+          int _plus = ((count).intValue() + _multiply);
+          _xblockexpression = Pair.<Integer, Integer>of(Integer.valueOf(_plus), Integer.valueOf(((i).intValue() + 1)));
         }
         return _xblockexpression;
       }
     };
-    List<Pair<Pair<HAND, List<String>>, Integer>> _map_1 = ListExtensions.<String, Pair<Pair<HAND, List<String>>, Integer>>map(new InputLoader(Integer.valueOf(2023), Integer.valueOf(7)).getInputs(), _function_3);
-    final Comparator<Pair<Pair<HAND, List<String>>, Integer>> _function_4 = new Comparator<Pair<Pair<HAND, List<String>>, Integer>>() {
-      public int compare(final Pair<Pair<HAND, List<String>>, Integer> x, final Pair<Pair<HAND, List<String>>, Integer> y) {
-        return Day7.comparePair(x.getKey(), y.getKey(), true);
-      }
-    };
-    final List<Pair<Pair<HAND, List<String>>, Integer>> sorted2 = ListExtensions.<Pair<Pair<HAND, List<String>>, Integer>>sortInplace(new ArrayList<Pair<Pair<HAND, List<String>>, Integer>>(_map_1), _function_4);
-    int _size_1 = sorted2.size();
-    final Function2<Long, Integer, Long> _function_5 = new Function2<Long, Integer, Long>() {
-      public Long apply(final Long res, final Integer i) {
-        Integer _value = sorted2.get(((i).intValue() - 1)).getValue();
-        long _multiply = (((long) (i).intValue()) * ((long) (_value).intValue()));
-        return Long.valueOf(((res).longValue() + _multiply));
-      }
-    };
-    InputOutput.<Long>println(IterableExtensions.<Integer, Long>fold(new IntegerRange(1, _size_1), Long.valueOf(0L), _function_5));
+    InputOutput.<Integer>println(IterableExtensions.<Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>>fold(_sortInplace, _mappedTo, _function_2).getKey());
   }
 
   public static int toInt(final HAND hand) {
