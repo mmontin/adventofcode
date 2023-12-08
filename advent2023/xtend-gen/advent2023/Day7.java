@@ -1,7 +1,6 @@
 package advent2023;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -24,46 +23,38 @@ public class Day7 {
   }
 
   public static void process(final List<String> inputs, final boolean joker) {
-    final Function1<String, Pair<Pair<HAND, List<String>>, Integer>> _function = new Function1<String, Pair<Pair<HAND, List<String>>, Integer>>() {
-      public Pair<Pair<HAND, List<String>>, Integer> apply(final String it) {
-        Pair<Pair<HAND, List<String>>, Integer> _xblockexpression = null;
-        {
-          final String[] split = it.split(" ");
-          final Function1<Character, String> _function = new Function1<Character, String>() {
-            public String apply(final Character it_1) {
-              return (it_1 + "");
-            }
-          };
-          final List<String> hand = IterableExtensions.<String>toList(ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray((split[0]).toCharArray())), _function));
-          final int bet = Integer.parseInt(split[1]);
-          final HAND spread = Day7.spread(hand, joker);
-          Pair<HAND, List<String>> _mappedTo = Pair.<HAND, List<String>>of(spread, hand);
-          _xblockexpression = Pair.<Pair<HAND, List<String>>, Integer>of(_mappedTo, Integer.valueOf(bet));
-        }
-        return _xblockexpression;
+    final Function1<String, Pair<Pair<HAND, List<String>>, Integer>> _function = (String it) -> {
+      Pair<Pair<HAND, List<String>>, Integer> _xblockexpression = null;
+      {
+        final String[] split = it.split(" ");
+        final Function1<Character, String> _function_1 = (Character it_1) -> {
+          return (it_1 + "");
+        };
+        final List<String> hand = IterableExtensions.<String>toList(ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray((split[0]).toCharArray())), _function_1));
+        final int bet = Integer.parseInt(split[1]);
+        final HAND spread = Day7.spread(hand, joker);
+        Pair<HAND, List<String>> _mappedTo = Pair.<HAND, List<String>>of(spread, hand);
+        _xblockexpression = Pair.<Pair<HAND, List<String>>, Integer>of(_mappedTo, Integer.valueOf(bet));
       }
+      return _xblockexpression;
     };
     List<Pair<Pair<HAND, List<String>>, Integer>> _map = ListExtensions.<String, Pair<Pair<HAND, List<String>>, Integer>>map(inputs, _function);
-    final Comparator<Pair<Pair<HAND, List<String>>, Integer>> _function_1 = new Comparator<Pair<Pair<HAND, List<String>>, Integer>>() {
-      public int compare(final Pair<Pair<HAND, List<String>>, Integer> x, final Pair<Pair<HAND, List<String>>, Integer> y) {
-        return Day7.comparePair(x.getKey(), y.getKey(), joker);
-      }
+    final Comparator<Pair<Pair<HAND, List<String>>, Integer>> _function_1 = (Pair<Pair<HAND, List<String>>, Integer> x, Pair<Pair<HAND, List<String>>, Integer> y) -> {
+      return Day7.comparePair(x.getKey(), y.getKey(), joker);
     };
     List<Pair<Pair<HAND, List<String>>, Integer>> _sortInplace = ListExtensions.<Pair<Pair<HAND, List<String>>, Integer>>sortInplace(new ArrayList<Pair<Pair<HAND, List<String>>, Integer>>(_map), _function_1);
     Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(Integer.valueOf(0), Integer.valueOf(1));
-    final Function2<Pair<Integer, Integer>, Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>> _function_2 = new Function2<Pair<Integer, Integer>, Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>>() {
-      public Pair<Integer, Integer> apply(final Pair<Integer, Integer> acc, final Pair<Pair<HAND, List<String>>, Integer> el) {
-        Pair<Integer, Integer> _xblockexpression = null;
-        {
-          final Integer count = acc.getKey();
-          final Integer i = acc.getValue();
-          Integer _value = el.getValue();
-          int _multiply = ((i).intValue() * (_value).intValue());
-          int _plus = ((count).intValue() + _multiply);
-          _xblockexpression = Pair.<Integer, Integer>of(Integer.valueOf(_plus), Integer.valueOf(((i).intValue() + 1)));
-        }
-        return _xblockexpression;
+    final Function2<Pair<Integer, Integer>, Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>> _function_2 = (Pair<Integer, Integer> acc, Pair<Pair<HAND, List<String>>, Integer> el) -> {
+      Pair<Integer, Integer> _xblockexpression = null;
+      {
+        final Integer count = acc.getKey();
+        final Integer i = acc.getValue();
+        Integer _value = el.getValue();
+        int _multiply = ((i).intValue() * (_value).intValue());
+        int _plus = ((count).intValue() + _multiply);
+        _xblockexpression = Pair.<Integer, Integer>of(Integer.valueOf(_plus), Integer.valueOf(((i).intValue() + 1)));
       }
+      return _xblockexpression;
     };
     InputOutput.<Integer>println(IterableExtensions.<Pair<Pair<HAND, List<String>>, Integer>, Pair<Integer, Integer>>fold(_sortInplace, _mappedTo, _function_2).getKey());
   }
@@ -102,84 +93,55 @@ public class Day7 {
 
   public static int toInt(final String s, final boolean joker) {
     int _switchResult = (int) 0;
-    boolean _matched = false;
-    if (Objects.equal(s, "2")) {
-      _matched=true;
-      _switchResult = 0;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "3")) {
-        _matched=true;
-        _switchResult = 1;
+    if (s != null) {
+      switch (s) {
+        case "2":
+          _switchResult = 0;
+          break;
+        case "3":
+          _switchResult = 1;
+          break;
+        case "4":
+          _switchResult = 2;
+          break;
+        case "5":
+          _switchResult = 3;
+          break;
+        case "6":
+          _switchResult = 4;
+          break;
+        case "7":
+          _switchResult = 5;
+          break;
+        case "8":
+          _switchResult = 6;
+          break;
+        case "9":
+          _switchResult = 7;
+          break;
+        case "T":
+          _switchResult = 8;
+          break;
+        case "J":
+          int _xifexpression = (int) 0;
+          if (joker) {
+            _xifexpression = (-1);
+          } else {
+            _xifexpression = 9;
+          }
+          _switchResult = _xifexpression;
+          break;
+        case "Q":
+          _switchResult = 10;
+          break;
+        case "K":
+          _switchResult = 11;
+          break;
+        default:
+          _switchResult = 12;
+          break;
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "4")) {
-        _matched=true;
-        _switchResult = 2;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "5")) {
-        _matched=true;
-        _switchResult = 3;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "6")) {
-        _matched=true;
-        _switchResult = 4;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "7")) {
-        _matched=true;
-        _switchResult = 5;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "8")) {
-        _matched=true;
-        _switchResult = 6;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "9")) {
-        _matched=true;
-        _switchResult = 7;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "T")) {
-        _matched=true;
-        _switchResult = 8;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "J")) {
-        _matched=true;
-        int _xifexpression = (int) 0;
-        if (joker) {
-          _xifexpression = (-1);
-        } else {
-          _xifexpression = 9;
-        }
-        _switchResult = _xifexpression;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "Q")) {
-        _matched=true;
-        _switchResult = 10;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "K")) {
-        _matched=true;
-        _switchResult = 11;
-      }
-    }
-    if (!_matched) {
+    } else {
       _switchResult = 12;
     }
     return _switchResult;
@@ -192,16 +154,12 @@ public class Day7 {
   public static int compare(final List<String> left, final List<String> right, final boolean joker) {
     int _xblockexpression = (int) 0;
     {
-      final Function1<String, Integer> _function = new Function1<String, Integer>() {
-        public Integer apply(final String it) {
-          return Integer.valueOf(Day7.toInt(it, joker));
-        }
+      final Function1<String, Integer> _function = (String it) -> {
+        return Integer.valueOf(Day7.toInt(it, joker));
       };
       final List<Integer> leftInts = ListExtensions.<String, Integer>map(left, _function);
-      final Function1<String, Integer> _function_1 = new Function1<String, Integer>() {
-        public Integer apply(final String it) {
-          return Integer.valueOf(Day7.toInt(it, joker));
-        }
+      final Function1<String, Integer> _function_1 = (String it) -> {
+        return Integer.valueOf(Day7.toInt(it, joker));
       };
       final List<Integer> rightInts = ListExtensions.<String, Integer>map(right, _function_1);
       int i = 0;
@@ -232,10 +190,8 @@ public class Day7 {
   public static HAND spread(final List<String> l, final boolean joker) {
     HAND _xblockexpression = null;
     {
-      final Function1<String, String> _function = new Function1<String, String>() {
-        public String apply(final String it) {
-          return it;
-        }
+      final Function1<String, String> _function = (String it) -> {
+        return it;
       };
       final Map<String, List<String>> groups = IterableExtensions.<String, String>groupBy(l, _function);
       if (joker) {
@@ -244,18 +200,16 @@ public class Day7 {
         boolean _greaterThan = (_size > 0);
         if (_greaterThan) {
           if ((entry != null)) {
-            final Comparator<Map.Entry<String, List<String>>> _function_1 = new Comparator<Map.Entry<String, List<String>>>() {
-              public int compare(final Map.Entry<String, List<String>> x, final Map.Entry<String, List<String>> y) {
-                int _xblockexpression = (int) 0;
-                {
-                  int cmp = Integer.valueOf(x.getValue().size()).compareTo(Integer.valueOf(y.getValue().size()));
-                  if ((cmp == 0)) {
-                    cmp = Integer.valueOf(Day7.toInt(x.getKey(), false)).compareTo(Integer.valueOf(Day7.toInt(y.getKey(), false)));
-                  }
-                  _xblockexpression = cmp;
+            final Comparator<Map.Entry<String, List<String>>> _function_1 = (Map.Entry<String, List<String>> x, Map.Entry<String, List<String>> y) -> {
+              int _xblockexpression_1 = (int) 0;
+              {
+                int cmp = Integer.valueOf(x.getValue().size()).compareTo(Integer.valueOf(y.getValue().size()));
+                if ((cmp == 0)) {
+                  cmp = Integer.valueOf(Day7.toInt(x.getKey(), false)).compareTo(Integer.valueOf(Day7.toInt(y.getKey(), false)));
                 }
-                return _xblockexpression;
+                _xblockexpression_1 = cmp;
               }
+              return _xblockexpression_1;
             };
             final Map.Entry<String, List<String>> maxEntry = IterableExtensions.<Map.Entry<String, List<String>>>max(groups.entrySet(), _function_1);
             maxEntry.getValue().addAll(entry);
