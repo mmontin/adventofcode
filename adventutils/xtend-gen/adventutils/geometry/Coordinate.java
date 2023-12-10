@@ -247,6 +247,29 @@ public class Coordinate implements Comparable<Coordinate> {
     return _switchResult;
   }
 
+  public static Coordinate.Direction opposite(final Coordinate.Direction d) {
+    Coordinate.Direction _switchResult = null;
+    if (d != null) {
+      switch (d) {
+        case UP:
+          _switchResult = Coordinate.Direction.DOWN;
+          break;
+        case LEFT:
+          _switchResult = Coordinate.Direction.RIGHT;
+          break;
+        case DOWN:
+          _switchResult = Coordinate.Direction.UP;
+          break;
+        case RIGHT:
+          _switchResult = Coordinate.Direction.LEFT;
+          break;
+        default:
+          break;
+      }
+    }
+    return _switchResult;
+  }
+
   public static Coordinate.Direction directionFromString(final String s) {
     Coordinate.Direction _switchResult = null;
     boolean _matched = false;

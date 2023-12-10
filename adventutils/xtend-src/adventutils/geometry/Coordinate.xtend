@@ -167,6 +167,15 @@ class Coordinate implements Comparable<Coordinate> {
 			default: Direction.RIGHT
 		}
 	}
+	
+	def static Direction opposite(Direction d) {
+		switch d {
+			case UP: Direction.DOWN
+			case LEFT: Direction.RIGHT
+			case DOWN: Direction.UP
+			case RIGHT: Direction.LEFT
+		}
+	}
 
 	def static Direction directionFromString(String s) {
 		switch s {
