@@ -194,7 +194,7 @@ class AmphipodState implements State {
 				output.merge(newState,energy)[u , v | Math.min(u,v)]
 			]
 		]
-		output.entrySet.map[new Pair(it.key as State, it.value)].toList
+		output.entrySet.map[it.key -> it.value]
 	}
 
 	override equals(Object other) {

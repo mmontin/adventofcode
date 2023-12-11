@@ -38,14 +38,14 @@ public class Day16 {
       return 1;
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
-      final Function1<String, Pair<State, Integer>> _function = new Function1<String, Pair<State, Integer>>() {
-        public Pair<State, Integer> apply(final String v) {
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
+      final Function1<String, Pair<? extends State, Integer>> _function = new Function1<String, Pair<? extends State, Integer>>() {
+        public Pair<? extends State, Integer> apply(final String v) {
           Day16.StringState _stringState = new Day16.StringState(v);
           return Pair.<State, Integer>of(((State) _stringState), Integer.valueOf(1));
         }
       };
-      return ListExtensions.<String, Pair<State, Integer>>map(Day16.valves_paths.get(this.name), _function);
+      return ListExtensions.<String, Pair<? extends State, Integer>>map(Day16.valves_paths.get(this.name), _function);
     }
 
     public boolean equals(final Object other) {
@@ -165,8 +165,8 @@ public class Day16 {
       return _xblockexpression;
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
-      ArrayList<Pair<State, Integer>> _xblockexpression = null;
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
+      ArrayList<Pair<? extends State, Integer>> _xblockexpression = null;
       {
         final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
           public Boolean apply(final String it) {
@@ -174,9 +174,9 @@ public class Day16 {
             return Boolean.valueOf((!_contains));
           }
         };
-        final Function2<ArrayList<Pair<State, Integer>>, String, ArrayList<Pair<State, Integer>>> _function_1 = new Function2<ArrayList<Pair<State, Integer>>, String, ArrayList<Pair<State, Integer>>>() {
-          public ArrayList<Pair<State, Integer>> apply(final ArrayList<Pair<State, Integer>> acc, final String current_valve) {
-            ArrayList<Pair<State, Integer>> _xblockexpression = null;
+        final Function2<ArrayList<Pair<? extends State, Integer>>, String, ArrayList<Pair<? extends State, Integer>>> _function_1 = new Function2<ArrayList<Pair<? extends State, Integer>>, String, ArrayList<Pair<? extends State, Integer>>>() {
+          public ArrayList<Pair<? extends State, Integer>> apply(final ArrayList<Pair<? extends State, Integer>> acc, final String current_valve) {
+            ArrayList<Pair<? extends State, Integer>> _xblockexpression = null;
             {
               Integer _get = Day16.final_valves_distances.get(Tunnel.this.position).get(current_valve);
               final int duration_journey_open = ((_get).intValue() + 1);
@@ -193,7 +193,7 @@ public class Day16 {
             return _xblockexpression;
           }
         };
-        final ArrayList<Pair<State, Integer>> output = IterableExtensions.<String, ArrayList<Pair<State, Integer>>>fold(IterableExtensions.<String>filter(Day16.valves_flows.keySet(), _function), CollectionLiterals.<Pair<State, Integer>>newArrayList(), _function_1);
+        final ArrayList<Pair<? extends State, Integer>> output = IterableExtensions.<String, ArrayList<Pair<? extends State, Integer>>>fold(IterableExtensions.<String>filter(Day16.valves_flows.keySet(), _function), CollectionLiterals.<Pair<? extends State, Integer>>newArrayList(), _function_1);
         boolean _isEmpty = output.isEmpty();
         if (_isEmpty) {
           final int time_remaining = (Day16.max_duration - this.time);
@@ -398,8 +398,8 @@ public class Day16 {
       return this._minToGoal;
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
-      ArrayList<Pair<State, Integer>> _xblockexpression = null;
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
+      ArrayList<Pair<? extends State, Integer>> _xblockexpression = null;
       {
         final int remaining_duration = (Day16.max_duration - this.time);
         final ArrayList<Pair<String, Integer>> my_neighbours = CollectionLiterals.<Pair<String, Integer>>newArrayList();
@@ -460,7 +460,7 @@ public class Day16 {
           };
           Iterables.<Pair<String, Integer>>addAll(el_neighbours, IterableExtensions.<Pair<String, Integer>>filter(IterableExtensions.<String, Pair<String, Integer>>map(IterableExtensions.<String>filter(Day16.valves_flows.keySet(), _function_3), _function_4), _function_5));
         }
-        final ArrayList<Pair<State, Integer>> output = CollectionLiterals.<Pair<State, Integer>>newArrayList();
+        final ArrayList<Pair<? extends State, Integer>> output = CollectionLiterals.<Pair<? extends State, Integer>>newArrayList();
         final Consumer<Pair<String, Integer>> _function_6 = new Consumer<Pair<String, Integer>>() {
           public void accept(final Pair<String, Integer> my_next) {
             final Consumer<Pair<String, Integer>> _function = new Consumer<Pair<String, Integer>>() {

@@ -1,11 +1,12 @@
 package advent2022
 
-import java.util.Map
 import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
-import adventutils.pathfinding.State
 import adventutils.pathfinding.AStar
+import adventutils.pathfinding.NotInitializedException
+import adventutils.pathfinding.State
 import java.util.ArrayList
+import java.util.Map
 
 class Day12 {
 
@@ -41,7 +42,7 @@ class Day12 {
 		println(new ArrayList(elevations.keySet).filter[elevations.get(it)==0].map[
 			try {
 				new AStar(it).run.minDistance
-			} catch (NullPointerException npe) {
+			} catch (NotInitializedException npe) {
 				Integer.MAX_VALUE
 			}
 		].sort.head)
@@ -65,8 +66,8 @@ class Day12 {
 			noDiagonalUnboundedNeighbours.map[new CoordinateElevated(it.x, it.y)].filter [
 				elevations.get(this) + 1 >= elevations.getOrDefault(it, 30)
 			].map [
-				it as State -> 1
-			].toList
+				it -> 1
+			]
 		}
 	}
 }

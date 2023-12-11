@@ -19,6 +19,10 @@ class InputLoader {
 		Files.readAllLines(Paths.get(path))
 	}
 	
+	def getChars() {
+		inputs.map[toCharArray.map[it+""]]
+	}
+	
 	def <T> getInputs(Function1<? super String, ? extends T> f) {
 		getInputs().map[x | f.apply(x)]
 	}

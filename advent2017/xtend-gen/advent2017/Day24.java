@@ -6,7 +6,6 @@ import adventutils.pathfinding.State;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
@@ -84,7 +83,7 @@ public class Day24 {
 
     private final int last_plug;
 
-    private final List<Pair<State, Integer>> neighbours;
+    private final Iterable<Pair<? extends State, Integer>> neighbours;
 
     private final boolean isGoal;
 
@@ -99,14 +98,13 @@ public class Day24 {
     public Bridge(final Set<Day24.Element> _remaining, final int _last_plug) {
       this.remaining = _remaining;
       this.last_plug = _last_plug;
-      this.neighbours = CollectionLiterals.<Pair<State, Integer>>newArrayList();
       final Function1<Day24.Element, Boolean> _function = new Function1<Day24.Element, Boolean>() {
         public Boolean apply(final Day24.Element it) {
           return Boolean.valueOf(it.connectsWithPort(Bridge.this.last_plug));
         }
       };
-      final Consumer<Day24.Element> _function_1 = new Consumer<Day24.Element>() {
-        public void accept(final Day24.Element it) {
+      final Function1<Day24.Element, Pair<? extends State, Integer>> _function_1 = new Function1<Day24.Element, Pair<? extends State, Integer>>() {
+        public Pair<? extends State, Integer> apply(final Day24.Element it) {
           HashSet<Day24.Element> _xblockexpression = null;
           {
             final HashSet<Day24.Element> output = new HashSet<Day24.Element>(Bridge.this.remaining);
@@ -115,12 +113,11 @@ public class Day24 {
           }
           int _otherPort = it.otherPort(Bridge.this.last_plug);
           Day24.Bridge _bridge = new Day24.Bridge(_xblockexpression, _otherPort);
-          Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _bridge), Integer.valueOf(0));
-          Bridge.this.neighbours.add(_mappedTo);
+          return Pair.<Day24.Bridge, Integer>of(_bridge, Integer.valueOf(0));
         }
       };
-      IterableExtensions.<Day24.Element>filter(this.remaining, _function).forEach(_function_1);
-      this.isGoal = this.neighbours.isEmpty();
+      this.neighbours = IterableExtensions.<Day24.Element, Pair<? extends State, Integer>>map(IterableExtensions.<Day24.Element>filter(this.remaining, _function), _function_1);
+      this.isGoal = IterableExtensions.isEmpty(this.neighbours);
       Day24.Element _element = new Day24.Element(this.last_plug, this.last_plug);
       final HashSet<Day24.Element> accessible = CollectionLiterals.<Day24.Element>newHashSet(_element);
       final HashSet<Day24.Element> to_try = new HashSet<Day24.Element>(this.remaining);
@@ -169,7 +166,7 @@ public class Day24 {
       return this.minToGoal;
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
       return this.neighbours;
     }
 

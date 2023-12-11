@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
@@ -24,6 +25,20 @@ public class InputLoader {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+
+  public List<List<String>> getChars() {
+    final Function1<String, List<String>> _function = new Function1<String, List<String>>() {
+      public List<String> apply(final String it) {
+        final Function1<Character, String> _function = new Function1<Character, String>() {
+          public String apply(final Character it_1) {
+            return (it_1 + "");
+          }
+        };
+        return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
+      }
+    };
+    return ListExtensions.<String, List<String>>map(this.getInputs(), _function);
   }
 
   public <T extends Object> List<T> getInputs(final Function1<? super String, ? extends T> f) {

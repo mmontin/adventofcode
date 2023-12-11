@@ -8,7 +8,7 @@ public interface State {
 
   int minToGoal();
 
-  Iterable<Pair<State, Integer>> neighbours();
+  Iterable<Pair<? extends State, Integer>> neighbours();
 
   boolean equals(final Object other);
 

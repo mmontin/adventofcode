@@ -42,8 +42,8 @@ public class Day24 {
       return this.position.manhattanDistanceTo(Day24.PositionTimed.current_arrival);
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
-      List<Pair<State, Integer>> _xblockexpression = null;
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
+      Iterable<Pair<? extends State, Integer>> _xblockexpression = null;
       {
         final Set<Coordinate> squares = this.position.noDiagonalUnboundedNeighbours();
         squares.add(this.position);
@@ -53,13 +53,13 @@ public class Day24 {
               it.equals(Day24.arrival)) || (((((it.getX() >= 0) && (it.getX() < Day24.WALL_DOWN)) && (it.getY() >= 0)) && (it.getY() < Day24.WALL_RIGHT)) && (!Day24.getBlizzardsAtTime((PositionTimed.this.time + 1)).contains(it)))));
           }
         };
-        final Function1<Coordinate, Pair<State, Integer>> _function_1 = new Function1<Coordinate, Pair<State, Integer>>() {
-          public Pair<State, Integer> apply(final Coordinate it) {
+        final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = new Function1<Coordinate, Pair<? extends State, Integer>>() {
+          public Pair<? extends State, Integer> apply(final Coordinate it) {
             Day24.PositionTimed _positionTimed = new Day24.PositionTimed(it, (PositionTimed.this.time + 1));
-            return Pair.<State, Integer>of(((State) _positionTimed), Integer.valueOf(1));
+            return Pair.<Day24.PositionTimed, Integer>of(_positionTimed, Integer.valueOf(1));
           }
         };
-        _xblockexpression = IterableExtensions.<Pair<State, Integer>>toList(IterableExtensions.<Coordinate, Pair<State, Integer>>map(IterableExtensions.<Coordinate>filter(squares, _function), _function_1));
+        _xblockexpression = IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>filter(squares, _function), _function_1);
       }
       return _xblockexpression;
     }

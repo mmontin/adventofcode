@@ -23,19 +23,19 @@ public class CoordinateState extends Coordinate implements State {
     return this.manhattanDistanceTo(this.goal);
   }
 
-  public Iterable<Pair<State, Integer>> neighbours() {
+  public Iterable<Pair<? extends State, Integer>> neighbours() {
     final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
       public Boolean apply(final Coordinate it) {
         boolean _contains = Launcher.walls.contains(it);
         return Boolean.valueOf((!_contains));
       }
     };
-    final Function1<Coordinate, Pair<State, Integer>> _function_1 = new Function1<Coordinate, Pair<State, Integer>>() {
-      public Pair<State, Integer> apply(final Coordinate it) {
+    final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = new Function1<Coordinate, Pair<? extends State, Integer>>() {
+      public Pair<? extends State, Integer> apply(final Coordinate it) {
         CoordinateState _coordinateState = new CoordinateState(it, CoordinateState.this.goal);
-        return new Pair<State, Integer>(((State) _coordinateState), Integer.valueOf(1));
+        return Pair.<CoordinateState, Integer>of(_coordinateState, Integer.valueOf(1));
       }
     };
-    return IterableExtensions.<Pair<State, Integer>>toList(IterableExtensions.<Coordinate, Pair<State, Integer>>map(IterableExtensions.<Coordinate>filter(super.noDiagonalUnboundedNeighbours(), _function), _function_1));
+    return IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>filter(super.noDiagonalUnboundedNeighbours(), _function), _function_1);
   }
 }

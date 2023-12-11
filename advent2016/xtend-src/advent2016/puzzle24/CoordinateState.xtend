@@ -23,6 +23,6 @@ class CoordinateState extends Coordinate implements State {
 	override neighbours() {
 		super.noDiagonalUnboundedNeighbours.filter[
 			!Launcher.walls.contains(it)
-		].map[new Pair(new CoordinateState(it, goal) as State,1)].toList
+		].map[new CoordinateState(it, goal) -> 1]
 	}
 }

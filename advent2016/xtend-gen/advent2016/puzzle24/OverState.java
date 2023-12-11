@@ -3,7 +3,6 @@ package advent2016.puzzle24;
 import adventutils.geometry.Coordinate;
 import adventutils.pathfinding.State;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -35,15 +34,15 @@ public class OverState implements State {
     return this.currentPosition.manhattanDistanceTo(Launcher.initial);
   }
 
-  public Iterable<Pair<State, Integer>> neighbours() {
-    List<Pair<State, Integer>> _xifexpression = null;
+  public Iterable<Pair<? extends State, Integer>> neighbours() {
+    Iterable<Pair<? extends State, Integer>> _xifexpression = null;
     boolean _equals = this.toVisit.equals(CollectionLiterals.<Coordinate>newHashSet(Launcher.initial));
     if (_equals) {
       HashSet<Coordinate> _newHashSet = CollectionLiterals.<Coordinate>newHashSet();
       OverState _overState = new OverState(Launcher.initial, _newHashSet);
       Integer _get = Launcher.distances.get(CollectionLiterals.<Coordinate>newHashSet(this.currentPosition, Launcher.initial));
       Pair<State, Integer> _pair = new Pair<State, Integer>(((State) _overState), _get);
-      _xifexpression = CollectionLiterals.<Pair<State, Integer>>newArrayList(_pair);
+      _xifexpression = CollectionLiterals.<Pair<? extends State, Integer>>newArrayList(_pair);
     } else {
       final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
         public Boolean apply(final Coordinate it) {
@@ -51,20 +50,20 @@ public class OverState implements State {
           return Boolean.valueOf((!_equals));
         }
       };
-      final Function1<Coordinate, Pair<State, Integer>> _function_1 = new Function1<Coordinate, Pair<State, Integer>>() {
-        public Pair<State, Integer> apply(final Coordinate it) {
-          Pair<State, Integer> _xblockexpression = null;
+      final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = new Function1<Coordinate, Pair<? extends State, Integer>>() {
+        public Pair<? extends State, Integer> apply(final Coordinate it) {
+          Pair<OverState, Integer> _xblockexpression = null;
           {
             final HashSet<Coordinate> newToVisit = new HashSet<Coordinate>(OverState.this.toVisit);
             newToVisit.remove(it);
             OverState _overState = new OverState(it, newToVisit);
             Integer _get = Launcher.distances.get(CollectionLiterals.<Coordinate>newHashSet(it, OverState.this.currentPosition));
-            _xblockexpression = new Pair<State, Integer>(((State) _overState), _get);
+            _xblockexpression = Pair.<OverState, Integer>of(_overState, _get);
           }
           return _xblockexpression;
         }
       };
-      _xifexpression = IterableExtensions.<Pair<State, Integer>>toList(IterableExtensions.<Coordinate, Pair<State, Integer>>map(IterableExtensions.<Coordinate>filter(this.toVisit, _function), _function_1));
+      _xifexpression = IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>filter(this.toVisit, _function), _function_1);
     }
     return _xifexpression;
   }

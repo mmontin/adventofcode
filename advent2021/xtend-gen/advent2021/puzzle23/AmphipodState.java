@@ -5,7 +5,6 @@ import adventutils.pathfinding.State;
 import com.google.common.base.Objects;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -377,8 +376,8 @@ public class AmphipodState implements State {
     return this.minBound;
   }
 
-  public Iterable<Pair<State, Integer>> neighbours() {
-    List<Pair<State, Integer>> _xblockexpression = null;
+  public Iterable<Pair<? extends State, Integer>> neighbours() {
+    Iterable<Pair<? extends State, Integer>> _xblockexpression = null;
     {
       final HashMap<AmphipodState, Integer> output = CollectionLiterals.<AmphipodState, Integer>newHashMap();
       final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function = new Function1<Map.Entry<Coordinate, Integer>, Boolean>() {
@@ -416,14 +415,14 @@ public class AmphipodState implements State {
         }
       };
       IterableExtensions.<Map.Entry<Coordinate, Integer>>filter(this.amphipods.entrySet(), _function).forEach(_function_1);
-      final Function1<Map.Entry<AmphipodState, Integer>, Pair<State, Integer>> _function_2 = new Function1<Map.Entry<AmphipodState, Integer>, Pair<State, Integer>>() {
-        public Pair<State, Integer> apply(final Map.Entry<AmphipodState, Integer> it) {
+      final Function1<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>> _function_2 = new Function1<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>>() {
+        public Pair<? extends State, Integer> apply(final Map.Entry<AmphipodState, Integer> it) {
           AmphipodState _key = it.getKey();
           Integer _value = it.getValue();
-          return new Pair<State, Integer>(((State) _key), _value);
+          return Pair.<AmphipodState, Integer>of(_key, _value);
         }
       };
-      _xblockexpression = IterableExtensions.<Pair<State, Integer>>toList(IterableExtensions.<Map.Entry<AmphipodState, Integer>, Pair<State, Integer>>map(output.entrySet(), _function_2));
+      _xblockexpression = IterableExtensions.<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>>map(output.entrySet(), _function_2);
     }
     return _xblockexpression;
   }

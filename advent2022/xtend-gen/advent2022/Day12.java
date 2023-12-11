@@ -3,6 +3,7 @@ package advent2022;
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.NotInitializedException;
 import adventutils.pathfinding.State;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class Day12 {
       return this.manhattanDistanceTo(Day12.target);
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
       final Function1<Coordinate, Day12.CoordinateElevated> _function = new Function1<Coordinate, Day12.CoordinateElevated>() {
         public Day12.CoordinateElevated apply(final Coordinate it) {
           int _x = it.getX();
@@ -51,12 +52,12 @@ public class Day12 {
           return Boolean.valueOf((_plus >= (_orDefault).intValue()));
         }
       };
-      final Function1<Day12.CoordinateElevated, Pair<State, Integer>> _function_2 = new Function1<Day12.CoordinateElevated, Pair<State, Integer>>() {
-        public Pair<State, Integer> apply(final Day12.CoordinateElevated it) {
-          return Pair.<State, Integer>of(((State) it), Integer.valueOf(1));
+      final Function1<Day12.CoordinateElevated, Pair<? extends State, Integer>> _function_2 = new Function1<Day12.CoordinateElevated, Pair<? extends State, Integer>>() {
+        public Pair<? extends State, Integer> apply(final Day12.CoordinateElevated it) {
+          return Pair.<Day12.CoordinateElevated, Integer>of(it, Integer.valueOf(1));
         }
       };
-      return IterableExtensions.<Pair<State, Integer>>toList(IterableExtensions.<Day12.CoordinateElevated, Pair<State, Integer>>map(IterableExtensions.<Day12.CoordinateElevated>filter(IterableExtensions.<Coordinate, Day12.CoordinateElevated>map(this.noDiagonalUnboundedNeighbours(), _function), _function_1), _function_2));
+      return IterableExtensions.<Day12.CoordinateElevated, Pair<? extends State, Integer>>map(IterableExtensions.<Day12.CoordinateElevated>filter(IterableExtensions.<Coordinate, Day12.CoordinateElevated>map(this.noDiagonalUnboundedNeighbours(), _function), _function_1), _function_2);
     }
   }
 
@@ -127,7 +128,7 @@ public class Day12 {
         try {
           _xtrycatchfinallyexpression = new AStar(it).run().getMinDistance();
         } catch (final Throwable _t) {
-          if (_t instanceof NullPointerException) {
+          if (_t instanceof NotInitializedException) {
             _xtrycatchfinallyexpression = Integer.valueOf(Integer.MAX_VALUE);
           } else {
             throw Exceptions.sneakyThrow(_t);

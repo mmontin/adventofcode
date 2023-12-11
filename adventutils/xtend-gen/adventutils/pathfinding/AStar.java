@@ -54,8 +54,8 @@ public class AStar {
   private State step() {
     State _xblockexpression = null;
     {
-      final Consumer<Pair<State, Integer>> _function = new Consumer<Pair<State, Integer>>() {
-        public void accept(final Pair<State, Integer> it) {
+      final Consumer<Pair<? extends State, Integer>> _function = new Consumer<Pair<? extends State, Integer>>() {
+        public void accept(final Pair<? extends State, Integer> it) {
           final State state = it.getKey();
           Integer _get = AStar.this.gScore.get(AStar.this.current);
           Integer _value = it.getValue();

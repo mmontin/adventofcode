@@ -283,10 +283,10 @@ public class Day19 {
       return this._minToGoal;
     }
 
-    public Iterable<Pair<State, Integer>> neighbours() {
-      ArrayList<Pair<State, Integer>> _xblockexpression = null;
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
+      ArrayList<Pair<? extends State, Integer>> _xblockexpression = null;
       {
-        final ArrayList<Pair<State, Integer>> output = CollectionLiterals.<Pair<State, Integer>>newArrayList();
+        final ArrayList<Pair<? extends State, Integer>> output = CollectionLiterals.<Pair<? extends State, Integer>>newArrayList();
         final int remaining_duration = (Day19.MAX_TIME - this.time);
         final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function = new Function2<String, Pair<Integer, Day19.Resources>, Boolean>() {
           public Boolean apply(final String k, final Pair<Integer, Day19.Resources> v) {

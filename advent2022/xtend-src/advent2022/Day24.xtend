@@ -87,7 +87,7 @@ class Day24 {
 				it.equals(departure) ||
 				it.equals(arrival) ||
 				(it.x >= 0 && it.x < WALL_DOWN && it.y >= 0 && it.y < WALL_RIGHT && !getBlizzardsAtTime(time+1).contains(it))
-			].map[new PositionTimed(it,time+1) as State -> 1].toList
+			].map[new PositionTimed(it,time+1) -> 1]
 		}
 		
 		override toString() {

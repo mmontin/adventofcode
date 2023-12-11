@@ -54,15 +54,15 @@ public class Day15 {
     }
 
     @Override
-    public Iterable<Pair<State, Integer>> neighbours() {
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
       final Function1<Coordinate, Boolean> _function = (Coordinate it) -> {
         return Boolean.valueOf(Day15.available.contains(it));
       };
-      final Function1<Coordinate, Pair<State, Integer>> _function_1 = (Coordinate it) -> {
+      final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = (Coordinate it) -> {
         Day15.MyCoordinate _myCoordinate = new Day15.MyCoordinate(it, this.goals);
         return Pair.<State, Integer>of(((State) _myCoordinate), Integer.valueOf(1));
       };
-      return IterableExtensions.<Coordinate, Pair<State, Integer>>map(IterableExtensions.<Coordinate>filter(this.noDiagonalUnboundedNeighbours(), _function), _function_1);
+      return IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>filter(this.noDiagonalUnboundedNeighbours(), _function), _function_1);
     }
   }
 

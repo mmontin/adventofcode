@@ -18,7 +18,7 @@ class Path {
 	}
 
 	// Here we assume that the new neighbour is not in the path
-	new(Path current_path, Pair<State, Integer> neighbour) {
+	new(Path current_path, Pair<? extends State, Integer> neighbour) {
 		path = new ArrayList(current_path.path)
 		current = neighbour.key
 		path.add(current)

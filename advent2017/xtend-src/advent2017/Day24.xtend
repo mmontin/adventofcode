@@ -81,7 +81,7 @@ class Day24 {
 		final Set<Element> remaining
 		final int last_plug
 
-		final List<Pair<State, Integer>> neighbours
+		final Iterable<Pair<? extends State, Integer>> neighbours
 		final boolean isGoal
 		final int minToGoal
 
@@ -96,16 +96,15 @@ class Day24 {
 			remaining = _remaining
 			last_plug = _last_plug
 
-			neighbours = newArrayList
-			remaining.filter[connectsWithPort(last_plug)].forEach [
-				neighbours.add(new Bridge(
+			neighbours = remaining.filter[connectsWithPort(last_plug)].map [
+				new Bridge(
 					{
 						val output = new HashSet(remaining)
 						output.remove(it)
 						output
 					},
 					it.otherPort(last_plug)
-				) as State -> 0)
+				) -> 0
 			]
 
 			isGoal = neighbours.isEmpty

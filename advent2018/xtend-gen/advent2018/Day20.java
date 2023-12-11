@@ -49,11 +49,11 @@ public class Day20 {
     }
 
     @Override
-    public Iterable<Pair<State, Integer>> neighbours() {
-      final Function1<Day20.MyCoordinate, Pair<State, Integer>> _function = (Day20.MyCoordinate x) -> {
+    public Iterable<Pair<? extends State, Integer>> neighbours() {
+      final Function1<Day20.MyCoordinate, Pair<? extends State, Integer>> _function = (Day20.MyCoordinate x) -> {
         return Pair.<State, Integer>of(((State) x), Integer.valueOf(1));
       };
-      return IterableExtensions.<Day20.MyCoordinate, Pair<State, Integer>>map(this.friends, _function);
+      return IterableExtensions.<Day20.MyCoordinate, Pair<? extends State, Integer>>map(this.friends, _function);
     }
 
     @Override

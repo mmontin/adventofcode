@@ -33,14 +33,14 @@ public class CoordinateState extends Coordinate implements State {
     return this.manhattan;
   }
 
-  public Iterable<Pair<State, Integer>> neighbours() {
-    final Function1<Coordinate, Pair<State, Integer>> _function = new Function1<Coordinate, Pair<State, Integer>>() {
-      public Pair<State, Integer> apply(final Coordinate it) {
+  public Iterable<Pair<? extends State, Integer>> neighbours() {
+    final Function1<Coordinate, Pair<? extends State, Integer>> _function = new Function1<Coordinate, Pair<? extends State, Integer>>() {
+      public Pair<? extends State, Integer> apply(final Coordinate it) {
         CoordinateState _coordinateState = new CoordinateState(it);
         Integer _get = Launcher.coordinates.get(it);
         return new Pair<State, Integer>(((State) _coordinateState), _get);
       }
     };
-    return ListExtensions.<Coordinate, Pair<State, Integer>>map(IterableExtensions.<Coordinate>toList(this.noDiagonalBoundedNeighbours(0, Launcher.max_indice)), _function);
+    return ListExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>toList(this.noDiagonalBoundedNeighbours(0, Launcher.max_indice)), _function);
   }
 }

@@ -9,7 +9,7 @@ interface State {
 	def int minToGoal()
 
 	// Possible states that can be reached from this state, along with their distances
-	def Iterable<Pair<State, Integer>> neighbours()
+	def Iterable<Pair<? extends State, Integer>> neighbours()
 
 	override boolean equals(Object other)
 
