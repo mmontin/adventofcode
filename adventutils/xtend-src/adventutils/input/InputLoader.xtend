@@ -24,7 +24,7 @@ class InputLoader {
 	}
 	
 	def <T> getInputs(Function1<? super String, ? extends T> f) {
-		getInputs().map[x | f.apply(x)]
+		inputs.map[x | f.apply(x)]
 	}
 	
 	def getInputReader() {
