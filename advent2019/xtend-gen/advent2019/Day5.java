@@ -12,7 +12,6 @@ public class Day5 {
     final Function1<String, Integer> _function = (String it) -> {
       return Integer.valueOf(Integer.parseInt(it));
     };
-    final List<Integer> opcodes = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2019), Integer.valueOf(5)).getInputs().get(0).split(","))), _function);
-    final int input = 1;
+    /* ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2019), Integer.valueOf(5)).getInputs().get(0).split(","))), _function); */
   }
 }

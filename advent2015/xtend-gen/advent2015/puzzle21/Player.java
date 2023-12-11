@@ -43,10 +43,8 @@ public class Player {
   }
 
   public void addAllItems(final List<Item> items) {
-    final Consumer<Item> _function = new Consumer<Item>() {
-      public void accept(final Item i) {
-        Player.this.addItem(i);
-      }
+    final Consumer<Item> _function = (Item i) -> {
+      this.addItem(i);
     };
     items.forEach(_function);
   }

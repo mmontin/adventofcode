@@ -17,6 +17,7 @@ public class Item {
     this.arm = arm_;
   }
 
+  @Override
   public boolean equals(final Object o) {
     return this.name.equals(((Item) o).name);
   }

@@ -4,7 +4,6 @@ import adventutils.input.InputLoader;
 import adventutils.list.ListUtils;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
@@ -24,31 +23,7 @@ public class Launcher {
     }
   });
 
-  private static int z = 0;
-
-  public static int function() {
-    int _xblockexpression = (int) 0;
-    {
-      final Stack<Object> stack = new Stack<Object>();
-      IntegerRange _upTo = new IntegerRange(9, 1);
-      for (final Integer i : _upTo) {
-        IntegerRange _upTo_1 = new IntegerRange(9, 1);
-        for (final Integer j : _upTo_1) {
-          IntegerRange _upTo_2 = new IntegerRange(9, 1);
-          for (final Integer k : _upTo_2) {
-            IntegerRange _upTo_3 = new IntegerRange(9, 1);
-            for (final Integer l : _upTo_3) {
-              InputOutput.println();
-            }
-          }
-        }
-      }
-      _xblockexpression = 0;
-    }
-    return _xblockexpression;
-  }
-
   public static void main(final String[] args) {
-    Launcher.function();
+    InputOutput.<List<Pair<Integer, Integer>>>println(Launcher.input);
   }
 }

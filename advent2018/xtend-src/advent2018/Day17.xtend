@@ -32,8 +32,6 @@ class Day17 {
 		output
 	}
 
-	static int flows = 0
-
 	static final int maxX = walls.maxBy[x].x
 
 	static final Set<Coordinate> water = new CoordinateSet

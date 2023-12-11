@@ -66,6 +66,10 @@ class Coordinate implements Comparable<Coordinate> {
 	def symByX(int offset) {
 		new Coordinate(2 * offset - x, y)
 	}
+	
+	def scale(int factor) {
+		new Coordinate(factor * x, factor * y)
+	}
 
 	// Neighbours in the 8 possible surrounding spots
 	def allAroundUnboundedNeighbours() {

@@ -1,7 +1,5 @@
 package advent2015.puzzle16;
 
-import com.google.common.base.Objects;
-
 @SuppressWarnings("all")
 public class Sue {
   protected Integer number;
@@ -46,60 +44,40 @@ public class Sue {
 
   public Integer assign(final String input, final Integer value) {
     Integer _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(input, "children")) {
-      _matched=true;
-      _switchResult = this.children = value;
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "cats")) {
-        _matched=true;
-        _switchResult = this.cats = value;
+    if (input != null) {
+      switch (input) {
+        case "children":
+          _switchResult = this.children = value;
+          break;
+        case "cats":
+          _switchResult = this.cats = value;
+          break;
+        case "samoyeds":
+          _switchResult = this.samoyeds = value;
+          break;
+        case "pomeranians":
+          _switchResult = this.pomeranians = value;
+          break;
+        case "akitas":
+          _switchResult = this.akitas = value;
+          break;
+        case "vizslas":
+          _switchResult = this.vizslas = value;
+          break;
+        case "goldfish":
+          _switchResult = this.goldfish = value;
+          break;
+        case "trees":
+          _switchResult = this.trees = value;
+          break;
+        case "cars":
+          _switchResult = this.cars = value;
+          break;
+        default:
+          _switchResult = this.perfumes = value;
+          break;
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "samoyeds")) {
-        _matched=true;
-        _switchResult = this.samoyeds = value;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "pomeranians")) {
-        _matched=true;
-        _switchResult = this.pomeranians = value;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "akitas")) {
-        _matched=true;
-        _switchResult = this.akitas = value;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "vizslas")) {
-        _matched=true;
-        _switchResult = this.vizslas = value;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "goldfish")) {
-        _matched=true;
-        _switchResult = this.goldfish = value;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "trees")) {
-        _matched=true;
-        _switchResult = this.trees = value;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(input, "cars")) {
-        _matched=true;
-        _switchResult = this.cars = value;
-      }
-    }
-    if (!_matched) {
+    } else {
       _switchResult = this.perfumes = value;
     }
     return _switchResult;

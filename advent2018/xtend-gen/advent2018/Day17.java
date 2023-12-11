@@ -58,8 +58,6 @@ public class Day17 {
     }
   }.apply();
 
-  private static int flows = 0;
-
   private static final int maxX = IterableExtensions.<Coordinate, Integer>maxBy(Day17.walls, ((Function1<Coordinate, Integer>) (Coordinate it) -> {
     return Integer.valueOf(it.getX());
   })).getX();

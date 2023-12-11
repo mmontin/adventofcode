@@ -17,6 +17,9 @@ public class Launcher {
 		
 		int cardLoopSize = findLoopSize(cardKey);
 		int doorLoopSize = findLoopSize(doorKey);
+		
+		System.out.println(cardLoopSize + " " + doorLoopSize) ;
+		
 	}
 
 	private static int findLoopSize(int k) {

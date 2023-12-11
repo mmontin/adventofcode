@@ -1,7 +1,6 @@
 package advent2015.puzzle23;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import com.google.common.primitives.UnsignedLong;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -37,77 +36,78 @@ public class Launcher {
       final String[] split = s.split(" ");
       int _switchResult = (int) 0;
       String _get = split[0];
-      boolean _matched = false;
-      if (Objects.equal(_get, "hlf")) {
-        _matched=true;
-        int _xblockexpression_1 = (int) 0;
-        {
-          boolean _equals = (split[1]).equals("a");
-          if (_equals) {
-            Launcher.a = Launcher.a.dividedBy(Launcher.TWO);
-          } else {
-            Launcher.b = Launcher.b.dividedBy(Launcher.TWO);
-          }
-          _xblockexpression_1 = Launcher.current_instruction++;
-        }
-        _switchResult = _xblockexpression_1;
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "tpl")) {
-          _matched=true;
-          int _xblockexpression_2 = (int) 0;
-          {
-            boolean _equals = (split[1]).equals("a");
-            if (_equals) {
-              Launcher.a = Launcher.a.times(Launcher.THREE);
-            } else {
-              Launcher.b = Launcher.b.times(Launcher.THREE);
+      if (_get != null) {
+        switch (_get) {
+          case "hlf":
+            int _xblockexpression_1 = (int) 0;
+            {
+              boolean _equals = (split[1]).equals("a");
+              if (_equals) {
+                Launcher.a = Launcher.a.dividedBy(Launcher.TWO);
+              } else {
+                Launcher.b = Launcher.b.dividedBy(Launcher.TWO);
+              }
+              _xblockexpression_1 = Launcher.current_instruction++;
             }
-            _xblockexpression_2 = Launcher.current_instruction++;
-          }
-          _switchResult = _xblockexpression_2;
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "inc")) {
-          _matched=true;
-          int _xblockexpression_3 = (int) 0;
-          {
-            boolean _equals = (split[1]).equals("a");
-            if (_equals) {
-              Launcher.a = Launcher.a.plus(Launcher.ONE);
-            } else {
-              Launcher.b = Launcher.b.plus(Launcher.ONE);
+            _switchResult = _xblockexpression_1;
+            break;
+          case "tpl":
+            int _xblockexpression_2 = (int) 0;
+            {
+              boolean _equals = (split[1]).equals("a");
+              if (_equals) {
+                Launcher.a = Launcher.a.times(Launcher.THREE);
+              } else {
+                Launcher.b = Launcher.b.times(Launcher.THREE);
+              }
+              _xblockexpression_2 = Launcher.current_instruction++;
             }
-            _xblockexpression_3 = Launcher.current_instruction++;
-          }
-          _switchResult = _xblockexpression_3;
+            _switchResult = _xblockexpression_2;
+            break;
+          case "inc":
+            int _xblockexpression_3 = (int) 0;
+            {
+              boolean _equals = (split[1]).equals("a");
+              if (_equals) {
+                Launcher.a = Launcher.a.plus(Launcher.ONE);
+              } else {
+                Launcher.b = Launcher.b.plus(Launcher.ONE);
+              }
+              _xblockexpression_3 = Launcher.current_instruction++;
+            }
+            _switchResult = _xblockexpression_3;
+            break;
+          case "jmp":
+            int _current_instruction = Launcher.current_instruction;
+            int _parseInt = Integer.parseInt(split[1]);
+            _switchResult = Launcher.current_instruction = (_current_instruction + _parseInt);
+            break;
+          case "jie":
+            int _xifexpression = (int) 0;
+            boolean _isEven = Launcher.isEven(split[1]);
+            if (_isEven) {
+              int _current_instruction_1 = Launcher.current_instruction;
+              int _parseInt_1 = Integer.parseInt(split[2]);
+              _xifexpression = Launcher.current_instruction = (_current_instruction_1 + _parseInt_1);
+            } else {
+              _xifexpression = Launcher.current_instruction++;
+            }
+            _switchResult = _xifexpression;
+            break;
+          default:
+            int _xifexpression_1 = (int) 0;
+            boolean _isOne = Launcher.isOne(split[1]);
+            if (_isOne) {
+              int _current_instruction_2 = Launcher.current_instruction;
+              int _parseInt_2 = Integer.parseInt(split[2]);
+              _xifexpression_1 = Launcher.current_instruction = (_current_instruction_2 + _parseInt_2);
+            } else {
+              _xifexpression_1 = Launcher.current_instruction++;
+            }
+            _switchResult = _xifexpression_1;
+            break;
         }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "jmp")) {
-          _matched=true;
-          int _current_instruction = Launcher.current_instruction;
-          int _parseInt = Integer.parseInt(split[1]);
-          _switchResult = Launcher.current_instruction = (_current_instruction + _parseInt);
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "jie")) {
-          _matched=true;
-          int _xifexpression = (int) 0;
-          boolean _isEven = Launcher.isEven(split[1]);
-          if (_isEven) {
-            int _current_instruction_1 = Launcher.current_instruction;
-            int _parseInt_1 = Integer.parseInt(split[2]);
-            _xifexpression = Launcher.current_instruction = (_current_instruction_1 + _parseInt_1);
-          } else {
-            _xifexpression = Launcher.current_instruction++;
-          }
-          _switchResult = _xifexpression;
-        }
-      }
-      if (!_matched) {
+      } else {
         int _xifexpression_1 = (int) 0;
         boolean _isOne = Launcher.isOne(split[1]);
         if (_isOne) {

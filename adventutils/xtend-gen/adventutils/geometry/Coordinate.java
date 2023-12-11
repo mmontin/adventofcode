@@ -94,6 +94,10 @@ public class Coordinate implements Comparable<Coordinate> {
     return new Coordinate(((2 * offset) - this.x), this.y);
   }
 
+  public Coordinate scale(final int factor) {
+    return new Coordinate((factor * this.x), (factor * this.y));
+  }
+
   public HashSet<Coordinate> allAroundUnboundedNeighbours() {
     Coordinate _coordinate = new Coordinate((this.x - 1), (this.y - 1));
     Coordinate _coordinate_1 = new Coordinate((this.x - 1), this.y);

@@ -3,7 +3,9 @@ package advent2018;
 import adventutils.input.InputLoader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class Day4 {
   public static void main(final String[] args) {
     final SimpleDateFormat my_parser = new SimpleDateFormat("[yyyy-MM-dd HH:mm]");
+    final Calendar calendar = GregorianCalendar.getInstance();
     final Function1<String, Pair<Date, List<String>>> _function = (String it) -> {
       try {
         Pair<Date, List<String>> _xblockexpression = null;
@@ -43,53 +46,56 @@ public class Day4 {
     final HashMap<Integer, ArrayList<Integer>> sleeping_time = CollectionLiterals.<Integer, ArrayList<Integer>>newHashMap();
     int current_guard = 0;
     int previous_time = 0;
+    int current_time = 0;
     for (final Pair<Date, List<String>> p : input) {
-      String _get = p.getValue().get(0);
-      if (_get != null) {
-        switch (_get) {
-          case "Guard":
-            current_guard = Integer.parseInt(p.getValue().get(1).replace("#", ""));
-            break;
-          case "falls":
-            previous_time = p.getKey().getMinutes();
-            break;
-          default:
-            {
-              final ArrayList<Integer> new_list = CollectionLiterals.<Integer>newArrayList();
-              int _minutes = p.getKey().getMinutes();
-              ExclusiveRange _doubleDotLessThan = new ExclusiveRange(previous_time, _minutes, true);
-              for (final Integer i : _doubleDotLessThan) {
-                new_list.add(i);
-              }
-              final BiFunction<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> _function_2 = (ArrayList<Integer> o, ArrayList<Integer> n) -> {
-                ArrayList<Integer> _xblockexpression = null;
-                {
-                  o.addAll(n);
-                  _xblockexpression = o;
+      {
+        calendar.setTime(p.getKey());
+        current_time = calendar.get(Calendar.MINUTE);
+        String _get = p.getValue().get(0);
+        if (_get != null) {
+          switch (_get) {
+            case "Guard":
+              current_guard = Integer.parseInt(p.getValue().get(1).replace("#", ""));
+              break;
+            case "falls":
+              previous_time = current_time;
+              break;
+            default:
+              {
+                final ArrayList<Integer> new_list = CollectionLiterals.<Integer>newArrayList();
+                ExclusiveRange _doubleDotLessThan = new ExclusiveRange(previous_time, current_time, true);
+                for (final Integer i : _doubleDotLessThan) {
+                  new_list.add(i);
                 }
-                return _xblockexpression;
-              };
-              sleeping_time.merge(Integer.valueOf(current_guard), new_list, _function_2);
-            }
-            break;
-        }
-      } else {
-        {
-          final ArrayList<Integer> new_list = CollectionLiterals.<Integer>newArrayList();
-          int _minutes = p.getKey().getMinutes();
-          ExclusiveRange _doubleDotLessThan = new ExclusiveRange(previous_time, _minutes, true);
-          for (final Integer i : _doubleDotLessThan) {
-            new_list.add(i);
+                final BiFunction<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> _function_2 = (ArrayList<Integer> o, ArrayList<Integer> n) -> {
+                  ArrayList<Integer> _xblockexpression = null;
+                  {
+                    o.addAll(n);
+                    _xblockexpression = o;
+                  }
+                  return _xblockexpression;
+                };
+                sleeping_time.merge(Integer.valueOf(current_guard), new_list, _function_2);
+              }
+              break;
           }
-          final BiFunction<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> _function_2 = (ArrayList<Integer> o, ArrayList<Integer> n) -> {
-            ArrayList<Integer> _xblockexpression = null;
-            {
-              o.addAll(n);
-              _xblockexpression = o;
+        } else {
+          {
+            final ArrayList<Integer> new_list = CollectionLiterals.<Integer>newArrayList();
+            ExclusiveRange _doubleDotLessThan = new ExclusiveRange(previous_time, current_time, true);
+            for (final Integer i : _doubleDotLessThan) {
+              new_list.add(i);
             }
-            return _xblockexpression;
-          };
-          sleeping_time.merge(Integer.valueOf(current_guard), new_list, _function_2);
+            final BiFunction<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> _function_2 = (ArrayList<Integer> o, ArrayList<Integer> n) -> {
+              ArrayList<Integer> _xblockexpression = null;
+              {
+                o.addAll(n);
+                _xblockexpression = o;
+              }
+              return _xblockexpression;
+            };
+            sleeping_time.merge(Integer.valueOf(current_guard), new_list, _function_2);
+          }
         }
       }
     }
