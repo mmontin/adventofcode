@@ -5,16 +5,16 @@ import java.util.List
 import java.util.Map
 
 class Day12 {
-	
+
 	def static void main(String[] args) {
-		
+
 		val inputs = new InputLoader(2023, 12).inputs.map [
 			val split = it.split(" ")
 			split.get(0) -> split.get(1).split(",").map[Integer.parseInt(it)]
 		]
 
 		println(inputs.fold(0L)[acc, el|acc + el.key.count(el.value)])
-		
+
 		val inputs_mod = inputs.map [ el |
 			val new_list = newArrayList;
 			(0 .. 4).forEach[new_list.addAll(el.value)]
@@ -70,23 +70,20 @@ class Day12 {
 
 	def static long count(String line, List<Integer> brokens) {
 
-		var ans = calls.get(line -> brokens)
-		if (ans !== null)
-			ans
-		else {
-			if (brokens.minSize > line.length)
-				ans = 0L
-			else if (empty(line))
-				ans = brokens.size == 0 ? 1L : 0L
-			else if (brokens.size == 0)
-				ans = line.possiblyEmpty ? 1L : 0L
-			else {
+		var ans = switch (line) {
+			case calls.containsKey(line -> brokens):
+				calls.get(line -> brokens)
+			case brokens.empty && line.possiblyEmpty:
+				1L
+			case brokens.empty || empty(line):
+				0L
+			default: {
 				val splitted = breakList(brokens)
 				val left = splitted.key.key
 				val max = splitted.key.value
 				val right = splitted.value
 
-				ans = fulls(line, max, left.minSize, right.minSize).fold(0L) [ acc, el |
+				fulls(line, max, left.minSize, right.minSize).fold(0L) [ acc, el |
 					val left_string = el.key.key
 					val right_string = el.value
 					var left_possibilities = 0L
@@ -99,7 +96,7 @@ class Day12 {
 						left_possibilities++
 
 					var right_possibilities = 0L
-					if (left_possibilities != 0) {
+					if (left_possibilities != 0)
 						if (!right_string.empty) {
 							val first_right = right_string.substring(0, 1)
 							val last_right = right_string.substring(1)
@@ -107,13 +104,13 @@ class Day12 {
 								right_possibilities += count(last_right, right)
 						} else if (right.isEmpty)
 							right_possibilities++
-					}
 
 					acc + right_possibilities * left_possibilities
 				]
 			}
-			calls.put(line -> brokens, ans)
-			ans
 		}
+
+		calls.put(line -> brokens, ans)
+		ans
 	}
 }
