@@ -2,3 +2,6 @@
 /.Either.xtendbin
 /Either.java
 /.Arithmetics.java._trace
+/.Runner.java._trace
+/.RunnerWithMemory.java._trace
+/.RunnerWithMemory2.java._trace

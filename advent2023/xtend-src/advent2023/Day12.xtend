@@ -1,8 +1,8 @@
 package advent2023
 
+import adventutils.RunnerWithMemory2
 import adventutils.input.InputLoader
 import java.util.List
-import java.util.Map
 
 class Day12 {
 
@@ -13,7 +13,7 @@ class Day12 {
 			split.get(0) -> split.get(1).split(",").map[Integer.parseInt(it)]
 		]
 
-		println(inputs.fold(0L)[acc, el|acc + el.key.count(el.value)])
+		println(inputs.fold(0L)[acc, el|acc + myRunner.call(el.key, el.value)])
 
 		val inputs_mod = inputs.map [ el |
 			val new_list = newArrayList;
@@ -21,7 +21,7 @@ class Day12 {
 			(el.key + "?").repeat(4) + el.key -> new_list
 		]
 
-		println(inputs_mod.fold(0L)[acc, el|acc + el.key.count(el.value)])
+		println(inputs_mod.fold(0L)[acc, el|acc + myRunner.call(el.key, el.value)])
 	}
 
 	def static fulls(String s, int size, int left_buffer, int right_buffer) {
@@ -66,13 +66,11 @@ class Day12 {
 		input.subList(0, max_pos) -> max -> input.subList(max_pos + 1, input.size)
 	}
 
-	static final Map<Pair<String, List<Integer>>, Long> calls = newHashMap
+	static final RunnerWithMemory2<String, List<Integer>, Long> myRunner = new RunnerWithMemory2[a, b|count(a, b)]
 
-	def static long count(String line, List<Integer> brokens) {
+	def static count(String line, List<Integer> brokens) {
 
-		var ans = switch (line) {
-			case calls.containsKey(line -> brokens):
-				calls.get(line -> brokens)
+		switch (line) {
 			case brokens.empty && line.possiblyEmpty:
 				1L
 			case brokens.empty || empty(line):
@@ -91,7 +89,7 @@ class Day12 {
 						val last_left = left_string.substring(left_string.length - 1)
 						val first_left = left_string.substring(0, left_string.length - 1)
 						if (last_left.possiblyEmpty)
-							left_possibilities += count(first_left, left)
+							left_possibilities += myRunner.call(first_left, left)
 					} else if (left.isEmpty)
 						left_possibilities++
 
@@ -101,7 +99,7 @@ class Day12 {
 							val first_right = right_string.substring(0, 1)
 							val last_right = right_string.substring(1)
 							if (first_right.possiblyEmpty)
-								right_possibilities += count(last_right, right)
+								right_possibilities += myRunner.call(last_right, right)
 						} else if (right.isEmpty)
 							right_possibilities++
 
@@ -109,8 +107,5 @@ class Day12 {
 				]
 			}
 		}
-
-		calls.put(line -> brokens, ans)
-		ans
 	}
 }

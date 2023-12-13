@@ -1,9 +1,9 @@
 package advent2023;
 
+import adventutils.RunnerWithMemory2;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -33,8 +33,8 @@ public class Day12 {
     };
     final List<Pair<String, List<Integer>>> inputs = ListExtensions.<String, Pair<String, List<Integer>>>map(new InputLoader(Integer.valueOf(2023), Integer.valueOf(12)).getInputs(), _function);
     final Function2<Long, Pair<String, List<Integer>>, Long> _function_1 = (Long acc, Pair<String, List<Integer>> el) -> {
-      long _count = Day12.count(el.getKey(), el.getValue());
-      return Long.valueOf(((acc).longValue() + _count));
+      Long _call = Day12.myRunner.call(el.getKey(), el.getValue());
+      return Long.valueOf(((acc).longValue() + (_call).longValue()));
     };
     InputOutput.<Long>println(IterableExtensions.<Pair<String, List<Integer>>, Long>fold(inputs, Long.valueOf(0L), _function_1));
     final Function1<Pair<String, List<Integer>>, Pair<String, ArrayList<Integer>>> _function_2 = (Pair<String, List<Integer>> el) -> {
@@ -55,8 +55,8 @@ public class Day12 {
     };
     final List<Pair<String, ArrayList<Integer>>> inputs_mod = ListExtensions.<Pair<String, List<Integer>>, Pair<String, ArrayList<Integer>>>map(inputs, _function_2);
     final Function2<Long, Pair<String, ArrayList<Integer>>, Long> _function_3 = (Long acc, Pair<String, ArrayList<Integer>> el) -> {
-      long _count = Day12.count(el.getKey(), el.getValue());
-      return Long.valueOf(((acc).longValue() + _count));
+      Long _call = Day12.myRunner.call(el.getKey(), el.getValue());
+      return Long.valueOf(((acc).longValue() + (_call).longValue()));
     };
     InputOutput.<Long>println(IterableExtensions.<Pair<String, ArrayList<Integer>>, Long>fold(inputs_mod, Long.valueOf(0L), _function_3));
   }
@@ -139,99 +139,85 @@ public class Day12 {
     return _xblockexpression;
   }
 
-  private static final Map<Pair<String, List<Integer>>, Long> calls = CollectionLiterals.<Pair<String, List<Integer>>, Long>newHashMap();
+  private static final RunnerWithMemory2<String, List<Integer>, Long> myRunner = new RunnerWithMemory2<String, List<Integer>, Long>(((Function2<String, List<Integer>, Long>) (String a, List<Integer> b) -> {
+    return Day12.count(a, b);
+  }));
 
-  public static long count(final String line, final List<Integer> brokens) {
-    Long _xblockexpression = null;
-    {
-      Long _switchResult = null;
-      boolean _matched = false;
-      Pair<String, List<Integer>> _mappedTo = Pair.<String, List<Integer>>of(line, brokens);
-      boolean _containsKey = Day12.calls.containsKey(_mappedTo);
-      if (_containsKey) {
+  public static Long count(final String line, final List<Integer> brokens) {
+    Long _switchResult = null;
+    boolean _matched = false;
+    if ((brokens.isEmpty() && Day12.possiblyEmpty(line))) {
+      _matched=true;
+      _switchResult = Long.valueOf(1L);
+    }
+    if (!_matched) {
+      if ((brokens.isEmpty() || Day12.empty(line))) {
         _matched=true;
-        Pair<String, List<Integer>> _mappedTo_1 = Pair.<String, List<Integer>>of(line, brokens);
-        _switchResult = Day12.calls.get(_mappedTo_1);
+        _switchResult = Long.valueOf(0L);
       }
-      if (!_matched) {
-        if ((brokens.isEmpty() && Day12.possiblyEmpty(line))) {
-          _matched=true;
-          _switchResult = Long.valueOf(1L);
-        }
-      }
-      if (!_matched) {
-        if ((brokens.isEmpty() || Day12.empty(line))) {
-          _matched=true;
-          _switchResult = Long.valueOf(0L);
-        }
-      }
-      if (!_matched) {
-        Long _xblockexpression_1 = null;
-        {
-          final Pair<Pair<List<Integer>, Integer>, List<Integer>> splitted = Day12.breakList(brokens);
-          final List<Integer> left = splitted.getKey().getKey();
-          final Integer max = splitted.getKey().getValue();
-          final List<Integer> right = splitted.getValue();
-          final Function2<Long, Pair<Pair<String, String>, String>, Long> _function = (Long acc, Pair<Pair<String, String>, String> el) -> {
-            long _xblockexpression_2 = (long) 0;
-            {
-              final String left_string = el.getKey().getKey();
-              final String right_string = el.getValue();
-              long left_possibilities = 0L;
-              boolean _isEmpty = left_string.isEmpty();
-              boolean _not = (!_isEmpty);
-              if (_not) {
-                int _length = left_string.length();
-                int _minus = (_length - 1);
-                final String last_left = left_string.substring(_minus);
-                int _length_1 = left_string.length();
-                int _minus_1 = (_length_1 - 1);
-                final String first_left = left_string.substring(0, _minus_1);
-                boolean _possiblyEmpty = Day12.possiblyEmpty(last_left);
-                if (_possiblyEmpty) {
-                  long _left_possibilities = left_possibilities;
-                  long _count = Day12.count(first_left, left);
-                  left_possibilities = (_left_possibilities + _count);
+    }
+    if (!_matched) {
+      Long _xblockexpression = null;
+      {
+        final Pair<Pair<List<Integer>, Integer>, List<Integer>> splitted = Day12.breakList(brokens);
+        final List<Integer> left = splitted.getKey().getKey();
+        final Integer max = splitted.getKey().getValue();
+        final List<Integer> right = splitted.getValue();
+        final Function2<Long, Pair<Pair<String, String>, String>, Long> _function = (Long acc, Pair<Pair<String, String>, String> el) -> {
+          long _xblockexpression_1 = (long) 0;
+          {
+            final String left_string = el.getKey().getKey();
+            final String right_string = el.getValue();
+            long left_possibilities = 0L;
+            boolean _isEmpty = left_string.isEmpty();
+            boolean _not = (!_isEmpty);
+            if (_not) {
+              int _length = left_string.length();
+              int _minus = (_length - 1);
+              final String last_left = left_string.substring(_minus);
+              int _length_1 = left_string.length();
+              int _minus_1 = (_length_1 - 1);
+              final String first_left = left_string.substring(0, _minus_1);
+              boolean _possiblyEmpty = Day12.possiblyEmpty(last_left);
+              if (_possiblyEmpty) {
+                long _left_possibilities = left_possibilities;
+                Long _call = Day12.myRunner.call(first_left, left);
+                left_possibilities = (_left_possibilities + (_call).longValue());
+              }
+            } else {
+              boolean _isEmpty_1 = left.isEmpty();
+              if (_isEmpty_1) {
+                left_possibilities++;
+              }
+            }
+            long right_possibilities = 0L;
+            if ((left_possibilities != 0)) {
+              boolean _isEmpty_2 = right_string.isEmpty();
+              boolean _not_1 = (!_isEmpty_2);
+              if (_not_1) {
+                final String first_right = right_string.substring(0, 1);
+                final String last_right = right_string.substring(1);
+                boolean _possiblyEmpty_1 = Day12.possiblyEmpty(first_right);
+                if (_possiblyEmpty_1) {
+                  long _right_possibilities = right_possibilities;
+                  Long _call_1 = Day12.myRunner.call(last_right, right);
+                  right_possibilities = (_right_possibilities + (_call_1).longValue());
                 }
               } else {
-                boolean _isEmpty_1 = left.isEmpty();
-                if (_isEmpty_1) {
-                  left_possibilities++;
+                boolean _isEmpty_3 = right.isEmpty();
+                if (_isEmpty_3) {
+                  right_possibilities++;
                 }
               }
-              long right_possibilities = 0L;
-              if ((left_possibilities != 0)) {
-                boolean _isEmpty_2 = right_string.isEmpty();
-                boolean _not_1 = (!_isEmpty_2);
-                if (_not_1) {
-                  final String first_right = right_string.substring(0, 1);
-                  final String last_right = right_string.substring(1);
-                  boolean _possiblyEmpty_1 = Day12.possiblyEmpty(first_right);
-                  if (_possiblyEmpty_1) {
-                    long _right_possibilities = right_possibilities;
-                    long _count_1 = Day12.count(last_right, right);
-                    right_possibilities = (_right_possibilities + _count_1);
-                  }
-                } else {
-                  boolean _isEmpty_3 = right.isEmpty();
-                  if (_isEmpty_3) {
-                    right_possibilities++;
-                  }
-                }
-              }
-              _xblockexpression_2 = ((acc).longValue() + (right_possibilities * left_possibilities));
             }
-            return Long.valueOf(_xblockexpression_2);
-          };
-          _xblockexpression_1 = IterableExtensions.<Pair<Pair<String, String>, String>, Long>fold(Day12.fulls(line, (max).intValue(), (Day12.minSize(left)).intValue(), (Day12.minSize(right)).intValue()), Long.valueOf(0L), _function);
-        }
-        _switchResult = _xblockexpression_1;
+            _xblockexpression_1 = ((acc).longValue() + (right_possibilities * left_possibilities));
+          }
+          return Long.valueOf(_xblockexpression_1);
+        };
+        _xblockexpression = IterableExtensions.<Pair<Pair<String, String>, String>, Long>fold(Day12.fulls(line, (max).intValue(), (Day12.minSize(left)).intValue(), (Day12.minSize(right)).intValue()), Long.valueOf(0L), _function);
       }
-      Long ans = _switchResult;
-      Pair<String, List<Integer>> _mappedTo_2 = Pair.<String, List<Integer>>of(line, brokens);
-      Day12.calls.put(_mappedTo_2, ans);
-      _xblockexpression = ans;
+      _switchResult = _xblockexpression;
     }
-    return (_xblockexpression).longValue();
+    return _switchResult;
   }
 }
