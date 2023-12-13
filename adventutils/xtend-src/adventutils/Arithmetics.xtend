@@ -16,4 +16,25 @@ class Arithmetics {
 
 		x1 * x2 / nb2
 	}
+
+	def static gcd(int nb1, int nb2) {
+
+		var a = nb1
+		var b = nb2
+		var r = 0
+
+		if (b > a) {
+			var t = a
+			a = b
+			b = t
+		}
+		
+		do {
+			r = a % b
+			a = b
+			b = r
+		} while (r != 0)
+
+		a
+	}
 }

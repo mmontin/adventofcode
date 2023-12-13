@@ -1,5 +1,6 @@
 package adventutils.geometry;
 
+import adventutils.Arithmetics;
 import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.Set;
@@ -98,6 +99,37 @@ public class Coordinate implements Comparable<Coordinate> {
     return new Coordinate((factor * this.x), (factor * this.y));
   }
 
+  public Coordinate add(final Coordinate other) {
+    return new Coordinate((this.x + other.x), (this.y + other.y));
+  }
+
+  public Coordinate diff(final Coordinate other) {
+    Coordinate _xblockexpression = null;
+    {
+      final int diff_x = (this.x - other.x);
+      final int diff_y = (this.y - other.y);
+      Coordinate _xifexpression = null;
+      if ((diff_x == 0)) {
+        _xifexpression = new Coordinate(0, 1);
+      } else {
+        Coordinate _xifexpression_1 = null;
+        if ((diff_y == 0)) {
+          _xifexpression_1 = new Coordinate(1, 0);
+        } else {
+          Coordinate _xblockexpression_1 = null;
+          {
+            final int gcd = Math.abs(Arithmetics.gcd(diff_x, diff_y));
+            _xblockexpression_1 = new Coordinate((diff_x / gcd), (diff_y / gcd));
+          }
+          _xifexpression_1 = _xblockexpression_1;
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+
   public HashSet<Coordinate> allAroundUnboundedNeighbours() {
     Coordinate _coordinate = new Coordinate((this.x - 1), (this.y - 1));
     Coordinate _coordinate_1 = new Coordinate((this.x - 1), this.y);
@@ -179,6 +211,13 @@ public class Coordinate implements Comparable<Coordinate> {
     int _abs = Math.abs((other.x - this.x));
     int _abs_1 = Math.abs((other.y - this.y));
     return (_abs + _abs_1);
+  }
+
+  public double length() {
+    double _pow = Math.pow(this.x, 2);
+    double _pow_1 = Math.pow(this.y, 2);
+    double _plus = (_pow + _pow_1);
+    return Math.sqrt(_plus);
   }
 
   public int manhattanDistanceToZero() {

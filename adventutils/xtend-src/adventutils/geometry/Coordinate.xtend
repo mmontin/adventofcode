@@ -1,6 +1,7 @@
 package adventutils.geometry
 
 import java.util.Set
+import adventutils.Arithmetics
 
 // Unmutable 2D coordinates
 class Coordinate implements Comparable<Coordinate> {
@@ -66,9 +67,26 @@ class Coordinate implements Comparable<Coordinate> {
 	def symByX(int offset) {
 		new Coordinate(2 * offset - x, y)
 	}
-	
+
 	def scale(int factor) {
 		new Coordinate(factor * x, factor * y)
+	}
+
+	def Coordinate add(Coordinate other) {
+		new Coordinate(x + other.x, y + other.y)
+	}
+
+	def Coordinate diff(Coordinate other) {
+		val diff_x = x - other.x
+		val diff_y = y - other.y
+		if (diff_x == 0)
+			new Coordinate(0, 1)
+		else if (diff_y == 0)
+			new Coordinate(1, 0)
+		else {
+			val gcd = Math.abs(Arithmetics.gcd(diff_x, diff_y))
+			new Coordinate(diff_x / gcd, diff_y / gcd)
+		}
 	}
 
 	// Neighbours in the 8 possible surrounding spots
@@ -125,6 +143,10 @@ class Coordinate implements Comparable<Coordinate> {
 	def manhattanDistanceTo(Coordinate other) {
 		Math.abs(other.x - x) + Math.abs(other.y - y)
 	}
+	
+	def length() {
+		Math.sqrt(Math.pow(x,2)+Math.pow(y,2))
+	}
 
 	def manhattanDistanceToZero() {
 		manhattanDistanceTo(new Coordinate(0, 0))
@@ -171,7 +193,7 @@ class Coordinate implements Comparable<Coordinate> {
 			default: Direction.RIGHT
 		}
 	}
-	
+
 	def static Direction opposite(Direction d) {
 		switch d {
 			case UP: Direction.DOWN
