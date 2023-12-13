@@ -19,15 +19,9 @@ class Arithmetics {
 
 	def static gcd(int nb1, int nb2) {
 
-		var a = nb1
-		var b = nb2
+		var a = Math.max(nb1,nb2)
+		var b = Math.min(nb1,nb2)
 		var r = 0
-
-		if (b > a) {
-			var t = a
-			a = b
-			b = t
-		}
 		
 		do {
 			r = a % b

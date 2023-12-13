@@ -66,7 +66,7 @@ class Day12 {
 		input.subList(0, max_pos) -> max -> input.subList(max_pos + 1, input.size)
 	}
 
-	static final RunnerWithMemory2<String, List<Integer>, Long> myRunner = new RunnerWithMemory2[a, b|count(a, b)]
+	static final RunnerWithMemory2<String, List<Integer>, Long> myRunner = new RunnerWithMemory2[x, y|count(x, y)]
 
 	def static count(String line, List<Integer> brokens) {
 

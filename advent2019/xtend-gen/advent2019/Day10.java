@@ -3,6 +3,7 @@ package advent2019;
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Pair;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Day10 {
@@ -28,7 +29,7 @@ public class Day10 {
           {
             boolean _equals = s.equals("#");
             if (_equals) {
-              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+              Coordinate _coordinate = new Coordinate((j).intValue(), (-(i).intValue()));
               asteroids.add(_coordinate);
             }
             _xblockexpression_1 = ((j).intValue() + 1);
@@ -51,7 +52,7 @@ public class Day10 {
         {
           final Coordinate first = asteroids.get((i).intValue());
           final Coordinate second = asteroids.get((j).intValue());
-          final Coordinate vect = second.diff(first);
+          final Coordinate vect = second.subtract(first).reduce();
           Coordinate current = first.add(vect);
           while ((!asteroids_set.contains(current))) {
             current = current.add(vect);
@@ -81,25 +82,129 @@ public class Day10 {
       return Integer.valueOf(it.getValue().size());
     };
     final Map.Entry<Coordinate, HashSet<Coordinate>> best_spot = IterableExtensions.<Map.Entry<Coordinate, HashSet<Coordinate>>, Integer>maxBy(visible.entrySet(), _function_1);
-    InputOutput.<Integer>println(Integer.valueOf(best_spot.getValue().size()));
-    InputOutput.<Coordinate>println(best_spot.getKey());
-    final Function1<Coordinate, Pair<Coordinate, Double>> _function_2 = (Coordinate it) -> {
-      Pair<Coordinate, Double> _xblockexpression = null;
-      {
-        final Coordinate vector = it.diff(best_spot.getKey());
-        int _x = vector.getX();
-        int _minus = (-_x);
-        double _length = vector.length();
-        double _divide = (_minus / _length);
-        double _acos = Math.acos(_divide);
-        _xblockexpression = Pair.<Coordinate, Double>of(it, Double.valueOf(_acos));
+    final Coordinate best_location = best_spot.getKey();
+    final Function1<Coordinate, Coordinate> _function_2 = (Coordinate it) -> {
+      return it.subtract(best_location);
+    };
+    final List<Coordinate> visible_from_best_location = IterableExtensions.<Coordinate>sort(IterableExtensions.<Coordinate, Coordinate>map(best_spot.getValue(), _function_2));
+    InputOutput.<Integer>println(Integer.valueOf(visible_from_best_location.size()));
+    final Comparator<Coordinate> _function_3 = (Coordinate c1, Coordinate c2) -> {
+      return Day10.compare(c1, c2);
+    };
+    InputOutput.<List<Coordinate>>println(ListExtensions.<Coordinate>sortInplace(visible_from_best_location, _function_3));
+    final Comparator<Coordinate> _function_4 = (Coordinate x, Coordinate y) -> {
+      return Day10.compare(x, y);
+    };
+    InputOutput.<Coordinate>println(ListExtensions.<Coordinate>sortInplace(visible_from_best_location, _function_4).get(199).add(best_location).symByY(0));
+  }
+
+  public static int compare(final Coordinate c1, final Coordinate c2) {
+    int _xblockexpression = (int) 0;
+    {
+      final int quartile1 = Day10.quartile(c1);
+      final int quartile2 = Day10.quartile(c2);
+      int _xifexpression = (int) 0;
+      if ((quartile1 != quartile2)) {
+        _xifexpression = Integer.valueOf(quartile1).compareTo(Integer.valueOf(quartile2));
+      } else {
+        int _xblockexpression_1 = (int) 0;
+        {
+          int _x = c1.getX();
+          int _y = c1.getY();
+          double _divide = (((double) _x) / ((double) _y));
+          final double angle1 = Math.atan(Math.abs(_divide));
+          int _x_1 = c2.getX();
+          int _y_1 = c2.getY();
+          double _divide_1 = (((double) _x_1) / ((double) _y_1));
+          final double angle2 = Math.atan(Math.abs(_divide_1));
+          int _switchResult = (int) 0;
+          switch (quartile1) {
+            case 1:
+              _switchResult = Integer.valueOf(c1.getY()).compareTo(Integer.valueOf(c2.getY()));
+              break;
+            case 3:
+              _switchResult = Integer.valueOf(c1.getX()).compareTo(Integer.valueOf(c1.getY()));
+              break;
+            case 5:
+              _switchResult = Integer.valueOf(c2.getY()).compareTo(Integer.valueOf(c2.getY()));
+              break;
+            case 7:
+              _switchResult = Integer.valueOf(c2.getX()).compareTo(Integer.valueOf(c1.getX()));
+              break;
+            case 2:
+              _switchResult = Double.valueOf(angle1).compareTo(Double.valueOf(angle2));
+              break;
+            case 4:
+              _switchResult = Double.valueOf(angle2).compareTo(Double.valueOf(angle1));
+              break;
+            case 6:
+              _switchResult = Double.valueOf(angle1).compareTo(Double.valueOf(angle2));
+              break;
+            default:
+              _switchResult = Double.valueOf(angle2).compareTo(Double.valueOf(angle1));
+              break;
+          }
+          _xblockexpression_1 = _switchResult;
+        }
+        _xifexpression = _xblockexpression_1;
       }
-      return _xblockexpression;
-    };
-    final Function1<Pair<Coordinate, Double>, Double> _function_3 = (Pair<Coordinate, Double> it) -> {
-      return it.getValue();
-    };
-    InputOutput.<List<Pair<Coordinate, Double>>>println(
-      IterableExtensions.<Pair<Coordinate, Double>, Double>sortBy(IterableExtensions.<Coordinate, Pair<Coordinate, Double>>map(best_spot.getValue(), _function_2), _function_3));
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+
+  public static int quartile(final Coordinate c) {
+    int _switchResult = (int) 0;
+    boolean _matched = false;
+    if (((c.getY() == 0) && (c.getX() > 0))) {
+      _matched=true;
+      _switchResult = 3;
+    }
+    if (!_matched) {
+      int _y = c.getY();
+      boolean _equals = (_y == 0);
+      if (_equals) {
+        _matched=true;
+        _switchResult = 7;
+      }
+    }
+    if (!_matched) {
+      if (((c.getX() == 0) && (c.getY() > 0))) {
+        _matched=true;
+        _switchResult = 1;
+      }
+    }
+    if (!_matched) {
+      int _x = c.getX();
+      boolean _equals_1 = (_x == 0);
+      if (_equals_1) {
+        _matched=true;
+        _switchResult = 5;
+      }
+    }
+    if (!_matched) {
+      if (((c.getX() > 0) && (c.getY() > 0))) {
+        _matched=true;
+        _switchResult = 2;
+      }
+    }
+    if (!_matched) {
+      int _x_1 = c.getX();
+      boolean _greaterThan = (_x_1 > 0);
+      if (_greaterThan) {
+        _matched=true;
+        _switchResult = 4;
+      }
+    }
+    if (!_matched) {
+      if (((c.getX() < 0) && (c.getY() < 0))) {
+        _matched=true;
+        _switchResult = 6;
+      }
+    }
+    if (!_matched) {
+      _switchResult = 8;
+    }
+    return _switchResult;
   }
 }

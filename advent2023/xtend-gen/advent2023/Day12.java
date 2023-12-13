@@ -139,8 +139,8 @@ public class Day12 {
     return _xblockexpression;
   }
 
-  private static final RunnerWithMemory2<String, List<Integer>, Long> myRunner = new RunnerWithMemory2<String, List<Integer>, Long>(((Function2<String, List<Integer>, Long>) (String a, List<Integer> b) -> {
-    return Day12.count(a, b);
+  private static final RunnerWithMemory2<String, List<Integer>, Long> myRunner = new RunnerWithMemory2<String, List<Integer>, Long>(((Function2<String, List<Integer>, Long>) (String x, List<Integer> y) -> {
+    return Day12.count(x, y);
   }));
 
   public static Long count(final String line, final List<Integer> brokens) {

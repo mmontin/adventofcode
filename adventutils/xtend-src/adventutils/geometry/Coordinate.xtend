@@ -71,21 +71,27 @@ class Coordinate implements Comparable<Coordinate> {
 	def scale(int factor) {
 		new Coordinate(factor * x, factor * y)
 	}
+	
+	def negate() {
+		new Coordinate(-x, -y)
+	}
 
 	def Coordinate add(Coordinate other) {
 		new Coordinate(x + other.x, y + other.y)
 	}
 
-	def Coordinate diff(Coordinate other) {
-		val diff_x = x - other.x
-		val diff_y = y - other.y
-		if (diff_x == 0)
-			new Coordinate(0, 1)
-		else if (diff_y == 0)
-			new Coordinate(1, 0)
+	def Coordinate subtract(Coordinate other) {
+		new Coordinate(x - other.x, y-other.y)
+	}
+	
+	def Coordinate reduce() {
+		if (x== 0)
+			new Coordinate(0, Math.signum(y) as int)
+		else if (y == 0)
+			new Coordinate(Math.signum(x) as int, 0)
 		else {
-			val gcd = Math.abs(Arithmetics.gcd(diff_x, diff_y))
-			new Coordinate(diff_x / gcd, diff_y / gcd)
+			val gcd = Math.abs(Arithmetics.gcd(x, y))
+			new Coordinate(x / gcd, y / gcd)
 		}
 	}
 

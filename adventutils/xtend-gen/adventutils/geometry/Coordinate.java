@@ -99,35 +99,39 @@ public class Coordinate implements Comparable<Coordinate> {
     return new Coordinate((factor * this.x), (factor * this.y));
   }
 
+  public Coordinate negate() {
+    return new Coordinate((-this.x), (-this.y));
+  }
+
   public Coordinate add(final Coordinate other) {
     return new Coordinate((this.x + other.x), (this.y + other.y));
   }
 
-  public Coordinate diff(final Coordinate other) {
-    Coordinate _xblockexpression = null;
-    {
-      final int diff_x = (this.x - other.x);
-      final int diff_y = (this.y - other.y);
-      Coordinate _xifexpression = null;
-      if ((diff_x == 0)) {
-        _xifexpression = new Coordinate(0, 1);
+  public Coordinate subtract(final Coordinate other) {
+    return new Coordinate((this.x - other.x), (this.y - other.y));
+  }
+
+  public Coordinate reduce() {
+    Coordinate _xifexpression = null;
+    if ((this.x == 0)) {
+      float _signum = Math.signum(this.y);
+      _xifexpression = new Coordinate(0, ((int) _signum));
+    } else {
+      Coordinate _xifexpression_1 = null;
+      if ((this.y == 0)) {
+        float _signum_1 = Math.signum(this.x);
+        _xifexpression_1 = new Coordinate(((int) _signum_1), 0);
       } else {
-        Coordinate _xifexpression_1 = null;
-        if ((diff_y == 0)) {
-          _xifexpression_1 = new Coordinate(1, 0);
-        } else {
-          Coordinate _xblockexpression_1 = null;
-          {
-            final int gcd = Math.abs(Arithmetics.gcd(diff_x, diff_y));
-            _xblockexpression_1 = new Coordinate((diff_x / gcd), (diff_y / gcd));
-          }
-          _xifexpression_1 = _xblockexpression_1;
+        Coordinate _xblockexpression = null;
+        {
+          final int gcd = Math.abs(Arithmetics.gcd(this.x, this.y));
+          _xblockexpression = new Coordinate((this.x / gcd), (this.y / gcd));
         }
-        _xifexpression = _xifexpression_1;
+        _xifexpression_1 = _xblockexpression;
       }
-      _xblockexpression = _xifexpression;
+      _xifexpression = _xifexpression_1;
     }
-    return _xblockexpression;
+    return _xifexpression;
   }
 
   public HashSet<Coordinate> allAroundUnboundedNeighbours() {
