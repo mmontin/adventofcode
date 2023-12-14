@@ -9,6 +9,7 @@ class Day10 {
 	def static void main(String[] args) {
 
 		val asteroids = newArrayList
+		
 		new InputLoader(2019, 10).chars.fold(0) [ i, el |
 			el.fold(0) [ j, s |
 				if(s.equals("#")) asteroids.add(new Coordinate(j, -i))
@@ -16,36 +17,29 @@ class Day10 {
 			]
 			i + 1
 		]
+		
 		val asteroids_set = new HashSet(asteroids)
-
 		val visible = newHashMap
-
 		val nb_of_asteroids = asteroids.size
+		
 		for (i : 0 ..< nb_of_asteroids) {
 			for (j : i + 1 ..< nb_of_asteroids) {
 				val first = asteroids.get(i)
 				val second = asteroids.get(j)
 				val vect = second.subtract(first).reduce
 				var current = first.add(vect)
-				while (!asteroids_set.contains(current)) {
+				while (!asteroids_set.contains(current)) 
 					current = current.add(vect)
-				}
-
 				visible.merge(first, newHashSet(current))[x, y|x.addAll(y); x]
 				visible.merge(current, newHashSet(first))[x, y|x.addAll(y); x]
 			}
 		}
 
 		val best_spot = visible.entrySet.maxBy[value.size]
-		val best_location = best_spot.key
-
-		val visible_from_best_location = best_spot.value.map [
-			it.subtract(best_location)
-		].sort
-
+		val visible_from_best_location = best_spot.value.map[it.subtract(best_spot.key)].toList
 		println(visible_from_best_location.size)
-	    println(visible_from_best_location.sortInplace[c1,c2|c1.compare(c2)])
-		println(visible_from_best_location.sortInplace[x,y|x.compare(y)].get(199).add(best_location).symByY(0))
+		val star200 = visible_from_best_location.sortInplace[x, y|x.compare(y)].get(199).add(best_spot.key).symByY(0)
+		println(star200.x * 100 + star200.y)
 	}
 
 	static def compare(Coordinate c1, Coordinate c2) {

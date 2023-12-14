@@ -82,20 +82,20 @@ public class Day10 {
       return Integer.valueOf(it.getValue().size());
     };
     final Map.Entry<Coordinate, HashSet<Coordinate>> best_spot = IterableExtensions.<Map.Entry<Coordinate, HashSet<Coordinate>>, Integer>maxBy(visible.entrySet(), _function_1);
-    final Coordinate best_location = best_spot.getKey();
     final Function1<Coordinate, Coordinate> _function_2 = (Coordinate it) -> {
-      return it.subtract(best_location);
+      return it.subtract(best_spot.getKey());
     };
-    final List<Coordinate> visible_from_best_location = IterableExtensions.<Coordinate>sort(IterableExtensions.<Coordinate, Coordinate>map(best_spot.getValue(), _function_2));
+    final List<Coordinate> visible_from_best_location = IterableExtensions.<Coordinate>toList(IterableExtensions.<Coordinate, Coordinate>map(best_spot.getValue(), _function_2));
     InputOutput.<Integer>println(Integer.valueOf(visible_from_best_location.size()));
-    final Comparator<Coordinate> _function_3 = (Coordinate c1, Coordinate c2) -> {
-      return Day10.compare(c1, c2);
-    };
-    InputOutput.<List<Coordinate>>println(ListExtensions.<Coordinate>sortInplace(visible_from_best_location, _function_3));
-    final Comparator<Coordinate> _function_4 = (Coordinate x, Coordinate y) -> {
+    final Comparator<Coordinate> _function_3 = (Coordinate x, Coordinate y) -> {
       return Day10.compare(x, y);
     };
-    InputOutput.<Coordinate>println(ListExtensions.<Coordinate>sortInplace(visible_from_best_location, _function_4).get(199).add(best_location).symByY(0));
+    final Coordinate star200 = ListExtensions.<Coordinate>sortInplace(visible_from_best_location, _function_3).get(199).add(best_spot.getKey()).symByY(0);
+    int _x = star200.getX();
+    int _multiply = (_x * 100);
+    int _y = star200.getY();
+    int _plus = (_multiply + _y);
+    InputOutput.<Integer>println(Integer.valueOf(_plus));
   }
 
   public static int compare(final Coordinate c1, final Coordinate c2) {

@@ -2,6 +2,7 @@ package adventutils.geometry;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -53,6 +54,45 @@ public class CoordinateSet extends HashSet<Coordinate> {
             if (_equals) {
               Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
               CoordinateSet.this.add(_coordinate);
+            }
+          }
+        };
+        new ExclusiveRange(0, max_y, true).forEach(_function);
+      }
+    };
+    new ExclusiveRange(0, max_x, true).forEach(_function_1);
+  }
+
+  public CoordinateSet(final List<String> lines, final String other, final Set<Coordinate> otherSet) {
+    this();
+    final Function1<String, List<String>> _function = new Function1<String, List<String>>() {
+      public List<String> apply(final String it) {
+        final Function1<Character, String> _function = new Function1<Character, String>() {
+          public String apply(final Character it_1) {
+            return (it_1 + "");
+          }
+        };
+        return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
+      }
+    };
+    final List<List<String>> chars = ListExtensions.<String, List<String>>map(lines, _function);
+    final int max_x = chars.size();
+    final int max_y = chars.get(0).size();
+    final Consumer<Integer> _function_1 = new Consumer<Integer>() {
+      public void accept(final Integer i) {
+        final List<String> current_line = chars.get((i).intValue());
+        final Consumer<Integer> _function = new Consumer<Integer>() {
+          public void accept(final Integer j) {
+            boolean _equals = current_line.get((j).intValue()).equals("#");
+            if (_equals) {
+              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+              CoordinateSet.this.add(_coordinate);
+            } else {
+              boolean _equals_1 = current_line.get((j).intValue()).equals(other);
+              if (_equals_1) {
+                Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue());
+                otherSet.add(_coordinate_1);
+              }
             }
           }
         };
