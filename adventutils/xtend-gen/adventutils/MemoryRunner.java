@@ -5,12 +5,12 @@ import java.util.function.Function;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
-public class RunnerWithMemory<T extends Object, V extends Object> {
+public class MemoryRunner<T extends Object, V extends Object> {
   private Map<T, V> results;
 
   private Function<T, V> fun;
 
-  public RunnerWithMemory(final Function<T, V> fun_) {
+  public MemoryRunner(final Function<T, V> fun_) {
     this.results = CollectionLiterals.<T, V>newHashMap();
     this.fun = fun_;
   }

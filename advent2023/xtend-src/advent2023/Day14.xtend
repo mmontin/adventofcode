@@ -1,10 +1,10 @@
 package advent2023
 
+import adventutils.PatternRunner
 import adventutils.geometry.Coordinate
 import adventutils.geometry.CoordinateSet
 import adventutils.input.InputLoader
 import java.util.ArrayList
-import java.util.HashSet
 import java.util.List
 
 class Day14 {
@@ -24,49 +24,39 @@ class Day14 {
 
 	def static void main(String[] args) {
 
-		process(true, true)
-		println(load)
-		process(false, true)
-		
-		var cycles = newArrayList
-		var current = new HashSet(rolling)
-		var i = 0
-		var pos = -1
-		while (pos == -1) {
-			cycles.add(current)
-			i ++
-			cycle
-			current = new HashSet(rolling)
-			pos = cycles.indexOf(current)
-		}
+		val init_1 = new CoordinateSet
+		init_1.addAll(rolling)
 
-		val equivalent = (999999999 - pos) % (i - pos) + pos + 1
-		rolling.clear
-		rolling.addAll(cycles.get(equivalent))
-		println(load)
-	}
-	
-	def static cycle() {
-		process(true,true)
-		process(true,false)
-		process(false, true)
-		process(false,false)
+		println(load(process(true, true, init_1)))
+
+		val init_2 = new CoordinateSet
+		init_2.addAll(rolling)
+		val output_2 = PatternRunner.executeAndFindState(init_2, 1000000000)[cycle]
+		println(load(output_2))
 	}
 
-	def static process(boolean up, boolean col) {
-		(1 .. (col ? max_y : max_x) - 1).forEach[processCol(up, col)]
+	def static cycle(CoordinateSet rolling) {
+		val step_1 = process(true, true, rolling)
+		val step_2 = process(true, false, step_1)
+		val step_3 = process(false, true, step_2)
+		process(false, false, step_3)
 	}
 
-	def static load() {
+	def static process(boolean up, boolean col, CoordinateSet input) {
+		val rolling = new CoordinateSet
+		rolling.addAll(input)
+		(1 .. (col ? max_y : max_x) - 1).forEach[processCol(up, col, rolling)]
+		rolling
+	}
+
+	def static load(CoordinateSet rolling) {
 		rolling.fold(0) [ sum, el |
 			sum + (max_x - el.x)
 		]
 	}
 
-	def static processCol(int j, boolean up, boolean col) {
-
+	def static processCol(int j, boolean up, boolean col, CoordinateSet rolling) {
 		val max = col ? max_x : max_y
-
 		var last_wall = up ? 0 : max
 		var nb_of_rollings = 0
 		var i = up ? 1 : max - 1
@@ -75,8 +65,9 @@ class Day14 {
 			if (steady.contains(current)) {
 				for (k : 0 ..< nb_of_rollings)
 					rolling.add(
-						col ? new Coordinate(last_wall + (up ? k + 1 : -k - 1), j) : new Coordinate(j,
-							last_wall + (up ? k + 1 : -k - 1))
+						col
+							? new Coordinate(last_wall + (up ? k + 1 : -k - 1), j)
+							: new Coordinate(j, last_wall + (up ? k + 1 : -k - 1))
 					)
 				last_wall = col ? current.x : current.y
 				nb_of_rollings = 0

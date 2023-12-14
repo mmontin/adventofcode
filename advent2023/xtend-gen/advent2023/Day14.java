@@ -1,13 +1,13 @@
 package advent2023;
 
+import adventutils.PatternRunner;
 import adventutils.geometry.Coordinate;
 import adventutils.geometry.CoordinateSet;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import java.util.function.Function;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -46,60 +46,60 @@ public class Day14 {
   private static final CoordinateSet steady = new CoordinateSet(Day14.lines, "O", Day14.rolling);
 
   public static void main(final String[] args) {
-    Day14.process(true, true);
-    InputOutput.<Integer>println(Day14.load());
-    Day14.process(false, true);
-    ArrayList<HashSet<Coordinate>> cycles = CollectionLiterals.<HashSet<Coordinate>>newArrayList();
-    HashSet<Coordinate> current = new HashSet<Coordinate>(Day14.rolling);
-    int i = 0;
-    int pos = (-1);
-    while ((pos == (-1))) {
-      {
-        cycles.add(current);
-        i++;
-        Day14.cycle();
-        HashSet<Coordinate> _hashSet = new HashSet<Coordinate>(Day14.rolling);
-        current = _hashSet;
-        pos = cycles.indexOf(current);
-      }
-    }
-    final int equivalent = ((((999999999 - pos) % (i - pos)) + pos) + 1);
-    Day14.rolling.clear();
-    Day14.rolling.addAll(cycles.get(equivalent));
-    InputOutput.<Integer>println(Day14.load());
-  }
-
-  public static void cycle() {
-    Day14.process(true, true);
-    Day14.process(true, false);
-    Day14.process(false, true);
-    Day14.process(false, false);
-  }
-
-  public static void process(final boolean up, final boolean col) {
-    int _xifexpression = (int) 0;
-    if (col) {
-      _xifexpression = Day14.max_y;
-    } else {
-      _xifexpression = Day14.max_x;
-    }
-    int _minus = (_xifexpression - 1);
-    final Consumer<Integer> _function = (Integer it) -> {
-      Day14.processCol((it).intValue(), up, col);
+    final CoordinateSet init_1 = new CoordinateSet();
+    init_1.addAll(Day14.rolling);
+    InputOutput.<Integer>println(Day14.load(Day14.process(true, true, init_1)));
+    final CoordinateSet init_2 = new CoordinateSet();
+    init_2.addAll(Day14.rolling);
+    final Function<CoordinateSet, CoordinateSet> _function = (CoordinateSet it) -> {
+      return Day14.cycle(it);
     };
-    new IntegerRange(1, _minus).forEach(_function);
+    final CoordinateSet output_2 = PatternRunner.<CoordinateSet>executeAndFindState(init_2, 1000000000, _function);
+    InputOutput.<Integer>println(Day14.load(output_2));
   }
 
-  public static Integer load() {
+  public static CoordinateSet cycle(final CoordinateSet rolling) {
+    CoordinateSet _xblockexpression = null;
+    {
+      final CoordinateSet step_1 = Day14.process(true, true, rolling);
+      final CoordinateSet step_2 = Day14.process(true, false, step_1);
+      final CoordinateSet step_3 = Day14.process(false, true, step_2);
+      _xblockexpression = Day14.process(false, false, step_3);
+    }
+    return _xblockexpression;
+  }
+
+  public static CoordinateSet process(final boolean up, final boolean col, final CoordinateSet input) {
+    CoordinateSet _xblockexpression = null;
+    {
+      final CoordinateSet rolling = new CoordinateSet();
+      rolling.addAll(input);
+      int _xifexpression = (int) 0;
+      if (col) {
+        _xifexpression = Day14.max_y;
+      } else {
+        _xifexpression = Day14.max_x;
+      }
+      int _minus = (_xifexpression - 1);
+      final Consumer<Integer> _function = (Integer it) -> {
+        Day14.processCol((it).intValue(), up, col, rolling);
+      };
+      new IntegerRange(1, _minus).forEach(_function);
+      _xblockexpression = rolling;
+    }
+    return _xblockexpression;
+  }
+
+  public static Integer load(final CoordinateSet rolling) {
     final Function2<Integer, Coordinate, Integer> _function = (Integer sum, Coordinate el) -> {
       int _x = el.getX();
       int _minus = (Day14.max_x - _x);
       return Integer.valueOf(((sum).intValue() + _minus));
     };
-    return IterableExtensions.<Coordinate, Integer>fold(Day14.rolling, Integer.valueOf(0), _function);
+    return IterableExtensions.<Coordinate, Integer>fold(rolling, Integer.valueOf(0), _function);
   }
 
-  public static void processCol(final int j, final boolean up, final boolean col) {
+  public static void processCol(final int j, final boolean up, final boolean col, final CoordinateSet rolling) {
     int _xifexpression = (int) 0;
     if (col) {
       _xifexpression = Day14.max_x;
@@ -162,7 +162,7 @@ public class Day14 {
               int _plus_1 = (last_wall + _xifexpression_7);
               _xifexpression_5 = new Coordinate(j, _plus_1);
             }
-            Day14.rolling.add(_xifexpression_5);
+            rolling.add(_xifexpression_5);
           }
           int _xifexpression_8 = (int) 0;
           if (col) {
@@ -173,10 +173,10 @@ public class Day14 {
           last_wall = _xifexpression_8;
           nb_of_rollings = 0;
         } else {
-          boolean _contains_1 = Day14.rolling.contains(current);
+          boolean _contains_1 = rolling.contains(current);
           if (_contains_1) {
             nb_of_rollings++;
-            Day14.rolling.remove(current);
+            rolling.remove(current);
           }
         }
         if (up) {

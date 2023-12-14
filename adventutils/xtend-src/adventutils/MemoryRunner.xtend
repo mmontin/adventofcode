@@ -4,7 +4,7 @@ import java.util.Map
 import java.util.function.Function
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
-class RunnerWithMemory<T, V> {
+class MemoryRunner<T, V> {
 
 	Map<T, V> results
 	Function<T, V> fun
@@ -26,7 +26,7 @@ class RunnerWithMemory<T, V> {
 	}
 }
 
-class RunnerWithMemory2<T, T2, V> extends RunnerWithMemory<Pair<T, T2>, V> {
+class RunnerWithMemory2<T, T2, V> extends MemoryRunner<Pair<T, T2>, V> {
 
 	new(Function2<T, T2, V> fun) {
 		super[

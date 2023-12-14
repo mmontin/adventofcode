@@ -5,7 +5,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
-public class RunnerWithMemory2<T extends Object, T2 extends Object, V extends Object> extends RunnerWithMemory<Pair<T, T2>, V> {
+public class RunnerWithMemory2<T extends Object, T2 extends Object, V extends Object> extends MemoryRunner<Pair<T, T2>, V> {
   public RunnerWithMemory2(final Function2<T, T2, V> fun) {
     super(
       new Function<Pair<T, T2>, V>() {
