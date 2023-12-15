@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import adventutils.input.InputLoader;
-import adventutils.list.AgdaList;
+import adventutils.collection.AgdaList;
 
 public class Launcher {
 	public static void main(String[] args) throws IOException {

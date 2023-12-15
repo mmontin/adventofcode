@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adventutils.input.InputLoader;
-import adventutils.list.AgdaList;
+import adventutils.collection.AgdaList;
 
 public class Launcher {
 

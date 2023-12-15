@@ -1,7 +1,7 @@
 package advent2022;
 
+import adventutils.collection.AgdaList;
 import adventutils.input.InputLoader;
-import adventutils.list.AgdaList;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;

@@ -1,9 +1,9 @@
 package advent2018;
 
-import adventutils.geometry.Coordinate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
@@ -11,6 +11,8 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import adventutils.geometry.Coordinate;
 
 @SuppressWarnings("all")
 public class Day11 {

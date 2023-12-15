@@ -1,7 +1,7 @@
 package advent2023;
 
+import adventutils.collection.ListUtils;
 import adventutils.input.InputLoader;
-import adventutils.list.ListUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;

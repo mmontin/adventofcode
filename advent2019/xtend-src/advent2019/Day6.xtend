@@ -1,7 +1,7 @@
 package advent2019
 
 import adventutils.input.InputLoader
-import adventutils.list.ListUtils
+import adventutils.collection.ListUtils
 import adventutils.pathfinding.AStar
 import adventutils.pathfinding.State
 import java.util.HashSet

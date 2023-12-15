@@ -1,7 +1,7 @@
 package advent2021.puzzle24
 
 import adventutils.input.InputLoader
-import adventutils.list.ListUtils
+import adventutils.collection.ListUtils
 import java.util.ArrayList
 import java.util.List
 

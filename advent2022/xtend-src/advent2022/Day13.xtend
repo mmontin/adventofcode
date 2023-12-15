@@ -1,7 +1,7 @@
 package advent2022
 
 import adventutils.input.InputLoader
-import adventutils.list.AgdaList
+import adventutils.collection.AgdaList
 import java.util.ArrayList
 import java.util.List
 import java.util.Stack

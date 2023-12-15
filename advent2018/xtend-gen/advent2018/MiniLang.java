@@ -1,10 +1,12 @@
 package advent2018;
 
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+
+import com.google.common.base.Objects;
 
 @SuppressWarnings("all")
 public class MiniLang {

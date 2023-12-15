@@ -1,4 +1,4 @@
-package adventutils.list
+package adventutils.collection
 
 class Link<T> {
 

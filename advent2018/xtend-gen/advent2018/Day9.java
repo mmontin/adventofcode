@@ -1,6 +1,6 @@
 package advent2018;
 
-import adventutils.list.Link;
+import adventutils.collection.Link;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;

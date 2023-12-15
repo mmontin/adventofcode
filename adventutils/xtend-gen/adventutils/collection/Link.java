@@ -1,4 +1,4 @@
-package adventutils.list;
+package adventutils.collection;
 
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 

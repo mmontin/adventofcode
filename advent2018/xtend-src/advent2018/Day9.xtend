@@ -1,6 +1,6 @@
 package advent2018
 
-import adventutils.list.Link
+import adventutils.collection.Link
 
 class Day9 {
 

@@ -1,7 +1,7 @@
 package advent2023
 
 import adventutils.input.InputLoader
-import adventutils.list.ListUtils
+import adventutils.collection.ListUtils
 import java.util.List
 
 class Day9 {

@@ -1,4 +1,4 @@
-package adventutils.list;
+package adventutils.collection;
 
 import java.util.ArrayList;
 import java.util.List;
