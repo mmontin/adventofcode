@@ -1,11 +1,10 @@
 package advent2023;
 
+import adventutils.collection.Collection;
 import adventutils.input.InputLoader;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -32,46 +31,71 @@ public class Day15 {
       return Integer.valueOf(((acc).intValue() + (_apply).intValue()));
     };
     InputOutput.<Integer>println(IterableExtensions.<String, Integer>fold(((Iterable<String>)Conversions.doWrapArray(codes)), Integer.valueOf(0), _function_1));
-    final HashMap<Integer, ArrayList<Pair<String, Integer>>> boxes = CollectionLiterals.<Integer, ArrayList<Pair<String, Integer>>>newHashMap();
-    final Consumer<String> _function_2 = (String it) -> {
-      boolean _contains = it.contains("=");
+    final Function2<String, Map<Integer, ArrayList<Pair<String, Integer>>>, Serializable> _function_2 = (String el, Map<Integer, ArrayList<Pair<String, Integer>>> boxes) -> {
+      Serializable _xifexpression = null;
+      boolean _contains = el.contains("=");
       if (_contains) {
-        final String[] split = it.split("=");
-        final String label = split[0];
-        final Integer box = decode.apply(label);
-        final int focal = Integer.parseInt(split[1]);
-        final ArrayList<Pair<String, Integer>> previous = boxes.get(box);
-        if ((previous == null)) {
-          Pair<String, Integer> _mappedTo = Pair.<String, Integer>of(label, Integer.valueOf(focal));
-          boxes.put(box, CollectionLiterals.<Pair<String, Integer>>newArrayList(_mappedTo));
-        } else {
-          final Function1<Pair<String, Integer>, String> _function_3 = (Pair<String, Integer> it_1) -> {
-            return it_1.getKey();
-          };
-          final int index = ListExtensions.<Pair<String, Integer>, String>map(previous, _function_3).indexOf(label);
-          if ((index == (-1))) {
-            Pair<String, Integer> _mappedTo_1 = Pair.<String, Integer>of(label, Integer.valueOf(focal));
-            previous.add(_mappedTo_1);
+        Serializable _xblockexpression = null;
+        {
+          final String[] split = el.split("=");
+          final String label = split[0];
+          final Integer box = decode.apply(label);
+          final int focal = Integer.parseInt(split[1]);
+          final ArrayList<Pair<String, Integer>> previous = boxes.get(box);
+          Serializable _xifexpression_1 = null;
+          if ((previous == null)) {
+            Pair<String, Integer> _mappedTo = Pair.<String, Integer>of(label, Integer.valueOf(focal));
+            _xifexpression_1 = boxes.put(box, CollectionLiterals.<Pair<String, Integer>>newArrayList(_mappedTo));
           } else {
-            Pair<String, Integer> _mappedTo_2 = Pair.<String, Integer>of(label, Integer.valueOf(focal));
-            previous.set(index, _mappedTo_2);
+            Serializable _xblockexpression_1 = null;
+            {
+              final Function1<Pair<String, Integer>, String> _function_3 = (Pair<String, Integer> it) -> {
+                return it.getKey();
+              };
+              final int index = ListExtensions.<Pair<String, Integer>, String>map(previous, _function_3).indexOf(label);
+              Serializable _xifexpression_2 = null;
+              if ((index == (-1))) {
+                Pair<String, Integer> _mappedTo_1 = Pair.<String, Integer>of(label, Integer.valueOf(focal));
+                _xifexpression_2 = Boolean.valueOf(previous.add(_mappedTo_1));
+              } else {
+                Pair<String, Integer> _mappedTo_2 = Pair.<String, Integer>of(label, Integer.valueOf(focal));
+                _xifexpression_2 = previous.set(index, _mappedTo_2);
+              }
+              _xblockexpression_1 = _xifexpression_2;
+            }
+            _xifexpression_1 = _xblockexpression_1;
           }
+          _xblockexpression = _xifexpression_1;
         }
+        _xifexpression = _xblockexpression;
       } else {
-        final String label_1 = it.split("-")[0];
-        final ArrayList<Pair<String, Integer>> previous_1 = boxes.get(decode.apply(label_1));
-        if ((previous_1 != null)) {
-          final Function1<Pair<String, Integer>, String> _function_4 = (Pair<String, Integer> it_1) -> {
-            return it_1.getKey();
-          };
-          final int index_1 = ListExtensions.<Pair<String, Integer>, String>map(previous_1, _function_4).indexOf(label_1);
-          if ((index_1 != (-1))) {
-            previous_1.remove(index_1);
+        Pair<String, Integer> _xblockexpression_1 = null;
+        {
+          final String label = el.split("-")[0];
+          final ArrayList<Pair<String, Integer>> previous = boxes.get(decode.apply(label));
+          Pair<String, Integer> _xifexpression_1 = null;
+          if ((previous != null)) {
+            Pair<String, Integer> _xblockexpression_2 = null;
+            {
+              final Function1<Pair<String, Integer>, String> _function_3 = (Pair<String, Integer> it) -> {
+                return it.getKey();
+              };
+              final int index = ListExtensions.<Pair<String, Integer>, String>map(previous, _function_3).indexOf(label);
+              Pair<String, Integer> _xifexpression_2 = null;
+              if ((index != (-1))) {
+                _xifexpression_2 = previous.remove(index);
+              }
+              _xblockexpression_2 = _xifexpression_2;
+            }
+            _xifexpression_1 = _xblockexpression_2;
           }
+          _xblockexpression_1 = _xifexpression_1;
         }
+        _xifexpression = _xblockexpression_1;
       }
+      return _xifexpression;
     };
-    ((List<String>)Conversions.doWrapArray(codes)).forEach(_function_2);
+    final Map<Integer, ArrayList<Pair<String, Integer>>> boxes = Collection.<Integer, ArrayList<Pair<String, Integer>>, String, Serializable>aggregateToMap(((Iterable<String>)Conversions.doWrapArray(codes)), _function_2);
     final Function2<Integer, Map.Entry<Integer, ArrayList<Pair<String, Integer>>>, Integer> _function_3 = (Integer acc, Map.Entry<Integer, ArrayList<Pair<String, Integer>>> box) -> {
       ArrayList<Pair<String, Integer>> _value = box.getValue();
       Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(acc, Integer.valueOf(1));

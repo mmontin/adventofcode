@@ -1,5 +1,6 @@
 package advent2023
 
+import adventutils.collection.Collection
 import adventutils.input.InputLoader
 import java.util.function.Function
 
@@ -15,10 +16,9 @@ class Day15 {
 		val codes = new InputLoader(2023, 15).inputs.get(0).split(",")
 		println(codes.fold(0)[acc, el|acc + decode.apply(el)])
 
-		val boxes = newHashMap
-		codes.forEach [
-			if (it.contains("=")) {
-				val split = it.split("=")
+		val boxes = Collection.aggregateToMap(codes)[el,boxes|
+			if (el.contains("=")) {
+				val split = el.split("=")
 				val label = split.get(0)
 				val box = decode.apply(label)
 				val focal = Integer.parseInt(split.get(1))
@@ -33,7 +33,7 @@ class Day15 {
 						previous.set(index, label -> focal)
 				}
 			} else {
-				val label = it.split("-").get(0)
+				val label = el.split("-").get(0)
 				val previous = boxes.get(decode.apply(label))
 				if (previous !== null) {
 					val index = previous.map[key].indexOf(label)
