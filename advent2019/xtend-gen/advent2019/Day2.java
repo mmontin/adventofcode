@@ -15,11 +15,20 @@ public class Day2 {
       return Integer.valueOf(Integer.parseInt(it));
     };
     final List<Integer> inputs = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2019), Integer.valueOf(2)).getInputs().get(0).split(","))), _function);
-    final ArrayList<Integer> inputs_1 = new ArrayList<Integer>(inputs);
-    inputs_1.set(1, Integer.valueOf(12));
-    inputs_1.set(2, Integer.valueOf(2));
-    final Intcode decoder = new Intcode(inputs_1);
-    decoder.process();
-    InputOutput.<Integer>println(decoder.result());
+    InputOutput.<Integer>println(Day2.process(Integer.valueOf(9), Integer.valueOf(10), inputs));
+  }
+
+  public static Integer process(final Integer noun, final Integer verb, final List<Integer> inputs) {
+    Integer _xblockexpression = null;
+    {
+      final ArrayList<Integer> opcodes = new ArrayList<Integer>(inputs);
+      opcodes.set(1, noun);
+      opcodes.set(2, verb);
+      InputOutput.<ArrayList<Integer>>println(opcodes);
+      final Intcode decoder = new Intcode(opcodes);
+      decoder.process();
+      _xblockexpression = decoder.result();
+    }
+    return _xblockexpression;
   }
 }

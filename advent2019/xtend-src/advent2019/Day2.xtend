@@ -9,14 +9,7 @@ class Day2 {
 		
 		val inputs = new InputLoader(2019, 2).inputs.get(0).split(",").map[Integer.parseInt(it)]
 
-		val inputs_1 = new ArrayList(inputs)
-		inputs_1.set(1,12)
-		inputs_1.set(2,2)
-		
-		val decoder = new Intcode(inputs_1)
-		decoder.process
-		println(decoder.result)
-
+		println(process(9,10,inputs))
 		
 //		var i = 0
 //		var j = 0
@@ -33,18 +26,14 @@ class Day2 {
 //		println(100 * i + j)
 	}
 
-//	def static process(Integer noun, Integer verb, List<Integer> inputs) {
-//		val opcodes = new ArrayList(inputs)
-//		opcodes.set(1, noun)
-//		opcodes.set(2, verb)
-//		var i = 0
-//		while (opcodes.get(i) != 99) {
-//			val left = opcodes.get(opcodes.get(i + 1))
-//			val right = opcodes.get(opcodes.get(i + 2))
-//			val newVal = opcodes.get(i) == 1 ? left + right : left * right
-//			opcodes.set(opcodes.get(i + 3), newVal)
-//			i += 4
-//		}
-//		opcodes.get(0)
-//	}
+	def static process(Integer noun, Integer verb, List<Integer> inputs) {
+		val opcodes = new ArrayList(inputs)
+		opcodes.set(1, noun)
+		opcodes.set(2, verb)
+		
+		println(opcodes)
+		val decoder = new Intcode(opcodes)
+		decoder.process
+		decoder.result
+	}
 }
