@@ -1,10 +1,12 @@
 package advent2019
 
 import adventutils.string.StringUtils
+import java.util.ArrayList
+import java.util.LinkedList
 import java.util.List
 import java.util.Map
 
-class Intcode {
+class Intcode implements Runnable {
 
 	public static final Map<Integer, Pair<String, Integer>> codes = newHashMap(
 		99 -> ("halt" -> 0),
@@ -19,27 +21,35 @@ class Intcode {
 	)
 	public static final int inst_size = codes.values.map[value].max + 2
 
+	List<Integer> first_opcodes
+
+	public ListWrapper inputs
+	public ListWrapper outputs
 	List<Integer> opcodes
+	public String name
 	int pos
 
-	new(List<Integer> opcodes_) {
-		reset(opcodes_)
+	new(List<Integer> opcodes_, ListWrapper inputs_, ListWrapper outputs_, String name_) {
+		first_opcodes = opcodes_
+		inputs = inputs_
+		outputs = outputs_
+		name = name_
+		reset
 	}
-	
-	def reset(List<Integer> opcodes_) {
-		opcodes = opcodes_
+
+	new(List<Integer> opcodes_) {
+		this(opcodes_, new ListWrapper(newArrayList), new ListWrapper(newArrayList), "")
+	}
+
+	def reset() {
+		opcodes = new ArrayList(first_opcodes)
 		pos = 0
 	}
 
-	def process() {
-		processWithInputs(newArrayList)
-	}
-
-	def processWithInputs(List<Integer> inputs) {
+	override run() {
 		var finished = false
-		var outputs = newArrayList
-		var index = 0
 		while (!finished) {
+			println(name + " executing")
 			var current = StringUtils.padWith(opcodes.get(pos).toString, "0", inst_size)
 			var opcode = Integer.parseInt(current.substring(inst_size - 2))
 			var nb_params = codes.get(opcode).value
@@ -53,13 +63,26 @@ class Intcode {
 				case 2:
 					opcodes.set(params.get(2).resolveI, params.get(0).resolve * params.get(1).resolve)
 				case 3:
-					opcodes.set(params.get(0).resolveI, inputs.get(index ++))
+					synchronized (inputs) {
+						if (inputs.empty) {
+							println(name + " waiting")
+							inputs.wait
+						}
+						if (inputs.halt)
+							finished = true
+						else
+							opcodes.set(params.get(0).resolveI, inputs.poll)
+					}
 				case 4:
-					outputs.add(params.get(0).resolve)
-				case 5: 
-					if (params.get(0).resolve != 0)  pos = params.get(1).resolve - (nb_params + 1)
+					synchronized (outputs) {
+						outputs.add(params.get(0).resolve)
+						println(name + " notifying")
+						outputs.notify
+					}
+				case 5:
+					if(params.get(0).resolve != 0) pos = params.get(1).resolve - (nb_params + 1)
 				case 6:
-					if (params.get(0).resolve == 0)  pos = params.get(1).resolve - (nb_params + 1)
+					if(params.get(0).resolve == 0) pos = params.get(1).resolve - (nb_params + 1)
 				case 7:
 					opcodes.set(params.get(2).resolveI, params.get(0).resolve < params.get(1).resolve ? 1 : 0)
 				case 8:
@@ -69,7 +92,11 @@ class Intcode {
 			}
 			pos += nb_params + 1
 		}
-		outputs
+		synchronized (outputs) {
+			println(name + " halting")
+			outputs.halt = true
+			outputs.notify
+		}
 	}
 
 	def private resolveI(Pair<Integer, Boolean> input) {
@@ -86,5 +113,26 @@ class Intcode {
 
 	def result() {
 		opcodes.get(0)
+	}
+
+	static class ListWrapper extends LinkedList<Integer> {
+
+		public Integer lastProduced
+		boolean halt
+
+		new(List<Integer> list_) {
+			super(list_)
+			lastProduced = list_.last
+			halt = false
+		}
+		
+		override add(Integer i) {
+			lastProduced = i
+			super.add(i)
+		}
+
+		override toString() {
+			halt + " ; " + super.toString
+		}
 	}
 }

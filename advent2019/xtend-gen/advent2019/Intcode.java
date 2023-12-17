@@ -3,16 +3,48 @@ package advent2019;
 import adventutils.string.StringUtils;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
-public class Intcode {
+public class Intcode implements Runnable {
+  public static class ListWrapper extends LinkedList<Integer> {
+    public Integer lastProduced;
+
+    private boolean halt;
+
+    public ListWrapper(final List<Integer> list_) {
+      super(list_);
+      this.lastProduced = IterableExtensions.<Integer>last(list_);
+      this.halt = false;
+    }
+
+    @Override
+    public boolean add(final Integer i) {
+      boolean _xblockexpression = false;
+      {
+        this.lastProduced = i;
+        _xblockexpression = super.add(i);
+      }
+      return _xblockexpression;
+    }
+
+    @Override
+    public String toString() {
+      String _plus = (Boolean.valueOf(this.halt) + " ; ");
+      String _string = super.toString();
+      return (_plus + _string);
+    }
+  }
+
   public static final Map<Integer, Pair<String, Integer>> codes = CollectionLiterals.<Integer, Pair<String, Integer>>newHashMap(
     Pair.<Integer, Pair<String, Integer>>of(Integer.valueOf(99), Pair.<String, Integer>of("halt", Integer.valueOf(0))), 
     Pair.<Integer, Pair<String, Integer>>of(Integer.valueOf(1), Pair.<String, Integer>of("add", Integer.valueOf(3))), 
@@ -28,35 +60,47 @@ public class Intcode {
     return it.getValue();
   })))).intValue() + 2);
 
+  private List<Integer> first_opcodes;
+
+  public Intcode.ListWrapper inputs;
+
+  public Intcode.ListWrapper outputs;
+
   private List<Integer> opcodes;
+
+  public String name;
 
   private int pos;
 
-  public Intcode(final List<Integer> opcodes_) {
-    this.reset(opcodes_);
+  public Intcode(final List<Integer> opcodes_, final Intcode.ListWrapper inputs_, final Intcode.ListWrapper outputs_, final String name_) {
+    this.first_opcodes = opcodes_;
+    this.inputs = inputs_;
+    this.outputs = outputs_;
+    this.name = name_;
+    this.reset();
   }
 
-  public int reset(final List<Integer> opcodes_) {
+  public Intcode(final List<Integer> opcodes_) {
+    this(opcodes_, new Intcode.ListWrapper(CollectionLiterals.<Integer>newArrayList()), new Intcode.ListWrapper(CollectionLiterals.<Integer>newArrayList()), "");
+  }
+
+  public int reset() {
     int _xblockexpression = (int) 0;
     {
-      this.opcodes = opcodes_;
+      ArrayList<Integer> _arrayList = new ArrayList<Integer>(this.first_opcodes);
+      this.opcodes = _arrayList;
       _xblockexpression = this.pos = 0;
     }
     return _xblockexpression;
   }
 
-  public ArrayList<Integer> process() {
-    return this.processWithInputs(CollectionLiterals.<Integer>newArrayList());
-  }
-
-  public ArrayList<Integer> processWithInputs(final List<Integer> inputs) {
-    ArrayList<Integer> _xblockexpression = null;
-    {
+  @Override
+  public void run() {
+    try {
       boolean finished = false;
-      ArrayList<Integer> outputs = CollectionLiterals.<Integer>newArrayList();
-      int index = 0;
       while ((!finished)) {
         {
+          InputOutput.<String>println((this.name + " executing"));
           String current = StringUtils.padWith(this.opcodes.get(this.pos).toString(), "0", Intcode.inst_size);
           int opcode = Integer.parseInt(current.substring((Intcode.inst_size - 2)));
           Integer nb_params = Intcode.codes.get(Integer.valueOf(opcode)).getValue();
@@ -82,11 +126,25 @@ public class Intcode {
               this.opcodes.set((_resolveI_1).intValue(), Integer.valueOf(_multiply));
               break;
             case 3:
-              int _plusPlus = index++;
-              this.opcodes.set((this.resolveI(params.get(0))).intValue(), inputs.get(_plusPlus));
+              synchronized (this.inputs) {
+                boolean _isEmpty = this.inputs.isEmpty();
+                if (_isEmpty) {
+                  InputOutput.<String>println((this.name + " waiting"));
+                  this.inputs.wait();
+                }
+                if (this.inputs.halt) {
+                  finished = true;
+                } else {
+                  this.opcodes.set((this.resolveI(params.get(0))).intValue(), this.inputs.poll());
+                }
+              }
               break;
             case 4:
-              outputs.add(this.resolve(params.get(0)));
+              synchronized (this.outputs) {
+                this.outputs.add(this.resolve(params.get(0)));
+                InputOutput.<String>println((this.name + " notifying"));
+                this.outputs.notify();
+              }
               break;
             case 5:
               Integer _resolve_4 = this.resolve(params.get(0));
@@ -140,9 +198,14 @@ public class Intcode {
           this.pos = (_pos + ((nb_params).intValue() + 1));
         }
       }
-      _xblockexpression = outputs;
+      synchronized (this.outputs) {
+        InputOutput.<String>println((this.name + " halting"));
+        this.outputs.halt = true;
+        this.outputs.notify();
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    return _xblockexpression;
   }
 
   private Integer resolveI(final Pair<Integer, Boolean> input) {

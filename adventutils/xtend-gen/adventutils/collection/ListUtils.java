@@ -1,6 +1,10 @@
 package adventutils.collection;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
 public class ListUtils {
@@ -31,5 +35,35 @@ public class ListUtils {
       _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
+  }
+
+  public static <E extends Object> List<ArrayList<E>> permute(final List<E> inputs) {
+    final ArrayList<ArrayList<E>> result = CollectionLiterals.<ArrayList<E>>newArrayList();
+    if ((inputs != null)) {
+      final int s1 = inputs.size();
+      if ((s1 > 0)) {
+        final Iterator<E> iter = inputs.iterator();
+        while (iter.hasNext()) {
+          {
+            final E elt = iter.next();
+            final int index = inputs.indexOf(elt);
+            List<E> _subList = inputs.subList(0, index);
+            final ArrayList<E> list2 = new ArrayList<E>(_subList);
+            list2.addAll(inputs.subList((index + 1), s1));
+            final Consumer<ArrayList<E>> _function = new Consumer<ArrayList<E>>() {
+              public void accept(final ArrayList<E> it) {
+                it.add(0, elt);
+                result.add(it);
+              }
+            };
+            ListUtils.<E>permute(list2).forEach(_function);
+          }
+        }
+      } else {
+        ArrayList<E> _arrayList = new ArrayList<E>();
+        result.add(_arrayList);
+      }
+    }
+    return result;
   }
 }

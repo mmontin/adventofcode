@@ -39,7 +39,7 @@ public class Day2 {
       opcodes.set(1, noun);
       opcodes.set(2, verb);
       final Intcode decoder = new Intcode(opcodes);
-      decoder.process();
+      decoder.run();
       _xblockexpression = decoder.result();
     }
     return _xblockexpression;

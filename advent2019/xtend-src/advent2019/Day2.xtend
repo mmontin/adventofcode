@@ -31,7 +31,7 @@ class Day2 {
 		opcodes.set(2, verb)
 
 		val decoder = new Intcode(opcodes)
-		decoder.process
+		decoder.run
 		decoder.result
 	}
 }

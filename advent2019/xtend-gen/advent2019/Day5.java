@@ -16,12 +16,19 @@ public class Day5 {
     final Function1<String, Integer> _function = (String it) -> {
       return Integer.valueOf(Integer.parseInt(it));
     };
-    final List<Integer> inputs = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2019), Integer.valueOf(5)).getInputs().get(0).split(","))), _function);
-    ArrayList<Integer> _arrayList = new ArrayList<Integer>(inputs);
-    final Intcode decoder = new Intcode(_arrayList);
-    InputOutput.<Integer>println(IterableExtensions.<Integer>last(decoder.processWithInputs(CollectionLiterals.<Integer>newArrayList(Integer.valueOf(1)))));
-    ArrayList<Integer> _arrayList_1 = new ArrayList<Integer>(inputs);
-    decoder.reset(_arrayList_1);
-    InputOutput.<Integer>println(IterableExtensions.<Integer>last(decoder.processWithInputs(CollectionLiterals.<Integer>newArrayList(Integer.valueOf(5)))));
+    final List<Integer> opcodes = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2019), Integer.valueOf(5)).getInputs().get(0).split(","))), _function);
+    final ArrayList<Integer> inputs = CollectionLiterals.<Integer>newArrayList(Integer.valueOf(1));
+    final ArrayList<Integer> outputs = CollectionLiterals.<Integer>newArrayList();
+    Intcode.ListWrapper _listWrapper = new Intcode.ListWrapper(inputs);
+    Intcode.ListWrapper _listWrapper_1 = new Intcode.ListWrapper(outputs);
+    final Intcode decoder = new Intcode(opcodes, _listWrapper, _listWrapper_1, "");
+    decoder.run();
+    InputOutput.<Integer>println(IterableExtensions.<Integer>last(outputs));
+    decoder.reset();
+    inputs.clear();
+    outputs.clear();
+    inputs.add(Integer.valueOf(5));
+    decoder.run();
+    InputOutput.<Integer>println(IterableExtensions.<Integer>last(outputs));
   }
 }
