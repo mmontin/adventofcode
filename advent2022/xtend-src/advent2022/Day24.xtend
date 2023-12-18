@@ -1,13 +1,15 @@
 package advent2022
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
-import java.util.List
+import adventutils.pathfinding.AStar
 import adventutils.pathfinding.State
+import java.util.List
 import java.util.Map
 import java.util.Set
-import adventutils.pathfinding.AStar
+
+import static advent2022.Day24.PositionTimed.*
 
 class Day24 {
 

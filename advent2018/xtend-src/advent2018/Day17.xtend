@@ -2,8 +2,8 @@ package advent2018
 
 import adventutils.Either
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
 import adventutils.geometry.CoordinateSet
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.Optional
 import java.util.Set

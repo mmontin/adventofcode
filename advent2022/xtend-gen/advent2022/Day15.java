@@ -1,17 +1,19 @@
 package advent2022;
 
-import adventutils.geometry.Coordinate;
-import adventutils.geometry.Interval;
-import adventutils.geometry.Intervals;
-import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+
+import adventutils.geometry.Coordinate;
+import adventutils.geometry.Interval;
+import adventutils.geometry.Intervals;
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day15 {

@@ -1,10 +1,9 @@
 package advent2021.puzzle15;
 
-import adventutils.input.InputLoader;
-import adventutils.pathfinding.AStar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -12,6 +11,9 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+
+import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
 
 @SuppressWarnings("all")
 public class Launcher {

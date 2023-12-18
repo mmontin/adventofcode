@@ -1,6 +1,8 @@
 package advent2017;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import java.util.HashMap;
 import java.util.HashSet;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -34,7 +36,7 @@ public class Day3 {
     final HashMap<Coordinate, Integer> coordinates = CollectionLiterals.<Coordinate, Integer>newHashMap();
     Coordinate currentPosition = new Coordinate();
     coordinates.put(currentPosition, Integer.valueOf(1));
-    Coordinate.Direction currentDirection = Coordinate.Direction.RIGHT;
+    Direction currentDirection = Direction.RIGHT;
     do {
       {
         currentPosition = currentPosition.move(currentDirection);
@@ -49,7 +51,7 @@ public class Day3 {
         int _size = neighbours.size();
         boolean _lessEqualsThan = (_size <= 2);
         if (_lessEqualsThan) {
-          currentDirection = Coordinate.nextDirection(currentDirection);
+          currentDirection = Dir.nextDirection(currentDirection);
         }
       }
     } while(((coordinates.get(currentPosition)).intValue() < Day3.input));

@@ -1,7 +1,7 @@
 package advent2023
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.HashSet
 

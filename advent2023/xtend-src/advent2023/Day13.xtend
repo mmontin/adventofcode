@@ -2,12 +2,13 @@ package advent2023
 
 import adventutils.geometry.CoordinateSet
 import adventutils.input.InputLoader
+import java.util.List
 
 class Day13 {
 	def static void main(String[] args) {
 		val br = new InputLoader(2023, 13).inputReader
 		val tiles = newArrayList
-		val current_tile = newArrayList
+		val List<String> current_tile = newArrayList
 		while (br.ready) {
 			val current_line = br.readLine()
 			if (current_line.empty || !br.ready) {

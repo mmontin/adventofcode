@@ -2,7 +2,8 @@ package advent2023
 
 import adventutils.collection.Collection
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Dir
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import adventutils.pathfinding.AStar
 import adventutils.pathfinding.State
@@ -61,9 +62,9 @@ class Day17 {
 		}
 
 		override neighbours() {
-			val directions = Coordinate.allDirections
+			val directions = Dir.allDirections
 			directions.remove(direction)
-			directions.remove(Coordinate.opposite(direction))
+			directions.remove(Dir.opposite(direction))
 			directions.fold(newHashSet) [ output, d |
 				(1 ..< max_offset + 1).fold(0) [ acc, i |
 					val newCoords = switch d {

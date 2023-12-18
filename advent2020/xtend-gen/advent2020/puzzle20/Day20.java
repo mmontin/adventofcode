@@ -1,6 +1,7 @@
 package advent2020.puzzle20;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class Day20 {
       this.content = _content;
     }
 
-    public String getBorder(final Coordinate.Direction d) {
+    public String getBorder(final Direction d) {
       String _switchResult = null;
       if (d != null) {
         switch (d) {
@@ -109,13 +110,13 @@ public class Day20 {
     }
 
     public boolean matchesSomewhereWithOtherName(final String border, final long _number) {
-      return (((this.matchesThereButWithOtherName(border, Coordinate.Direction.UP, _number) || 
-        this.matchesThereButWithOtherName(border, Coordinate.Direction.DOWN, _number)) || 
-        this.matchesThereButWithOtherName(border, Coordinate.Direction.LEFT, _number)) || 
-        this.matchesThereButWithOtherName(border, Coordinate.Direction.RIGHT, _number));
+      return (((this.matchesThereButWithOtherName(border, Direction.UP, _number) || 
+        this.matchesThereButWithOtherName(border, Direction.DOWN, _number)) || 
+        this.matchesThereButWithOtherName(border, Direction.LEFT, _number)) || 
+        this.matchesThereButWithOtherName(border, Direction.RIGHT, _number));
     }
 
-    public boolean matchesThereButWithOtherName(final String border, final Coordinate.Direction d, final long _number) {
+    public boolean matchesThereButWithOtherName(final String border, final Direction d, final long _number) {
       return ((this.number != _number) && this.getBorder(d).equals(border));
     }
 
@@ -355,10 +356,10 @@ public class Day20 {
       public Boolean apply(final Day20.Tile it) {
         boolean _xblockexpression = false;
         {
-          final String rb = it.getBorder(Coordinate.Direction.RIGHT);
-          final String db = it.getBorder(Coordinate.Direction.DOWN);
-          final String ub = it.getBorder(Coordinate.Direction.UP);
-          final String lb = it.getBorder(Coordinate.Direction.LEFT);
+          final String rb = it.getBorder(Direction.RIGHT);
+          final String db = it.getBorder(Direction.DOWN);
+          final String ub = it.getBorder(Direction.UP);
+          final String lb = it.getBorder(Direction.LEFT);
           final long name = it.number;
           final HashSet<Day20.Tile> dup = new HashSet<Day20.Tile>(all_tiles);
           final Function1<Day20.Tile, Boolean> _function = new Function1<Day20.Tile, Boolean>() {
@@ -406,7 +407,7 @@ public class Day20 {
       {
         final Function1<Day20.Tile, Boolean> _function_3 = new Function1<Day20.Tile, Boolean>() {
           public Boolean apply(final Day20.Tile it) {
-            return Boolean.valueOf(it.matchesThereButWithOtherName(Day20.current_tile.getBorder(Coordinate.Direction.RIGHT), Coordinate.Direction.LEFT, 
+            return Boolean.valueOf(it.matchesThereButWithOtherName(Day20.current_tile.getBorder(Direction.RIGHT), Direction.LEFT, 
               Day20.current_tile.number));
           }
         };
@@ -428,7 +429,7 @@ public class Day20 {
         Day20.current_tile = image.get(_coordinate_1);
         final Function1<Day20.Tile, Boolean> _function_3 = new Function1<Day20.Tile, Boolean>() {
           public Boolean apply(final Day20.Tile it) {
-            return Boolean.valueOf(it.matchesThereButWithOtherName(Day20.current_tile.getBorder(Coordinate.Direction.DOWN), Coordinate.Direction.UP, 
+            return Boolean.valueOf(it.matchesThereButWithOtherName(Day20.current_tile.getBorder(Direction.DOWN), Direction.UP, 
               Day20.current_tile.number));
           }
         };
@@ -446,7 +447,7 @@ public class Day20 {
           {
             final Function1<Day20.Tile, Boolean> _function_5 = new Function1<Day20.Tile, Boolean>() {
               public Boolean apply(final Day20.Tile it) {
-                return Boolean.valueOf(it.matchesThereButWithOtherName(Day20.current_tile.getBorder(Coordinate.Direction.RIGHT), Coordinate.Direction.LEFT, 
+                return Boolean.valueOf(it.matchesThereButWithOtherName(Day20.current_tile.getBorder(Direction.RIGHT), Direction.LEFT, 
                   Day20.current_tile.number));
               }
             };

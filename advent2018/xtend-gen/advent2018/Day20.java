@@ -1,6 +1,8 @@
 package advent2018;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import adventutils.pathfinding.AStar;
 import adventutils.pathfinding.NotInitializedException;
@@ -93,7 +95,7 @@ public class Day20 {
             break;
           default:
             {
-              final Coordinate.Direction direction = Coordinate.directionFromPole(s);
+              final Direction direction = Dir.directionFromPole(s);
               final HashSet<Day20.MyCoordinate> next_coords = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
               final Consumer<Day20.MyCoordinate> _function_2 = (Day20.MyCoordinate c) -> {
                 final Coordinate next_coord = c.otherMove(direction);
@@ -123,7 +125,7 @@ public class Day20 {
         }
       } else {
         {
-          final Coordinate.Direction direction = Coordinate.directionFromPole(s);
+          final Direction direction = Dir.directionFromPole(s);
           final HashSet<Day20.MyCoordinate> next_coords = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
           final Consumer<Day20.MyCoordinate> _function_2 = (Day20.MyCoordinate c) -> {
             final Coordinate next_coord = c.otherMove(direction);

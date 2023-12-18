@@ -1,7 +1,8 @@
 package advent2017
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Dir
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.Map
 
@@ -28,10 +29,10 @@ class Day22 {
 
 		for (i : 0 .. 9999) {
 			if (infected.contains(current_position)) {
-				current_direction = Coordinate.clockWise(current_direction)
+				current_direction = Dir.clockWise(current_direction)
 				infected.remove(current_position)
 			} else {
-				current_direction = Coordinate.counterClockWise(current_direction)
+				current_direction = Dir.counterClockWise(current_direction)
 				infected.add(current_position)
 				infections++
 			}
@@ -59,10 +60,10 @@ class Day22 {
 		for (i : 0 .. 9999999) {
 			val current_state = nodes.getOrDefault(current_position, 0)
 			current_direction = switch current_state {
-				case 0: Coordinate.counterClockWise(current_direction)
+				case 0: Dir.counterClockWise(current_direction)
 				case 1: current_direction
-				case 2: Coordinate.clockWise(current_direction)
-				case 3: Coordinate.clockWise(Coordinate.clockWise(current_direction))
+				case 2: Dir.clockWise(current_direction)
+				case 3: Dir.clockWise(Dir.clockWise(current_direction))
 			}
 			if(nodes.merge(current_position, 1)[x, y|(x + y) % 4] == 2) infections++
 			current_position = current_position.otherMove(current_direction)

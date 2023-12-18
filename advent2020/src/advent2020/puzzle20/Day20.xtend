@@ -1,7 +1,7 @@
 package advent2020.puzzle20
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.HashSet
 import java.util.List

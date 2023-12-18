@@ -3,8 +3,8 @@ package advent2020.puzzle12;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import adventutils.input.InputLoader;
 import adventutils.collection.AgdaList;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 

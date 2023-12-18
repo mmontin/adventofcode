@@ -1,7 +1,8 @@
 package advent2021.puzzle23;
 
-import adventutils.pathfinding.AStar;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+
+import adventutils.pathfinding.AStar;
 
 @SuppressWarnings("all")
 public class Launcher {

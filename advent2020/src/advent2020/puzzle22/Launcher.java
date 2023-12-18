@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import adventutils.input.InputLoader;
 import adventutils.collection.AgdaList;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 

@@ -1,6 +1,7 @@
 package advent2022;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,11 +28,11 @@ public class Day23 {
 
   private static final Set<Coordinate> elves = CollectionLiterals.<Coordinate>newHashSet();
 
-  private static final List<Coordinate.Direction> propositions = CollectionLiterals.<Coordinate.Direction>newArrayList();
+  private static final List<Direction> propositions = CollectionLiterals.<Direction>newArrayList();
 
   public static void init() {
     Day23.propositions.clear();
-    Day23.propositions.addAll(CollectionLiterals.<Coordinate.Direction>newArrayList(Coordinate.Direction.UP, Coordinate.Direction.DOWN, Coordinate.Direction.LEFT, Coordinate.Direction.RIGHT));
+    Day23.propositions.addAll(CollectionLiterals.<Direction>newArrayList(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
     Day23.elves.clear();
     int _size = Day23.input.size();
     final Consumer<Integer> _function = new Consumer<Integer>() {
@@ -116,7 +117,7 @@ public class Day23 {
             int i = 0;
             while (((!proposition_made) && (i < 4))) {
               {
-                final Coordinate.Direction current_direction = Day23.propositions.get(i);
+                final Direction current_direction = Day23.propositions.get(i);
                 final Set<Coordinate> current_proposal = elf.directedNeighbours(current_direction);
                 boolean _containsAll = empty_neighbours.containsAll(current_proposal);
                 if (_containsAll) {

@@ -1,6 +1,7 @@
 package advent2018
 
 import adventutils.geometry.Coordinate
+import adventutils.geometry.Dir
 import adventutils.input.InputLoader
 import adventutils.pathfinding.AStar
 import adventutils.pathfinding.NotInitializedException
@@ -38,7 +39,7 @@ class Day20 {
 					current_stack.peek.addAll(last)
 				}
 				default: {
-					val direction = Coordinate.directionFromPole(s)
+					val direction = Dir.directionFromPole(s)
 					val next_coords = newHashSet
 					current_stack.pop.forEach [ c |
 						val next_coord = c.otherMove(direction)

@@ -1,7 +1,8 @@
 package advent2022
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Dir
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.List
 import java.util.Map
@@ -177,14 +178,14 @@ class Day22 {
 		for (s : movements) {
 			switch s {
 				case "L": {
-					current_orientation = Coordinate.counterClockWise(current_orientation)
+					current_orientation = Dir.counterClockWise(current_orientation)
 					current_full_position = current_full_position.key ->
-						Coordinate.counterClockWise(current_full_position.value)
+						Dir.counterClockWise(current_full_position.value)
 				}
 				case "R": {
-					current_orientation = Coordinate.clockWise(current_orientation)
+					current_orientation = Dir.clockWise(current_orientation)
 					current_full_position = current_full_position.key ->
-						Coordinate.clockWise(current_full_position.value)
+						Dir.clockWise(current_full_position.value)
 				}
 				default: {
 					val steps = Integer.parseInt(s)
@@ -206,8 +207,8 @@ class Day22 {
 				}
 			}
 		}
-		println(current_position.x * 1000 + 4 * current_position.y + Coordinate.directionValue(current_orientation))
+		println(current_position.x * 1000 + 4 * current_position.y + Dir.directionValue(current_orientation))
 		println(current_full_position.key.x * 1000 + 4 * current_full_position.key.y +
-			Coordinate.directionValue(current_full_position.value))
+			Dir.directionValue(current_full_position.value))
 	}
 }

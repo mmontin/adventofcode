@@ -16,20 +16,24 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public static void main(final String[] args) {
     final List<List<Integer>> tiles = new ArrayList<List<Integer>>();
-    final Consumer<String> _function = (String l) -> {
-      final ArrayList<Integer> line = CollectionLiterals.<Integer>newArrayList();
-      final Consumer<Character> _function_1 = (Character c) -> {
-        int _xifexpression = (int) 0;
-        boolean _equals = (c + "").equals("#");
-        if (_equals) {
-          _xifexpression = 1;
-        } else {
-          _xifexpression = 0;
-        }
-        line.add(Integer.valueOf(_xifexpression));
-      };
-      ((List<Character>)Conversions.doWrapArray(l.toCharArray())).forEach(_function_1);
-      tiles.add(line);
+    final Consumer<String> _function = new Consumer<String>() {
+      public void accept(final String l) {
+        final ArrayList<Integer> line = CollectionLiterals.<Integer>newArrayList();
+        final Consumer<Character> _function = new Consumer<Character>() {
+          public void accept(final Character c) {
+            int _xifexpression = (int) 0;
+            boolean _equals = (c + "").equals("#");
+            if (_equals) {
+              _xifexpression = 1;
+            } else {
+              _xifexpression = 0;
+            }
+            line.add(Integer.valueOf(_xifexpression));
+          }
+        };
+        ((List<Character>)Conversions.doWrapArray(l.toCharArray())).forEach(_function);
+        tiles.add(line);
+      }
     };
     new InputLoader(Integer.valueOf(2015), Integer.valueOf(18)).getInputs().forEach(_function);
     List<List<Integer>> input = tiles;
@@ -37,11 +41,15 @@ public class Launcher {
     for (final Integer k : _upTo) {
       input = Launcher.step(input);
     }
-    final Function2<Integer, List<Integer>, Integer> _function_1 = (Integer v, List<Integer> l) -> {
-      final Function2<Integer, Integer, Integer> _function_2 = (Integer x, Integer y) -> {
-        return Integer.valueOf(((x).intValue() + (y).intValue()));
-      };
-      return IterableExtensions.<Integer, Integer>fold(l, v, _function_2);
+    final Function2<Integer, List<Integer>, Integer> _function_1 = new Function2<Integer, List<Integer>, Integer>() {
+      public Integer apply(final Integer v, final List<Integer> l) {
+        final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
+          public Integer apply(final Integer x, final Integer y) {
+            return Integer.valueOf(((x).intValue() + (y).intValue()));
+          }
+        };
+        return IterableExtensions.<Integer, Integer>fold(l, v, _function);
+      }
     };
     InputOutput.<Integer>println(IterableExtensions.<List<Integer>, Integer>fold(input, Integer.valueOf(0), _function_1));
   }

@@ -1,11 +1,10 @@
 package advent2017;
 
-import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -14,6 +13,10 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import com.google.common.base.Objects;
+
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day18 {

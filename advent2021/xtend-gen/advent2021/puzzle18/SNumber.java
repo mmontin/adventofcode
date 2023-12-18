@@ -1,6 +1,7 @@
 package advent2021.puzzle18;
 
 import java.io.BufferedReader;
+
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")

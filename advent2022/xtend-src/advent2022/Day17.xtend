@@ -1,16 +1,19 @@
 package advent2022
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Dir
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
+import java.math.BigInteger
 import java.util.List
 import java.util.Set
-import java.math.BigInteger
+
+import static advent2022.Day17.Rock.*
 
 class Day17 {
 
 	static final List<Direction> movements = new InputLoader(2022, 17).inputs.head.toCharArray.map [
-		Coordinate.fromLeftRight(it + "")
+		Dir.fromLeftRight(it + "")
 	]
 	static final int movements_size = movements.size
 

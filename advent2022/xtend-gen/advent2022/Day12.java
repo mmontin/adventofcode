@@ -1,17 +1,12 @@
 package advent2022;
 
-import adventutils.geometry.Coordinate;
-import adventutils.input.InputLoader;
-import adventutils.pathfinding.AStar;
-import adventutils.pathfinding.NotInitializedException;
-import adventutils.pathfinding.State;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -20,6 +15,14 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import com.google.common.base.Objects;
+
+import adventutils.geometry.Coordinate;
+import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.NotInitializedException;
+import adventutils.pathfinding.State;
 
 @SuppressWarnings("all")
 public class Day12 {

@@ -9,8 +9,10 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public static void main(final String[] args) {
     int _intValue = Launcher.intValue(2978, 3083);
-    final Function2<Long, Integer, Long> _function = (Long v, Integer e) -> {
-      return Long.valueOf((((v).longValue() * 252533L) % 33554393L));
+    final Function2<Long, Integer, Long> _function = new Function2<Long, Integer, Long>() {
+      public Long apply(final Long v, final Integer e) {
+        return Long.valueOf((((v).longValue() * 252533L) % 33554393L));
+      }
     };
     InputOutput.<Long>println(IterableExtensions.<Integer, Long>fold(new ExclusiveRange(1, _intValue, true), Long.valueOf(20151125L), _function));
   }

@@ -1,6 +1,7 @@
 package advent2022;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +87,8 @@ public class Day14 {
       Coordinate current = Day14.source;
       do {
         {
-          final Coordinate down = current.move(Coordinate.Direction.UP);
-          final ArrayList<Coordinate> possibilities = CollectionLiterals.<Coordinate>newArrayList(down, down.move(Coordinate.Direction.LEFT), down.move(Coordinate.Direction.RIGHT));
+          final Coordinate down = current.move(Direction.UP);
+          final ArrayList<Coordinate> possibilities = CollectionLiterals.<Coordinate>newArrayList(down, down.move(Direction.LEFT), down.move(Direction.RIGHT));
           possibilities.removeAll(Day14.rocks);
           int _size = possibilities.size();
           boolean _equals = (_size == 0);
@@ -108,8 +109,8 @@ public class Day14 {
     Coordinate current = Day14.source;
     do {
       {
-        final Coordinate down = current.move(Coordinate.Direction.UP);
-        final ArrayList<Coordinate> possibilities = CollectionLiterals.<Coordinate>newArrayList(down, down.move(Coordinate.Direction.LEFT), down.move(Coordinate.Direction.RIGHT));
+        final Coordinate down = current.move(Direction.UP);
+        final ArrayList<Coordinate> possibilities = CollectionLiterals.<Coordinate>newArrayList(down, down.move(Direction.LEFT), down.move(Direction.RIGHT));
         possibilities.removeAll(Day14.rocks);
         final Predicate<Coordinate> _function = new Predicate<Coordinate>() {
           public boolean test(final Coordinate it) {

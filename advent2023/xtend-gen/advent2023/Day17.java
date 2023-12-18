@@ -2,6 +2,8 @@ package advent2023;
 
 import adventutils.collection.Collection;
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import adventutils.pathfinding.AStar;
 import adventutils.pathfinding.State;
@@ -23,9 +25,9 @@ public class Day17 {
   public static class DirectedCoordinate extends Coordinate implements State {
     private final int hashCode;
 
-    private Coordinate.Direction direction;
+    private Direction direction;
 
-    public DirectedCoordinate(final int i, final int j, final Coordinate.Direction d) {
+    public DirectedCoordinate(final int i, final int j, final Direction d) {
       super(i, j);
       this.direction = d;
       int _hashCode = super.hashCode();
@@ -45,11 +47,11 @@ public class Day17 {
     public Iterable<Pair<? extends State, Integer>> neighbours() {
       HashSet<Pair<? extends State, Integer>> _xblockexpression = null;
       {
-        final Set<Coordinate.Direction> directions = Coordinate.allDirections();
+        final Set<Direction> directions = Dir.allDirections();
         directions.remove(this.direction);
-        directions.remove(Coordinate.opposite(this.direction));
-        final Function2<HashSet<Pair<? extends State, Integer>>, Coordinate.Direction, HashSet<Pair<? extends State, Integer>>> _function = new Function2<HashSet<Pair<? extends State, Integer>>, Coordinate.Direction, HashSet<Pair<? extends State, Integer>>>() {
-          public HashSet<Pair<? extends State, Integer>> apply(final HashSet<Pair<? extends State, Integer>> output, final Coordinate.Direction d) {
+        directions.remove(Dir.opposite(this.direction));
+        final Function2<HashSet<Pair<? extends State, Integer>>, Direction, HashSet<Pair<? extends State, Integer>>> _function = new Function2<HashSet<Pair<? extends State, Integer>>, Direction, HashSet<Pair<? extends State, Integer>>>() {
+          public HashSet<Pair<? extends State, Integer>> apply(final HashSet<Pair<? extends State, Integer>> output, final Direction d) {
             HashSet<Pair<? extends State, Integer>> _xblockexpression = null;
             {
               final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
@@ -129,7 +131,7 @@ public class Day17 {
             return _xblockexpression;
           }
         };
-        _xblockexpression = IterableExtensions.<Coordinate.Direction, HashSet<Pair<? extends State, Integer>>>fold(directions, CollectionLiterals.<Pair<? extends State, Integer>>newHashSet(), _function);
+        _xblockexpression = IterableExtensions.<Direction, HashSet<Pair<? extends State, Integer>>>fold(directions, CollectionLiterals.<Pair<? extends State, Integer>>newHashSet(), _function);
       }
       return _xblockexpression;
     }
@@ -178,7 +180,7 @@ public class Day17 {
 
   private static final Coordinate target = new Coordinate(Day17.max_x, Day17.max_y);
 
-  private static final Day17.DirectedCoordinate source = new Day17.DirectedCoordinate(0, 0, Coordinate.Direction.UP);
+  private static final Day17.DirectedCoordinate source = new Day17.DirectedCoordinate(0, 0, Direction.UP);
 
   private static int min_offset;
 

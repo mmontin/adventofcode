@@ -1,8 +1,8 @@
 package advent2022;
 
-import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.xtext.xbase.lib.ArrayExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -11,6 +11,8 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day3 {

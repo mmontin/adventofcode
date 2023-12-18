@@ -14,8 +14,10 @@ public class Launcher {
     int result = 0;
     while ((result < Launcher.INPUT)) {
       int _plusPlus = i++;
-      final Function2<Integer, Integer, Integer> _function = (Integer v, Integer e) -> {
-        return Integer.valueOf(((v).intValue() + (11 * (e).intValue())));
+      final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
+        public Integer apply(final Integer v, final Integer e) {
+          return Integer.valueOf(((v).intValue() + (11 * (e).intValue())));
+        }
       };
       result = (IterableExtensions.<Integer, Integer>fold(Launcher.divisors(_plusPlus), Integer.valueOf(0), _function)).intValue();
     }

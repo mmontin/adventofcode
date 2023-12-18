@@ -1,6 +1,8 @@
 package advent2022;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.HashSet;
@@ -77,7 +79,7 @@ public class Day17 {
       this.shape = _switchResult;
     }
 
-    public boolean move(final Coordinate.Direction d) {
+    public boolean move(final Direction d) {
       boolean _xblockexpression = false;
       {
         final Function1<Coordinate, Coordinate> _function = new Function1<Coordinate, Coordinate>() {
@@ -115,10 +117,10 @@ public class Day17 {
     }
   }
 
-  private static final List<Coordinate.Direction> movements = ListExtensions.<Character, Coordinate.Direction>map(((List<Character>)Conversions.doWrapArray(IterableExtensions.<String>head(new InputLoader(Integer.valueOf(2022), Integer.valueOf(17)).getInputs()).toCharArray())), new Function1<Character, Coordinate.Direction>() {
-    public Coordinate.Direction apply(final Character it) {
+  private static final List<Direction> movements = ListExtensions.<Character, Direction>map(((List<Character>)Conversions.doWrapArray(IterableExtensions.<String>head(new InputLoader(Integer.valueOf(2022), Integer.valueOf(17)).getInputs()).toCharArray())), new Function1<Character, Direction>() {
+    public Direction apply(final Character it) {
       String _plus = (it + "");
-      return Coordinate.fromLeftRight(_plus);
+      return Dir.fromLeftRight(_plus);
     }
   });
 
@@ -190,7 +192,7 @@ public class Day17 {
         {
           current_rock.move(Day17.movements.get(current_movement));
           current_movement = ((current_movement + 1) % Day17.movements_size);
-          has_moved = current_rock.move(Coordinate.Direction.DOWN);
+          has_moved = current_rock.move(Direction.DOWN);
         }
       }
       current_rock.cement();

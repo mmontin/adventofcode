@@ -1,7 +1,6 @@
 package adventutils.geometry;
 
 import adventutils.Arithmetics;
-import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -13,16 +12,6 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Coordinate implements Comparable<Coordinate> {
-  public enum Direction {
-    UP,
-
-    DOWN,
-
-    LEFT,
-
-    RIGHT;
-  }
-
   private final int x;
 
   private final int y;
@@ -157,43 +146,47 @@ public class Coordinate implements Comparable<Coordinate> {
   }
 
   public Set<Coordinate> noDiagonalUnboundedNeighbours() {
-    final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate>() {
-      public Coordinate apply(final Pair<Coordinate, Coordinate.Direction> it) {
+    final Function1<Pair<Coordinate, Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Direction>, Coordinate>() {
+      public Coordinate apply(final Pair<Coordinate, Direction> it) {
         return it.getKey();
       }
     };
-    return IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(this.noDiagonalUnboundedNeighboursWithDirection(), _function));
+    return IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Direction>, Coordinate>map(this.noDiagonalUnboundedNeighboursWithDirection(), _function));
   }
 
-  public HashSet<Pair<Coordinate, Coordinate.Direction>> noDiagonalUnboundedNeighboursWithDirection() {
+  public HashSet<Pair<Coordinate, Direction>> noDiagonalUnboundedNeighboursWithDirection() {
     Coordinate _coordinate = new Coordinate((this.x - 1), this.y);
-    Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.UP);
+    Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(_coordinate, Direction.UP);
     Coordinate _coordinate_1 = new Coordinate((this.x + 1), this.y);
-    Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.DOWN);
+    Pair<Coordinate, Direction> _mappedTo_1 = Pair.<Coordinate, Direction>of(_coordinate_1, Direction.DOWN);
     Coordinate _coordinate_2 = new Coordinate(this.x, (this.y - 1));
-    Pair<Coordinate, Coordinate.Direction> _mappedTo_2 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_2, Coordinate.Direction.LEFT);
+    Pair<Coordinate, Direction> _mappedTo_2 = Pair.<Coordinate, Direction>of(_coordinate_2, Direction.LEFT);
     Coordinate _coordinate_3 = new Coordinate(this.x, (this.y + 1));
-    Pair<Coordinate, Coordinate.Direction> _mappedTo_3 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_3, Coordinate.Direction.RIGHT);
-    return CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(_mappedTo, _mappedTo_1, _mappedTo_2, _mappedTo_3);
+    Pair<Coordinate, Direction> _mappedTo_3 = Pair.<Coordinate, Direction>of(_coordinate_3, Direction.RIGHT);
+    return CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet(_mappedTo, _mappedTo_1, _mappedTo_2, _mappedTo_3);
   }
 
   public HashSet<Coordinate> noDiagonalBoundedNeighbours(final int lowerBound, final int higherBound) {
+    return this.noDiagonalBoundedNeighbours(lowerBound, higherBound, lowerBound, higherBound);
+  }
+
+  public HashSet<Coordinate> noDiagonalBoundedNeighbours(final int min_x, final int max_x, final int min_y, final int max_y) {
     HashSet<Coordinate> _xblockexpression = null;
     {
       final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
-      if ((this.x > lowerBound)) {
+      if ((this.x > min_x)) {
         Coordinate _coordinate = new Coordinate((this.x - 1), this.y);
         output.add(_coordinate);
       }
-      if ((this.x < higherBound)) {
+      if ((this.x < max_x)) {
         Coordinate _coordinate_1 = new Coordinate((this.x + 1), this.y);
         output.add(_coordinate_1);
       }
-      if ((this.y > lowerBound)) {
+      if ((this.y > min_y)) {
         Coordinate _coordinate_2 = new Coordinate(this.x, (this.y - 1));
         output.add(_coordinate_2);
       }
-      if ((this.y < higherBound)) {
+      if ((this.y < max_y)) {
         Coordinate _coordinate_3 = new Coordinate(this.x, (this.y + 1));
         output.add(_coordinate_3);
       }
@@ -256,170 +249,7 @@ public class Coordinate implements Comparable<Coordinate> {
     return this.code;
   }
 
-  public static Set<Coordinate.Direction> allDirections() {
-    return CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.DOWN, Coordinate.Direction.UP, Coordinate.Direction.RIGHT, Coordinate.Direction.LEFT);
-  }
-
-  public static Coordinate.Direction fromLeftRight(final String s) {
-    Coordinate.Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "<")) {
-      _matched=true;
-      _switchResult = Coordinate.Direction.LEFT;
-    }
-    if (!_matched) {
-      _switchResult = Coordinate.Direction.RIGHT;
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate.Direction directionFromPole(final String s) {
-    Coordinate.Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "N")) {
-      _matched=true;
-      _switchResult = Coordinate.Direction.UP;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "S")) {
-        _matched=true;
-        _switchResult = Coordinate.Direction.DOWN;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "W")) {
-        _matched=true;
-        _switchResult = Coordinate.Direction.LEFT;
-      }
-    }
-    if (!_matched) {
-      _switchResult = Coordinate.Direction.RIGHT;
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate.Direction opposite(final Coordinate.Direction d) {
-    Coordinate.Direction _switchResult = null;
-    if (d != null) {
-      switch (d) {
-        case UP:
-          _switchResult = Coordinate.Direction.DOWN;
-          break;
-        case LEFT:
-          _switchResult = Coordinate.Direction.RIGHT;
-          break;
-        case DOWN:
-          _switchResult = Coordinate.Direction.UP;
-          break;
-        case RIGHT:
-          _switchResult = Coordinate.Direction.LEFT;
-          break;
-        default:
-          break;
-      }
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate.Direction directionFromString(final String s) {
-    Coordinate.Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "U")) {
-      _matched=true;
-      _switchResult = Coordinate.Direction.UP;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "D")) {
-        _matched=true;
-        _switchResult = Coordinate.Direction.DOWN;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "L")) {
-        _matched=true;
-        _switchResult = Coordinate.Direction.LEFT;
-      }
-    }
-    if (!_matched) {
-      _switchResult = Coordinate.Direction.RIGHT;
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate.Direction nextDirection(final Coordinate.Direction d) {
-    Coordinate.Direction _switchResult = null;
-    if (d != null) {
-      switch (d) {
-        case UP:
-          _switchResult = Coordinate.Direction.LEFT;
-          break;
-        case LEFT:
-          _switchResult = Coordinate.Direction.DOWN;
-          break;
-        case DOWN:
-          _switchResult = Coordinate.Direction.RIGHT;
-          break;
-        case RIGHT:
-          _switchResult = Coordinate.Direction.UP;
-          break;
-        default:
-          break;
-      }
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate.Direction clockWise(final Coordinate.Direction d) {
-    Coordinate.Direction _switchResult = null;
-    if (d != null) {
-      switch (d) {
-        case UP:
-          _switchResult = Coordinate.Direction.RIGHT;
-          break;
-        case RIGHT:
-          _switchResult = Coordinate.Direction.DOWN;
-          break;
-        case DOWN:
-          _switchResult = Coordinate.Direction.LEFT;
-          break;
-        case LEFT:
-          _switchResult = Coordinate.Direction.UP;
-          break;
-        default:
-          break;
-      }
-    }
-    return _switchResult;
-  }
-
-  public static Coordinate.Direction counterClockWise(final Coordinate.Direction d) {
-    return Coordinate.nextDirection(d);
-  }
-
-  public static int directionValue(final Coordinate.Direction d) {
-    int _switchResult = (int) 0;
-    if (d != null) {
-      switch (d) {
-        case UP:
-          _switchResult = 3;
-          break;
-        case RIGHT:
-          _switchResult = 0;
-          break;
-        case DOWN:
-          _switchResult = 1;
-          break;
-        case LEFT:
-          _switchResult = 2;
-          break;
-        default:
-          break;
-      }
-    }
-    return _switchResult;
-  }
-
-  public Coordinate move(final Coordinate.Direction d) {
+  public Coordinate move(final Direction d) {
     Coordinate _switchResult = null;
     if (d != null) {
       switch (d) {
@@ -442,21 +272,25 @@ public class Coordinate implements Comparable<Coordinate> {
     return _switchResult;
   }
 
-  public Coordinate otherMove(final Coordinate.Direction d) {
+  public Coordinate otherMove(final Direction d) {
+    return this.otherMove(d, 1);
+  }
+
+  public Coordinate otherMove(final Direction d, final int distance) {
     Coordinate _switchResult = null;
     if (d != null) {
       switch (d) {
         case UP:
-          _switchResult = this.addX((-1));
+          _switchResult = this.addX((-distance));
           break;
         case DOWN:
-          _switchResult = this.addX(1);
+          _switchResult = this.addX(distance);
           break;
         case RIGHT:
-          _switchResult = this.addY(1);
+          _switchResult = this.addY(distance);
           break;
         case LEFT:
-          _switchResult = this.addY((-1));
+          _switchResult = this.addY((-distance));
           break;
         default:
           break;
@@ -465,7 +299,7 @@ public class Coordinate implements Comparable<Coordinate> {
     return _switchResult;
   }
 
-  public Set<Coordinate> directedNeighbours(final Coordinate.Direction d) {
+  public Set<Coordinate> directedNeighbours(final Direction d) {
     HashSet<Coordinate> _switchResult = null;
     if (d != null) {
       switch (d) {

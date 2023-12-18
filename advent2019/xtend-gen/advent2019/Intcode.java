@@ -1,11 +1,10 @@
 package advent2019;
 
-import adventutils.string.StringUtils;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -13,6 +12,10 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import com.google.common.base.Objects;
+
+import adventutils.string.StringUtils;
 
 @SuppressWarnings("all")
 public class Intcode implements Runnable {

@@ -1,11 +1,10 @@
 package advent2023;
 
-import adventutils.Arithmetics;
-import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -14,6 +13,9 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import adventutils.Arithmetics;
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day8 {

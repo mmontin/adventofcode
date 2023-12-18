@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import adventutils.input.InputLoader;
 import adventutils.collection.AgdaList;
+import adventutils.input.InputLoader;
 
 public class Launcher {
 	public static void main(String[] args) throws IOException {

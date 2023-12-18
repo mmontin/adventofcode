@@ -2,6 +2,7 @@ package advent2023;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;

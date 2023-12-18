@@ -1,6 +1,7 @@
 package advent2023;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
@@ -47,66 +48,66 @@ public class Day10 {
             boolean _matched = false;
             if (Objects.equal(_get, "|")) {
               _matched=true;
-              final Function1<Coordinate.Direction, Coordinate> _function = new Function1<Coordinate.Direction, Coordinate>() {
-                public Coordinate apply(final Coordinate.Direction it) {
+              final Function1<Direction, Coordinate> _function = new Function1<Direction, Coordinate>() {
+                public Coordinate apply(final Direction it) {
                   return current.otherMove(it);
                 }
               };
-              coordinates.put(current, IterableExtensions.<Coordinate.Direction, Coordinate>map(CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.UP, Coordinate.Direction.DOWN), _function));
+              coordinates.put(current, IterableExtensions.<Direction, Coordinate>map(CollectionLiterals.<Direction>newHashSet(Direction.UP, Direction.DOWN), _function));
             }
             if (!_matched) {
               if (Objects.equal(_get, "-")) {
                 _matched=true;
-                final Function1<Coordinate.Direction, Coordinate> _function_1 = new Function1<Coordinate.Direction, Coordinate>() {
-                  public Coordinate apply(final Coordinate.Direction it) {
+                final Function1<Direction, Coordinate> _function_1 = new Function1<Direction, Coordinate>() {
+                  public Coordinate apply(final Direction it) {
                     return current.otherMove(it);
                   }
                 };
-                coordinates.put(current, IterableExtensions.<Coordinate.Direction, Coordinate>map(CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.LEFT, Coordinate.Direction.RIGHT), _function_1));
+                coordinates.put(current, IterableExtensions.<Direction, Coordinate>map(CollectionLiterals.<Direction>newHashSet(Direction.LEFT, Direction.RIGHT), _function_1));
               }
             }
             if (!_matched) {
               if (Objects.equal(_get, "7")) {
                 _matched=true;
-                final Function1<Coordinate.Direction, Coordinate> _function_2 = new Function1<Coordinate.Direction, Coordinate>() {
-                  public Coordinate apply(final Coordinate.Direction it) {
+                final Function1<Direction, Coordinate> _function_2 = new Function1<Direction, Coordinate>() {
+                  public Coordinate apply(final Direction it) {
                     return current.otherMove(it);
                   }
                 };
-                coordinates.put(current, IterableExtensions.<Coordinate.Direction, Coordinate>map(CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.LEFT, Coordinate.Direction.DOWN), _function_2));
+                coordinates.put(current, IterableExtensions.<Direction, Coordinate>map(CollectionLiterals.<Direction>newHashSet(Direction.LEFT, Direction.DOWN), _function_2));
               }
             }
             if (!_matched) {
               if (Objects.equal(_get, "J")) {
                 _matched=true;
-                final Function1<Coordinate.Direction, Coordinate> _function_3 = new Function1<Coordinate.Direction, Coordinate>() {
-                  public Coordinate apply(final Coordinate.Direction it) {
+                final Function1<Direction, Coordinate> _function_3 = new Function1<Direction, Coordinate>() {
+                  public Coordinate apply(final Direction it) {
                     return current.otherMove(it);
                   }
                 };
-                coordinates.put(current, IterableExtensions.<Coordinate.Direction, Coordinate>map(CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.LEFT, Coordinate.Direction.UP), _function_3));
+                coordinates.put(current, IterableExtensions.<Direction, Coordinate>map(CollectionLiterals.<Direction>newHashSet(Direction.LEFT, Direction.UP), _function_3));
               }
             }
             if (!_matched) {
               if (Objects.equal(_get, "F")) {
                 _matched=true;
-                final Function1<Coordinate.Direction, Coordinate> _function_4 = new Function1<Coordinate.Direction, Coordinate>() {
-                  public Coordinate apply(final Coordinate.Direction it) {
+                final Function1<Direction, Coordinate> _function_4 = new Function1<Direction, Coordinate>() {
+                  public Coordinate apply(final Direction it) {
                     return current.otherMove(it);
                   }
                 };
-                coordinates.put(current, IterableExtensions.<Coordinate.Direction, Coordinate>map(CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.RIGHT, Coordinate.Direction.DOWN), _function_4));
+                coordinates.put(current, IterableExtensions.<Direction, Coordinate>map(CollectionLiterals.<Direction>newHashSet(Direction.RIGHT, Direction.DOWN), _function_4));
               }
             }
             if (!_matched) {
               if (Objects.equal(_get, "L")) {
                 _matched=true;
-                final Function1<Coordinate.Direction, Coordinate> _function_5 = new Function1<Coordinate.Direction, Coordinate>() {
-                  public Coordinate apply(final Coordinate.Direction it) {
+                final Function1<Direction, Coordinate> _function_5 = new Function1<Direction, Coordinate>() {
+                  public Coordinate apply(final Direction it) {
                     return current.otherMove(it);
                   }
                 };
-                coordinates.put(current, IterableExtensions.<Coordinate.Direction, Coordinate>map(CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.UP, Coordinate.Direction.RIGHT), _function_5));
+                coordinates.put(current, IterableExtensions.<Direction, Coordinate>map(CollectionLiterals.<Direction>newHashSet(Direction.UP, Direction.RIGHT), _function_5));
               }
             }
             if (!_matched) {

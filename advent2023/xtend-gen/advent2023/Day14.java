@@ -1,13 +1,10 @@
 package advent2023;
 
-import adventutils.PatternRunner;
-import adventutils.geometry.Coordinate;
-import adventutils.geometry.CoordinateSet;
-import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -16,6 +13,11 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
+
+import adventutils.PatternRunner;
+import adventutils.geometry.Coordinate;
+import adventutils.geometry.CoordinateSet;
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day14 {

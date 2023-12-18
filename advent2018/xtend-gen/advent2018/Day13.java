@@ -1,6 +1,8 @@
 package advent2018;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.List;
@@ -20,52 +22,52 @@ public class Day13 {
   public static class Robot {
     public Coordinate position;
 
-    private Coordinate.Direction facing;
+    private Direction facing;
 
-    private Coordinate.Direction next_direction;
+    private Direction next_direction;
 
-    public Robot(final Coordinate _position, final Coordinate.Direction _facing) {
+    public Robot(final Coordinate _position, final Direction _facing) {
       this.position = _position;
       this.facing = _facing;
-      this.next_direction = Coordinate.Direction.LEFT;
+      this.next_direction = Direction.LEFT;
     }
 
-    public Coordinate.Direction turn() {
-      Coordinate.Direction _switchResult = null;
-      final Coordinate.Direction next_direction = this.next_direction;
+    public Direction turn() {
+      Direction _switchResult = null;
+      final Direction next_direction = this.next_direction;
       if (next_direction != null) {
         switch (next_direction) {
           case LEFT:
-            Coordinate.Direction _xblockexpression = null;
+            Direction _xblockexpression = null;
             {
-              this.facing = Coordinate.counterClockWise(this.facing);
-              _xblockexpression = this.next_direction = Coordinate.Direction.UP;
+              this.facing = Dir.counterClockWise(this.facing);
+              _xblockexpression = this.next_direction = Direction.UP;
             }
             _switchResult = _xblockexpression;
             break;
           case RIGHT:
-            Coordinate.Direction _xblockexpression_1 = null;
+            Direction _xblockexpression_1 = null;
             {
-              this.facing = Coordinate.clockWise(this.facing);
-              _xblockexpression_1 = this.next_direction = Coordinate.Direction.LEFT;
+              this.facing = Dir.clockWise(this.facing);
+              _xblockexpression_1 = this.next_direction = Direction.LEFT;
             }
             _switchResult = _xblockexpression_1;
             break;
           default:
-            _switchResult = this.next_direction = Coordinate.Direction.RIGHT;
+            _switchResult = this.next_direction = Direction.RIGHT;
             break;
         }
       } else {
-        _switchResult = this.next_direction = Coordinate.Direction.RIGHT;
+        _switchResult = this.next_direction = Direction.RIGHT;
       }
       return _switchResult;
     }
 
-    public Coordinate.Direction move() {
-      Coordinate.Direction _xblockexpression = null;
+    public Direction move() {
+      Direction _xblockexpression = null;
       {
         this.position = this.position.otherMove(this.facing);
-        Coordinate.Direction _switchResult = null;
+        Direction _switchResult = null;
         String _get = Day13.terrain.get(this.position);
         if (_get != null) {
           switch (_get) {
@@ -73,21 +75,21 @@ public class Day13 {
               _switchResult = this.turn();
               break;
             case "/":
-              Coordinate.Direction _switchResult_1 = null;
-              final Coordinate.Direction facing = this.facing;
+              Direction _switchResult_1 = null;
+              final Direction facing = this.facing;
               if (facing != null) {
                 switch (facing) {
                   case UP:
-                    _switchResult_1 = Coordinate.Direction.RIGHT;
+                    _switchResult_1 = Direction.RIGHT;
                     break;
                   case RIGHT:
-                    _switchResult_1 = Coordinate.Direction.UP;
+                    _switchResult_1 = Direction.UP;
                     break;
                   case LEFT:
-                    _switchResult_1 = Coordinate.Direction.DOWN;
+                    _switchResult_1 = Direction.DOWN;
                     break;
                   case DOWN:
-                    _switchResult_1 = Coordinate.Direction.LEFT;
+                    _switchResult_1 = Direction.LEFT;
                     break;
                   default:
                     break;
@@ -96,21 +98,21 @@ public class Day13 {
               _switchResult = this.facing = _switchResult_1;
               break;
             case "\\":
-              Coordinate.Direction _switchResult_2 = null;
-              final Coordinate.Direction facing_1 = this.facing;
+              Direction _switchResult_2 = null;
+              final Direction facing_1 = this.facing;
               if (facing_1 != null) {
                 switch (facing_1) {
                   case UP:
-                    _switchResult_2 = Coordinate.Direction.LEFT;
+                    _switchResult_2 = Direction.LEFT;
                     break;
                   case LEFT:
-                    _switchResult_2 = Coordinate.Direction.UP;
+                    _switchResult_2 = Direction.UP;
                     break;
                   case RIGHT:
-                    _switchResult_2 = Coordinate.Direction.DOWN;
+                    _switchResult_2 = Direction.DOWN;
                     break;
                   case DOWN:
-                    _switchResult_2 = Coordinate.Direction.RIGHT;
+                    _switchResult_2 = Direction.RIGHT;
                     break;
                   default:
                     break;
@@ -207,22 +209,22 @@ public class Day13 {
             case " ":
               break;
             case "<":
-              Day13.Robot _robot = new Day13.Robot(current, Coordinate.Direction.LEFT);
+              Day13.Robot _robot = new Day13.Robot(current, Direction.LEFT);
               Day13.robots.add(_robot);
               Day13.terrain.put(current, "-");
               break;
             case ">":
-              Day13.Robot _robot_1 = new Day13.Robot(current, Coordinate.Direction.RIGHT);
+              Day13.Robot _robot_1 = new Day13.Robot(current, Direction.RIGHT);
               Day13.robots.add(_robot_1);
               Day13.terrain.put(current, "-");
               break;
             case "v":
-              Day13.Robot _robot_2 = new Day13.Robot(current, Coordinate.Direction.DOWN);
+              Day13.Robot _robot_2 = new Day13.Robot(current, Direction.DOWN);
               Day13.robots.add(_robot_2);
               Day13.terrain.put(current, "|");
               break;
             case "^":
-              Day13.Robot _robot_3 = new Day13.Robot(current, Coordinate.Direction.UP);
+              Day13.Robot _robot_3 = new Day13.Robot(current, Direction.UP);
               Day13.robots.add(_robot_3);
               Day13.terrain.put(current, "|");
               break;

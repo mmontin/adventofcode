@@ -1,11 +1,13 @@
 package advent2021.puzzle1;
 
-import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

@@ -2,6 +2,7 @@ package advent2023;
 
 import adventutils.collection.Collection;
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.HashSet;
@@ -48,26 +49,26 @@ public class Day16 {
     }
   });
 
-  private static final Set<Pair<Coordinate, Coordinate.Direction>> visited = CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet();
+  private static final Set<Pair<Coordinate, Direction>> visited = CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet();
 
   public static void main(final String[] args) {
     Coordinate _coordinate = new Coordinate(0, (-1));
-    Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.RIGHT);
-    Day16.process(CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(_mappedTo));
-    final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate>() {
-      public Coordinate apply(final Pair<Coordinate, Coordinate.Direction> it) {
+    Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(_coordinate, Direction.RIGHT);
+    Day16.process(CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet(_mappedTo));
+    final Function1<Pair<Coordinate, Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Direction>, Coordinate>() {
+      public Coordinate apply(final Pair<Coordinate, Direction> it) {
         return it.getKey();
       }
     };
-    InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(Day16.visited, _function)).size()));
-    final HashSet<Pair<Coordinate, Coordinate.Direction>> initials = CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet();
+    InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Direction>, Coordinate>map(Day16.visited, _function)).size()));
+    final HashSet<Pair<Coordinate, Direction>> initials = CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet();
     final Consumer<Integer> _function_1 = new Consumer<Integer>() {
       public void accept(final Integer it) {
         Coordinate _coordinate = new Coordinate((it).intValue(), (-1));
-        Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.RIGHT);
+        Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(_coordinate, Direction.RIGHT);
         initials.add(_mappedTo);
         Coordinate _coordinate_1 = new Coordinate((it).intValue(), (Day16.max_y + 1));
-        Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.LEFT);
+        Pair<Coordinate, Direction> _mappedTo_1 = Pair.<Coordinate, Direction>of(_coordinate_1, Direction.LEFT);
         initials.add(_mappedTo_1);
       }
     };
@@ -75,136 +76,136 @@ public class Day16 {
     final Consumer<Integer> _function_2 = new Consumer<Integer>() {
       public void accept(final Integer it) {
         Coordinate _coordinate = new Coordinate((-1), (it).intValue());
-        Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.DOWN);
+        Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(_coordinate, Direction.DOWN);
         initials.add(_mappedTo);
         Coordinate _coordinate_1 = new Coordinate((Day16.max_x + 1), (it).intValue());
-        Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.UP);
+        Pair<Coordinate, Direction> _mappedTo_1 = Pair.<Coordinate, Direction>of(_coordinate_1, Direction.UP);
         initials.add(_mappedTo_1);
       }
     };
     new IntegerRange(0, Day16.max_y).forEach(_function_2);
-    final Function1<Pair<Coordinate, Coordinate.Direction>, Integer> _function_3 = new Function1<Pair<Coordinate, Coordinate.Direction>, Integer>() {
-      public Integer apply(final Pair<Coordinate, Coordinate.Direction> it) {
+    final Function1<Pair<Coordinate, Direction>, Integer> _function_3 = new Function1<Pair<Coordinate, Direction>, Integer>() {
+      public Integer apply(final Pair<Coordinate, Direction> it) {
         int _xblockexpression = (int) 0;
         {
-          Day16.process(CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(it));
-          final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate>() {
-            public Coordinate apply(final Pair<Coordinate, Coordinate.Direction> it_1) {
+          Day16.process(CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet(it));
+          final Function1<Pair<Coordinate, Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Direction>, Coordinate>() {
+            public Coordinate apply(final Pair<Coordinate, Direction> it_1) {
               return it_1.getKey();
             }
           };
-          final int ret = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(Day16.visited, _function)).size();
+          final int ret = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Direction>, Coordinate>map(Day16.visited, _function)).size();
           Day16.visited.clear();
           _xblockexpression = ret;
         }
         return Integer.valueOf(_xblockexpression);
       }
     };
-    InputOutput.<Integer>println(IterableExtensions.<Integer>max(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Integer>map(initials, _function_3)));
+    InputOutput.<Integer>println(IterableExtensions.<Integer>max(IterableExtensions.<Pair<Coordinate, Direction>, Integer>map(initials, _function_3)));
   }
 
-  public static void process(final Set<Pair<Coordinate, Coordinate.Direction>> current) {
-    final Consumer<Pair<Coordinate, Coordinate.Direction>> _function = new Consumer<Pair<Coordinate, Coordinate.Direction>>() {
-      public void accept(final Pair<Coordinate, Coordinate.Direction> it) {
+  public static void process(final Set<Pair<Coordinate, Direction>> current) {
+    final Consumer<Pair<Coordinate, Direction>> _function = new Consumer<Pair<Coordinate, Direction>>() {
+      public void accept(final Pair<Coordinate, Direction> it) {
         Day16.process(Day16.nextCoords(it));
       }
     };
     current.forEach(_function);
   }
 
-  public static HashSet<Pair<Coordinate, Coordinate.Direction>> nextCoords(final Pair<Coordinate, Coordinate.Direction> current) {
-    HashSet<Pair<Coordinate, Coordinate.Direction>> _xblockexpression = null;
+  public static HashSet<Pair<Coordinate, Direction>> nextCoords(final Pair<Coordinate, Direction> current) {
+    HashSet<Pair<Coordinate, Direction>> _xblockexpression = null;
     {
-      final HashSet<Pair<Coordinate, Coordinate.Direction>> output = CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet();
+      final HashSet<Pair<Coordinate, Direction>> output = CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet();
       final Coordinate next = current.getKey().otherMove(current.getValue());
       if (((((next.getX() >= 0) && (next.getX() <= Day16.max_x)) && (next.getY() >= 0)) && (next.getY() <= Day16.max_y))) {
         String _get = Day16.walls.get(next);
         boolean _matched = false;
         if (Objects.equal(_get, null)) {
           _matched=true;
-          Coordinate.Direction _value = current.getValue();
-          Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(next, _value);
+          Direction _value = current.getValue();
+          Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(next, _value);
           output.add(_mappedTo);
         }
         if (!_matched) {
           if (Objects.equal(_get, "/")) {
             _matched=true;
-            Coordinate.Direction _switchResult_1 = null;
-            Coordinate.Direction _value_1 = current.getValue();
+            Direction _switchResult_1 = null;
+            Direction _value_1 = current.getValue();
             if (_value_1 != null) {
               switch (_value_1) {
                 case UP:
-                  _switchResult_1 = Coordinate.Direction.RIGHT;
+                  _switchResult_1 = Direction.RIGHT;
                   break;
                 case DOWN:
-                  _switchResult_1 = Coordinate.Direction.LEFT;
+                  _switchResult_1 = Direction.LEFT;
                   break;
                 case RIGHT:
-                  _switchResult_1 = Coordinate.Direction.UP;
+                  _switchResult_1 = Direction.UP;
                   break;
                 case LEFT:
-                  _switchResult_1 = Coordinate.Direction.DOWN;
+                  _switchResult_1 = Direction.DOWN;
                   break;
                 default:
                   break;
               }
             }
-            Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(next, _switchResult_1);
+            Pair<Coordinate, Direction> _mappedTo_1 = Pair.<Coordinate, Direction>of(next, _switchResult_1);
             output.add(_mappedTo_1);
           }
         }
         if (!_matched) {
           if (Objects.equal(_get, "-")) {
             _matched=true;
-            if ((Objects.equal(current.getValue(), Coordinate.Direction.LEFT) || Objects.equal(current.getValue(), Coordinate.Direction.RIGHT))) {
-              Coordinate.Direction _value_2 = current.getValue();
-              Pair<Coordinate, Coordinate.Direction> _mappedTo_2 = Pair.<Coordinate, Coordinate.Direction>of(next, _value_2);
+            if ((Objects.equal(current.getValue(), Direction.LEFT) || Objects.equal(current.getValue(), Direction.RIGHT))) {
+              Direction _value_2 = current.getValue();
+              Pair<Coordinate, Direction> _mappedTo_2 = Pair.<Coordinate, Direction>of(next, _value_2);
               output.add(_mappedTo_2);
             } else {
-              Pair<Coordinate, Coordinate.Direction> _mappedTo_3 = Pair.<Coordinate, Coordinate.Direction>of(next, Coordinate.Direction.LEFT);
-              Pair<Coordinate, Coordinate.Direction> _mappedTo_4 = Pair.<Coordinate, Coordinate.Direction>of(next, Coordinate.Direction.RIGHT);
-              CollectionExtensions.<Pair<Coordinate, Coordinate.Direction>>addAll(output, _mappedTo_3, _mappedTo_4);
+              Pair<Coordinate, Direction> _mappedTo_3 = Pair.<Coordinate, Direction>of(next, Direction.LEFT);
+              Pair<Coordinate, Direction> _mappedTo_4 = Pair.<Coordinate, Direction>of(next, Direction.RIGHT);
+              CollectionExtensions.<Pair<Coordinate, Direction>>addAll(output, _mappedTo_3, _mappedTo_4);
             }
           }
         }
         if (!_matched) {
           if (Objects.equal(_get, "|")) {
             _matched=true;
-            if ((Objects.equal(current.getValue(), Coordinate.Direction.UP) || Objects.equal(current.getValue(), Coordinate.Direction.DOWN))) {
-              Coordinate.Direction _value_3 = current.getValue();
-              Pair<Coordinate, Coordinate.Direction> _mappedTo_5 = Pair.<Coordinate, Coordinate.Direction>of(next, _value_3);
+            if ((Objects.equal(current.getValue(), Direction.UP) || Objects.equal(current.getValue(), Direction.DOWN))) {
+              Direction _value_3 = current.getValue();
+              Pair<Coordinate, Direction> _mappedTo_5 = Pair.<Coordinate, Direction>of(next, _value_3);
               output.add(_mappedTo_5);
             } else {
-              Pair<Coordinate, Coordinate.Direction> _mappedTo_6 = Pair.<Coordinate, Coordinate.Direction>of(next, Coordinate.Direction.UP);
-              Pair<Coordinate, Coordinate.Direction> _mappedTo_7 = Pair.<Coordinate, Coordinate.Direction>of(next, Coordinate.Direction.DOWN);
-              CollectionExtensions.<Pair<Coordinate, Coordinate.Direction>>addAll(output, _mappedTo_6, _mappedTo_7);
+              Pair<Coordinate, Direction> _mappedTo_6 = Pair.<Coordinate, Direction>of(next, Direction.UP);
+              Pair<Coordinate, Direction> _mappedTo_7 = Pair.<Coordinate, Direction>of(next, Direction.DOWN);
+              CollectionExtensions.<Pair<Coordinate, Direction>>addAll(output, _mappedTo_6, _mappedTo_7);
             }
           }
         }
         if (!_matched) {
           if (Objects.equal(_get, "\\")) {
             _matched=true;
-            Coordinate.Direction _switchResult_2 = null;
-            Coordinate.Direction _value_4 = current.getValue();
+            Direction _switchResult_2 = null;
+            Direction _value_4 = current.getValue();
             if (_value_4 != null) {
               switch (_value_4) {
                 case UP:
-                  _switchResult_2 = Coordinate.Direction.LEFT;
+                  _switchResult_2 = Direction.LEFT;
                   break;
                 case DOWN:
-                  _switchResult_2 = Coordinate.Direction.RIGHT;
+                  _switchResult_2 = Direction.RIGHT;
                   break;
                 case RIGHT:
-                  _switchResult_2 = Coordinate.Direction.DOWN;
+                  _switchResult_2 = Direction.DOWN;
                   break;
                 case LEFT:
-                  _switchResult_2 = Coordinate.Direction.UP;
+                  _switchResult_2 = Direction.UP;
                   break;
                 default:
                   break;
               }
             }
-            Pair<Coordinate, Coordinate.Direction> _mappedTo_8 = Pair.<Coordinate, Coordinate.Direction>of(next, _switchResult_2);
+            Pair<Coordinate, Direction> _mappedTo_8 = Pair.<Coordinate, Direction>of(next, _switchResult_2);
             output.add(_mappedTo_8);
           }
         }

@@ -1,7 +1,8 @@
 package advent2019
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Dir
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.List
 
@@ -9,10 +10,10 @@ class Day3 {
 	def static void main(String[] args) {
 		val inputs = new InputLoader(2019, 3).inputs
 		val path1 = inputs.get(0).split(",").map [
-			Coordinate.directionFromString(it.substring(0, 1)) -> Integer.parseInt(it.substring(1))
+			Dir.directionFromString(it.substring(0, 1)) -> Integer.parseInt(it.substring(1))
 		]
 		val path2 = inputs.get(1).split(",").map [
-			Coordinate.directionFromString(it.substring(0, 1)) -> Integer.parseInt(it.substring(1))
+			Dir.directionFromString(it.substring(0, 1)) -> Integer.parseInt(it.substring(1))
 		]
 
 		val coords1 = navigate(path1)

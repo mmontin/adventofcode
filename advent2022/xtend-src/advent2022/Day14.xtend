@@ -1,10 +1,10 @@
 package advent2022
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
-import java.util.Set
 import java.util.List
+import java.util.Set
 
 class Day14 {
 

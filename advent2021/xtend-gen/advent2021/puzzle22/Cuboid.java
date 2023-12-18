@@ -3,6 +3,7 @@ package advent2021.puzzle22;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")

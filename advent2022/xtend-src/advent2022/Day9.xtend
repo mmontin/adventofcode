@@ -1,6 +1,7 @@
 package advent2022
 
 import adventutils.geometry.Coordinate
+import adventutils.geometry.Dir
 import adventutils.input.InputLoader
 import java.util.ArrayList
 import java.util.Set
@@ -24,7 +25,7 @@ class Day9 {
 
 		new InputLoader(2022, 9).inputs.forEach [
 			val split = it.split(" ")
-			val direction = Coordinate.directionFromString(split.get(0))
+			val direction = Dir.directionFromString(split.get(0))
 			(0 ..< Integer.parseInt(split.get(1))).forEach [ i |
 				// For Q1, we move the head and then update the tail
 				head = head.move(direction)

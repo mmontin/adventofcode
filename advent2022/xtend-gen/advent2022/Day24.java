@@ -1,6 +1,7 @@
 package advent2022;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import adventutils.pathfinding.AStar;
 import adventutils.pathfinding.State;
@@ -90,16 +91,16 @@ public class Day24 {
   public static class Blizzard {
     private Coordinate initial;
 
-    private Coordinate.Direction direction;
+    private Direction direction;
 
-    public Blizzard(final Coordinate _initial, final Coordinate.Direction _direction) {
+    public Blizzard(final Coordinate _initial, final Direction _direction) {
       this.initial = _initial;
       this.direction = _direction;
     }
 
     public Coordinate getCurrentPosition(final int t) {
       Coordinate _switchResult = null;
-      final Coordinate.Direction direction = this.direction;
+      final Direction direction = this.direction;
       if (direction != null) {
         switch (direction) {
           case UP:
@@ -172,14 +173,14 @@ public class Day24 {
                 if (Objects.equal(_string, ">")) {
                   _matched=true;
                   Coordinate _coordinate = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                  Day24.Blizzard _blizzard = new Day24.Blizzard(_coordinate, Coordinate.Direction.RIGHT);
+                  Day24.Blizzard _blizzard = new Day24.Blizzard(_coordinate, Direction.RIGHT);
                   output.add(_blizzard);
                 }
                 if (!_matched) {
                   if (Objects.equal(_string, "<")) {
                     _matched=true;
                     Coordinate _coordinate_1 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                    Day24.Blizzard _blizzard_1 = new Day24.Blizzard(_coordinate_1, Coordinate.Direction.LEFT);
+                    Day24.Blizzard _blizzard_1 = new Day24.Blizzard(_coordinate_1, Direction.LEFT);
                     output.add(_blizzard_1);
                   }
                 }
@@ -187,7 +188,7 @@ public class Day24 {
                   if (Objects.equal(_string, "v")) {
                     _matched=true;
                     Coordinate _coordinate_2 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                    Day24.Blizzard _blizzard_2 = new Day24.Blizzard(_coordinate_2, Coordinate.Direction.DOWN);
+                    Day24.Blizzard _blizzard_2 = new Day24.Blizzard(_coordinate_2, Direction.DOWN);
                     output.add(_blizzard_2);
                   }
                 }
@@ -195,7 +196,7 @@ public class Day24 {
                   if (Objects.equal(_string, "^")) {
                     _matched=true;
                     Coordinate _coordinate_3 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                    Day24.Blizzard _blizzard_3 = new Day24.Blizzard(_coordinate_3, Coordinate.Direction.UP);
+                    Day24.Blizzard _blizzard_3 = new Day24.Blizzard(_coordinate_3, Direction.UP);
                     output.add(_blizzard_3);
                   }
                 }

@@ -1,12 +1,10 @@
 package advent2023;
 
-import adventutils.geometry.Coordinate;
-import adventutils.geometry.CoordinateSet;
-import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -16,13 +14,19 @@ import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
+import com.google.common.base.Objects;
+
+import adventutils.geometry.Coordinate;
+import adventutils.geometry.CoordinateSet;
+import adventutils.input.InputLoader;
+
 @SuppressWarnings("all")
 public class Day13 {
   public static void main(final String[] args) {
     try {
       final BufferedReader br = new InputLoader(Integer.valueOf(2023), Integer.valueOf(13)).getInputReader();
       final ArrayList<CoordinateSet> tiles = CollectionLiterals.<CoordinateSet>newArrayList();
-      final ArrayList<String> current_tile = CollectionLiterals.<String>newArrayList();
+      final List<String> current_tile = CollectionLiterals.<String>newArrayList();
       while (br.ready()) {
         {
           final String current_line = br.readLine();

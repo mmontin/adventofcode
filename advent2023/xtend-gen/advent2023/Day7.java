@@ -1,12 +1,11 @@
 package advent2023;
 
-import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
@@ -14,6 +13,10 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import com.google.common.base.Objects;
+
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day7 {

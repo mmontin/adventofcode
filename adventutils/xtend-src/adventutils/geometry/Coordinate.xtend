@@ -132,11 +132,15 @@ class Coordinate implements Comparable<Coordinate> {
 
 	// Neighbours excluding diagonals, and bounded in a square of size higherBound - lowerBound
 	def noDiagonalBoundedNeighbours(int lowerBound, int higherBound) {
+		noDiagonalBoundedNeighbours(lowerBound, higherBound, lowerBound, higherBound)
+	}
+	
+	def noDiagonalBoundedNeighbours(int min_x, int max_x, int min_y, int max_y) {
 		val output = newHashSet
-		if(x > lowerBound) output.add(new Coordinate(x - 1, y))
-		if(x < higherBound) output.add(new Coordinate(x + 1, y))
-		if(y > lowerBound) output.add(new Coordinate(x, y - 1))
-		if(y < higherBound) output.add(new Coordinate(x, y + 1))
+		if(x > min_x) output.add(new Coordinate(x - 1, y))
+		if(x < max_x) output.add(new Coordinate(x + 1, y))
+		if(y > min_y) output.add(new Coordinate(x, y - 1))
+		if(y < max_y) output.add(new Coordinate(x, y + 1))
 		output
 	}
 
@@ -177,82 +181,6 @@ class Coordinate implements Comparable<Coordinate> {
 		code
 	}
 
-	static enum Direction {
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT
-	}
-
-	def static Set<Direction> allDirections() {
-		newHashSet(Direction.DOWN, Direction.UP, Direction.RIGHT, Direction.LEFT)
-	}
-
-	def static Direction fromLeftRight(String s) {
-		switch s {
-			case "<": Direction.LEFT
-			default: Direction.RIGHT
-		}
-	}
-
-	def static Direction directionFromPole(String s) {
-		switch s {
-			case "N": Direction.UP
-			case "S": Direction.DOWN
-			case "W": Direction.LEFT
-			default: Direction.RIGHT
-		}
-	}
-
-	def static Direction opposite(Direction d) {
-		switch d {
-			case UP: Direction.DOWN
-			case LEFT: Direction.RIGHT
-			case DOWN: Direction.UP
-			case RIGHT: Direction.LEFT
-		}
-	}
-
-	def static Direction directionFromString(String s) {
-		switch s {
-			case "U": Direction.UP
-			case "D": Direction.DOWN
-			case "L": Direction.LEFT
-			default: Direction.RIGHT
-		}
-	}
-
-	def static Direction nextDirection(Direction d) {
-		switch d {
-			case UP: Direction.LEFT
-			case LEFT: Direction.DOWN
-			case DOWN: Direction.RIGHT
-			case RIGHT: Direction.UP
-		}
-	}
-
-	def static Direction clockWise(Direction d) {
-		switch d {
-			case UP: Direction.RIGHT
-			case RIGHT: Direction.DOWN
-			case DOWN: Direction.LEFT
-			case LEFT: Direction.UP
-		}
-	}
-
-	def static Direction counterClockWise(Direction d) {
-		d.nextDirection
-	}
-
-	def static int directionValue(Direction d) {
-		switch d {
-			case UP: 3
-			case RIGHT: 0
-			case DOWN: 1
-			case LEFT: 2
-		}
-	}
-
 	def Coordinate move(Direction d) {
 		switch d {
 			case UP: addY(1)
@@ -263,12 +191,16 @@ class Coordinate implements Comparable<Coordinate> {
 	}
 
 	def Coordinate otherMove(Direction d) {
+		otherMove(d,1)
+	}
+	
+	def Coordinate otherMove(Direction d, int distance) {
 		switch d {
-			case UP: addX(-1)
-			case DOWN: addX(1)
-			case RIGHT: addY(1)
-			case LEFT: addY(-1)
-		}
+			case UP: addX(-distance)
+			case DOWN: addX(distance)
+			case RIGHT: addY(distance)
+			case LEFT: addY(-distance)
+		}		
 	}
 
 	def Set<Coordinate> directedNeighbours(Direction d) {

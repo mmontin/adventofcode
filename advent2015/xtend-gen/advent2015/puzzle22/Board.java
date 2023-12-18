@@ -52,16 +52,18 @@ public class Board {
   }
 
   public List<Integer> update(final Integer... vector) {
-    final Function2<ArrayList<Integer>, Integer, ArrayList<Integer>> _function = (ArrayList<Integer> l, Integer i) -> {
-      ArrayList<Integer> _xblockexpression = null;
-      {
-        Integer _get = this.boardState.get((i).intValue());
-        Integer _get_1 = vector[(i).intValue()];
-        int _plus = ((_get).intValue() + (_get_1).intValue());
-        l.add(Integer.valueOf(_plus));
-        _xblockexpression = l;
+    final Function2<ArrayList<Integer>, Integer, ArrayList<Integer>> _function = new Function2<ArrayList<Integer>, Integer, ArrayList<Integer>>() {
+      public ArrayList<Integer> apply(final ArrayList<Integer> l, final Integer i) {
+        ArrayList<Integer> _xblockexpression = null;
+        {
+          Integer _get = Board.this.boardState.get((i).intValue());
+          Integer _get_1 = vector[(i).intValue()];
+          int _plus = ((_get).intValue() + (_get_1).intValue());
+          l.add(Integer.valueOf(_plus));
+          _xblockexpression = l;
+        }
+        return _xblockexpression;
       }
-      return _xblockexpression;
     };
     return this.boardState = IterableExtensions.<Integer, ArrayList<Integer>>fold(new IntegerRange(0, 7), CollectionLiterals.<Integer>newArrayList(), _function);
   }
@@ -179,21 +181,23 @@ public class Board {
         Board.updateManaMin(mana_spent_already);
       } else {
         if (((Board.mana_min_spent_to_win - (mana_spent_already).intValue()) >= 53)) {
-          final Consumer<Board.Spell> _function = (Board.Spell it) -> {
-            final Board newBoard = new Board(this);
-            newBoard.playerTurn(it);
-            Integer _player_mana = this.player_mana();
-            int _plus = ((mana_spent_already).intValue() + (_player_mana).intValue());
-            Integer _player_mana_1 = newBoard.player_mana();
-            final int new_mana_spent = (_plus - (_player_mana_1).intValue());
-            boolean _initTurn_1 = newBoard.initTurn();
-            if (_initTurn_1) {
-              Board.updateManaMin(Integer.valueOf(new_mana_spent));
-            } else {
-              boolean _bossTurn = newBoard.bossTurn();
-              boolean _not = (!_bossTurn);
-              if (_not) {
-                newBoard.play(Integer.valueOf(new_mana_spent));
+          final Consumer<Board.Spell> _function = new Consumer<Board.Spell>() {
+            public void accept(final Board.Spell it) {
+              final Board newBoard = new Board(Board.this);
+              newBoard.playerTurn(it);
+              Integer _player_mana = Board.this.player_mana();
+              int _plus = ((mana_spent_already).intValue() + (_player_mana).intValue());
+              Integer _player_mana_1 = newBoard.player_mana();
+              final int new_mana_spent = (_plus - (_player_mana_1).intValue());
+              boolean _initTurn = newBoard.initTurn();
+              if (_initTurn) {
+                Board.updateManaMin(Integer.valueOf(new_mana_spent));
+              } else {
+                boolean _bossTurn = newBoard.bossTurn();
+                boolean _not = (!_bossTurn);
+                if (_not) {
+                  newBoard.play(Integer.valueOf(new_mana_spent));
+                }
               }
             }
           };

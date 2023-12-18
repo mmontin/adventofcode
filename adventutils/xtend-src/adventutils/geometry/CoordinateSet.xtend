@@ -1,5 +1,6 @@
 package adventutils.geometry
 
+import java.util.Collection
 import java.util.HashSet
 import java.util.List
 import java.util.Set
@@ -19,6 +20,10 @@ class CoordinateSet extends HashSet<Coordinate> {
 		maxY = 0
 	}
 
+	new(Collection<? extends Coordinate> col) {
+		super(col)
+	}
+
 	new(List<String> lines) {
 		this()
 		val chars = lines.map[it.toCharArray.map[it + ""]]
@@ -32,7 +37,7 @@ class CoordinateSet extends HashSet<Coordinate> {
 			]
 		]
 	}
-	
+
 	new(List<String> lines, String other, Set<Coordinate> otherSet) {
 		this()
 		val chars = lines.map[it.toCharArray.map[it + ""]]
@@ -44,25 +49,51 @@ class CoordinateSet extends HashSet<Coordinate> {
 				if (current_line.get(j).equals("#"))
 					add(new Coordinate(i, j))
 				else if (current_line.get(j).equals(other))
-					otherSet.add(new Coordinate(i,j))
+					otherSet.add(new Coordinate(i, j))
 			]
 		]
-	}	
-	
+	}
+
 	override add(Coordinate c) {
-		if (c.x < minX) minX = c.x
-		if (c.x > maxX) maxX = c.x
-		if (c.y < minY) minY = c.y
-		if (c.y > maxY) maxY = c.y
+		if(c.x < minX) minX = c.x
+		if(c.x > maxX) maxX = c.x
+		if(c.y < minY) minY = c.y
+		if(c.y > maxY) maxY = c.y
 		super.add(c)
+	}
+	
+	override remove(Object c) {
+		val res = super.remove(c)
+		val myCoord = c as Coordinate
+		if (myCoord.x == minX)
+			minX = minBy[x].x
+		if (myCoord.x == maxX)
+			maxX = maxBy[x].x
+		if (myCoord.y == minY)
+			minY = minBy[y].y
+		if (myCoord.y == maxY)
+			maxY = maxBy[y].y
+		res
 	}
 
 	def line(int x) {
 		this.filter[it.x == x]
 	}
-	
+
 	def column(int y) {
 		this.filter[it.y == y]
+	}
+
+	def invertSet() {
+		val output = new CoordinateSet;
+		(minX .. maxX).forEach [ i |
+			(minY .. maxY).forEach [ j |
+				val newCoord = new Coordinate(i, j)
+				if (!contains(newCoord))
+					output.add(newCoord)
+			]
+		]
+		output
 	}
 
 	override toString() {

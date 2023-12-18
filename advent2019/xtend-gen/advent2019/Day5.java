@@ -1,14 +1,16 @@
 package advent2019;
 
-import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
+
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day5 {

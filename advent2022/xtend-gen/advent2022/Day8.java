@@ -1,14 +1,16 @@
 package advent2022;
 
-import adventutils.geometry.Coordinate;
-import adventutils.input.InputLoader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+
+import adventutils.geometry.Coordinate;
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day8 {

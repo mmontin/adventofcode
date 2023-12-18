@@ -1,8 +1,5 @@
 package advent2023;
 
-import adventutils.geometry.Coordinate;
-import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +7,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -18,6 +16,11 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import com.google.common.base.Objects;
+
+import adventutils.geometry.Coordinate;
+import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day3 {

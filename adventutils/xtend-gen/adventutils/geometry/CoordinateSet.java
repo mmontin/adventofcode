@@ -1,5 +1,6 @@
 package adventutils.geometry;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,10 @@ public class CoordinateSet extends HashSet<Coordinate> {
     this.maxX = 0;
     this.minY = 0;
     this.maxY = 0;
+  }
+
+  public CoordinateSet(final Collection<? extends Coordinate> col) {
+    super(col);
   }
 
   public CoordinateSet(final List<String> lines) {
@@ -130,6 +135,56 @@ public class CoordinateSet extends HashSet<Coordinate> {
     return _xblockexpression;
   }
 
+  public boolean remove(final Object c) {
+    boolean _xblockexpression = false;
+    {
+      final boolean res = super.remove(c);
+      final Coordinate myCoord = ((Coordinate) c);
+      int _x = myCoord.getX();
+      boolean _equals = (_x == this.minX);
+      if (_equals) {
+        final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
+          public Integer apply(final Coordinate it) {
+            return Integer.valueOf(it.getX());
+          }
+        };
+        this.minX = IterableExtensions.<Coordinate, Integer>minBy(this, _function).getX();
+      }
+      int _x_1 = myCoord.getX();
+      boolean _equals_1 = (_x_1 == this.maxX);
+      if (_equals_1) {
+        final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
+          public Integer apply(final Coordinate it) {
+            return Integer.valueOf(it.getX());
+          }
+        };
+        this.maxX = IterableExtensions.<Coordinate, Integer>maxBy(this, _function_1).getX();
+      }
+      int _y = myCoord.getY();
+      boolean _equals_2 = (_y == this.minY);
+      if (_equals_2) {
+        final Function1<Coordinate, Integer> _function_2 = new Function1<Coordinate, Integer>() {
+          public Integer apply(final Coordinate it) {
+            return Integer.valueOf(it.getY());
+          }
+        };
+        this.minY = IterableExtensions.<Coordinate, Integer>minBy(this, _function_2).getY();
+      }
+      int _y_1 = myCoord.getY();
+      boolean _equals_3 = (_y_1 == this.maxY);
+      if (_equals_3) {
+        final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
+          public Integer apply(final Coordinate it) {
+            return Integer.valueOf(it.getY());
+          }
+        };
+        this.maxY = IterableExtensions.<Coordinate, Integer>maxBy(this, _function_3).getY();
+      }
+      _xblockexpression = res;
+    }
+    return _xblockexpression;
+  }
+
   public Iterable<Coordinate> line(final int x) {
     final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
       public Boolean apply(final Coordinate it) {
@@ -148,6 +203,31 @@ public class CoordinateSet extends HashSet<Coordinate> {
       }
     };
     return IterableExtensions.<Coordinate>filter(this, _function);
+  }
+
+  public CoordinateSet invertSet() {
+    CoordinateSet _xblockexpression = null;
+    {
+      final CoordinateSet output = new CoordinateSet();
+      final Consumer<Integer> _function = new Consumer<Integer>() {
+        public void accept(final Integer i) {
+          final Consumer<Integer> _function = new Consumer<Integer>() {
+            public void accept(final Integer j) {
+              final Coordinate newCoord = new Coordinate((i).intValue(), (j).intValue());
+              boolean _contains = CoordinateSet.this.contains(newCoord);
+              boolean _not = (!_contains);
+              if (_not) {
+                output.add(newCoord);
+              }
+            }
+          };
+          new IntegerRange(CoordinateSet.this.minY, CoordinateSet.this.maxY).forEach(_function);
+        }
+      };
+      new IntegerRange(this.minX, this.maxX).forEach(_function);
+      _xblockexpression = output;
+    }
+    return _xblockexpression;
   }
 
   public String toString() {

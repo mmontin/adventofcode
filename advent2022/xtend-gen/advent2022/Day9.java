@@ -1,6 +1,8 @@
 package advent2022;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.Set;
@@ -43,7 +45,7 @@ public class Day9 {
     final Consumer<String> _function = new Consumer<String>() {
       public void accept(final String it) {
         final String[] split = it.split(" ");
-        final Coordinate.Direction direction = Coordinate.directionFromString(split[0]);
+        final Direction direction = Dir.directionFromString(split[0]);
         int _parseInt = Integer.parseInt(split[1]);
         final Consumer<Integer> _function = new Consumer<Integer>() {
           public void accept(final Integer i) {

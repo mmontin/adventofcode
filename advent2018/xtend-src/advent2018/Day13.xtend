@@ -1,7 +1,8 @@
 package advent2018
 
 import adventutils.geometry.Coordinate
-import adventutils.geometry.Coordinate.Direction
+import adventutils.geometry.Dir
+import adventutils.geometry.Direction
 import adventutils.input.InputLoader
 import java.util.Map
 import java.util.Set
@@ -26,11 +27,11 @@ class Day13 {
 		def turn() {
 			switch (next_direction) {
 				case LEFT: {
-					facing = Coordinate.counterClockWise(facing)
+					facing = Dir.counterClockWise(facing)
 					next_direction = Direction.UP
 				}
 				case RIGHT: {
-					facing = Coordinate.clockWise(facing)
+					facing = Dir.clockWise(facing)
 					next_direction = Direction.LEFT
 				}
 				default:

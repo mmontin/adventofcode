@@ -1,6 +1,7 @@
 package advent2017;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class Day19 {
 
   private static Coordinate current_location;
 
-  private static Coordinate.Direction current_direction;
+  private static Direction current_direction;
 
   public static void main(final String[] args) {
     final Function1<String, List<String>> _function = new Function1<String, List<String>>() {
@@ -64,7 +65,7 @@ public class Day19 {
       }
     };
     Day19.current_location = IterableExtensions.<Coordinate, Integer>minBy(Day19.routes.keySet(), _function_2);
-    Day19.current_direction = Coordinate.Direction.DOWN;
+    Day19.current_direction = Direction.DOWN;
     while ((Day19.current_location != null)) {
       {
         Day19.visited.add(Day19.routes.get(Day19.current_location));
@@ -74,12 +75,12 @@ public class Day19 {
           Day19.previous_location = Day19.current_location;
           Day19.current_location = next_step;
         } else {
-          final Function1<Pair<Coordinate, Coordinate.Direction>, Boolean> _function_3 = new Function1<Pair<Coordinate, Coordinate.Direction>, Boolean>() {
-            public Boolean apply(final Pair<Coordinate, Coordinate.Direction> it) {
+          final Function1<Pair<Coordinate, Direction>, Boolean> _function_3 = new Function1<Pair<Coordinate, Direction>, Boolean>() {
+            public Boolean apply(final Pair<Coordinate, Direction> it) {
               return Boolean.valueOf((Day19.routes.keySet().contains(it.getKey()) && (!it.getKey().equals(Day19.previous_location))));
             }
           };
-          final Pair<Coordinate, Coordinate.Direction> next = IterableExtensions.<Pair<Coordinate, Coordinate.Direction>>head(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>>filter(Day19.current_location.noDiagonalUnboundedNeighboursWithDirection(), _function_3));
+          final Pair<Coordinate, Direction> next = IterableExtensions.<Pair<Coordinate, Direction>>head(IterableExtensions.<Pair<Coordinate, Direction>>filter(Day19.current_location.noDiagonalUnboundedNeighboursWithDirection(), _function_3));
           Day19.previous_location = Day19.current_location;
           Coordinate _xifexpression = null;
           if ((next == null)) {
@@ -88,7 +89,7 @@ public class Day19 {
             _xifexpression = next.getKey();
           }
           Day19.current_location = _xifexpression;
-          Coordinate.Direction _xifexpression_1 = null;
+          Direction _xifexpression_1 = null;
           if ((next == null)) {
             _xifexpression_1 = null;
           } else {

@@ -1,6 +1,8 @@
 package advent2017;
 
 import adventutils.geometry.Coordinate;
+import adventutils.geometry.Dir;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.HashSet;
 import java.util.List;
@@ -37,17 +39,17 @@ public class Day22 {
       }
     }
     Coordinate current_position = new Coordinate((size_x / 2), (size_y / 2));
-    Coordinate.Direction current_direction = Coordinate.Direction.UP;
+    Direction current_direction = Direction.UP;
     int infections = 0;
     IntegerRange _upTo_2 = new IntegerRange(0, 9999);
     for (final Integer i_1 : _upTo_2) {
       {
         boolean _contains = infected.contains(current_position);
         if (_contains) {
-          current_direction = Coordinate.clockWise(current_direction);
+          current_direction = Dir.clockWise(current_direction);
           infected.remove(current_position);
         } else {
-          current_direction = Coordinate.counterClockWise(current_direction);
+          current_direction = Dir.counterClockWise(current_direction);
           infected.add(current_position);
           infections++;
         }
@@ -72,26 +74,26 @@ public class Day22 {
     }
     Coordinate _coordinate_3 = new Coordinate((size_x / 2), (size_y / 2));
     current_position = _coordinate_3;
-    current_direction = Coordinate.Direction.UP;
+    current_direction = Direction.UP;
     infections = 0;
     IntegerRange _upTo_5 = new IntegerRange(0, 9999999);
     for (final Integer i_3 : _upTo_5) {
       {
         final Integer current_state = nodes.getOrDefault(current_position, Integer.valueOf(0));
-        Coordinate.Direction _switchResult = null;
+        Direction _switchResult = null;
         if (current_state != null) {
           switch (current_state) {
             case 0:
-              _switchResult = Coordinate.counterClockWise(current_direction);
+              _switchResult = Dir.counterClockWise(current_direction);
               break;
             case 1:
               _switchResult = current_direction;
               break;
             case 2:
-              _switchResult = Coordinate.clockWise(current_direction);
+              _switchResult = Dir.clockWise(current_direction);
               break;
             case 3:
-              _switchResult = Coordinate.clockWise(Coordinate.clockWise(current_direction));
+              _switchResult = Dir.clockWise(Dir.clockWise(current_direction));
               break;
           }
         }

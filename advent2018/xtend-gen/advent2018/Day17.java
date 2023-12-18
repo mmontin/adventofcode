@@ -3,6 +3,7 @@ package advent2018;
 import adventutils.Either;
 import adventutils.geometry.Coordinate;
 import adventutils.geometry.CoordinateSet;
+import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -188,11 +189,11 @@ public class Day17 {
     Optional<ArrayList<Coordinate>> _xblockexpression = null;
     {
       final ArrayList<Coordinate> output = CollectionLiterals.<Coordinate>newArrayList();
-      Coordinate next = source.otherMove(Coordinate.Direction.DOWN);
+      Coordinate next = source.otherMove(Direction.DOWN);
       while (((!Day17.walls.contains(next)) && (next.getX() < Day17.maxX))) {
         {
           output.add(0, next);
-          next = next.otherMove(Coordinate.Direction.DOWN);
+          next = next.otherMove(Direction.DOWN);
         }
       }
       Optional<ArrayList<Coordinate>> _xifexpression = null;
@@ -229,21 +230,21 @@ public class Day17 {
     Either<Coordinate, Set<Coordinate>> _xblockexpression = null;
     {
       final HashSet<Coordinate> reached = CollectionLiterals.<Coordinate>newHashSet();
-      Coordinate.Direction _xifexpression = null;
+      Direction _xifexpression = null;
       if (left) {
-        _xifexpression = Coordinate.Direction.LEFT;
+        _xifexpression = Direction.LEFT;
       } else {
-        _xifexpression = Coordinate.Direction.RIGHT;
+        _xifexpression = Direction.RIGHT;
       }
       Coordinate next = source.otherMove(_xifexpression);
-      while (((!Day17.walls.contains(next)) && Day17.walls.contains(next.otherMove(Coordinate.Direction.DOWN)))) {
+      while (((!Day17.walls.contains(next)) && Day17.walls.contains(next.otherMove(Direction.DOWN)))) {
         {
           reached.add(next);
-          Coordinate.Direction _xifexpression_1 = null;
+          Direction _xifexpression_1 = null;
           if (left) {
-            _xifexpression_1 = Coordinate.Direction.LEFT;
+            _xifexpression_1 = Direction.LEFT;
           } else {
-            _xifexpression_1 = Coordinate.Direction.RIGHT;
+            _xifexpression_1 = Direction.RIGHT;
           }
           next = next.otherMove(_xifexpression_1);
         }

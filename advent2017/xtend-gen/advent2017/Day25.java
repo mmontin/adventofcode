@@ -1,11 +1,13 @@
 package advent2017;
 
-import com.google.common.base.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+
+import com.google.common.base.Objects;
 
 @SuppressWarnings("all")
 public class Day25 {

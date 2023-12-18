@@ -1,15 +1,12 @@
 package advent2022;
 
-import adventutils.input.InputLoader;
-import adventutils.pathfinding.AStar;
-import adventutils.pathfinding.State;
-import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -20,6 +17,12 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.MapExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+
+import com.google.common.collect.Iterables;
+
+import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 
 @SuppressWarnings("all")
 public class Day16 {
