@@ -48,6 +48,15 @@ class Dir {
 			default: Direction.RIGHT
 		}
 	}
+	
+	def static Direction directionFromStringNb(String s) {
+		switch s {
+			case "0": Direction.RIGHT
+			case "1": Direction.DOWN
+			case "2": Direction.LEFT
+			case "3": Direction.UP
+		}
+	}
 
 	def static Direction nextDirection(Direction d) {
 		switch d {

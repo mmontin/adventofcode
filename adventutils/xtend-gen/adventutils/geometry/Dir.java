@@ -96,6 +96,34 @@ public class Dir {
     return _switchResult;
   }
 
+  public static Direction directionFromStringNb(final String s) {
+    Direction _switchResult = null;
+    boolean _matched = false;
+    if (Objects.equal(s, "0")) {
+      _matched=true;
+      _switchResult = Direction.RIGHT;
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "1")) {
+        _matched=true;
+        _switchResult = Direction.DOWN;
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "2")) {
+        _matched=true;
+        _switchResult = Direction.LEFT;
+      }
+    }
+    if (!_matched) {
+      if (Objects.equal(s, "3")) {
+        _matched=true;
+        _switchResult = Direction.UP;
+      }
+    }
+    return _switchResult;
+  }
+
   public static Direction nextDirection(final Direction d) {
     Direction _switchResult = null;
     if (d != null) {

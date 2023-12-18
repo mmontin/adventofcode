@@ -25,10 +25,7 @@ public class CoordinateSet extends HashSet<Coordinate> {
 
   public CoordinateSet() {
     super();
-    this.minX = 0;
-    this.maxX = 0;
-    this.minY = 0;
-    this.maxY = 0;
+    this.setBoundaries(0, 0, 0, 0);
   }
 
   public CoordinateSet(final Collection<? extends Coordinate> col) {
@@ -105,6 +102,17 @@ public class CoordinateSet extends HashSet<Coordinate> {
       }
     };
     new ExclusiveRange(0, max_x, true).forEach(_function_1);
+  }
+
+  public int setBoundaries(final int minX_, final int maxX_, final int minY_, final int maxY_) {
+    int _xblockexpression = (int) 0;
+    {
+      this.minX = minX_;
+      this.maxX = maxX_;
+      this.minY = minY_;
+      _xblockexpression = this.maxY = maxY_;
+    }
+    return _xblockexpression;
   }
 
   public boolean add(final Coordinate c) {

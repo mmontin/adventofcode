@@ -14,10 +14,7 @@ class CoordinateSet extends HashSet<Coordinate> {
 
 	new() {
 		super()
-		minX = 0
-		maxX = 0
-		minY = 0
-		maxY = 0
+		setBoundaries(0,0,0,0)
 	}
 
 	new(Collection<? extends Coordinate> col) {
@@ -52,6 +49,13 @@ class CoordinateSet extends HashSet<Coordinate> {
 					otherSet.add(new Coordinate(i, j))
 			]
 		]
+	}
+	
+	def setBoundaries(int minX_, int maxX_, int minY_, int maxY_) {
+		minX = minX_
+		maxX = maxX_
+		minY = minY_
+		maxY = maxY_
 	}
 
 	override add(Coordinate c) {

@@ -1,19 +1,16 @@
 package advent2018;
 
+import adventutils.geometry.Coordinate;
+import adventutils.geometry.CoordinateSet;
+import adventutils.geometry.Interval;
+import adventutils.input.InputLoader;
+import com.google.common.base.Objects;
 import java.util.List;
-
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
-
-import com.google.common.base.Objects;
-
-import adventutils.geometry.Coordinate;
-import adventutils.geometry.CoordinateSet;
-import adventutils.geometry.Interval;
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day10 {
