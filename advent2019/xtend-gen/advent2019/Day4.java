@@ -1,9 +1,8 @@
 package advent2019;
 
+import com.google.common.base.Objects;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
-
-import com.google.common.base.Objects;
 
 @SuppressWarnings("all")
 public class Day4 {

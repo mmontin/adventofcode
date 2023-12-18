@@ -1,12 +1,10 @@
 package advent2018;
 
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day19 {

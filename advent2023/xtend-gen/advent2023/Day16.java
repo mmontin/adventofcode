@@ -26,23 +26,27 @@ public class Day16 {
 
   private static final int max_y = (Day16.chars.get(0).size() - 1);
 
-  private static final Map<Coordinate, String> walls = Collection.<Coordinate, String, Integer, Integer>aggregateToMap(new IntegerRange(0, Day16.max_x), ((Function2<Integer, Map<Coordinate, String>, Integer>) (Integer i, Map<Coordinate, String> walls_1) -> {
-    int _xblockexpression = (int) 0;
-    {
-      final List<String> current_line = Day16.chars.get((i).intValue());
-      final Consumer<Integer> _function = (Integer j) -> {
-        boolean _equals = current_line.get((j).intValue()).equals(".");
-        boolean _not = (!_equals);
-        if (_not) {
-          Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-          walls_1.put(_coordinate, current_line.get((j).intValue()));
-        }
-      };
-      new IntegerRange(0, Day16.max_y).forEach(_function);
-      _xblockexpression = 0;
+  private static final Map<Coordinate, String> walls = Collection.<Coordinate, String, Integer, Integer>aggregateToMap(new IntegerRange(0, Day16.max_x), new Function2<Integer, Map<Coordinate, String>, Integer>() {
+    public Integer apply(final Integer i, final Map<Coordinate, String> walls_1) {
+      int _xblockexpression = (int) 0;
+      {
+        final List<String> current_line = Day16.chars.get((i).intValue());
+        final Consumer<Integer> _function = new Consumer<Integer>() {
+          public void accept(final Integer j) {
+            boolean _equals = current_line.get((j).intValue()).equals(".");
+            boolean _not = (!_equals);
+            if (_not) {
+              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+              walls_1.put(_coordinate, current_line.get((j).intValue()));
+            }
+          }
+        };
+        new IntegerRange(0, Day16.max_y).forEach(_function);
+        _xblockexpression = 0;
+      }
+      return Integer.valueOf(_xblockexpression);
     }
-    return Integer.valueOf(_xblockexpression);
-  }));
+  });
 
   private static final Set<Pair<Coordinate, Coordinate.Direction>> visited = CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet();
 
@@ -50,48 +54,60 @@ public class Day16 {
     Coordinate _coordinate = new Coordinate(0, (-1));
     Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.RIGHT);
     Day16.process(CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(_mappedTo));
-    final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = (Pair<Coordinate, Coordinate.Direction> it) -> {
-      return it.getKey();
+    final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate>() {
+      public Coordinate apply(final Pair<Coordinate, Coordinate.Direction> it) {
+        return it.getKey();
+      }
     };
     InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(Day16.visited, _function)).size()));
     final HashSet<Pair<Coordinate, Coordinate.Direction>> initials = CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet();
-    final Consumer<Integer> _function_1 = (Integer it) -> {
-      Coordinate _coordinate_1 = new Coordinate((it).intValue(), (-1));
-      Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.RIGHT);
-      initials.add(_mappedTo_1);
-      Coordinate _coordinate_2 = new Coordinate((it).intValue(), (Day16.max_y + 1));
-      Pair<Coordinate, Coordinate.Direction> _mappedTo_2 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_2, Coordinate.Direction.LEFT);
-      initials.add(_mappedTo_2);
+    final Consumer<Integer> _function_1 = new Consumer<Integer>() {
+      public void accept(final Integer it) {
+        Coordinate _coordinate = new Coordinate((it).intValue(), (-1));
+        Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.RIGHT);
+        initials.add(_mappedTo);
+        Coordinate _coordinate_1 = new Coordinate((it).intValue(), (Day16.max_y + 1));
+        Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.LEFT);
+        initials.add(_mappedTo_1);
+      }
     };
     new IntegerRange(0, Day16.max_x).forEach(_function_1);
-    final Consumer<Integer> _function_2 = (Integer it) -> {
-      Coordinate _coordinate_1 = new Coordinate((-1), (it).intValue());
-      Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.DOWN);
-      initials.add(_mappedTo_1);
-      Coordinate _coordinate_2 = new Coordinate((Day16.max_x + 1), (it).intValue());
-      Pair<Coordinate, Coordinate.Direction> _mappedTo_2 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_2, Coordinate.Direction.UP);
-      initials.add(_mappedTo_2);
+    final Consumer<Integer> _function_2 = new Consumer<Integer>() {
+      public void accept(final Integer it) {
+        Coordinate _coordinate = new Coordinate((-1), (it).intValue());
+        Pair<Coordinate, Coordinate.Direction> _mappedTo = Pair.<Coordinate, Coordinate.Direction>of(_coordinate, Coordinate.Direction.DOWN);
+        initials.add(_mappedTo);
+        Coordinate _coordinate_1 = new Coordinate((Day16.max_x + 1), (it).intValue());
+        Pair<Coordinate, Coordinate.Direction> _mappedTo_1 = Pair.<Coordinate, Coordinate.Direction>of(_coordinate_1, Coordinate.Direction.UP);
+        initials.add(_mappedTo_1);
+      }
     };
     new IntegerRange(0, Day16.max_y).forEach(_function_2);
-    final Function1<Pair<Coordinate, Coordinate.Direction>, Integer> _function_3 = (Pair<Coordinate, Coordinate.Direction> it) -> {
-      int _xblockexpression = (int) 0;
-      {
-        Day16.process(CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(it));
-        final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function_4 = (Pair<Coordinate, Coordinate.Direction> it_1) -> {
-          return it_1.getKey();
-        };
-        final int ret = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(Day16.visited, _function_4)).size();
-        Day16.visited.clear();
-        _xblockexpression = ret;
+    final Function1<Pair<Coordinate, Coordinate.Direction>, Integer> _function_3 = new Function1<Pair<Coordinate, Coordinate.Direction>, Integer>() {
+      public Integer apply(final Pair<Coordinate, Coordinate.Direction> it) {
+        int _xblockexpression = (int) 0;
+        {
+          Day16.process(CollectionLiterals.<Pair<Coordinate, Coordinate.Direction>>newHashSet(it));
+          final Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Coordinate.Direction>, Coordinate>() {
+            public Coordinate apply(final Pair<Coordinate, Coordinate.Direction> it_1) {
+              return it_1.getKey();
+            }
+          };
+          final int ret = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Coordinate>map(Day16.visited, _function)).size();
+          Day16.visited.clear();
+          _xblockexpression = ret;
+        }
+        return Integer.valueOf(_xblockexpression);
       }
-      return Integer.valueOf(_xblockexpression);
     };
     InputOutput.<Integer>println(IterableExtensions.<Integer>max(IterableExtensions.<Pair<Coordinate, Coordinate.Direction>, Integer>map(initials, _function_3)));
   }
 
   public static void process(final Set<Pair<Coordinate, Coordinate.Direction>> current) {
-    final Consumer<Pair<Coordinate, Coordinate.Direction>> _function = (Pair<Coordinate, Coordinate.Direction> it) -> {
-      Day16.process(Day16.nextCoords(it));
+    final Consumer<Pair<Coordinate, Coordinate.Direction>> _function = new Consumer<Pair<Coordinate, Coordinate.Direction>>() {
+      public void accept(final Pair<Coordinate, Coordinate.Direction> it) {
+        Day16.process(Day16.nextCoords(it));
+      }
     };
     current.forEach(_function);
   }

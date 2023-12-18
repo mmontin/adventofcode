@@ -71,7 +71,7 @@ class Coordinate implements Comparable<Coordinate> {
 	def scale(int factor) {
 		new Coordinate(factor * x, factor * y)
 	}
-	
+
 	def negate() {
 		new Coordinate(-x, -y)
 	}
@@ -81,11 +81,11 @@ class Coordinate implements Comparable<Coordinate> {
 	}
 
 	def Coordinate subtract(Coordinate other) {
-		new Coordinate(x - other.x, y-other.y)
+		new Coordinate(x - other.x, y - other.y)
 	}
-	
+
 	def Coordinate reduce() {
-		if (x== 0)
+		if (x == 0)
 			new Coordinate(0, Math.signum(y) as int)
 		else if (y == 0)
 			new Coordinate(Math.signum(x) as int, 0)
@@ -149,9 +149,9 @@ class Coordinate implements Comparable<Coordinate> {
 	def manhattanDistanceTo(Coordinate other) {
 		Math.abs(other.x - x) + Math.abs(other.y - y)
 	}
-	
+
 	def length() {
-		Math.sqrt(Math.pow(x,2)+Math.pow(y,2))
+		Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
 	}
 
 	def manhattanDistanceToZero() {
@@ -182,6 +182,10 @@ class Coordinate implements Comparable<Coordinate> {
 		DOWN,
 		LEFT,
 		RIGHT
+	}
+
+	def static Set<Direction> allDirections() {
+		newHashSet(Direction.DOWN, Direction.UP, Direction.RIGHT, Direction.LEFT)
 	}
 
 	def static Direction fromLeftRight(String s) {

@@ -256,6 +256,10 @@ public class Coordinate implements Comparable<Coordinate> {
     return this.code;
   }
 
+  public static Set<Coordinate.Direction> allDirections() {
+    return CollectionLiterals.<Coordinate.Direction>newHashSet(Coordinate.Direction.DOWN, Coordinate.Direction.UP, Coordinate.Direction.RIGHT, Coordinate.Direction.LEFT);
+  }
+
   public static Coordinate.Direction fromLeftRight(final String s) {
     Coordinate.Direction _switchResult = null;
     boolean _matched = false;

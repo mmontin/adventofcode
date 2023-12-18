@@ -5,12 +5,13 @@ import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
 import adventutils.pathfinding.AStar;
 import adventutils.pathfinding.State;
-import com.google.common.base.Objects;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
@@ -19,115 +20,133 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Day17 {
-  public static class MyCoordinate extends Coordinate implements State {
-    private List<Coordinate.Direction> last_directions;
-
+  public static class DirectedCoordinate extends Coordinate implements State {
     private final int hashCode;
 
-    public MyCoordinate(final int i, final int j, final List<Coordinate.Direction> directions) {
+    private Coordinate.Direction direction;
+
+    public DirectedCoordinate(final int i, final int j, final Coordinate.Direction d) {
       super(i, j);
-      this.last_directions = directions;
+      this.direction = d;
       int _hashCode = super.hashCode();
-      int _hashCode_1 = this.last_directions.hashCode();
+      int _hashCode_1 = d.hashCode();
       int _multiply = (_hashCode * _hashCode_1);
       this.hashCode = _multiply;
     }
 
-    @Override
     public boolean isGoal() {
       return super.equals(Day17.target);
     }
 
-    @Override
     public int minToGoal() {
       return this.manhattanDistanceTo(Day17.target);
     }
 
-    @Override
     public Iterable<Pair<? extends State, Integer>> neighbours() {
-      ArrayList<Pair<? extends State, Integer>> _xblockexpression = null;
+      HashSet<Pair<? extends State, Integer>> _xblockexpression = null;
       {
-        ArrayList<Coordinate.Direction> _switchResult = null;
-        int _size = this.last_directions.size();
-        final int x = _size;
-        boolean _matched = false;
-        if (Objects.equal(x, 0)) {
-          _matched=true;
-          _switchResult = CollectionLiterals.<Coordinate.Direction>newArrayList(Coordinate.Direction.DOWN, Coordinate.Direction.RIGHT);
-        }
-        if (!_matched) {
-          if ((x < 3)) {
-            _matched=true;
-            ArrayList<Coordinate.Direction> _xblockexpression_1 = null;
+        final Set<Coordinate.Direction> directions = Coordinate.allDirections();
+        directions.remove(this.direction);
+        directions.remove(Coordinate.opposite(this.direction));
+        final Function2<HashSet<Pair<? extends State, Integer>>, Coordinate.Direction, HashSet<Pair<? extends State, Integer>>> _function = new Function2<HashSet<Pair<? extends State, Integer>>, Coordinate.Direction, HashSet<Pair<? extends State, Integer>>>() {
+          public HashSet<Pair<? extends State, Integer>> apply(final HashSet<Pair<? extends State, Integer>> output, final Coordinate.Direction d) {
+            HashSet<Pair<? extends State, Integer>> _xblockexpression = null;
             {
-              final ArrayList<Coordinate.Direction> output = CollectionLiterals.<Coordinate.Direction>newArrayList(Coordinate.Direction.DOWN, Coordinate.Direction.UP, Coordinate.Direction.RIGHT, Coordinate.Direction.LEFT);
-              output.remove(Coordinate.opposite(IterableExtensions.<Coordinate.Direction>last(this.last_directions)));
-              _xblockexpression_1 = output;
+              final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
+                public Integer apply(final Integer acc, final Integer i) {
+                  Integer _xblockexpression = null;
+                  {
+                    Pair<Coordinate, Day17.DirectedCoordinate> _switchResult = null;
+                    if (d != null) {
+                      switch (d) {
+                        case UP:
+                          int _x = DirectedCoordinate.this.getX();
+                          int _minus = (_x - (i).intValue());
+                          int _y = DirectedCoordinate.this.getY();
+                          Coordinate _coordinate = new Coordinate(_minus, _y);
+                          int _x_1 = DirectedCoordinate.this.getX();
+                          int _minus_1 = (_x_1 - (i).intValue());
+                          int _y_1 = DirectedCoordinate.this.getY();
+                          Day17.DirectedCoordinate _directedCoordinate = new Day17.DirectedCoordinate(_minus_1, _y_1, d);
+                          _switchResult = Pair.<Coordinate, Day17.DirectedCoordinate>of(_coordinate, _directedCoordinate);
+                          break;
+                        case DOWN:
+                          int _x_2 = DirectedCoordinate.this.getX();
+                          int _plus = (_x_2 + (i).intValue());
+                          int _y_2 = DirectedCoordinate.this.getY();
+                          Coordinate _coordinate_1 = new Coordinate(_plus, _y_2);
+                          int _x_3 = DirectedCoordinate.this.getX();
+                          int _plus_1 = (_x_3 + (i).intValue());
+                          int _y_3 = DirectedCoordinate.this.getY();
+                          Day17.DirectedCoordinate _directedCoordinate_1 = new Day17.DirectedCoordinate(_plus_1, _y_3, d);
+                          _switchResult = Pair.<Coordinate, Day17.DirectedCoordinate>of(_coordinate_1, _directedCoordinate_1);
+                          break;
+                        case LEFT:
+                          int _x_4 = DirectedCoordinate.this.getX();
+                          int _y_4 = DirectedCoordinate.this.getY();
+                          int _minus_2 = (_y_4 - (i).intValue());
+                          Coordinate _coordinate_2 = new Coordinate(_x_4, _minus_2);
+                          int _x_5 = DirectedCoordinate.this.getX();
+                          int _y_5 = DirectedCoordinate.this.getY();
+                          int _minus_3 = (_y_5 - (i).intValue());
+                          Day17.DirectedCoordinate _directedCoordinate_2 = new Day17.DirectedCoordinate(_x_5, _minus_3, d);
+                          _switchResult = Pair.<Coordinate, Day17.DirectedCoordinate>of(_coordinate_2, _directedCoordinate_2);
+                          break;
+                        case RIGHT:
+                          int _x_6 = DirectedCoordinate.this.getX();
+                          int _y_6 = DirectedCoordinate.this.getY();
+                          int _plus_2 = (_y_6 + (i).intValue());
+                          Coordinate _coordinate_3 = new Coordinate(_x_6, _plus_2);
+                          int _x_7 = DirectedCoordinate.this.getX();
+                          int _y_7 = DirectedCoordinate.this.getY();
+                          int _plus_3 = (_y_7 + (i).intValue());
+                          Day17.DirectedCoordinate _directedCoordinate_3 = new Day17.DirectedCoordinate(_x_7, _plus_3, d);
+                          _switchResult = Pair.<Coordinate, Day17.DirectedCoordinate>of(_coordinate_3, _directedCoordinate_3);
+                          break;
+                        default:
+                          break;
+                      }
+                    }
+                    final Pair<Coordinate, Day17.DirectedCoordinate> newCoords = _switchResult;
+                    final Integer h = Day17.heat.get(newCoords.getKey());
+                    Integer ans = acc;
+                    if ((h != null)) {
+                      ans = Integer.valueOf(((acc).intValue() + (h).intValue()));
+                      if (((i).intValue() >= Day17.min_offset)) {
+                        Day17.DirectedCoordinate _value = newCoords.getValue();
+                        Pair<Day17.DirectedCoordinate, Integer> _mappedTo = Pair.<Day17.DirectedCoordinate, Integer>of(_value, ans);
+                        output.add(_mappedTo);
+                      }
+                    }
+                    _xblockexpression = ans;
+                  }
+                  return _xblockexpression;
+                }
+              };
+              IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(1, (Day17.max_offset + 1), true), Integer.valueOf(0), _function);
+              _xblockexpression = output;
             }
-            _switchResult = _xblockexpression_1;
-          }
-        }
-        if (!_matched) {
-          ArrayList<Coordinate.Direction> _xblockexpression_2 = null;
-          {
-            final ArrayList<Coordinate.Direction> output = CollectionLiterals.<Coordinate.Direction>newArrayList(Coordinate.Direction.DOWN, Coordinate.Direction.UP, Coordinate.Direction.RIGHT, Coordinate.Direction.LEFT);
-            output.remove(Coordinate.opposite(IterableExtensions.<Coordinate.Direction>last(this.last_directions)));
-            int _size_1 = IterableExtensions.<Coordinate.Direction>toSet(this.last_directions).size();
-            boolean _equals = (_size_1 == 1);
-            if (_equals) {
-              output.remove(IterableExtensions.<Coordinate.Direction>last(this.last_directions));
-            }
-            _xblockexpression_2 = output;
-          }
-          _switchResult = _xblockexpression_2;
-        }
-        final ArrayList<Coordinate.Direction> next_directions = _switchResult;
-        final ArrayList<Pair<? extends State, Integer>> output = CollectionLiterals.<Pair<? extends State, Integer>>newArrayList();
-        final Consumer<Coordinate.Direction> _function = (Coordinate.Direction it) -> {
-          final Coordinate next_coordinate = this.otherMove(it);
-          boolean _containsKey = Day17.heat.containsKey(next_coordinate);
-          if (_containsKey) {
-            ArrayList<Coordinate.Direction> _xifexpression = null;
-            int _size_1 = this.last_directions.size();
-            boolean _lessThan = (_size_1 < 3);
-            if (_lessThan) {
-              _xifexpression = new ArrayList<Coordinate.Direction>(this.last_directions);
-            } else {
-              List<Coordinate.Direction> _subList = this.last_directions.subList(1, 3);
-              _xifexpression = new ArrayList<Coordinate.Direction>(_subList);
-            }
-            final ArrayList<Coordinate.Direction> next_list = _xifexpression;
-            next_list.add(it);
-            int _x = next_coordinate.getX();
-            int _y = next_coordinate.getY();
-            Day17.MyCoordinate _myCoordinate = new Day17.MyCoordinate(_x, _y, next_list);
-            Integer _get = Day17.heat.get(next_coordinate);
-            Pair<Day17.MyCoordinate, Integer> _mappedTo = Pair.<Day17.MyCoordinate, Integer>of(_myCoordinate, _get);
-            output.add(_mappedTo);
+            return _xblockexpression;
           }
         };
-        next_directions.forEach(_function);
-        _xblockexpression = output;
+        _xblockexpression = IterableExtensions.<Coordinate.Direction, HashSet<Pair<? extends State, Integer>>>fold(directions, CollectionLiterals.<Pair<? extends State, Integer>>newHashSet(), _function);
       }
       return _xblockexpression;
     }
 
-    @Override
     public String toString() {
       return super.toString();
     }
 
-    @Override
     public int hashCode() {
       return this.hashCode;
     }
 
-    @Override
     public boolean equals(final Object other) {
       boolean _xblockexpression = false;
       {
-        final Day17.MyCoordinate c = ((Day17.MyCoordinate) other);
-        _xblockexpression = (super.equals(other) && c.last_directions.equals(this.last_directions));
+        final Day17.DirectedCoordinate c = ((Day17.DirectedCoordinate) other);
+        _xblockexpression = (super.equals(other) && c.direction.equals(this.direction));
       }
       return _xblockexpression;
     }
@@ -139,26 +158,40 @@ public class Day17 {
 
   private static final int max_y = (Day17.chars.get(0).size() - 1);
 
-  private static final Map<Coordinate, Integer> heat = Collection.<Coordinate, Integer, Integer, Integer>aggregateToMap(new IntegerRange(0, Day17.max_x), ((Function2<Integer, Map<Coordinate, Integer>, Integer>) (Integer i, Map<Coordinate, Integer> heat_1) -> {
-    int _xblockexpression = (int) 0;
-    {
-      final List<String> current_line = Day17.chars.get((i).intValue());
-      final Consumer<Integer> _function = (Integer j) -> {
-        Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-        heat_1.put(_coordinate, Integer.valueOf(Integer.parseInt(current_line.get((j).intValue()))));
-      };
-      new IntegerRange(0, Day17.max_y).forEach(_function);
-      _xblockexpression = 0;
+  private static final Map<Coordinate, Integer> heat = Collection.<Coordinate, Integer, Integer, Integer>aggregateToMap(new IntegerRange(0, Day17.max_x), new Function2<Integer, Map<Coordinate, Integer>, Integer>() {
+    public Integer apply(final Integer i, final Map<Coordinate, Integer> heat_1) {
+      int _xblockexpression = (int) 0;
+      {
+        final List<String> current_line = Day17.chars.get((i).intValue());
+        final Consumer<Integer> _function = new Consumer<Integer>() {
+          public void accept(final Integer j) {
+            Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+            heat_1.put(_coordinate, Integer.valueOf(Integer.parseInt(current_line.get((j).intValue()))));
+          }
+        };
+        new IntegerRange(0, Day17.max_y).forEach(_function);
+        _xblockexpression = 0;
+      }
+      return Integer.valueOf(_xblockexpression);
     }
-    return Integer.valueOf(_xblockexpression);
-  }));
+  });
 
   private static final Coordinate target = new Coordinate(Day17.max_x, Day17.max_y);
 
+  private static final Day17.DirectedCoordinate source = new Day17.DirectedCoordinate(0, 0, Coordinate.Direction.UP);
+
+  private static int min_offset;
+
+  private static int max_offset;
+
   public static void main(final String[] args) {
-    ArrayList<Coordinate.Direction> _newArrayList = CollectionLiterals.<Coordinate.Direction>newArrayList();
-    Day17.MyCoordinate _myCoordinate = new Day17.MyCoordinate(0, 0, _newArrayList);
-    final AStar aStar = new AStar(_myCoordinate);
+    Day17.min_offset = 1;
+    Day17.max_offset = 3;
+    final AStar aStar = new AStar(Day17.source);
+    InputOutput.<Integer>println(aStar.run().getMinDistance());
+    Day17.min_offset = 4;
+    Day17.max_offset = 10;
+    aStar.initialize(Day17.source);
     InputOutput.<Integer>println(aStar.run().getMinDistance());
   }
 }

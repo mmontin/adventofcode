@@ -2,10 +2,10 @@ package advent2023
 
 import adventutils.collection.Collection
 import adventutils.geometry.Coordinate
+import adventutils.geometry.Coordinate.Direction
 import adventutils.input.InputLoader
 import adventutils.pathfinding.AStar
 import adventutils.pathfinding.State
-import java.util.ArrayList
 import java.util.List
 import java.util.Map
 
@@ -23,22 +23,33 @@ class Day17 {
 		0
 	]
 	static final Coordinate target = new Coordinate(max_x, max_y)
+	static final DirectedCoordinate source = new DirectedCoordinate(0, 0, Direction.UP)
+
+	static int min_offset
+	static int max_offset
 
 	def static void main(String[] args) {
-		val aStar = new AStar(new MyCoordinate(0,0,newArrayList))
-		//println(aStar.run.minPath)
+
+		min_offset = 1
+		max_offset = 3
+		val aStar = new AStar(source)
+		println(aStar.run.minDistance)
+
+		min_offset = 4
+		max_offset = 10
+		aStar.initialize(source)
 		println(aStar.run.minDistance)
 	}
 
-	static class MyCoordinate extends Coordinate implements State {
+	static class DirectedCoordinate extends Coordinate implements State {
 
-		List<Coordinate.Direction> last_directions
 		final int hashCode
+		Direction direction
 
-		new(int i, int j, List<Coordinate.Direction> directions) {
+		new(int i, int j, Direction d) {
 			super(i, j)
-			last_directions = directions
-			hashCode = super.hashCode * last_directions.hashCode
+			direction = d
+			hashCode = super.hashCode * d.hashCode
 		}
 
 		override isGoal() {
@@ -46,40 +57,32 @@ class Day17 {
 		}
 
 		override minToGoal() {
-			this.manhattanDistanceTo(target)
+			manhattanDistanceTo(target)
 		}
 
 		override neighbours() {
-			val next_directions = switch (x : last_directions.size) {
-				case 0:
-					newArrayList(Direction.DOWN, Direction.RIGHT)
-				case x < 3: {
-					val output = newArrayList(Direction.DOWN, Direction.UP, Direction.RIGHT, Direction.LEFT)
-					output.remove(Coordinate.opposite(last_directions.last))
-					output
-				}
-				default: {
-					val output = newArrayList(Direction.DOWN, Direction.UP, Direction.RIGHT, Direction.LEFT)
-					output.remove(Coordinate.opposite(last_directions.last))
-					if (last_directions.toSet.size == 1)
-						output.remove(last_directions.last)
-					output
-				}
-			}
-			val output = newArrayList
-			next_directions.forEach[
-				val next_coordinate = this.otherMove(it)
-				if (heat.containsKey(next_coordinate)) {
-					val next_list = last_directions.size < 3 ?
-						new ArrayList(last_directions) : 
-						new ArrayList(last_directions.subList(1,3))
-					next_list.add(it)
-					output.add(new MyCoordinate(next_coordinate.x, next_coordinate.y, next_list)
-						-> heat.get(next_coordinate)
-					)
-				}
+			val directions = Coordinate.allDirections
+			directions.remove(direction)
+			directions.remove(Coordinate.opposite(direction))
+			directions.fold(newHashSet) [ output, d |
+				(1 ..< max_offset + 1).fold(0) [ acc, i |
+					val newCoords = switch d {
+						case UP: new Coordinate(x - i, y) -> new DirectedCoordinate(x - i, y, d)
+						case DOWN: new Coordinate(x + i, y) -> new DirectedCoordinate(x + i, y, d)
+						case LEFT: new Coordinate(x, y - i) -> new DirectedCoordinate(x, y - i, d)
+						case RIGHT: new Coordinate(x, y + i) -> new DirectedCoordinate(x, y + i, d)
+					}
+					val h = heat.get(newCoords.key)
+					var ans = acc
+					if (h !== null) {
+						ans = acc + h
+						if (i >= min_offset)
+							output.add(newCoords.value -> ans)
+					}
+					ans
+				]
+				output
 			]
-			output
 		}
 
 		override toString() {
@@ -89,10 +92,10 @@ class Day17 {
 		override hashCode() {
 			hashCode
 		}
-		
+
 		override equals(Object other) {
-			val MyCoordinate c = other as MyCoordinate
-			super.equals(other) && c.last_directions.equals(last_directions)
+			val DirectedCoordinate c = other as DirectedCoordinate
+			super.equals(other) && c.direction.equals(direction)
 		}
 	}
 }
