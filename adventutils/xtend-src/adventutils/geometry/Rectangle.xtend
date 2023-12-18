@@ -4,15 +4,15 @@ import java.math.BigInteger
 
 class Rectangle {
 
-	final int minX
-	final int maxX
-	final int minY
-	final int maxY
+	public final int minX
+	public final int maxX
+	public final int minY
+	public final int maxY
 
-	final Coordinate top_left
-	final Coordinate top_right
-	final Coordinate bot_left
-	final Coordinate bot_right
+	public final Coordinate top_left
+	public final Coordinate top_right
+	public final Coordinate bot_left
+	public final Coordinate bot_right
 
 	new(int x1, int x2, int y1, int y2) {
 		minX = x1 <= x2 ? x1 : x2

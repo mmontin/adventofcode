@@ -7,21 +7,21 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Rectangle {
-  private final int minX;
+  public final int minX;
 
-  private final int maxX;
+  public final int maxX;
 
-  private final int minY;
+  public final int minY;
 
-  private final int maxY;
+  public final int maxY;
 
-  private final Coordinate top_left;
+  public final Coordinate top_left;
 
-  private final Coordinate top_right;
+  public final Coordinate top_right;
 
-  private final Coordinate bot_left;
+  public final Coordinate bot_left;
 
-  private final Coordinate bot_right;
+  public final Coordinate bot_right;
 
   public Rectangle(final int x1, final int x2, final int y1, final int y2) {
     int _xifexpression = (int) 0;

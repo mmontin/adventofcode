@@ -10,8 +10,11 @@ import adventutils.geometry.Rectangle;
 import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -111,30 +114,13 @@ public class Day18 {
       }
     };
     final ArrayList<Pair<Rectangle, Rectangle>> all_rectangles = IterableExtensions.<Integer, ArrayList<Pair<Rectangle, Rectangle>>>fold(new IntegerRange(0, _minus), CollectionLiterals.<Pair<Rectangle, Rectangle>>newArrayList(), _function_4);
-    final Function2<HashSet<Rectangle>, Coordinate, HashSet<Rectangle>> _function_5 = new Function2<HashSet<Rectangle>, Coordinate, HashSet<Rectangle>>() {
-      public HashSet<Rectangle> apply(final HashSet<Rectangle> set, final Coordinate el) {
-        HashSet<Rectangle> _xblockexpression = null;
-        {
-          final Function1<Pair<Rectangle, Rectangle>, Boolean> _function = new Function1<Pair<Rectangle, Rectangle>, Boolean>() {
-            public Boolean apply(final Pair<Rectangle, Rectangle> it) {
-              return Boolean.valueOf(it.getKey().strictlyContains(el));
-            }
-          };
-          final Pair<Rectangle, Rectangle> rect = IterableExtensions.<Pair<Rectangle, Rectangle>>findFirst(all_rectangles, _function);
-          if ((rect != null)) {
-            set.add(rect.getValue());
-          }
-          _xblockexpression = set;
-        }
-        return _xblockexpression;
-      }
-    };
-    final HashSet<Rectangle> used_rectangles = IterableExtensions.<Coordinate, HashSet<Rectangle>>fold(inside, CollectionLiterals.<Rectangle>newHashSet(), _function_5);
+    final long t1 = System.currentTimeMillis();
+    final HashSet<Rectangle> used_rectangles = Day18.smartSearch(all_rectangles, inside);
     HashSet<HashSet<Coordinate>> _newHashSet = CollectionLiterals.<HashSet<Coordinate>>newHashSet();
     HashSet<Coordinate> _newHashSet_1 = CollectionLiterals.<Coordinate>newHashSet();
     Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>> _mappedTo = Pair.<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>of(_newHashSet, _newHashSet_1);
     Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>> _mappedTo_1 = Pair.<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>of(BigInteger.ZERO, _mappedTo);
-    final Function2<Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>, Rectangle, Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>> _function_6 = new Function2<Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>, Rectangle, Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>>() {
+    final Function2<Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>, Rectangle, Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>> _function_5 = new Function2<Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>, Rectangle, Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>>() {
       public Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>> apply(final Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>> sum, final Rectangle el) {
         Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>> _xblockexpression = null;
         {
@@ -152,11 +138,15 @@ public class Day18 {
         return _xblockexpression;
       }
     };
-    final Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>> overSize = IterableExtensions.<Rectangle, Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>>fold(used_rectangles, _mappedTo_1, _function_6);
+    final Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>> overSize = IterableExtensions.<Rectangle, Pair<BigInteger, Pair<HashSet<HashSet<Coordinate>>, HashSet<Coordinate>>>>fold(used_rectangles, _mappedTo_1, _function_5);
+    long _currentTimeMillis = System.currentTimeMillis();
+    long _minus_1 = (_currentTimeMillis - t1);
+    String _plus_1 = ("TIME : " + Long.valueOf(_minus_1));
+    InputOutput.<String>println(_plus_1);
     BigInteger _key = overSize.getKey();
     BigInteger _valueOf = BigInteger.valueOf(overSize.getValue().getValue().size());
-    BigInteger _plus_1 = _key.add(_valueOf);
-    final Function2<BigInteger, HashSet<Coordinate>, BigInteger> _function_7 = new Function2<BigInteger, HashSet<Coordinate>, BigInteger>() {
+    BigInteger _plus_2 = _key.add(_valueOf);
+    final Function2<BigInteger, HashSet<Coordinate>, BigInteger> _function_6 = new Function2<BigInteger, HashSet<Coordinate>, BigInteger>() {
       public BigInteger apply(final BigInteger acc, final HashSet<Coordinate> el) {
         int _manhattanDistanceTo = (((Coordinate[])Conversions.unwrapArray(el, Coordinate.class))[0]).manhattanDistanceTo(((Coordinate[])Conversions.unwrapArray(el, Coordinate.class))[1]);
         int _plus = (_manhattanDistanceTo + 1);
@@ -164,8 +154,39 @@ public class Day18 {
         return acc.add(_valueOf);
       }
     };
-    BigInteger _fold = IterableExtensions.<HashSet<Coordinate>, BigInteger>fold(overSize.getValue().getKey(), BigInteger.ZERO, _function_7);
-    final BigInteger size = _plus_1.add(_fold);
+    BigInteger _fold = IterableExtensions.<HashSet<Coordinate>, BigInteger>fold(overSize.getValue().getKey(), BigInteger.ZERO, _function_6);
+    final BigInteger size = _plus_2.add(_fold);
     InputOutput.<BigInteger>println(size);
+  }
+
+  public static HashSet<Rectangle> smartSearch(final ArrayList<Pair<Rectangle, Rectangle>> all_rectangles, final Set<Coordinate> inside) {
+    HashSet<Rectangle> _xblockexpression = null;
+    {
+      final HashSet<Rectangle> output = CollectionLiterals.<Rectangle>newHashSet();
+      final Iterator<Pair<Rectangle, Rectangle>> rec_it = all_rectangles.iterator();
+      final List<Coordinate> sorted_coords = IterableExtensions.<Coordinate>sort(inside);
+      while (rec_it.hasNext()) {
+        {
+          final Pair<Rectangle, Rectangle> current = rec_it.next();
+          int left = Arrays.binarySearch(((Object[])Conversions.unwrapArray(sorted_coords, Object.class)), current.getKey().top_left);
+          if ((left < 0)) {
+            left = ((-left) - 1);
+          }
+          int right = Arrays.binarySearch(((Object[])Conversions.unwrapArray(sorted_coords, Object.class)), current.getKey().bot_right);
+          if ((right < 0)) {
+            right = ((-right) - 1);
+          }
+          int i = left;
+          while ((((i <= right) && (i < sorted_coords.size())) && (!current.getKey().strictlyContains(sorted_coords.get(i))))) {
+            i++;
+          }
+          if (((i < sorted_coords.size()) && current.getKey().strictlyContains(sorted_coords.get(i)))) {
+            output.add(current.getValue());
+          }
+        }
+      }
+      _xblockexpression = output;
+    }
+    return _xblockexpression;
   }
 }

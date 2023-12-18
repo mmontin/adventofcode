@@ -237,5 +237,4 @@ class Coordinate implements Comparable<Coordinate> {
 			default: value
 		}
 	}
-
 }

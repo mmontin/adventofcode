@@ -9,11 +9,14 @@ import adventutils.input.InputLoader
 import java.math.BigInteger
 import java.util.ArrayList
 import java.util.List
+import java.util.Set
+import java.util.Arrays
 
 class Day18 {
 
 	def static void main(String[] args) {
 
+		// Data preparation
 		val List<String> input = new InputLoader(2023, 18).inputs
 		val Coordinate start = new Coordinate(0, 0)
 
@@ -35,7 +38,7 @@ class Day18 {
 		// PART 1
 		val output = Map.flow(first_list)
 		println(output.value.key.size + output.value.value.size)
-		
+
 		// PART 2
 		val xs = second_list.map[x].toSet.sort
 		val ys = second_list.map[y].toSet.sort
@@ -57,11 +60,9 @@ class Day18 {
 			list
 		]
 
-		val used_rectangles = inside.fold(newHashSet) [ set, el |	
-			val rect = all_rectangles.findFirst[it.key.strictlyContains(el)]
-			if (rect !== null) set.add(rect.value)
-			set
-		]
+		val t1 = System.currentTimeMillis
+
+		val used_rectangles = smartSearch(all_rectangles,inside)
 
 		val overSize = used_rectangles.fold(BigInteger.ZERO -> (newHashSet -> newHashSet)) [ sum, el |
 			val tmp = el.bordersAndCorners
@@ -71,6 +72,7 @@ class Day18 {
 			sum.value.value.addAll(corners)
 			sum.key + el.innerArea -> sum.value
 		]
+		println("TIME : " + (System.currentTimeMillis - t1))
 
 		val size = overSize.key + BigInteger.valueOf(overSize.value.value.size)
 			 + overSize.value.key.fold(BigInteger.ZERO)[acc,el|
@@ -78,5 +80,27 @@ class Day18 {
 			 ]
 		
 		println(size)
+	}
+	
+	def static smartSearch(ArrayList<Pair<Rectangle, Rectangle>> all_rectangles, Set<Coordinate> inside) {
+		val output = newHashSet
+		val rec_it = all_rectangles.iterator
+		
+		val sorted_coords = inside.sort
+		
+		while (rec_it.hasNext) {
+			val current = rec_it.next
+			var left = Arrays.binarySearch(sorted_coords,current.key.top_left)
+			if (left < 0) left = -left - 1
+			var right = Arrays.binarySearch(sorted_coords,current.key.bot_right)
+			if (right < 0) right = -right - 1
+			var i = left
+			while (i <= right && i < sorted_coords.size && !current.key.strictlyContains(sorted_coords.get(i))) {
+				i ++
+			}
+			if (i < sorted_coords.size && current.key.strictlyContains(sorted_coords.get(i)))
+				output.add(current.value)
+		}
+		output
 	}
 }
