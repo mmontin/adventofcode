@@ -1,5 +1,7 @@
 package adventutils.geometry;
 
+import org.eclipse.xtext.xbase.lib.Pair;
+
 @SuppressWarnings("all")
 public class Interval {
   public long leftBound;
@@ -9,6 +11,10 @@ public class Interval {
   public Interval(final long lb, final long rb) {
     this.leftBound = lb;
     this.rightBound = rb;
+  }
+
+  public Interval(final Interval other) {
+    this(other.leftBound, other.rightBound);
   }
 
   public Interval(final String s) {
@@ -62,6 +68,24 @@ public class Interval {
   public boolean isEmpty() {
     long _length = this.length();
     return (_length < 0);
+  }
+
+  public Pair<Interval, Interval> split(final long limit, final boolean includeLeft) {
+    long _xifexpression = (long) 0;
+    if (includeLeft) {
+      _xifexpression = limit;
+    } else {
+      _xifexpression = (limit - 1);
+    }
+    Interval _interval = new Interval(this.leftBound, _xifexpression);
+    long _xifexpression_1 = (long) 0;
+    if (includeLeft) {
+      _xifexpression_1 = (limit + 1);
+    } else {
+      _xifexpression_1 = limit;
+    }
+    Interval _interval_1 = new Interval(_xifexpression_1, this.rightBound);
+    return Pair.<Interval, Interval>of(_interval, _interval_1);
   }
 
   public String toString() {

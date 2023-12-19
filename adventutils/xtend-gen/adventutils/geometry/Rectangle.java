@@ -6,7 +6,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
-public class Rectangle {
+public class Rectangle implements Comparable<Rectangle> {
   public final int minX;
 
   public final int maxX;
@@ -117,6 +117,21 @@ public class Rectangle {
     {
       final Rectangle o = ((Rectangle) other);
       _xblockexpression = ((((this.minX == o.minX) && (this.maxY == o.maxY)) && (this.minY == o.minY)) && (this.maxY == o.maxY));
+    }
+    return _xblockexpression;
+  }
+
+  public int compareTo(final Rectangle other) {
+    int _xblockexpression = (int) 0;
+    {
+      final int one = this.top_left.compareTo(other.top_left);
+      int _xifexpression = (int) 0;
+      if ((one == 0)) {
+        _xifexpression = this.bot_right.compareTo(other.bot_right);
+      } else {
+        _xifexpression = one;
+      }
+      _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
   }

@@ -12,7 +12,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -163,24 +162,34 @@ public class Day18 {
     HashSet<Rectangle> _xblockexpression = null;
     {
       final HashSet<Rectangle> output = CollectionLiterals.<Rectangle>newHashSet();
-      final Iterator<Pair<Rectangle, Rectangle>> rec_it = all_rectangles.iterator();
       final List<Coordinate> sorted_coords = IterableExtensions.<Coordinate>sort(inside);
-      while (rec_it.hasNext()) {
+      int left = 0;
+      int right = sorted_coords.size();
+      final Function1<Pair<Rectangle, Rectangle>, Rectangle> _function = new Function1<Pair<Rectangle, Rectangle>, Rectangle>() {
+        public Rectangle apply(final Pair<Rectangle, Rectangle> it) {
+          return it.getKey();
+        }
+      };
+      List<Pair<Rectangle, Rectangle>> _sortBy = IterableExtensions.<Pair<Rectangle, Rectangle>, Rectangle>sortBy(all_rectangles, _function);
+      for (final Pair<Rectangle, Rectangle> current : _sortBy) {
         {
-          final Pair<Rectangle, Rectangle> current = rec_it.next();
-          int left = Arrays.binarySearch(((Object[])Conversions.unwrapArray(sorted_coords, Object.class)), current.getKey().top_left);
+          right = sorted_coords.size();
+          left = Arrays.binarySearch(((Object[])Conversions.unwrapArray(sorted_coords, Object.class)), left, right, current.getKey().top_left);
           if ((left < 0)) {
             left = ((-left) - 1);
           }
-          int right = Arrays.binarySearch(((Object[])Conversions.unwrapArray(sorted_coords, Object.class)), current.getKey().bot_right);
+          right = Arrays.binarySearch(((Object[])Conversions.unwrapArray(sorted_coords, Object.class)), left, right, current.getKey().bot_right);
           if ((right < 0)) {
             right = ((-right) - 1);
           }
-          int i = left;
-          while ((((i <= right) && (i < sorted_coords.size())) && (!current.getKey().strictlyContains(sorted_coords.get(i))))) {
-            i++;
-          }
-          if (((i < sorted_coords.size()) && current.getKey().strictlyContains(sorted_coords.get(i)))) {
+          final List<Coordinate> candidates = sorted_coords.subList(left, Math.min(right, sorted_coords.size()));
+          final Function1<Coordinate, Boolean> _function_1 = new Function1<Coordinate, Boolean>() {
+            public Boolean apply(final Coordinate it) {
+              return Boolean.valueOf(current.getKey().strictlyContains(it));
+            }
+          };
+          boolean _exists = IterableExtensions.<Coordinate>exists(candidates, _function_1);
+          if (_exists) {
             output.add(current.getValue());
           }
         }

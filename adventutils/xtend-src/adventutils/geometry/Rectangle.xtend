@@ -2,7 +2,7 @@ package adventutils.geometry
 
 import java.math.BigInteger
 
-class Rectangle {
+class Rectangle implements Comparable<Rectangle> {
 
 	public final int minX
 	public final int maxX
@@ -70,5 +70,12 @@ class Rectangle {
 	override equals(Object other) {
 		val Rectangle o = other as Rectangle
 		minX == o.minX && maxY == o.maxY && minY == o.minY && maxY == o.maxY
+	}
+	
+	override compareTo(Rectangle other) {
+		val one = top_left.compareTo(other.top_left)
+		if (one == 0)
+			bot_right.compareTo(other.bot_right)
+		else one
 	}
 }

@@ -28,7 +28,7 @@ class Day18 {
 
 			val dir = Dir.directionFromString(split.get(0))
 			val number = Integer.parseInt(split.get(1))
-			first_list.add(first_list.last.otherMove(dir,number))
+			first_list.add(first_list.last.otherMove(dir, number))
 
 			val other_number = Integer.parseInt(split.get(2).substring(2, split.get(2).length - 2), 16)
 			val other_dir = Dir.directionFromStringNb(split.get(2).charAt(split.get(2).length - 2) + "")
@@ -62,7 +62,7 @@ class Day18 {
 
 		val t1 = System.currentTimeMillis
 
-		val used_rectangles = smartSearch(all_rectangles,inside)
+		val used_rectangles = smartSearch(all_rectangles, inside)
 
 		val overSize = used_rectangles.fold(BigInteger.ZERO -> (newHashSet -> newHashSet)) [ sum, el |
 			val tmp = el.bordersAndCorners
@@ -74,33 +74,33 @@ class Day18 {
 		]
 		println("TIME : " + (System.currentTimeMillis - t1))
 
-		val size = overSize.key + BigInteger.valueOf(overSize.value.value.size)
-			 + overSize.value.key.fold(BigInteger.ZERO)[acc,el|
-			 	acc + BigInteger.valueOf(el.get(0).manhattanDistanceTo(el.get(1))+1)
-			 ]
-		
+		val size = overSize.key + BigInteger.valueOf(overSize.value.value.size) +
+			overSize.value.key.fold(BigInteger.ZERO) [ acc, el |
+				acc + BigInteger.valueOf(el.get(0).manhattanDistanceTo(el.get(1)) + 1)
+			]
+
 		println(size)
 	}
-	
+
 	def static smartSearch(ArrayList<Pair<Rectangle, Rectangle>> all_rectangles, Set<Coordinate> inside) {
+
 		val output = newHashSet
-		val rec_it = all_rectangles.iterator
-		
 		val sorted_coords = inside.sort
-		
-		while (rec_it.hasNext) {
-			val current = rec_it.next
-			var left = Arrays.binarySearch(sorted_coords,current.key.top_left)
-			if (left < 0) left = -left - 1
-			var right = Arrays.binarySearch(sorted_coords,current.key.bot_right)
-			if (right < 0) right = -right - 1
-			var i = left
-			while (i <= right && i < sorted_coords.size && !current.key.strictlyContains(sorted_coords.get(i))) {
-				i ++
-			}
-			if (i < sorted_coords.size && current.key.strictlyContains(sorted_coords.get(i)))
+
+		var left = 0
+		var right = sorted_coords.size
+
+		for (current : all_rectangles.sortBy[key]) {
+			right = sorted_coords.size
+			left = Arrays.binarySearch(sorted_coords, left, right, current.key.top_left)
+			if(left < 0) left = -left - 1
+			right = Arrays.binarySearch(sorted_coords, left, right, current.key.bot_right)
+			if(right < 0) right = -right - 1
+			val candidates = sorted_coords.subList(left, Math.min(right, sorted_coords.size))
+			if (candidates.exists[current.key.strictlyContains(it)])
 				output.add(current.value)
 		}
+
 		output
 	}
 }

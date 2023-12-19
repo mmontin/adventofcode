@@ -9,6 +9,10 @@ class Interval {
 		leftBound = lb
 		rightBound = rb
 	}
+	
+	new(Interval other) {
+		this(other.leftBound, other.rightBound)
+	}
 
 	new(String s) {
 		this(Long.parseLong(s.split("-").get(0)), Long.parseLong(s.split("-").get(1)))
@@ -49,6 +53,11 @@ class Interval {
 
 	def isEmpty() {
 		length < 0
+	}
+	
+	def split(long limit, boolean includeLeft) {
+		new Interval(leftBound, includeLeft ? limit : limit - 1) ->
+		new Interval(includeLeft ? limit + 1 : limit, rightBound)
 	}
 
 	override toString() {
