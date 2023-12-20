@@ -32,7 +32,13 @@ public class Day20 {
 
   public static void main(final String[] args) {
     final Set<String> all_receivers = CollectionLiterals.<String>newHashSet();
-    final Consumer<String> _function = new Consumer<String>() {
+    final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
+      public Boolean apply(final String it) {
+        boolean _isBlank = it.isBlank();
+        return Boolean.valueOf((!_isBlank));
+      }
+    };
+    final Consumer<String> _function_1 = new Consumer<String>() {
       public void accept(final String it) {
         final String[] split = it.split(" -> ");
         final String[] receivers = (split[1]).split(", ");
@@ -61,8 +67,8 @@ public class Day20 {
         }
       }
     };
-    new InputLoader(Integer.valueOf(2023), Integer.valueOf(20)).getInputs().forEach(_function);
-    final Consumer<String> _function_1 = new Consumer<String>() {
+    IterableExtensions.<String>filter(new InputLoader(Integer.valueOf(2023), Integer.valueOf(20)).getInputs(), _function).forEach(_function_1);
+    final Consumer<String> _function_2 = new Consumer<String>() {
       public void accept(final String it) {
         boolean _containsKey = Day20.modules.containsKey(it);
         boolean _not = (!_containsKey);
@@ -73,8 +79,8 @@ public class Day20 {
         }
       }
     };
-    all_receivers.forEach(_function_1);
-    final Consumer<Map.Entry<String, advent2023.Module>> _function_2 = new Consumer<Map.Entry<String, advent2023.Module>>() {
+    all_receivers.forEach(_function_2);
+    final Consumer<Map.Entry<String, advent2023.Module>> _function_3 = new Consumer<Map.Entry<String, advent2023.Module>>() {
       public void accept(final Map.Entry<String, advent2023.Module> it) {
         final List<String> targets = it.getValue().targets;
         final Function1<String, advent2023.Module> _function = new Function1<String, advent2023.Module>() {
@@ -92,9 +98,9 @@ public class Day20 {
         ListExtensions.<String, advent2023.Module>map(targets, _function).forEach(_function_1);
       }
     };
-    Day20.modules.entrySet().forEach(_function_2);
+    Day20.modules.entrySet().forEach(_function_3);
     Day20.printState();
-    final Consumer<Integer> _function_3 = new Consumer<Integer>() {
+    final Consumer<Integer> _function_4 = new Consumer<Integer>() {
       public void accept(final Integer it) {
         try {
           Day20.pushButton();
@@ -105,7 +111,7 @@ public class Day20 {
         }
       }
     };
-    new IntegerRange(1, 1000).forEach(_function_3);
+    new IntegerRange(1, 1000).forEach(_function_4);
     InputOutput.<Integer>println(Integer.valueOf((Day20.low_pulses * Day20.high_pulses)));
   }
 
@@ -150,8 +156,8 @@ public class Day20 {
               return (x + y);
             }
           };
-          int _parseInt = Integer.parseInt(IterableExtensions.<String>reduce(ListExtensions.<Boolean, String>map(ListExtensions.<Map.Entry<String, Boolean>, Boolean>map(IterableExtensions.<Map.Entry<String, Boolean>, String>sortBy(((Conjunction) _value).sources.entrySet(), _function), _function_1), _function_2), _function_3), 2);
-          return (_plus + Integer.valueOf(_parseInt));
+          String _reduce = IterableExtensions.<String>reduce(ListExtensions.<Boolean, String>map(ListExtensions.<Map.Entry<String, Boolean>, Boolean>map(IterableExtensions.<Map.Entry<String, Boolean>, String>sortBy(((Conjunction) _value).sources.entrySet(), _function), _function_1), _function_2), _function_3);
+          return (_plus + _reduce);
         }
       };
       _xblockexpression = InputOutput.<String>println(IterableExtensions.join(IterableExtensions.<Map.Entry<String, advent2023.Module>, String>map(IterableExtensions.<Map.Entry<String, advent2023.Module>>filter(Day20.modules.entrySet(), _function), _function_1), "; "));

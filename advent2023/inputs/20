@@ -1,3 +1,15 @@
+&kh -> rx
+
+&pv -> kh
+&qh -> kh
+&xm -> kh
+&hz -> kh
+
+&tb -> sx, qn, vj, qq, sk, pv
+&fl -> xv, tx, sl, df, qh, zc, zm
+&kc -> zb, xp, pd, fc, xm
+&hd -> hp, js, hz
+
 %dt -> fm, hd
 %tl -> jk, hd
 %vx -> kc, sz
@@ -5,12 +17,9 @@
 %kj -> tl, hd
 %pm -> tb
 %fc -> rt
-&tb -> sx, qn, vj, qq, sk, pv
 %df -> bb
 %qq -> jm
 %sl -> vz
-broadcaster -> hp, zb, xv, qn
-&pv -> kh
 %gf -> pm, tb
 %pb -> hd, kj
 %gr -> hd, pb
@@ -19,33 +28,26 @@ broadcaster -> hp, zb, xv, qn
 %jm -> tb, db
 %bh -> fl, gz
 %rt -> kc, xp
-&qh -> kh
 %lb -> zm, fl
 %pd -> lq
 %qn -> sk, tb
 %gb -> qq, tb
-&xm -> kh
 %mv -> hd, gr
 %gz -> fl
 %js -> mv
 %hp -> dt, hd
 %nk -> kc, vx
-&kh -> rx
 %zc -> tx
 %mp -> js, hd
 %zm -> mb
 %xh -> cd, tb
 %db -> xh, tb
 %sx -> vj
-&hz -> kh
 %vj -> gb
 %zq -> hd
 %lj -> fc, kc
 %lg -> kc, nk
-&fl -> xv, tx, sl, df, qh, zc, zm
-&kc -> zb, xp, pd, fc, xm
 %lq -> kc, lj
-&hd -> hp, js, hz
 %mb -> fl, sl
 %vz -> fl, bh
 %fm -> mp, hd
@@ -56,3 +58,5 @@ broadcaster -> hp, zb, xv, qn
 %xv -> zc, fl
 %sk -> sx
 %cd -> gf, tb
+
+broadcaster -> hp, zb, xv, qn

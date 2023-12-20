@@ -18,7 +18,7 @@ class Day20 {
 
 		val Set<String> all_receivers = newHashSet
 
-		new InputLoader(2023, 20).inputs.forEach [
+		new InputLoader(2023, 20).inputs.filter[!isBlank].forEach [
 			val split = it.split(" -> ")
 			val receivers = split.get(1).split(", ")
 			all_receivers.addAll(receivers)
@@ -50,9 +50,9 @@ class Day20 {
 	def static printState() {
 		println("---------------------------------------")
 		println(modules.entrySet.filter[it.value instanceof Conjunction].map [
-			it.key + " : " + Integer.parseInt((it.value as Conjunction).sources.entrySet.sortBy[key].map[value].map [
+			it.key + " : " + (it.value as Conjunction).sources.entrySet.sortBy[key].map[value].map [
 				it ? "1" : "0"
-			].reduce[x, y|x + y], 2)
+			].reduce[x, y|x + y]
 		].join('; '))
 //		modules.entrySet.forEach [
 //			if (it.value instanceof Conjunction)
