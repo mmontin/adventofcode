@@ -1,5 +1,6 @@
 package advent2023
 
+import adventutils.Arithmetics
 import adventutils.input.InputLoader
 import java.util.List
 import java.util.Map
@@ -13,7 +14,10 @@ class Day20 {
 	static Queue<Pair<String, Pair<Boolean, String>>> messages = newLinkedList
 	static int low_pulses = 0
 	static int high_pulses = 0
-
+	static int i = 0
+	static Set<String> pre_end = newHashSet("pv", "qh", "xm", "hz")
+	static Set<Long> ranks = newHashSet
+	
 	def static void main(String[] args) {
 
 		val Set<String> all_receivers = newHashSet
@@ -42,24 +46,13 @@ class Day20 {
 			]
 		]
 
-		printState;
-		(1 .. 1000).forEach[pushButton; printState; Thread.sleep(200)]
-		println(low_pulses * high_pulses)
-	}
-
-	def static printState() {
-		println("---------------------------------------")
-		println(modules.entrySet.filter[it.value instanceof Conjunction].map [
-			it.key + " : " + (it.value as Conjunction).sources.entrySet.sortBy[key].map[value].map [
-				it ? "1" : "0"
-			].reduce[x, y|x + y]
-		].join('; '))
-//		modules.entrySet.forEach [
-//			if (it.value instanceof Conjunction)
-//				println("Conjunction " + it.key + " " + Integer.parseInt((it.value as Conjunction).sources.entrySet.map[value].map[
-//					it ? "1" : "0"
-//				].reduce[x, y|x + y], 2))
-//		]
+		while (!pre_end.empty) {
+			pushButton
+			i++
+			if(i == 1000) println(low_pulses * high_pulses)
+		}
+		
+		println(ranks.reduce[x,y|Arithmetics.lcm(x,y)])
 	}
 
 	def static pushButton() {
@@ -75,6 +68,10 @@ class Day20 {
 		val response = modules.get(target).receiveAndSend(source, signal)
 		messages.addAll(response.map[target -> it])
 		if(signal) high_pulses++ else low_pulses++
+		if(pre_end.contains(source) && signal) {
+			pre_end.remove(source)
+			ranks.add((i + 1) as long)
+		}
 	}
 }
 
@@ -103,9 +100,6 @@ abstract class Module {
 	override toString() {
 		"sends to + " + targets
 	}
-}
-
-class DontSendException extends Exception {
 }
 
 class Button extends Module {

@@ -1,5 +1,6 @@
 package advent2023;
 
+import adventutils.Arithmetics;
 import adventutils.input.InputLoader;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
@@ -11,11 +12,9 @@ import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -29,6 +28,12 @@ public class Day20 {
   private static int low_pulses = 0;
 
   private static int high_pulses = 0;
+
+  private static int i = 0;
+
+  private static Set<String> pre_end = CollectionLiterals.<String>newHashSet("pv", "qh", "xm", "hz");
+
+  private static Set<Long> ranks = CollectionLiterals.<Long>newHashSet();
 
   public static void main(final String[] args) {
     final Set<String> all_receivers = CollectionLiterals.<String>newHashSet();
@@ -99,70 +104,21 @@ public class Day20 {
       }
     };
     Day20.modules.entrySet().forEach(_function_3);
-    Day20.printState();
-    final Consumer<Integer> _function_4 = new Consumer<Integer>() {
-      public void accept(final Integer it) {
-        try {
-          Day20.pushButton();
-          Day20.printState();
-          Thread.sleep(200);
-        } catch (Throwable _e) {
-          throw Exceptions.sneakyThrow(_e);
+    while ((!Day20.pre_end.isEmpty())) {
+      {
+        Day20.pushButton();
+        Day20.i++;
+        if ((Day20.i == 1000)) {
+          InputOutput.<Integer>println(Integer.valueOf((Day20.low_pulses * Day20.high_pulses)));
         }
       }
-    };
-    new IntegerRange(1, 1000).forEach(_function_4);
-    InputOutput.<Integer>println(Integer.valueOf((Day20.low_pulses * Day20.high_pulses)));
-  }
-
-  public static String printState() {
-    String _xblockexpression = null;
-    {
-      InputOutput.<String>println("---------------------------------------");
-      final Function1<Map.Entry<String, advent2023.Module>, Boolean> _function = new Function1<Map.Entry<String, advent2023.Module>, Boolean>() {
-        public Boolean apply(final Map.Entry<String, advent2023.Module> it) {
-          advent2023.Module _value = it.getValue();
-          return Boolean.valueOf((_value instanceof Conjunction));
-        }
-      };
-      final Function1<Map.Entry<String, advent2023.Module>, String> _function_1 = new Function1<Map.Entry<String, advent2023.Module>, String>() {
-        public String apply(final Map.Entry<String, advent2023.Module> it) {
-          String _key = it.getKey();
-          String _plus = (_key + " : ");
-          advent2023.Module _value = it.getValue();
-          final Function1<Map.Entry<String, Boolean>, String> _function = new Function1<Map.Entry<String, Boolean>, String>() {
-            public String apply(final Map.Entry<String, Boolean> it_1) {
-              return it_1.getKey();
-            }
-          };
-          final Function1<Map.Entry<String, Boolean>, Boolean> _function_1 = new Function1<Map.Entry<String, Boolean>, Boolean>() {
-            public Boolean apply(final Map.Entry<String, Boolean> it_1) {
-              return it_1.getValue();
-            }
-          };
-          final Function1<Boolean, String> _function_2 = new Function1<Boolean, String>() {
-            public String apply(final Boolean it_1) {
-              String _xifexpression = null;
-              if ((it_1).booleanValue()) {
-                _xifexpression = "1";
-              } else {
-                _xifexpression = "0";
-              }
-              return _xifexpression;
-            }
-          };
-          final Function2<String, String, String> _function_3 = new Function2<String, String, String>() {
-            public String apply(final String x, final String y) {
-              return (x + y);
-            }
-          };
-          String _reduce = IterableExtensions.<String>reduce(ListExtensions.<Boolean, String>map(ListExtensions.<Map.Entry<String, Boolean>, Boolean>map(IterableExtensions.<Map.Entry<String, Boolean>, String>sortBy(((Conjunction) _value).sources.entrySet(), _function), _function_1), _function_2), _function_3);
-          return (_plus + _reduce);
-        }
-      };
-      _xblockexpression = InputOutput.<String>println(IterableExtensions.join(IterableExtensions.<Map.Entry<String, advent2023.Module>, String>map(IterableExtensions.<Map.Entry<String, advent2023.Module>>filter(Day20.modules.entrySet(), _function), _function_1), "; "));
     }
-    return _xblockexpression;
+    final Function2<Long, Long, Long> _function_4 = new Function2<Long, Long, Long>() {
+      public Long apply(final Long x, final Long y) {
+        return Long.valueOf(Arithmetics.lcm((x).longValue(), (y).longValue()));
+      }
+    };
+    InputOutput.<Long>println(IterableExtensions.<Long>reduce(Day20.ranks, _function_4));
   }
 
   public static void pushButton() {
@@ -178,8 +134,8 @@ public class Day20 {
     }
   }
 
-  public static int processMessage(final Pair<String, Pair<Boolean, String>> message) {
-    int _xblockexpression = (int) 0;
+  public static boolean processMessage(final Pair<String, Pair<Boolean, String>> message) {
+    boolean _xblockexpression = false;
     {
       final String source = message.getKey();
       final Boolean signal = message.getValue().getKey();
@@ -191,11 +147,19 @@ public class Day20 {
         }
       };
       Day20.messages.addAll(ListExtensions.<Pair<Boolean, String>, Pair<String, Pair<Boolean, String>>>map(response, _function));
-      int _xifexpression = (int) 0;
       if ((signal).booleanValue()) {
-        _xifexpression = Day20.high_pulses++;
+        Day20.high_pulses++;
       } else {
-        _xifexpression = Day20.low_pulses++;
+        Day20.low_pulses++;
+      }
+      boolean _xifexpression = false;
+      if ((Day20.pre_end.contains(source) && (signal).booleanValue())) {
+        boolean _xblockexpression_1 = false;
+        {
+          Day20.pre_end.remove(source);
+          _xblockexpression_1 = Day20.ranks.add(Long.valueOf(((long) (Day20.i + 1))));
+        }
+        _xifexpression = _xblockexpression_1;
       }
       _xblockexpression = _xifexpression;
     }
