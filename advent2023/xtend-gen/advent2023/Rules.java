@@ -66,10 +66,8 @@ public class Rules implements Rule {
       boolean finished = false;
       int i = 0;
       while (((i < this.rules.size()) && (!finished))) {
-        {
-          finished = this.rules.get(i).process(values, accepted);
-          i++;
-        }
+        int _plusPlus = i++;
+        finished = this.rules.get(_plusPlus).process(values, accepted);
       }
       _xblockexpression = finished;
     }
@@ -84,10 +82,10 @@ public class Rules implements Rule {
       final HashSet<List<Interval>> output = CollectionLiterals.<List<Interval>>newHashSet();
       while (((i < this.rules.size()) && (!res.isEmpty()))) {
         {
-          final Pair<Set<List<Interval>>, List<Interval>> apply = this.rules.get(i).processItvs(res);
+          int _plusPlus = i++;
+          final Pair<Set<List<Interval>>, List<Interval>> apply = this.rules.get(_plusPlus).processItvs(res);
           res = apply.getValue();
           output.addAll(apply.getKey());
-          i++;
         }
       }
       ArrayList<Interval> _newArrayList = CollectionLiterals.<Interval>newArrayList();

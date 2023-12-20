@@ -62,7 +62,8 @@ public class Day19 {
     Interval _interval_1 = new Interval(1, 4000);
     Interval _interval_2 = new Interval(1, 4000);
     Interval _interval_3 = new Interval(1, 4000);
-    final Pair<Set<List<Interval>>, List<Interval>> intervals = Rules.all_rules.get("in").processItvs(CollectionLiterals.<Interval>newArrayList(_interval, _interval_1, _interval_2, _interval_3));
+    final Pair<Set<List<Interval>>, List<Interval>> intervals = Rules.all_rules.get("in").processItvs(
+      CollectionLiterals.<Interval>newArrayList(_interval, _interval_1, _interval_2, _interval_3));
     final Function2<BigInteger, List<Interval>, BigInteger> _function_3 = new Function2<BigInteger, List<Interval>, BigInteger>() {
       public BigInteger apply(final BigInteger acc, final List<Interval> el) {
         final Function1<Interval, BigInteger> _function = new Function1<Interval, BigInteger>() {
@@ -81,7 +82,6 @@ public class Day19 {
         return acc.add(_reduce);
       }
     };
-    InputOutput.<BigInteger>println(
-      IterableExtensions.<List<Interval>, BigInteger>fold(intervals.getKey(), BigInteger.ZERO, _function_3));
+    InputOutput.<BigInteger>println(IterableExtensions.<List<Interval>, BigInteger>fold(intervals.getKey(), BigInteger.ZERO, _function_3));
   }
 }
