@@ -5,3 +5,12 @@
 /.Path.java._trace
 /.NoGoalReachedException.java._trace
 /.CoordinateState.java._trace
+/.AStar.xtendbin
+/.DFS.xtendbin
+/.Path.xtendbin
+/.State.xtendbin
+/AStar.java
+/DFS.java
+/NotInitializedException.java
+/Path.java
+/State.java

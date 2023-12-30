@@ -13,6 +13,7 @@ public class RedirectRule implements Rule {
     this.where = where_;
   }
 
+  @Override
   public boolean process(final List<Integer> values, final List<List<Integer>> accepted) {
     boolean _xblockexpression = false;
     {
@@ -22,6 +23,7 @@ public class RedirectRule implements Rule {
     return _xblockexpression;
   }
 
+  @Override
   public Pair<Set<List<Interval>>, List<Interval>> processItvs(final List<Interval> itvs) {
     return Rules.all_rules.get(this.where).processItvs(itvs);
   }

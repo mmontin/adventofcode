@@ -1,14 +1,12 @@
 package advent2018;
 
+import adventutils.collection.Link;
 import java.util.HashMap;
 import java.util.function.BiFunction;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import adventutils.collection.Link;
 
 @SuppressWarnings("all")
 public class Day9 {

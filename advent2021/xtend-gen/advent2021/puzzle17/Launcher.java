@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;

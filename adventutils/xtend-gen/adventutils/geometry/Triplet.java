@@ -2,9 +2,12 @@ package adventutils.geometry;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
@@ -65,6 +68,10 @@ public class Triplet {
     return new Triplet((this.x + other.x), (this.y + other.y), (this.z + other.z));
   }
 
+  public Triplet addZ(final int dz) {
+    return new Triplet(this.x, this.y, (this.z + dz));
+  }
+
   public Triplet incrZ() {
     return new Triplet(this.x, this.y, (this.z + 1));
   }
@@ -87,5 +94,36 @@ public class Triplet {
 
   public Triplet decrY() {
     return new Triplet(this.x, (this.y - 1), this.z);
+  }
+
+  public Set<Triplet> line(final Triplet other) {
+    Set<Triplet> _xifexpression = null;
+    if ((other.x != this.x)) {
+      final Function1<Integer, Triplet> _function = new Function1<Integer, Triplet>() {
+        public Triplet apply(final Integer it) {
+          return new Triplet((it).intValue(), Triplet.this.y, Triplet.this.z);
+        }
+      };
+      _xifexpression = IterableExtensions.<Triplet>toSet(IterableExtensions.<Integer, Triplet>map(new IntegerRange(other.x, this.x), _function));
+    } else {
+      Set<Triplet> _xifexpression_1 = null;
+      if ((other.y != this.y)) {
+        final Function1<Integer, Triplet> _function_1 = new Function1<Integer, Triplet>() {
+          public Triplet apply(final Integer it) {
+            return new Triplet(Triplet.this.x, (it).intValue(), Triplet.this.z);
+          }
+        };
+        _xifexpression_1 = IterableExtensions.<Triplet>toSet(IterableExtensions.<Integer, Triplet>map(new IntegerRange(other.y, this.y), _function_1));
+      } else {
+        final Function1<Integer, Triplet> _function_2 = new Function1<Integer, Triplet>() {
+          public Triplet apply(final Integer it) {
+            return new Triplet(Triplet.this.x, Triplet.this.y, (it).intValue());
+          }
+        };
+        _xifexpression_1 = IterableExtensions.<Triplet>toSet(IterableExtensions.<Integer, Triplet>map(new IntegerRange(other.z, this.z), _function_2));
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
   }
 }

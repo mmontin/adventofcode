@@ -1,11 +1,9 @@
 package advent2021.puzzle21;
 
+import com.google.common.base.Objects;
 import java.math.BigInteger;
-
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
-
-import com.google.common.base.Objects;
 
 @SuppressWarnings("all")
 public class Launcher {

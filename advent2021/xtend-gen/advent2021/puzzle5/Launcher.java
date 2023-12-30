@@ -1,14 +1,12 @@
 package advent2021.puzzle5;
 
+import adventutils.input.InputLoader;
 import java.util.HashMap;
 import java.util.function.Consumer;
-
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

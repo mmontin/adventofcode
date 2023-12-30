@@ -1,13 +1,10 @@
 package advent2021.puzzle2;
 
+import adventutils.input.InputLoader;
+import com.google.common.base.Objects;
 import java.util.List;
-
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-
-import com.google.common.base.Objects;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

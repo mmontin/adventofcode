@@ -1,5 +1,6 @@
 package advent2021.puzzle14;
 
+import adventutils.input.InputLoader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +10,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.IntPredicate;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -18,8 +18,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

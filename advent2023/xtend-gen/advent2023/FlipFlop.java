@@ -12,6 +12,7 @@ public class FlipFlop extends advent2023.Module {
     this.on = false;
   }
 
+  @Override
   public Optional<Boolean> generateSignal(final String source, final boolean highPulse) {
     Optional<Boolean> _xifexpression = null;
     if ((!highPulse)) {

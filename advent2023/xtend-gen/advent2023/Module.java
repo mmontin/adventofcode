@@ -16,10 +16,8 @@ public abstract class Module {
   }
 
   public final List<Pair<Boolean, String>> send(final boolean highPulse) {
-    final Function1<String, Pair<Boolean, String>> _function = new Function1<String, Pair<Boolean, String>>() {
-      public Pair<Boolean, String> apply(final String it) {
-        return Pair.<Boolean, String>of(Boolean.valueOf(highPulse), it);
-      }
+    final Function1<String, Pair<Boolean, String>> _function = (String it) -> {
+      return Pair.<Boolean, String>of(Boolean.valueOf(highPulse), it);
     };
     return ListExtensions.<String, Pair<Boolean, String>>map(this.targets, _function);
   }
@@ -33,11 +31,9 @@ public abstract class Module {
       List<Pair<Boolean, String>> _xifexpression = null;
       boolean _isPresent = toSend.isPresent();
       if (_isPresent) {
-        final Function1<String, Pair<Boolean, String>> _function = new Function1<String, Pair<Boolean, String>>() {
-          public Pair<Boolean, String> apply(final String it) {
-            Boolean _get = toSend.get();
-            return Pair.<Boolean, String>of(_get, it);
-          }
+        final Function1<String, Pair<Boolean, String>> _function = (String it) -> {
+          Boolean _get = toSend.get();
+          return Pair.<Boolean, String>of(_get, it);
         };
         _xifexpression = ListExtensions.<String, Pair<Boolean, String>>map(this.targets, _function);
       } else {
@@ -48,6 +44,7 @@ public abstract class Module {
     return _xblockexpression;
   }
 
+  @Override
   public String toString() {
     return ("sends to + " + this.targets);
   }

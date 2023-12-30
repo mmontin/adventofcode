@@ -17,10 +17,8 @@ public class Launcher {
   private static int iterations = 0;
 
   public static void main(final String[] args) {
-    final Function1<String, Integer> _function = new Function1<String, Integer>() {
-      public Integer apply(final String x) {
-        return Integer.valueOf(Integer.parseInt(x));
-      }
+    final Function1<String, Integer> _function = (String x) -> {
+      return Integer.valueOf(Integer.parseInt(x));
     };
     InputOutput.<Integer>println(Launcher.compute(ListExtensions.<Integer>reverse(IterableExtensions.<Integer>sort(ListExtensions.<String, Integer>map(new InputLoader(Integer.valueOf(2015), Integer.valueOf(17)).getInputs(), _function))), Integer.valueOf(150), Integer.valueOf(0)));
     InputOutput.<Integer>println(Integer.valueOf(Launcher.iterations));
@@ -39,16 +37,12 @@ public class Launcher {
       int _xblockexpression_1 = (int) 0;
       {
         final ArrayList<Integer> candidatesDuplicate = new ArrayList<Integer>(candidates);
-        final Predicate<Integer> _function = new Predicate<Integer>() {
-          public boolean test(final Integer x) {
-            return (x.compareTo(value) > 0);
-          }
+        final Predicate<Integer> _function = (Integer x) -> {
+          return (x.compareTo(value) > 0);
         };
         candidatesDuplicate.removeIf(_function);
-        final Function2<Integer, Integer, Integer> _function_1 = new Function2<Integer, Integer, Integer>() {
-          public Integer apply(final Integer v, final Integer x) {
-            return Integer.valueOf(((v).intValue() + (x).intValue()));
-          }
+        final Function2<Integer, Integer, Integer> _function_1 = (Integer v, Integer x) -> {
+          return Integer.valueOf(((v).intValue() + (x).intValue()));
         };
         Integer _fold = IterableExtensions.<Integer, Integer>fold(candidatesDuplicate, Integer.valueOf(0), _function_1);
         final int difference = ((_fold).intValue() - (value).intValue());

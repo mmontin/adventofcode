@@ -1,19 +1,17 @@
 package advent2017;
 
+import adventutils.input.InputLoader;
+import adventutils.pathfinding.AStar;
+import adventutils.pathfinding.State;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
-
-import adventutils.input.InputLoader;
-import adventutils.pathfinding.AStar;
-import adventutils.pathfinding.State;
 
 @SuppressWarnings("all")
 public class Day24 {

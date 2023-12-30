@@ -20,16 +20,15 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Day14 {
   private static final List<String> lines = new Function0<List<String>>() {
+    @Override
     public List<String> apply() {
       ArrayList<String> _xblockexpression = null;
       {
         final List<String> output = new InputLoader(Integer.valueOf(2023), Integer.valueOf(14)).getInputs();
         output.add(0, "#".repeat(output.get(0).length()));
         output.add("#".repeat(output.get(0).length()));
-        final Function1<String, String> _function = new Function1<String, String>() {
-          public String apply(final String it) {
-            return (("#" + it) + "#");
-          }
+        final Function1<String, String> _function = (String it) -> {
+          return (("#" + it) + "#");
         };
         List<String> _map = ListExtensions.<String, String>map(output, _function);
         _xblockexpression = new ArrayList<String>(_map);
@@ -52,10 +51,8 @@ public class Day14 {
     InputOutput.<Integer>println(Day14.load(Day14.process(true, true, init_1)));
     final CoordinateSet init_2 = new CoordinateSet();
     init_2.addAll(Day14.rolling);
-    final Function<CoordinateSet, CoordinateSet> _function = new Function<CoordinateSet, CoordinateSet>() {
-      public CoordinateSet apply(final CoordinateSet it) {
-        return Day14.cycle(it);
-      }
+    final Function<CoordinateSet, CoordinateSet> _function = (CoordinateSet it) -> {
+      return Day14.cycle(it);
     };
     final CoordinateSet output_2 = PatternRunner.<CoordinateSet>executeAndFindState(init_2, 1000000000, _function);
     InputOutput.<Integer>println(Day14.load(output_2));
@@ -84,10 +81,8 @@ public class Day14 {
         _xifexpression = Day14.max_x;
       }
       int _minus = (_xifexpression - 1);
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer it) {
-          Day14.processCol((it).intValue(), up, col, rolling);
-        }
+      final Consumer<Integer> _function = (Integer it) -> {
+        Day14.processCol((it).intValue(), up, col, rolling);
       };
       new IntegerRange(1, _minus).forEach(_function);
       _xblockexpression = rolling;
@@ -96,12 +91,10 @@ public class Day14 {
   }
 
   public static Integer load(final CoordinateSet rolling) {
-    final Function2<Integer, Coordinate, Integer> _function = new Function2<Integer, Coordinate, Integer>() {
-      public Integer apply(final Integer sum, final Coordinate el) {
-        int _x = el.getX();
-        int _minus = (Day14.max_x - _x);
-        return Integer.valueOf(((sum).intValue() + _minus));
-      }
+    final Function2<Integer, Coordinate, Integer> _function = (Integer sum, Coordinate el) -> {
+      int _x = el.getX();
+      int _minus = (Day14.max_x - _x);
+      return Integer.valueOf(((sum).intValue() + _minus));
     };
     return IterableExtensions.<Coordinate, Integer>fold(rolling, Integer.valueOf(0), _function);
   }

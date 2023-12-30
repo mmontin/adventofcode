@@ -20,14 +20,13 @@ public class Conjunction extends advent2023.Module {
     return this.sources.put(source, Boolean.valueOf(false));
   }
 
+  @Override
   public Optional<Boolean> generateSignal(final String source, final boolean highPulse) {
     Optional<Boolean> _xblockexpression = null;
     {
       this.sources.put(source, Boolean.valueOf(highPulse));
-      final Function2<Boolean, Boolean, Boolean> _function = new Function2<Boolean, Boolean, Boolean>() {
-        public Boolean apply(final Boolean x, final Boolean y) {
-          return Boolean.valueOf(((x).booleanValue() && (y).booleanValue()));
-        }
+      final Function2<Boolean, Boolean, Boolean> _function = (Boolean x, Boolean y) -> {
+        return Boolean.valueOf(((x).booleanValue() && (y).booleanValue()));
       };
       Boolean _reduce = IterableExtensions.<Boolean>reduce(this.sources.values(), _function);
       boolean _not = (!(_reduce).booleanValue());
@@ -36,6 +35,7 @@ public class Conjunction extends advent2023.Module {
     return _xblockexpression;
   }
 
+  @Override
   public String toString() {
     String _string = super.toString();
     return ((("Receives from " + this.sources) + " ; ") + _string);

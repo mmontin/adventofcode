@@ -9,6 +9,7 @@ public class Button extends advent2023.Module {
     super(CollectionLiterals.<String>newArrayList("broadcaster"));
   }
 
+  @Override
   public Optional<Boolean> generateSignal(final String source, final boolean highPulse) {
     return Optional.<Boolean>of(Boolean.valueOf(false));
   }

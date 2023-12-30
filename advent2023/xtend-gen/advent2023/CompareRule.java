@@ -33,6 +33,7 @@ public class CompareRule implements Rule {
     this.next = Rules.createRule(split[2]);
   }
 
+  @Override
   public boolean process(final List<Integer> values, final List<List<Integer>> accepted) {
     boolean _xifexpression = false;
     boolean _xifexpression_1 = false;
@@ -56,36 +57,35 @@ public class CompareRule implements Rule {
     return _xifexpression;
   }
 
+  @Override
   public Pair<Set<List<Interval>>, List<Interval>> processItvs(final List<Interval> itvs) {
     Pair<Set<List<Interval>>, List<Interval>> _xblockexpression = null;
     {
       final ArrayList<Interval> left = CollectionLiterals.<Interval>newArrayList();
       final ArrayList<Interval> right = CollectionLiterals.<Interval>newArrayList();
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer it) {
-          final Interval current = itvs.get((it).intValue());
-          if (((it).intValue() == CompareRule.this.rank)) {
-            final Pair<Interval, Interval> split = current.split(CompareRule.this.value, (!CompareRule.this.isLower));
-            Interval _xifexpression = null;
-            if (CompareRule.this.isLower) {
-              _xifexpression = split.getKey();
-            } else {
-              _xifexpression = split.getValue();
-            }
-            left.add(_xifexpression);
-            Interval _xifexpression_1 = null;
-            if (CompareRule.this.isLower) {
-              _xifexpression_1 = split.getValue();
-            } else {
-              _xifexpression_1 = split.getKey();
-            }
-            right.add(_xifexpression_1);
+      final Consumer<Integer> _function = (Integer it) -> {
+        final Interval current = itvs.get((it).intValue());
+        if (((it).intValue() == this.rank)) {
+          final Pair<Interval, Interval> split = current.split(this.value, (!this.isLower));
+          Interval _xifexpression = null;
+          if (this.isLower) {
+            _xifexpression = split.getKey();
           } else {
-            Interval _interval = new Interval(current);
-            right.add(_interval);
-            Interval _interval_1 = new Interval(current);
-            left.add(_interval_1);
+            _xifexpression = split.getValue();
           }
+          left.add(_xifexpression);
+          Interval _xifexpression_1 = null;
+          if (this.isLower) {
+            _xifexpression_1 = split.getValue();
+          } else {
+            _xifexpression_1 = split.getKey();
+          }
+          right.add(_xifexpression_1);
+        } else {
+          Interval _interval = new Interval(current);
+          right.add(_interval);
+          Interval _interval_1 = new Interval(current);
+          left.add(_interval_1);
         }
       };
       new ExclusiveRange(0, 4, true).forEach(_function);

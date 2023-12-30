@@ -1,16 +1,14 @@
 package advent2021.puzzle22;
 
+import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

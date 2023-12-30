@@ -145,6 +145,16 @@ public class Coordinate implements Comparable<Coordinate> {
     return _xblockexpression;
   }
 
+  public Set<Coordinate> noDiagonalFilteredNeighbours(final Set<Coordinate> candidates) {
+    Set<Coordinate> _xblockexpression = null;
+    {
+      final Set<Coordinate> output = this.noDiagonalUnboundedNeighbours();
+      output.retainAll(candidates);
+      _xblockexpression = output;
+    }
+    return _xblockexpression;
+  }
+
   public Set<Coordinate> noDiagonalUnboundedNeighbours() {
     final Function1<Pair<Coordinate, Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Direction>, Coordinate>() {
       public Coordinate apply(final Pair<Coordinate, Direction> it) {

@@ -5,27 +5,27 @@ import java.util.function.Function;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
-public class MemoryRunner<T extends Object, V extends Object> {
-  private Map<T, V> results;
+public class MemoryRunner<I extends Object, O extends Object> {
+  private Map<I, O> results;
 
-  private Function<T, V> fun;
+  private Function<I, O> fun;
 
-  public MemoryRunner(final Function<T, V> fun_) {
-    this.results = CollectionLiterals.<T, V>newHashMap();
+  public MemoryRunner(final Function<I, O> fun_) {
+    this.results = CollectionLiterals.<I, O>newHashMap();
     this.fun = fun_;
   }
 
-  public V call(final T param) {
-    V _xblockexpression = null;
+  public O call(final I param) {
+    O _xblockexpression = null;
     {
-      final V prev_result = this.results.get(param);
-      V _xifexpression = null;
+      final O prev_result = this.results.get(param);
+      O _xifexpression = null;
       if ((prev_result != null)) {
         _xifexpression = prev_result;
       } else {
-        V _xblockexpression_1 = null;
+        O _xblockexpression_1 = null;
         {
-          final V res = this.fun.apply(param);
+          final O res = this.fun.apply(param);
           this.results.put(param, res);
           _xblockexpression_1 = res;
         }

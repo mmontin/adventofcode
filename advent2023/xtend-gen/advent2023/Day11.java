@@ -1,17 +1,15 @@
 package advent2023;
 
+import adventutils.geometry.Coordinate;
+import adventutils.input.InputLoader;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import adventutils.geometry.Coordinate;
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day11 {
@@ -21,20 +19,14 @@ public class Day11 {
     final int max_x = (_size - 1);
     int _size_1 = inputs.get(0).size();
     int max_y = (_size_1 - 1);
-    final Function1<Integer, Boolean> _function = new Function1<Integer, Boolean>() {
-      public Boolean apply(final Integer y) {
-        final Function1<Integer, String> _function = new Function1<Integer, String>() {
-          public String apply(final Integer x) {
-            return inputs.get((x).intValue()).get((y).intValue());
-          }
-        };
-        final Function1<String, Boolean> _function_1 = new Function1<String, Boolean>() {
-          public Boolean apply(final String it) {
-            return Boolean.valueOf(it.equals("."));
-          }
-        };
-        return Boolean.valueOf(IterableExtensions.<String>forall(IterableExtensions.<Integer, String>map(new IntegerRange(0, max_x), _function), _function_1));
-      }
+    final Function1<Integer, Boolean> _function = (Integer y) -> {
+      final Function1<Integer, String> _function_1 = (Integer x) -> {
+        return inputs.get((x).intValue()).get((y).intValue());
+      };
+      final Function1<String, Boolean> _function_2 = (String it) -> {
+        return Boolean.valueOf(it.equals("."));
+      };
+      return Boolean.valueOf(IterableExtensions.<String>forall(IterableExtensions.<Integer, String>map(new IntegerRange(0, max_x), _function_1), _function_2));
     };
     final List<Boolean> empty_cols = IterableExtensions.<Boolean>toList(IterableExtensions.<Integer, Boolean>map(new IntegerRange(0, max_y), _function));
     final ArrayList<Coordinate> galaxies_1 = CollectionLiterals.<Coordinate>newArrayList();
@@ -49,10 +41,8 @@ public class Day11 {
         final List<String> line = inputs.get((x).intValue());
         y_offset_1 = 0;
         y_offset_2 = 0;
-        final Function1<String, Boolean> _function_1 = new Function1<String, Boolean>() {
-          public Boolean apply(final String it) {
-            return Boolean.valueOf(it.equals("."));
-          }
+        final Function1<String, Boolean> _function_1 = (String it) -> {
+          return Boolean.valueOf(it.equals("."));
         };
         boolean _forall = IterableExtensions.<String>forall(line, _function_1);
         if (_forall) {

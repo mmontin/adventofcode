@@ -37,16 +37,14 @@ public class Day13 {
         }
       }
       Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(Integer.valueOf(0), Integer.valueOf(0));
-      final Function2<Pair<Integer, Integer>, CoordinateSet, Pair<Integer, Integer>> _function = new Function2<Pair<Integer, Integer>, CoordinateSet, Pair<Integer, Integer>>() {
-        public Pair<Integer, Integer> apply(final Pair<Integer, Integer> acc, final CoordinateSet el) {
-          Integer _key = acc.getKey();
-          Integer _process = Day13.process(el);
-          int _plus = ((_key).intValue() + (_process).intValue());
-          Integer _value = acc.getValue();
-          Integer _process2 = Day13.process2(el);
-          int _plus_1 = ((_value).intValue() + (_process2).intValue());
-          return Pair.<Integer, Integer>of(Integer.valueOf(_plus), Integer.valueOf(_plus_1));
-        }
+      final Function2<Pair<Integer, Integer>, CoordinateSet, Pair<Integer, Integer>> _function = (Pair<Integer, Integer> acc, CoordinateSet el) -> {
+        Integer _key = acc.getKey();
+        Integer _process = Day13.process(el);
+        int _plus = ((_key).intValue() + (_process).intValue());
+        Integer _value = acc.getValue();
+        Integer _process2 = Day13.process2(el);
+        int _plus_1 = ((_value).intValue() + (_process2).intValue());
+        return Pair.<Integer, Integer>of(Integer.valueOf(_plus), Integer.valueOf(_plus_1));
       };
       InputOutput.<Pair<Integer, Integer>>println(IterableExtensions.<CoordinateSet, Pair<Integer, Integer>>fold(tiles, _mappedTo, _function));
     } catch (Throwable _e) {
@@ -83,30 +81,22 @@ public class Day13 {
             {
               Pair<Iterable<Integer>, Iterable<Integer>> _xifexpression_3 = null;
               if (isLine) {
-                final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getY());
-                  }
+                final Function1<Coordinate, Integer> _function = (Coordinate it) -> {
+                  return Integer.valueOf(it.getY());
                 };
                 Iterable<Integer> _map = IterableExtensions.<Coordinate, Integer>map(tile.line((i - n)), _function);
-                final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getY());
-                  }
+                final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
+                  return Integer.valueOf(it.getY());
                 };
                 Iterable<Integer> _map_1 = IterableExtensions.<Coordinate, Integer>map(tile.line(((i + n) - 1)), _function_1);
                 _xifexpression_3 = Pair.<Iterable<Integer>, Iterable<Integer>>of(_map, _map_1);
               } else {
-                final Function1<Coordinate, Integer> _function_2 = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getX());
-                  }
+                final Function1<Coordinate, Integer> _function_2 = (Coordinate it) -> {
+                  return Integer.valueOf(it.getX());
                 };
                 Iterable<Integer> _map_2 = IterableExtensions.<Coordinate, Integer>map(tile.column((i - n)), _function_2);
-                final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getX());
-                  }
+                final Function1<Coordinate, Integer> _function_3 = (Coordinate it) -> {
+                  return Integer.valueOf(it.getX());
                 };
                 Iterable<Integer> _map_3 = IterableExtensions.<Coordinate, Integer>map(tile.column(((i + n) - 1)), _function_3);
                 _xifexpression_3 = Pair.<Iterable<Integer>, Iterable<Integer>>of(_map_2, _map_3);
@@ -155,30 +145,22 @@ public class Day13 {
             {
               Pair<Set<Integer>, Set<Integer>> _xifexpression_3 = null;
               if (isLine) {
-                final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getY());
-                  }
+                final Function1<Coordinate, Integer> _function = (Coordinate it) -> {
+                  return Integer.valueOf(it.getY());
                 };
                 Set<Integer> _set = IterableExtensions.<Integer>toSet(IterableExtensions.<Coordinate, Integer>map(tile.line((i - n)), _function));
-                final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getY());
-                  }
+                final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
+                  return Integer.valueOf(it.getY());
                 };
                 Set<Integer> _set_1 = IterableExtensions.<Integer>toSet(IterableExtensions.<Coordinate, Integer>map(tile.line(((i + n) - 1)), _function_1));
                 _xifexpression_3 = Pair.<Set<Integer>, Set<Integer>>of(_set, _set_1);
               } else {
-                final Function1<Coordinate, Integer> _function_2 = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getX());
-                  }
+                final Function1<Coordinate, Integer> _function_2 = (Coordinate it) -> {
+                  return Integer.valueOf(it.getX());
                 };
                 Set<Integer> _set_2 = IterableExtensions.<Integer>toSet(IterableExtensions.<Coordinate, Integer>map(tile.column((i - n)), _function_2));
-                final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
-                  public Integer apply(final Coordinate it) {
-                    return Integer.valueOf(it.getX());
-                  }
+                final Function1<Coordinate, Integer> _function_3 = (Coordinate it) -> {
+                  return Integer.valueOf(it.getX());
                 };
                 Set<Integer> _set_3 = IterableExtensions.<Integer>toSet(IterableExtensions.<Coordinate, Integer>map(tile.column(((i + n) - 1)), _function_3));
                 _xifexpression_3 = Pair.<Set<Integer>, Set<Integer>>of(_set_2, _set_3);
@@ -244,20 +226,16 @@ public class Day13 {
   public static Integer process(final CoordinateSet tile) {
     Integer _xblockexpression = null;
     {
-      final Function1<Integer, Boolean> _function = new Function1<Integer, Boolean>() {
-        public Boolean apply(final Integer i) {
-          return Boolean.valueOf(Day13.processSym(tile, true, (i).intValue()));
-        }
+      final Function1<Integer, Boolean> _function = (Integer i) -> {
+        return Boolean.valueOf(Day13.processSym(tile, true, (i).intValue()));
       };
       final Integer sym_line = IterableExtensions.<Integer>findFirst(new IntegerRange(1, tile.maxX), _function);
       Integer _xifexpression = null;
       if ((sym_line != null)) {
         _xifexpression = Integer.valueOf((100 * (sym_line).intValue()));
       } else {
-        final Function1<Integer, Boolean> _function_1 = new Function1<Integer, Boolean>() {
-          public Boolean apply(final Integer j) {
-            return Boolean.valueOf(Day13.processSym(tile, false, (j).intValue()));
-          }
+        final Function1<Integer, Boolean> _function_1 = (Integer j) -> {
+          return Boolean.valueOf(Day13.processSym(tile, false, (j).intValue()));
         };
         _xifexpression = IterableExtensions.<Integer>findFirst(new IntegerRange(1, tile.maxY), _function_1);
       }
@@ -269,20 +247,16 @@ public class Day13 {
   public static Integer process2(final CoordinateSet tile) {
     Integer _xblockexpression = null;
     {
-      final Function1<Integer, Boolean> _function = new Function1<Integer, Boolean>() {
-        public Boolean apply(final Integer i) {
-          return Boolean.valueOf(Day13.processSym2(tile, true, (i).intValue()));
-        }
+      final Function1<Integer, Boolean> _function = (Integer i) -> {
+        return Boolean.valueOf(Day13.processSym2(tile, true, (i).intValue()));
       };
       final Integer sym_line = IterableExtensions.<Integer>findFirst(new IntegerRange(1, tile.maxX), _function);
       Integer _xifexpression = null;
       if ((sym_line != null)) {
         _xifexpression = Integer.valueOf((100 * (sym_line).intValue()));
       } else {
-        final Function1<Integer, Boolean> _function_1 = new Function1<Integer, Boolean>() {
-          public Boolean apply(final Integer j) {
-            return Boolean.valueOf(Day13.processSym2(tile, false, (j).intValue()));
-          }
+        final Function1<Integer, Boolean> _function_1 = (Integer j) -> {
+          return Boolean.valueOf(Day13.processSym2(tile, false, (j).intValue()));
         };
         _xifexpression = IterableExtensions.<Integer>findFirst(new IntegerRange(1, tile.maxY), _function_1);
       }

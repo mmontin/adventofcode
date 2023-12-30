@@ -1,5 +1,8 @@
 package advent2021.puzzle19;
 
+import adventutils.geometry.Coordinate;
+import adventutils.input.InputLoader;
+import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +14,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -20,11 +22,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import com.google.common.base.Objects;
-
-import adventutils.geometry.Coordinate;
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

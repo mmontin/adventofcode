@@ -115,6 +115,13 @@ class Coordinate implements Comparable<Coordinate> {
 		output.retainAll(candidates)
 		output
 	}
+	
+	// Neighbours in the 4 closest spots, but keeping only those present in candidates
+	def noDiagonalFilteredNeighbours(Set<Coordinate> candidates) {
+		val output = noDiagonalUnboundedNeighbours
+		output.retainAll(candidates)
+		output
+	}	
 
 	// Neighbours on the 4 closest spots, excluding diagonals
 	def noDiagonalUnboundedNeighbours() {

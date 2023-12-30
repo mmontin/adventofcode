@@ -10,10 +10,12 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class RejectRule implements Rule {
+  @Override
   public boolean process(final List<Integer> values, final List<List<Integer>> accepted) {
     return true;
   }
 
+  @Override
   public Pair<Set<List<Interval>>, List<Interval>> processItvs(final List<Interval> itvs) {
     HashSet<List<Interval>> _newHashSet = CollectionLiterals.<List<Interval>>newHashSet();
     ArrayList<Interval> _newArrayList = CollectionLiterals.<Interval>newArrayList();

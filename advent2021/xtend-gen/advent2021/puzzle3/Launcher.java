@@ -1,20 +1,17 @@
 package advent2021.puzzle3;
 
+import adventutils.input.InputLoader;
+import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import com.google.common.base.Objects;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

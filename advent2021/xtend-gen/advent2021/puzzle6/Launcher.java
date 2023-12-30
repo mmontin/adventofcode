@@ -1,18 +1,16 @@
 package advent2021.puzzle6;
 
+import adventutils.input.InputLoader;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
-
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Launcher {

@@ -1,15 +1,12 @@
 package advent2017;
 
+import adventutils.input.InputLoader;
+import com.google.common.base.Objects;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-
-import com.google.common.base.Objects;
-
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day8 {

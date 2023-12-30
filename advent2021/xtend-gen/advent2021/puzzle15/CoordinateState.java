@@ -1,12 +1,11 @@
 package advent2021.puzzle15;
 
+import adventutils.geometry.Coordinate;
+import adventutils.pathfinding.State;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
-
-import adventutils.geometry.Coordinate;
-import adventutils.pathfinding.State;
 
 @SuppressWarnings("all")
 public class CoordinateState extends Coordinate implements State {

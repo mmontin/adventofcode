@@ -10,6 +10,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class AcceptRule implements Rule {
+  @Override
   public boolean process(final List<Integer> values, final List<List<Integer>> accepted) {
     boolean _xblockexpression = false;
     {
@@ -19,6 +20,7 @@ public class AcceptRule implements Rule {
     return _xblockexpression;
   }
 
+  @Override
   public Pair<Set<List<Interval>>, List<Interval>> processItvs(final List<Interval> itvs) {
     HashSet<List<Interval>> _newHashSet = CollectionLiterals.<List<Interval>>newHashSet(itvs);
     ArrayList<Interval> _newArrayList = CollectionLiterals.<Interval>newArrayList();

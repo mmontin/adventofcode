@@ -1,10 +1,8 @@
 package advent2021.puzzle18;
 
-import java.io.BufferedReader;
-
-import org.eclipse.xtext.xbase.lib.Exceptions;
-
 import com.google.common.base.Objects;
+import java.io.BufferedReader;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public class Pair extends SNumber {

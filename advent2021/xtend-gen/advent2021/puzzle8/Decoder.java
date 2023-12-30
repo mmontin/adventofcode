@@ -1,5 +1,6 @@
 package advent2021.puzzle8;
 
+import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -17,8 +17,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
-
-import com.google.common.base.Objects;
 
 @SuppressWarnings("all")
 public class Decoder {

@@ -26,10 +26,8 @@ public class Rules implements Rule {
     int _length = (split[1]).length();
     int _minus = (_length - 1);
     final String p = (split[1]).substring(0, _minus);
-    final Function1<String, Rule> _function = new Function1<String, Rule>() {
-      public Rule apply(final String it) {
-        return Rules.createRule(it);
-      }
+    final Function1<String, Rule> _function = (String it) -> {
+      return Rules.createRule(it);
     };
     this.rules = ListExtensions.<String, Rule>map(IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(p.split(",")))), _function);
     Rules.all_rules.put(name, this);
@@ -60,6 +58,7 @@ public class Rules implements Rule {
     return _switchResult;
   }
 
+  @Override
   public boolean process(final List<Integer> values, final List<List<Integer>> accepted) {
     boolean _xblockexpression = false;
     {
@@ -74,6 +73,7 @@ public class Rules implements Rule {
     return _xblockexpression;
   }
 
+  @Override
   public Pair<Set<List<Interval>>, List<Interval>> processItvs(final List<Interval> itvs) {
     Pair<Set<List<Interval>>, List<Interval>> _xblockexpression = null;
     {
@@ -96,24 +96,22 @@ public class Rules implements Rule {
 
   public static int getRank(final String s) {
     int _switchResult = (int) 0;
-    boolean _matched = false;
-    if (Objects.equal(s, "x")) {
-      _matched=true;
-      _switchResult = 0;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "m")) {
-        _matched=true;
-        _switchResult = 1;
+    if (s != null) {
+      switch (s) {
+        case "x":
+          _switchResult = 0;
+          break;
+        case "m":
+          _switchResult = 1;
+          break;
+        case "a":
+          _switchResult = 2;
+          break;
+        default:
+          _switchResult = 3;
+          break;
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "a")) {
-        _matched=true;
-        _switchResult = 2;
-      }
-    }
-    if (!_matched) {
+    } else {
       _switchResult = 3;
     }
     return _switchResult;

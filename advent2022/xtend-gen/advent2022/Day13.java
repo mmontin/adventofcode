@@ -1,10 +1,13 @@
 package advent2022;
 
+import adventutils.collection.AgdaList;
+import adventutils.input.InputLoader;
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Consumer;
-
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -15,12 +18,6 @@ import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
-
-import adventutils.collection.AgdaList;
-import adventutils.input.InputLoader;
 
 @SuppressWarnings("all")
 public class Day13 {
