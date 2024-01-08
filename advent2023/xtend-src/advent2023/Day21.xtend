@@ -1,6 +1,5 @@
 package advent2023
 
-import adventutils.MemoryRunnerWithDefault
 import adventutils.geometry.Coordinate
 import adventutils.input.InputLoader
 import java.util.Set
