@@ -25,52 +25,32 @@ class Day21 {
 			i + 1
 		]
 
-
-		println(runner.call(64 -> (start -> new Coordinate(0, 0))).size)
-//		println(runner.call(65 -> (start -> new Coordinate(0, 0))).size)
-//		println(runner.call(65+131 -> (start -> new Coordinate(0, 0))).size)
-//		println(runner.call(65+2*131 -> (start -> new Coordinate(0, 0))).size)
-
-		val a = 3710 // run(65)
-		val b = 29633 // run (56 + 131)
-		val c = 87955 // run (56 + 2*131)
-		val n = 202300 // 26501365 / 131
+		var Set<Coordinate> current = newHashSet(start)
+		val currents = newArrayList
+		for (i : 0 .. 327) {
+			if (i == 64)
+				println(current.size)
+			if (i % 131 == 65)
+				currents.add(current.size as long)
+			current = current.fold(newHashSet) [ acc, el |
+				acc.addAll(el.noDiagonalUnboundedNeighbours)
+				acc
+			].filter[garden_plots.contains(new Coordinate(mod(it.x, size_x), mod(it.y, size_y)))].toSet
+		}
 		
-		println(a+n*(b-a+(n-1)*(c )))
+		println(solve(currents.get(0),currents.get(1),currents.get(2)))
 	}
 
-	static final MemoryRunnerWithDefault<Pair<Integer, Pair<Coordinate, Coordinate>>, Set<Pair<Coordinate, Coordinate>>> runner = new MemoryRunnerWithDefault(
-		newHashSet) [
-		navigate
-	]
-
-	def static Set<Pair<Coordinate, Coordinate>> navigate(Pair<Integer, Pair<Coordinate, Coordinate>> input) {
-		val neighbours = neighbours(input.value.key, input.value.value)
-		if (input.key == 0)
-				newHashSet(input.value)
-			else if (input.key == 1)
-				neighbours
-			else
-				neighbours.fold(newHashSet) [ acc, el |
-					acc.addAll(runner.call(input.key - 1 -> el))
-					acc
-				]
+	def static int mod(int i, int max) {
+		val output = i % max ;
+		(output < 0) ? max + output : output
 	}
-
-	def static neighbours(Coordinate gardener_location, Coordinate board_position) {
-		gardener_location.noDiagonalUnboundedNeighbours.map [
-			switch it {
-				case (it.x == -1):
-					new Coordinate(size_x - 1, it.y) -> board_position.addX(-1)
-				case (it.x == size_x):
-					new Coordinate(0, it.y) -> board_position.addX(1)
-				case (it.y == -1):
-					new Coordinate(it.x, size_y - 1) -> board_position.addY(-1)
-				case (it.y == size_y):
-					new Coordinate(it.x, 0) -> board_position.addY(1)
-				default:
-					it -> board_position
-			}
-		].filter[garden_plots.contains(it.key)].toSet
+	
+	def static solve(long y1, long y2, long y3) {
+		val b = (4 * y2 - 3 * y1 - y3) / 2
+		val a = y2 - y1 - b
+		val c = y1  
+		val input = (26501365 - 65) / 131
+		a * input * input + b * input + c 
 	}
 }

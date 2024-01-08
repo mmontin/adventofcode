@@ -7,3 +7,5 @@
 /.RationalExtensions.java._trace
 /.GaussianElim.java._trace
 /.SingularMatrixException.java._trace
+/.GaussianElim.xtendbin
+/GaussianElim.java
