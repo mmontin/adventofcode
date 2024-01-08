@@ -1,6 +1,6 @@
 package adventutils.geometry;
 
-import adventutils.Arithmetics;
+import adventutils.maths.Arithmetics;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;

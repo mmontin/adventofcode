@@ -2,11 +2,17 @@ package adventutils.geometry;
 
 import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Rectangle implements Comparable<Rectangle> {
+  private final IntegerRange x;
+
+  private final IntegerRange y;
+
   public final int minX;
 
   public final int maxX;
@@ -24,34 +30,24 @@ public class Rectangle implements Comparable<Rectangle> {
   public final Coordinate bot_right;
 
   public Rectangle(final int x1, final int x2, final int y1, final int y2) {
-    int _xifexpression = (int) 0;
+    IntegerRange _xifexpression = null;
     if ((x1 <= x2)) {
-      _xifexpression = x1;
+      _xifexpression = new IntegerRange(x1, x2);
     } else {
-      _xifexpression = x2;
+      _xifexpression = new IntegerRange(x2, x1);
     }
-    this.minX = _xifexpression;
-    int _xifexpression_1 = (int) 0;
-    if ((this.minX == x1)) {
-      _xifexpression_1 = x2;
-    } else {
-      _xifexpression_1 = x1;
-    }
-    this.maxX = _xifexpression_1;
-    int _xifexpression_2 = (int) 0;
+    this.x = _xifexpression;
+    IntegerRange _xifexpression_1 = null;
     if ((y1 <= y2)) {
-      _xifexpression_2 = y1;
+      _xifexpression_1 = new IntegerRange(y1, y2);
     } else {
-      _xifexpression_2 = y2;
+      _xifexpression_1 = new IntegerRange(y2, y1);
     }
-    this.minY = _xifexpression_2;
-    int _xifexpression_3 = (int) 0;
-    if ((this.minY == y1)) {
-      _xifexpression_3 = y2;
-    } else {
-      _xifexpression_3 = y1;
-    }
-    this.maxY = _xifexpression_3;
+    this.y = _xifexpression_1;
+    this.minX = this.x.getStart();
+    this.maxX = this.x.getEnd();
+    this.minY = this.y.getStart();
+    this.maxY = this.y.getEnd();
     Coordinate _coordinate = new Coordinate(this.minX, this.minY);
     this.top_left = _coordinate;
     Coordinate _coordinate_1 = new Coordinate(this.minX, this.maxY);
@@ -106,6 +102,27 @@ public class Rectangle implements Comparable<Rectangle> {
       CollectionLiterals.<Coordinate>newHashSet(this.top_left.addX(1), this.bot_left.addX((-1))), 
       CollectionLiterals.<Coordinate>newHashSet(this.top_right.addX(1), this.bot_right.addX((-1))));
     return Pair.<HashSet<Coordinate>, HashSet<HashSet<Coordinate>>>of(_newHashSet, _newHashSet_1);
+  }
+
+  public HashSet<Coordinate> allCoordinates() {
+    HashSet<Coordinate> _xblockexpression = null;
+    {
+      final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
+      final Consumer<Integer> _function = new Consumer<Integer>() {
+        public void accept(final Integer i) {
+          final Consumer<Integer> _function = new Consumer<Integer>() {
+            public void accept(final Integer j) {
+              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+              output.add(_coordinate);
+            }
+          };
+          Rectangle.this.y.forEach(_function);
+        }
+      };
+      this.x.forEach(_function);
+      _xblockexpression = output;
+    }
+    return _xblockexpression;
   }
 
   public int hashCode() {
