@@ -1,7 +1,7 @@
 package advent2023;
 
-import adventutils.Arithmetics;
 import adventutils.input.InputLoader;
+import adventutils.maths.Arithmetics;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

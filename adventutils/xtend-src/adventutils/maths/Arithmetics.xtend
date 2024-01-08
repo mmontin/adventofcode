@@ -1,4 +1,6 @@
-package adventutils
+package adventutils.maths
+
+import java.math.BigInteger
 
 class Arithmetics {
 
@@ -15,6 +17,20 @@ class Arithmetics {
 		}
 
 		x1 * x2 / nb2
+	}
+	
+	def static gcd(BigInteger nb1, BigInteger nb2) {
+		var a = nb1.abs.max(nb2.abs)
+		var b = nb1.abs.min(nb2.abs)
+		var r = BigInteger.ZERO
+		
+		do {
+			r = a % b
+			a = b
+			b = r
+		} while (r.signum != 0)
+
+		a
 	}
 
 	def static gcd(int nb1, int nb2) {

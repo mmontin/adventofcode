@@ -1,4 +1,6 @@
-package adventutils;
+package adventutils.maths;
+
+import java.math.BigInteger;
 
 @SuppressWarnings("all")
 public class Arithmetics {
@@ -16,6 +18,25 @@ public class Arithmetics {
         }
       }
       _xblockexpression = ((x1 * x2) / nb2);
+    }
+    return _xblockexpression;
+  }
+
+  public static BigInteger gcd(final BigInteger nb1, final BigInteger nb2) {
+    BigInteger _xblockexpression = null;
+    {
+      BigInteger a = nb1.abs().max(nb2.abs());
+      BigInteger b = nb1.abs().min(nb2.abs());
+      BigInteger r = BigInteger.ZERO;
+      do {
+        {
+          BigInteger _modulo = a.mod(b);
+          r = _modulo;
+          a = b;
+          b = r;
+        }
+      } while((r.signum() != 0));
+      _xblockexpression = a;
     }
     return _xblockexpression;
   }

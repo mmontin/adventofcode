@@ -1,7 +1,7 @@
 package adventutils.geometry
 
+import adventutils.maths.Arithmetics
 import java.util.Set
-import adventutils.Arithmetics
 
 // Unmutable 2D coordinates
 class Coordinate implements Comparable<Coordinate> {
