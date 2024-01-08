@@ -1,20 +1,21 @@
 package advent2023;
 
-import adventutils.Cramer;
 import adventutils.input.InputLoader;
+import adventutils.maths.GaussianElim;
 import adventutils.maths.Rational;
 import com.google.common.base.Objects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
@@ -64,9 +65,9 @@ public class Day24 {
     }
   }
 
-  private static final BigDecimal min = new BigDecimal(7);
+  private static final BigDecimal min = new BigDecimal("200000000000000");
 
-  private static final BigDecimal max = new BigDecimal(27);
+  private static final BigDecimal max = new BigDecimal("400000000000000");
 
   public static void main(final String[] args) {
     final Function1<String, Day24.Hail> _function = (String it) -> {
@@ -99,14 +100,11 @@ public class Day24 {
       }
     }
     InputOutput.<Integer>println(Integer.valueOf(counter));
-    final Pair<Rational[][], Rational[]> matrix = Day24.computeMatrix(lines.get(0), lines.get(1), lines.get(2));
-    Rational[][] _key = matrix.getKey();
-    Rational[] _value = matrix.getValue();
-    final Cramer cramer = new Cramer(_key, _value);
-    final Consumer<Rational> _function_1 = (Rational it) -> {
-      InputOutput.<BigDecimal>println(it.approximate());
+    final Pair<ArrayList<ArrayList<Rational>>, ArrayList<Rational>> matrix = Day24.computeMatrix(lines.get(0), lines.get(1), lines.get(2), lines.get(3));
+    final Function2<Rational, Rational, Rational> _function_1 = (Rational x, Rational y) -> {
+      return x.operator_plus(y);
     };
-    ((List<Rational>)Conversions.doWrapArray(cramer.solve())).forEach(_function_1);
+    InputOutput.<BigInteger>println(IterableExtensions.<Rational>reduce(GaussianElim.solve(matrix.getKey(), matrix.getValue()).subList(0, 3), _function_1).approximate().toBigInteger());
   }
 
   public static Optional<Pair<BigDecimal, BigDecimal>> calculateIntersectionPoint(final Day24.Hail h0, final Day24.Hail h1) {
@@ -156,62 +154,55 @@ public class Day24 {
     return _xifexpression;
   }
 
-  public static Pair<Rational[][], Rational[]> computeMatrix(final Day24.Hail h0, final Day24.Hail h1, final Day24.Hail h2) {
-    Pair<Rational[][], Rational[]> _xblockexpression = null;
+  public static Pair<ArrayList<ArrayList<Rational>>, ArrayList<Rational>> computeMatrix(final Day24.Hail h0, final Day24.Hail h1, final Day24.Hail h2, final Day24.Hail h3) {
+    Pair<ArrayList<ArrayList<Rational>>, ArrayList<Rational>> _xblockexpression = null;
     {
-      final Pair<Rational[], Rational> r1 = Day24.compute1(h0, h1);
-      final Pair<Rational[], Rational> r2 = Day24.compute1(h1, h2);
-      final Pair<Rational[], Rational> r3 = Day24.compute1(h2, h0);
-      final Pair<Rational[], Rational> r4 = Day24.compute2(h0, h1);
-      final Pair<Rational[], Rational> r5 = Day24.compute2(h1, h2);
-      final Pair<Rational[], Rational> r6 = Day24.compute2(h2, h0);
-      Rational[] _key = r1.getKey();
-      Rational[] _key_1 = r2.getKey();
-      Rational[] _key_2 = r3.getKey();
-      Rational[] _key_3 = r4.getKey();
-      Rational[] _key_4 = r5.getKey();
-      Rational[] _key_5 = r6.getKey();
-      Rational _value = r1.getValue();
-      Rational _value_1 = r2.getValue();
-      Rational _value_2 = r3.getValue();
-      Rational _value_3 = r4.getValue();
-      Rational _value_4 = r5.getValue();
-      Rational _value_5 = r6.getValue();
-      _xblockexpression = Pair.<Rational[][], Rational[]>of(((Rational[][])Conversions.unwrapArray(Collections.<Rational[]>unmodifiableList(CollectionLiterals.<Rational[]>newArrayList(_key, _key_1, _key_2, _key_3, _key_4, _key_5)), Rational[].class)), 
-        ((Rational[])Conversions.unwrapArray(Collections.<Rational>unmodifiableList(CollectionLiterals.<Rational>newArrayList(_value, _value_1, _value_2, _value_3, _value_4, _value_5)), Rational.class)));
+      final Pair<ArrayList<Rational>, Rational> r1 = Day24.compute1(h0, h1);
+      final Pair<ArrayList<Rational>, Rational> r2 = Day24.compute1(h1, h2);
+      final Pair<ArrayList<Rational>, Rational> r3 = Day24.compute1(h2, h3);
+      final Pair<ArrayList<Rational>, Rational> r4 = Day24.compute2(h0, h1);
+      final Pair<ArrayList<Rational>, Rational> r5 = Day24.compute2(h1, h2);
+      final Pair<ArrayList<Rational>, Rational> r6 = Day24.compute2(h2, h3);
+      ArrayList<ArrayList<Rational>> _newArrayList = CollectionLiterals.<ArrayList<Rational>>newArrayList(r1.getKey(), r2.getKey(), r3.getKey(), r4.getKey(), r5.getKey(), r6.getKey());
+      ArrayList<Rational> _newArrayList_1 = CollectionLiterals.<Rational>newArrayList(r1.getValue(), r2.getValue(), r3.getValue(), r4.getValue(), r5.getValue(), r6.getValue());
+      _xblockexpression = Pair.<ArrayList<ArrayList<Rational>>, ArrayList<Rational>>of(_newArrayList, _newArrayList_1);
     }
     return _xblockexpression;
   }
 
-  public static Pair<Rational[], Rational> compute1(final Day24.Hail h0, final Day24.Hail h1) {
-    Rational _minus = h0.v.operator_minus(h1.v);
-    Rational _minus_1 = h1.u.operator_minus(h0.u);
-    Rational _minus_2 = h1.y.operator_minus(h0.y);
-    Rational _minus_3 = h0.x.operator_minus(h1.x);
-    Rational _negate = h0.x.negate();
-    Rational _multiply = _negate.operator_multiply(h0.v);
-    Rational _multiply_1 = h1.x.operator_multiply(h1.v);
-    Rational _plus = _multiply.operator_plus(_multiply_1);
-    Rational _multiply_2 = h0.y.operator_multiply(h0.u);
-    Rational _plus_1 = _plus.operator_plus(_multiply_2);
+  public static Pair<ArrayList<Rational>, Rational> compute1(final Day24.Hail h1, final Day24.Hail h2) {
+    Rational _minus = h1.v.operator_minus(h2.v);
+    Rational _minus_1 = h2.u.operator_minus(h1.u);
+    Rational _minus_2 = h2.y.operator_minus(h1.y);
+    Rational _minus_3 = h1.x.operator_minus(h2.x);
+    ArrayList<Rational> _newArrayList = CollectionLiterals.<Rational>newArrayList(_minus, _minus_1, 
+      Rational.ZERO, _minus_2, _minus_3, 
+      Rational.ZERO);
+    Rational _multiply = h1.x.operator_multiply(h1.v);
+    Rational _multiply_1 = h2.x.operator_multiply(h2.v);
+    Rational _minus_4 = _multiply.operator_minus(_multiply_1);
+    Rational _multiply_2 = h2.y.operator_multiply(h2.u);
+    Rational _plus = _minus_4.operator_plus(_multiply_2);
     Rational _multiply_3 = h1.y.operator_multiply(h1.u);
-    Rational _minus_4 = _plus_1.operator_minus(_multiply_3);
-    return Pair.<Rational[], Rational>of(((Rational[])Conversions.unwrapArray(Collections.<Rational>unmodifiableList(CollectionLiterals.<Rational>newArrayList(_minus, _minus_1, Rational.ZERO, _minus_2, _minus_3, Rational.ZERO)), Rational.class)), _minus_4);
+    Rational _minus_5 = _plus.operator_minus(_multiply_3);
+    return Pair.<ArrayList<Rational>, Rational>of(_newArrayList, _minus_5);
   }
 
-  public static Pair<Rational[], Rational> compute2(final Day24.Hail h0, final Day24.Hail h1) {
-    Rational _minus = h0.w.operator_minus(h1.w);
-    Rational _minus_1 = h1.v.operator_minus(h0.v);
-    Rational _minus_2 = h1.z.operator_minus(h0.z);
-    Rational _minus_3 = h0.y.operator_minus(h1.y);
-    Rational _negate = h0.y.negate();
-    Rational _multiply = _negate.operator_multiply(h0.w);
-    Rational _multiply_1 = h1.y.operator_multiply(h1.w);
-    Rational _plus = _multiply.operator_plus(_multiply_1);
-    Rational _multiply_2 = h0.z.operator_multiply(h0.v);
-    Rational _plus_1 = _plus.operator_plus(_multiply_2);
-    Rational _multiply_3 = h1.z.operator_multiply(h1.v);
-    Rational _minus_4 = _plus_1.operator_minus(_multiply_3);
-    return Pair.<Rational[], Rational>of(((Rational[])Conversions.unwrapArray(Collections.<Rational>unmodifiableList(CollectionLiterals.<Rational>newArrayList(Rational.ZERO, _minus, _minus_1, Rational.ZERO, _minus_2, _minus_3)), Rational.class)), _minus_4);
+  public static Pair<ArrayList<Rational>, Rational> compute2(final Day24.Hail h1, final Day24.Hail h2) {
+    Rational _minus = h1.w.operator_minus(h2.w);
+    Rational _minus_1 = h2.u.operator_minus(h1.u);
+    Rational _minus_2 = h2.z.operator_minus(h1.z);
+    Rational _minus_3 = h1.x.operator_minus(h2.x);
+    ArrayList<Rational> _newArrayList = CollectionLiterals.<Rational>newArrayList(_minus, 
+      Rational.ZERO, _minus_1, _minus_2, 
+      Rational.ZERO, _minus_3);
+    Rational _multiply = h1.x.operator_multiply(h1.w);
+    Rational _multiply_1 = h2.x.operator_multiply(h2.w);
+    Rational _minus_4 = _multiply.operator_minus(_multiply_1);
+    Rational _multiply_2 = h2.z.operator_multiply(h2.u);
+    Rational _plus = _minus_4.operator_plus(_multiply_2);
+    Rational _multiply_3 = h1.z.operator_multiply(h1.u);
+    Rational _minus_5 = _plus.operator_minus(_multiply_3);
+    return Pair.<ArrayList<Rational>, Rational>of(_newArrayList, _minus_5);
   }
 }

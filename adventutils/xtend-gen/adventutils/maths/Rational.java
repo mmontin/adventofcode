@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.math.MathContext;
 
 @SuppressWarnings("all")
-public class Rational {
+public class Rational implements Comparable<Rational> {
   public static final Rational ONE = new Rational(BigInteger.ONE);
 
   public static final Rational ZERO = new Rational(BigInteger.ZERO);
@@ -16,6 +16,10 @@ public class Rational {
 
   public Rational(final BigInteger num) {
     this(num, BigInteger.ONE);
+  }
+
+  public Rational(final long num) {
+    this(num, 1);
   }
 
   public Rational(final long num, final long den) {
@@ -60,7 +64,7 @@ public class Rational {
     return this.operator_multiply(other.inverse());
   }
 
-  public Rational negate() {
+  public Rational operator_minus() {
     BigInteger _negate = this.numerator.negate();
     return new Rational(_negate, this.denominator);
   }
@@ -74,7 +78,8 @@ public class Rational {
   }
 
   public Rational operator_minus(final Rational other) {
-    return this.operator_plus(other.negate());
+    Rational _minus = other.operator_minus();
+    return this.operator_plus(_minus);
   }
 
   public BigDecimal approximate() {
@@ -85,6 +90,11 @@ public class Rational {
 
   public int signum() {
     return this.numerator.signum();
+  }
+
+  public Rational abs() {
+    BigInteger _abs = this.numerator.abs();
+    return new Rational(_abs, this.denominator);
   }
 
   public boolean equals(final Object other) {
@@ -102,5 +112,9 @@ public class Rational {
 
   public String toString() {
     return (((("(" + this.numerator) + " / ") + this.denominator) + ")");
+  }
+
+  public int compareTo(final Rational o) {
+    return this.operator_minus(o).signum();
   }
 }

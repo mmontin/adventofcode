@@ -1,16 +1,16 @@
 package advent2023
 
-import adventutils.Cramer
 import adventutils.input.InputLoader
 import adventutils.maths.Rational
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.Optional
+import adventutils.maths.GaussianElim
 
 class Day24 {
 
-	static final BigDecimal min = new BigDecimal(7)//new BigDecimal("200000000000000")
-	static final BigDecimal max = new BigDecimal(27)// new BigDecimal("400000000000000")
+	static final BigDecimal min = new BigDecimal("200000000000000")
+	static final BigDecimal max = new BigDecimal("400000000000000")
 
 	def static void main(String[] args) {
 		val lines = new InputLoader(2023, 24).inputs.map[new Hail(it)]
@@ -31,9 +31,8 @@ class Day24 {
 		}
 		println(counter)
 		
-		val matrix = computeMatrix(lines.get(0), lines.get(1), lines.get(2))
-		val cramer = new Cramer(matrix.key, matrix.value)
-		cramer.solve.forEach[println(it.approximate)]
+		val matrix = computeMatrix(lines.get(0), lines.get(1), lines.get(2), lines.get(3))
+		println(GaussianElim.solve(matrix.key, matrix.value).subList(0,3).reduce[x,y|x+y].approximate.toBigInteger)
 	}
 
 	def static calculateIntersectionPoint(Hail h0, Hail h1) {
@@ -57,38 +56,38 @@ class Day24 {
 		}
 	}
 
-	def static Pair<Rational[][], Rational[]> computeMatrix(Hail h0, Hail h1, Hail h2) {
+	def static computeMatrix(Hail h0, Hail h1, Hail h2, Hail h3) {
 		val r1 = compute1(h0, h1)
 		val r2 = compute1(h1, h2)
-		val r3 = compute1(h2, h0)
+		val r3 = compute1(h2, h3)
 		val r4 = compute2(h0, h1)
 		val r5 = compute2(h1, h2)
-		val r6 = compute2(h2, h0)
+		val r6 = compute2(h2, h3)
 
-		#[r1.key, r2.key, r3.key, r4.key, r5.key, r6.key] ->
-			#[r1.value, r2.value, r3.value, r4.value, r5.value, r6.value]
+		newArrayList(r1.key, r2.key, r3.key, r4.key, r5.key, r6.key) ->
+			newArrayList(r1.value, r2.value, r3.value, r4.value, r5.value, r6.value)
 	}
 
-	def static Pair<Rational[],Rational> compute1(Hail h0, Hail h1) {
-		#[
-			h0.v - h1.v,
-			h1.u - h0.u,
+	def static compute1(Hail h1, Hail h2) {
+		newArrayList(
+			h1.v - h2.v,
+			h2.u - h1.u,
 			Rational.ZERO,
-			h1.y - h0.y,
-			h0.x - h1.x,
+			h2.y - h1.y,
+			h1.x - h2.x,
 			Rational.ZERO
-		] -> h0.x.negate * h0.v + h1.x * h1.v + h0.y * h0.u - h1.y * h1.u
+		) -> h1.x * h1.v - h2.x * h2.v +  h2.y * h2.u - h1.y * h1.u
 	}
 
-	def static Pair<Rational[],Rational> compute2(Hail h0, Hail h1) {
-		#[
+	def static compute2(Hail h1, Hail h2) {
+		newArrayList(
+			h1.w - h2.w,
 			Rational.ZERO,
-			h0.w - h1.w,
-			h1.v - h0.v,
+			h2.u - h1.u,
+			h2.z - h1.z,
 			Rational.ZERO,
-			h1.z - h0.z,
-			h0.y - h1.y
-		] -> h0.y.negate * h0.w + h1.y * h1.w + h0.z * h0.v - h1.z * h1.v
+			h1.x - h2.x
+		) -> h1.x * h1.w - h2.x * h2.w + h2.z * h2.u - h1.z * h1.u 
 	}
 
 	static class Hail {

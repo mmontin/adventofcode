@@ -3,7 +3,7 @@ package adventutils.maths
 import java.math.BigDecimal
 import java.math.BigInteger
 
-class Rational {
+class Rational implements Comparable<Rational> {
 
 	public static final Rational ONE = new Rational(BigInteger.ONE)
 	public static final Rational ZERO = new Rational(BigInteger.ZERO)
@@ -13,6 +13,10 @@ class Rational {
 
 	new(BigInteger num) {
 		this(num, BigInteger.ONE)
+	}
+
+	new(long num) {
+		this(num, 1)
 	}
 
 	new(long num, long den) {
@@ -48,7 +52,7 @@ class Rational {
 		operator_multiply(other.inverse)
 	}
 
-	def negate() {
+	def operator_minus() {
 		new Rational(numerator.negate, denominator)
 	}
 
@@ -57,7 +61,7 @@ class Rational {
 	}
 
 	def operator_minus(Rational other) {
-		operator_plus(other.negate)
+		operator_plus(- other)
 	}
 
 	def BigDecimal approximate() {
@@ -67,15 +71,25 @@ class Rational {
 	def signum() {
 		numerator.signum
 	}
-	
+
+	def abs() {
+		new Rational(numerator.abs, denominator)
+	}
+
 	override equals(Object other) {
 		switch other {
-			Rational: numerator.equals(other.numerator) && denominator.equals(other.denominator)
-			default : false
+			Rational:
+				numerator.equals(other.numerator) && denominator.equals(other.denominator)
+			default:
+				false
 		}
 	}
-	
+
 	override toString() {
 		"(" + numerator + " / " + denominator + ")"
+	}
+
+	override compareTo(Rational o) {
+		operator_minus(o).signum
 	}
 }
