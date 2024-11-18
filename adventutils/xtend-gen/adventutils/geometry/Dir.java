@@ -1,6 +1,5 @@
 package adventutils.geometry;
 
-import com.google.common.base.Objects;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
@@ -12,12 +11,16 @@ public class Dir {
 
   public static Direction fromLeftRight(final String s) {
     Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "<")) {
-      _matched=true;
-      _switchResult = Direction.LEFT;
-    }
-    if (!_matched) {
+    if (s != null) {
+      switch (s) {
+        case "<":
+          _switchResult = Direction.LEFT;
+          break;
+        default:
+          _switchResult = Direction.RIGHT;
+          break;
+      }
+    } else {
       _switchResult = Direction.RIGHT;
     }
     return _switchResult;
@@ -25,24 +28,22 @@ public class Dir {
 
   public static Direction directionFromPole(final String s) {
     Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "N")) {
-      _matched=true;
-      _switchResult = Direction.UP;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "S")) {
-        _matched=true;
-        _switchResult = Direction.DOWN;
+    if (s != null) {
+      switch (s) {
+        case "N":
+          _switchResult = Direction.UP;
+          break;
+        case "S":
+          _switchResult = Direction.DOWN;
+          break;
+        case "W":
+          _switchResult = Direction.LEFT;
+          break;
+        default:
+          _switchResult = Direction.RIGHT;
+          break;
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "W")) {
-        _matched=true;
-        _switchResult = Direction.LEFT;
-      }
-    }
-    if (!_matched) {
+    } else {
       _switchResult = Direction.RIGHT;
     }
     return _switchResult;
@@ -73,24 +74,22 @@ public class Dir {
 
   public static Direction directionFromString(final String s) {
     Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "U")) {
-      _matched=true;
-      _switchResult = Direction.UP;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "D")) {
-        _matched=true;
-        _switchResult = Direction.DOWN;
+    if (s != null) {
+      switch (s) {
+        case "U":
+          _switchResult = Direction.UP;
+          break;
+        case "D":
+          _switchResult = Direction.DOWN;
+          break;
+        case "L":
+          _switchResult = Direction.LEFT;
+          break;
+        default:
+          _switchResult = Direction.RIGHT;
+          break;
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "L")) {
-        _matched=true;
-        _switchResult = Direction.LEFT;
-      }
-    }
-    if (!_matched) {
+    } else {
       _switchResult = Direction.RIGHT;
     }
     return _switchResult;
@@ -98,27 +97,20 @@ public class Dir {
 
   public static Direction directionFromStringNb(final String s) {
     Direction _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(s, "0")) {
-      _matched=true;
-      _switchResult = Direction.RIGHT;
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "1")) {
-        _matched=true;
-        _switchResult = Direction.DOWN;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "2")) {
-        _matched=true;
-        _switchResult = Direction.LEFT;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(s, "3")) {
-        _matched=true;
-        _switchResult = Direction.UP;
+    if (s != null) {
+      switch (s) {
+        case "0":
+          _switchResult = Direction.RIGHT;
+          break;
+        case "1":
+          _switchResult = Direction.DOWN;
+          break;
+        case "2":
+          _switchResult = Direction.LEFT;
+          break;
+        case "3":
+          _switchResult = Direction.UP;
+          break;
       }
     }
     return _switchResult;

@@ -20,11 +20,9 @@ public class Launcher {
     boolean shown = false;
     int size = 0;
     final Coordinates finish = new Coordinates(Launcher.target_x, Launcher.target_y);
-    while ((!(start = IterableExtensions.<Coordinates, Integer>minBy(toVisit, new Function1<Coordinates, Integer>() {
-      public Integer apply(final Coordinates it) {
-        return Integer.valueOf(it.getDistance());
-      }
-    })).equals(finish))) {
+    while ((!(start = IterableExtensions.<Coordinates, Integer>minBy(toVisit, ((Function1<Coordinates, Integer>) (Coordinates it) -> {
+      return Integer.valueOf(it.getDistance());
+    }))).equals(finish))) {
       {
         if (((!shown) && (start.getDistance() > 50))) {
           size = visited.size();

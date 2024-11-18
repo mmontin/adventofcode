@@ -13,10 +13,8 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Day6 {
   public static void main(final String[] args) {
-    final Function1<String, Integer> _function = new Function1<String, Integer>() {
-      public Integer apply(final String it) {
-        return Integer.valueOf(Integer.parseInt(it));
-      }
+    final Function1<String, Integer> _function = (String it) -> {
+      return Integer.valueOf(Integer.parseInt(it));
     };
     final List<Integer> initial_banks = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(IterableExtensions.<String>head(new InputLoader(Integer.valueOf(2017), Integer.valueOf(6)).getInputs()).split("\\s+"))), _function);
     final ArrayList<Integer> banks = new ArrayList<Integer>(initial_banks);

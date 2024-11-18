@@ -5,7 +5,6 @@ import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
 import adventutils.pathfinding.AStar;
 import adventutils.pathfinding.State;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,45 +34,47 @@ public class Day24 {
       this.time = _time;
     }
 
+    @Override
     public boolean isGoal() {
       return this.position.equals(Day24.PositionTimed.current_arrival);
     }
 
+    @Override
     public int minToGoal() {
       return this.position.manhattanDistanceTo(Day24.PositionTimed.current_arrival);
     }
 
+    @Override
     public Iterable<Pair<? extends State, Integer>> neighbours() {
       Iterable<Pair<? extends State, Integer>> _xblockexpression = null;
       {
         final Set<Coordinate> squares = this.position.noDiagonalUnboundedNeighbours();
         squares.add(this.position);
-        final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-          public Boolean apply(final Coordinate it) {
-            return Boolean.valueOf(((it.equals(Day24.departure) || 
-              it.equals(Day24.arrival)) || (((((it.getX() >= 0) && (it.getX() < Day24.WALL_DOWN)) && (it.getY() >= 0)) && (it.getY() < Day24.WALL_RIGHT)) && (!Day24.getBlizzardsAtTime((PositionTimed.this.time + 1)).contains(it)))));
-          }
+        final Function1<Coordinate, Boolean> _function = (Coordinate it) -> {
+          return Boolean.valueOf(((it.equals(Day24.departure) || 
+            it.equals(Day24.arrival)) || (((((it.getX() >= 0) && (it.getX() < Day24.WALL_DOWN)) && (it.getY() >= 0)) && (it.getY() < Day24.WALL_RIGHT)) && (!Day24.getBlizzardsAtTime((this.time + 1)).contains(it)))));
         };
-        final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = new Function1<Coordinate, Pair<? extends State, Integer>>() {
-          public Pair<? extends State, Integer> apply(final Coordinate it) {
-            Day24.PositionTimed _positionTimed = new Day24.PositionTimed(it, (PositionTimed.this.time + 1));
-            return Pair.<Day24.PositionTimed, Integer>of(_positionTimed, Integer.valueOf(1));
-          }
+        final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = (Coordinate it) -> {
+          Day24.PositionTimed _positionTimed = new Day24.PositionTimed(it, (this.time + 1));
+          return Pair.<Day24.PositionTimed, Integer>of(_positionTimed, Integer.valueOf(1));
         };
         _xblockexpression = IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>filter(squares, _function), _function_1);
       }
       return _xblockexpression;
     }
 
+    @Override
     public String toString() {
       return this.position.toString();
     }
 
+    @Override
     public int hashCode() {
       int _hashCode = this.position.hashCode();
       return (_hashCode * this.time);
     }
 
+    @Override
     public boolean equals(final Object other) {
       boolean _switchResult = false;
       boolean _matched = false;
@@ -140,16 +141,15 @@ public class Day24 {
       return _switchResult;
     }
 
+    @Override
     public String toString() {
       return this.initial.toString();
     }
   }
 
-  private static final List<char[]> inputs = ListExtensions.<String, char[]>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(24)).getInputs(), new Function1<String, char[]>() {
-    public char[] apply(final String it) {
-      return it.toCharArray();
-    }
-  });
+  private static final List<char[]> inputs = ListExtensions.<String, char[]>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(24)).getInputs(), ((Function1<String, char[]>) (String it) -> {
+    return it.toCharArray();
+  }));
 
   private static final int WALL_DOWN = (Day24.inputs.size() - 2);
 
@@ -160,50 +160,40 @@ public class Day24 {
   private static final Coordinate arrival = new Coordinate(Day24.WALL_DOWN, (Day24.WALL_RIGHT - 1));
 
   private static final List<Day24.Blizzard> blizzards = new Function0<List<Day24.Blizzard>>() {
+    @Override
     public List<Day24.Blizzard> apply() {
       ArrayList<Day24.Blizzard> _xblockexpression = null;
       {
         final ArrayList<Day24.Blizzard> output = CollectionLiterals.<Day24.Blizzard>newArrayList();
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer i) {
-            final Consumer<Integer> _function = new Consumer<Integer>() {
-              public void accept(final Integer j) {
-                String _string = Character.valueOf((Day24.inputs.get((i).intValue())[(j).intValue()])).toString();
-                boolean _matched = false;
-                if (Objects.equal(_string, ">")) {
-                  _matched=true;
+        final Consumer<Integer> _function = (Integer i) -> {
+          final Consumer<Integer> _function_1 = (Integer j) -> {
+            String _string = Character.valueOf((Day24.inputs.get((i).intValue())[(j).intValue()])).toString();
+            if (_string != null) {
+              switch (_string) {
+                case ">":
                   Coordinate _coordinate = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
                   Day24.Blizzard _blizzard = new Day24.Blizzard(_coordinate, Direction.RIGHT);
                   output.add(_blizzard);
-                }
-                if (!_matched) {
-                  if (Objects.equal(_string, "<")) {
-                    _matched=true;
-                    Coordinate _coordinate_1 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                    Day24.Blizzard _blizzard_1 = new Day24.Blizzard(_coordinate_1, Direction.LEFT);
-                    output.add(_blizzard_1);
-                  }
-                }
-                if (!_matched) {
-                  if (Objects.equal(_string, "v")) {
-                    _matched=true;
-                    Coordinate _coordinate_2 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                    Day24.Blizzard _blizzard_2 = new Day24.Blizzard(_coordinate_2, Direction.DOWN);
-                    output.add(_blizzard_2);
-                  }
-                }
-                if (!_matched) {
-                  if (Objects.equal(_string, "^")) {
-                    _matched=true;
-                    Coordinate _coordinate_3 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
-                    Day24.Blizzard _blizzard_3 = new Day24.Blizzard(_coordinate_3, Direction.UP);
-                    output.add(_blizzard_3);
-                  }
-                }
+                  break;
+                case "<":
+                  Coordinate _coordinate_1 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
+                  Day24.Blizzard _blizzard_1 = new Day24.Blizzard(_coordinate_1, Direction.LEFT);
+                  output.add(_blizzard_1);
+                  break;
+                case "v":
+                  Coordinate _coordinate_2 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
+                  Day24.Blizzard _blizzard_2 = new Day24.Blizzard(_coordinate_2, Direction.DOWN);
+                  output.add(_blizzard_2);
+                  break;
+                case "^":
+                  Coordinate _coordinate_3 = new Coordinate(((i).intValue() - 1), ((j).intValue() - 1));
+                  Day24.Blizzard _blizzard_3 = new Day24.Blizzard(_coordinate_3, Direction.UP);
+                  output.add(_blizzard_3);
+                  break;
               }
-            };
-            new IntegerRange(1, Day24.WALL_RIGHT).forEach(_function);
-          }
+            }
+          };
+          new IntegerRange(1, Day24.WALL_RIGHT).forEach(_function_1);
         };
         new IntegerRange(1, Day24.WALL_DOWN).forEach(_function);
         _xblockexpression = output;
@@ -241,10 +231,8 @@ public class Day24 {
       boolean _containsKey = Day24.current_blizzards.containsKey(Integer.valueOf(t));
       boolean _not = (!_containsKey);
       if (_not) {
-        final Function1<Day24.Blizzard, Coordinate> _function = new Function1<Day24.Blizzard, Coordinate>() {
-          public Coordinate apply(final Day24.Blizzard it) {
-            return it.getCurrentPosition(t);
-          }
+        final Function1<Day24.Blizzard, Coordinate> _function = (Day24.Blizzard it) -> {
+          return it.getCurrentPosition(t);
         };
         Day24.current_blizzards.put(Integer.valueOf(t), IterableExtensions.<Coordinate>toSet(ListExtensions.<Day24.Blizzard, Coordinate>map(Day24.blizzards, _function)));
       }

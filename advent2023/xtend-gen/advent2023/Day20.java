@@ -2,10 +2,10 @@ package advent2023;
 
 import adventutils.input.InputLoader;
 import adventutils.maths.Arithmetics;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -48,7 +48,7 @@ public class Day20 {
       String _get = split[0];
       final String x = _get;
       boolean _matched = false;
-      if (Objects.equal(x, "broadcaster")) {
+      if (Objects.equals(x, "broadcaster")) {
         _matched=true;
         BroadCaster _broadCaster = new BroadCaster((List<String>)Conversions.doWrapArray(receivers));
         Day20.modules.put("broadcaster", _broadCaster);

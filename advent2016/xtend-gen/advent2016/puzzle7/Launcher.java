@@ -15,30 +15,26 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public class Launcher {
   public static void main(final String[] args) {
     final List<String> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(7)).getInputs();
-    final Function2<Integer, String, Integer> _function = new Function2<Integer, String, Integer>() {
-      public Integer apply(final Integer v, final String e) {
-        int _xifexpression = (int) 0;
-        boolean _checkTLS = Launcher.checkTLS(e);
-        if (_checkTLS) {
-          _xifexpression = 1;
-        } else {
-          _xifexpression = 0;
-        }
-        return Integer.valueOf(((v).intValue() + _xifexpression));
+    final Function2<Integer, String, Integer> _function = (Integer v, String e) -> {
+      int _xifexpression = (int) 0;
+      boolean _checkTLS = Launcher.checkTLS(e);
+      if (_checkTLS) {
+        _xifexpression = 1;
+      } else {
+        _xifexpression = 0;
       }
+      return Integer.valueOf(((v).intValue() + _xifexpression));
     };
     InputOutput.<Integer>println(IterableExtensions.<String, Integer>fold(input, Integer.valueOf(0), _function));
-    final Function2<Integer, String, Integer> _function_1 = new Function2<Integer, String, Integer>() {
-      public Integer apply(final Integer v, final String e) {
-        int _xifexpression = (int) 0;
-        Boolean _checkSSL = Launcher.checkSSL(e);
-        if ((_checkSSL).booleanValue()) {
-          _xifexpression = 1;
-        } else {
-          _xifexpression = 0;
-        }
-        return Integer.valueOf(((v).intValue() + _xifexpression));
+    final Function2<Integer, String, Integer> _function_1 = (Integer v, String e) -> {
+      int _xifexpression = (int) 0;
+      Boolean _checkSSL = Launcher.checkSSL(e);
+      if ((_checkSSL).booleanValue()) {
+        _xifexpression = 1;
+      } else {
+        _xifexpression = 0;
       }
+      return Integer.valueOf(((v).intValue() + _xifexpression));
     };
     InputOutput.<Integer>println(IterableExtensions.<String, Integer>fold(input, Integer.valueOf(0), _function_1));
   }
@@ -59,14 +55,10 @@ public class Launcher {
         }
       }
       s1.addAll(Launcher.getSSLPatterns(tmp));
-      final Function2<Boolean, String, Boolean> _function = new Function2<Boolean, String, Boolean>() {
-        public Boolean apply(final Boolean b, final String e) {
-          return Boolean.valueOf(((b).booleanValue() || (IterableExtensions.<String>findFirst(s2, new Function1<String, Boolean>() {
-            public Boolean apply(final String it) {
-              return Boolean.valueOf(Launcher.compatible(it, e));
-            }
-          }) != null)));
-        }
+      final Function2<Boolean, String, Boolean> _function = (Boolean b, String e) -> {
+        return Boolean.valueOf(((b).booleanValue() || (IterableExtensions.<String>findFirst(s2, ((Function1<String, Boolean>) (String it) -> {
+          return Boolean.valueOf(Launcher.compatible(it, e));
+        })) != null)));
       };
       _xblockexpression = IterableExtensions.<String, Boolean>fold(s1, Boolean.valueOf(false), _function);
     }
@@ -100,12 +92,10 @@ public class Launcher {
       final ArrayList<String> ans = CollectionLiterals.<String>newArrayList();
       int _length = s.length();
       int _minus = (_length - 3);
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer i) {
-          boolean _smallHasSSLPatter = Launcher.smallHasSSLPatter(s.substring((i).intValue(), ((i).intValue() + 3)));
-          if (_smallHasSSLPatter) {
-            ans.add(s.substring((i).intValue(), ((i).intValue() + 3)));
-          }
+      final Consumer<Integer> _function = (Integer i) -> {
+        boolean _smallHasSSLPatter = Launcher.smallHasSSLPatter(s.substring((i).intValue(), ((i).intValue() + 3)));
+        if (_smallHasSSLPatter) {
+          ans.add(s.substring((i).intValue(), ((i).intValue() + 3)));
         }
       };
       new IntegerRange(0, _minus).forEach(_function);

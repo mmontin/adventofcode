@@ -1,8 +1,8 @@
 package advent2018;
 
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
@@ -143,7 +143,7 @@ public class MiniLang {
           int _xifexpression_5 = (int) 0;
           Integer _get_12 = this.registry.get(a);
           Integer _get_13 = this.registry.get(b);
-          boolean _equals_2 = Objects.equal(_get_12, _get_13);
+          boolean _equals_2 = Objects.equals(_get_12, _get_13);
           if (_equals_2) {
             _xifexpression_5 = 1;
           } else {

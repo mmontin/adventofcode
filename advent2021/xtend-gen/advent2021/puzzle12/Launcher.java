@@ -19,36 +19,28 @@ public class Launcher {
   private static Set<List<String>> paths = CollectionLiterals.<List<String>>newHashSet();
 
   public static void main(final String[] args) {
-    final Function1<String, String[]> _function = new Function1<String, String[]>() {
-      public String[] apply(final String it) {
-        return it.split("-");
-      }
+    final Function1<String, String[]> _function = (String it) -> {
+      return it.split("-");
     };
-    final Consumer<String[]> _function_1 = new Consumer<String[]>() {
-      public void accept(final String[] it) {
-        final BiFunction<Set<String>, Set<String>, Set<String>> _function = new BiFunction<Set<String>, Set<String>, Set<String>>() {
-          public Set<String> apply(final Set<String> v, final Set<String> w) {
-            Set<String> _xblockexpression = null;
-            {
-              v.addAll(w);
-              _xblockexpression = v;
-            }
-            return _xblockexpression;
-          }
-        };
-        Launcher.graph.merge(it[0], CollectionLiterals.<String>newHashSet(it[1]), _function);
-        final BiFunction<Set<String>, Set<String>, Set<String>> _function_1 = new BiFunction<Set<String>, Set<String>, Set<String>>() {
-          public Set<String> apply(final Set<String> v, final Set<String> w) {
-            Set<String> _xblockexpression = null;
-            {
-              v.addAll(w);
-              _xblockexpression = v;
-            }
-            return _xblockexpression;
-          }
-        };
-        Launcher.graph.merge(it[1], CollectionLiterals.<String>newHashSet(it[0]), _function_1);
-      }
+    final Consumer<String[]> _function_1 = (String[] it) -> {
+      final BiFunction<Set<String>, Set<String>, Set<String>> _function_2 = (Set<String> v, Set<String> w) -> {
+        Set<String> _xblockexpression = null;
+        {
+          v.addAll(w);
+          _xblockexpression = v;
+        }
+        return _xblockexpression;
+      };
+      Launcher.graph.merge(it[0], CollectionLiterals.<String>newHashSet(it[1]), _function_2);
+      final BiFunction<Set<String>, Set<String>, Set<String>> _function_3 = (Set<String> v, Set<String> w) -> {
+        Set<String> _xblockexpression = null;
+        {
+          v.addAll(w);
+          _xblockexpression = v;
+        }
+        return _xblockexpression;
+      };
+      Launcher.graph.merge(it[1], CollectionLiterals.<String>newHashSet(it[0]), _function_3);
     };
     new InputLoader(Integer.valueOf(2021), Integer.valueOf(12)).<String[]>getInputs(_function).forEach(_function_1);
     Launcher.paths(CollectionLiterals.<String>newArrayList("start"), "start");
@@ -64,22 +56,16 @@ public class Launcher {
       Launcher.paths.add(visited);
     } else {
       visited.add(current);
-      final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
-        public Boolean apply(final String it) {
-          boolean _equals = it.equals("start");
-          return Boolean.valueOf((!_equals));
-        }
+      final Function1<String, Boolean> _function = (String it) -> {
+        boolean _equals_1 = it.equals("start");
+        return Boolean.valueOf((!_equals_1));
       };
-      final Function1<String, Boolean> _function_1 = new Function1<String, Boolean>() {
-        public Boolean apply(final String it) {
-          return Boolean.valueOf((Character.isUpperCase(it.charAt(0)) || ((!Launcher.hasDuplicates(visited)) || (!visited.contains(it)))));
-        }
+      final Function1<String, Boolean> _function_1 = (String it) -> {
+        return Boolean.valueOf((Character.isUpperCase(it.charAt(0)) || ((!Launcher.hasDuplicates(visited)) || (!visited.contains(it)))));
       };
-      final Consumer<String> _function_2 = new Consumer<String>() {
-        public void accept(final String it) {
-          ArrayList<String> _arrayList = new ArrayList<String>(visited);
-          Launcher.paths(_arrayList, it);
-        }
+      final Consumer<String> _function_2 = (String it) -> {
+        ArrayList<String> _arrayList = new ArrayList<String>(visited);
+        Launcher.paths(_arrayList, it);
       };
       IterableExtensions.<String>filter(IterableExtensions.<String>filter(Launcher.graph.get(current), _function), _function_1).forEach(_function_2);
     }
@@ -88,10 +74,8 @@ public class Launcher {
   public static boolean hasDuplicates(final List<String> l) {
     boolean _xblockexpression = false;
     {
-      final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
-        public Boolean apply(final String it) {
-          return Boolean.valueOf(Character.isLowerCase(it.charAt(0)));
-        }
+      final Function1<String, Boolean> _function = (String it) -> {
+        return Boolean.valueOf(Character.isLowerCase(it.charAt(0)));
       };
       final Iterable<String> trim = IterableExtensions.<String>filter(l, _function);
       int _size = IterableExtensions.size(trim);

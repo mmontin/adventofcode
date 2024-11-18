@@ -1,7 +1,6 @@
 package advent2021.puzzle10;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,30 +16,24 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    final Function1<String, List<Character>> _function = new Function1<String, List<Character>>() {
-      public List<Character> apply(final String it) {
-        return IterableExtensions.<Character>toList(((Iterable<Character>)Conversions.doWrapArray(it.toCharArray())));
-      }
+    final Function1<String, List<Character>> _function = (String it) -> {
+      return IterableExtensions.<Character>toList(((Iterable<Character>)Conversions.doWrapArray(it.toCharArray())));
     };
-    final Function2<ArrayList<BigInteger>, List<Character>, ArrayList<BigInteger>> _function_1 = new Function2<ArrayList<BigInteger>, List<Character>, ArrayList<BigInteger>>() {
-      public ArrayList<BigInteger> apply(final ArrayList<BigInteger> list, final List<Character> input) {
-        ArrayList<BigInteger> _xblockexpression = null;
-        {
-          final Function1<Character, String> _function = new Function1<Character, String>() {
-            public String apply(final Character it) {
-              return (it + "");
-            }
-          };
-          BigInteger processed = Launcher.process(ListExtensions.<Character, String>map(input, _function));
-          int _compareTo = processed.compareTo(BigInteger.valueOf(0));
-          boolean _greaterThan = (_compareTo > 0);
-          if (_greaterThan) {
-            list.add(processed);
-          }
-          _xblockexpression = list;
+    final Function2<ArrayList<BigInteger>, List<Character>, ArrayList<BigInteger>> _function_1 = (ArrayList<BigInteger> list, List<Character> input) -> {
+      ArrayList<BigInteger> _xblockexpression = null;
+      {
+        final Function1<Character, String> _function_2 = (Character it) -> {
+          return (it + "");
+        };
+        BigInteger processed = Launcher.process(ListExtensions.<Character, String>map(input, _function_2));
+        int _compareTo = processed.compareTo(BigInteger.valueOf(0));
+        boolean _greaterThan = (_compareTo > 0);
+        if (_greaterThan) {
+          list.add(processed);
         }
-        return _xblockexpression;
+        _xblockexpression = list;
       }
+      return _xblockexpression;
     };
     final List<BigInteger> output = IterableExtensions.<BigInteger>sort(IterableExtensions.<List<Character>, ArrayList<BigInteger>>fold(new InputLoader(Integer.valueOf(2021), Integer.valueOf(10)).<List<Character>>getInputs(_function), CollectionLiterals.<BigInteger>newArrayList(), _function_1));
     int _size = output.size();
@@ -58,59 +51,44 @@ public class Launcher {
         {
           int _plusPlus = i++;
           final String v = input.get(_plusPlus);
-          boolean _matched = false;
-          if (Objects.equal(v, "<")) {
-            _matched=true;
-          }
-          if (!_matched) {
-            if (Objects.equal(v, "(")) {
-              _matched=true;
+          if (v != null) {
+            switch (v) {
+              case "<":
+              case "(":
+              case "{":
+              case "[":
+                stack.push(v);
+                break;
+              case ">":
+                boolean _equals = stack.pop().equals("<");
+                boolean _not = (!_equals);
+                if (_not) {
+                  error = 25137;
+                }
+                break;
+              case ")":
+                boolean _equals_1 = stack.pop().equals("(");
+                boolean _not_1 = (!_equals_1);
+                if (_not_1) {
+                  error = 3;
+                }
+                break;
+              case "}":
+                boolean _equals_2 = stack.pop().equals("{");
+                boolean _not_2 = (!_equals_2);
+                if (_not_2) {
+                  error = 1197;
+                }
+                break;
+              default:
+                boolean _equals_3 = stack.pop().equals("[");
+                boolean _not_3 = (!_equals_3);
+                if (_not_3) {
+                  error = 57;
+                }
+                break;
             }
-          }
-          if (!_matched) {
-            if (Objects.equal(v, "{")) {
-              _matched=true;
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(v, "[")) {
-              _matched=true;
-            }
-          }
-          if (_matched) {
-            stack.push(v);
-          }
-          if (!_matched) {
-            if (Objects.equal(v, ">")) {
-              _matched=true;
-              boolean _equals = stack.pop().equals("<");
-              boolean _not = (!_equals);
-              if (_not) {
-                error = 25137;
-              }
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(v, ")")) {
-              _matched=true;
-              boolean _equals_1 = stack.pop().equals("(");
-              boolean _not_1 = (!_equals_1);
-              if (_not_1) {
-                error = 3;
-              }
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(v, "}")) {
-              _matched=true;
-              boolean _equals_2 = stack.pop().equals("{");
-              boolean _not_2 = (!_equals_2);
-              if (_not_2) {
-                error = 1197;
-              }
-            }
-          }
-          if (!_matched) {
+          } else {
             boolean _equals_3 = stack.pop().equals("[");
             boolean _not_3 = (!_equals_3);
             if (_not_3) {
@@ -130,24 +108,22 @@ public class Launcher {
             {
               int value = 0;
               String _pop = stack.pop();
-              boolean _matched = false;
-              if (Objects.equal(_pop, "<")) {
-                _matched=true;
-                value = 4;
-              }
-              if (!_matched) {
-                if (Objects.equal(_pop, "(")) {
-                  _matched=true;
-                  value = 1;
+              if (_pop != null) {
+                switch (_pop) {
+                  case "<":
+                    value = 4;
+                    break;
+                  case "(":
+                    value = 1;
+                    break;
+                  case "{":
+                    value = 3;
+                    break;
+                  default:
+                    value = 2;
+                    break;
                 }
-              }
-              if (!_matched) {
-                if (Objects.equal(_pop, "{")) {
-                  _matched=true;
-                  value = 3;
-                }
-              }
-              if (!_matched) {
+              } else {
                 value = 2;
               }
               score = BigInteger.valueOf(5).multiply(score).add(BigInteger.valueOf(value));

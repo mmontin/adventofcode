@@ -4,10 +4,10 @@ import adventutils.collection.Collection;
 import adventutils.geometry.Coordinate;
 import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
@@ -105,14 +105,14 @@ public class Day16 {
       if (((((next.getX() >= 0) && (next.getX() <= Day16.max_x)) && (next.getY() >= 0)) && (next.getY() <= Day16.max_y))) {
         String _get = Day16.walls.get(next);
         boolean _matched = false;
-        if (Objects.equal(_get, null)) {
+        if (Objects.equals(_get, null)) {
           _matched=true;
           Direction _value = current.getValue();
           Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(next, _value);
           output.add(_mappedTo);
         }
         if (!_matched) {
-          if (Objects.equal(_get, "/")) {
+          if (Objects.equals(_get, "/")) {
             _matched=true;
             Direction _switchResult_1 = null;
             Direction _value_1 = current.getValue();
@@ -139,9 +139,9 @@ public class Day16 {
           }
         }
         if (!_matched) {
-          if (Objects.equal(_get, "-")) {
+          if (Objects.equals(_get, "-")) {
             _matched=true;
-            if ((Objects.equal(current.getValue(), Direction.LEFT) || Objects.equal(current.getValue(), Direction.RIGHT))) {
+            if ((Objects.equals(current.getValue(), Direction.LEFT) || Objects.equals(current.getValue(), Direction.RIGHT))) {
               Direction _value_2 = current.getValue();
               Pair<Coordinate, Direction> _mappedTo_2 = Pair.<Coordinate, Direction>of(next, _value_2);
               output.add(_mappedTo_2);
@@ -153,9 +153,9 @@ public class Day16 {
           }
         }
         if (!_matched) {
-          if (Objects.equal(_get, "|")) {
+          if (Objects.equals(_get, "|")) {
             _matched=true;
-            if ((Objects.equal(current.getValue(), Direction.UP) || Objects.equal(current.getValue(), Direction.DOWN))) {
+            if ((Objects.equals(current.getValue(), Direction.UP) || Objects.equals(current.getValue(), Direction.DOWN))) {
               Direction _value_3 = current.getValue();
               Pair<Coordinate, Direction> _mappedTo_5 = Pair.<Coordinate, Direction>of(next, _value_3);
               output.add(_mappedTo_5);
@@ -167,7 +167,7 @@ public class Day16 {
           }
         }
         if (!_matched) {
-          if (Objects.equal(_get, "\\")) {
+          if (Objects.equals(_get, "\\")) {
             _matched=true;
             Direction _switchResult_2 = null;
             Direction _value_4 = current.getValue();

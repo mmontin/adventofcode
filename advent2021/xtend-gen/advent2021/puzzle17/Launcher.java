@@ -26,20 +26,16 @@ public class Launcher {
     final HashMap<Integer, HashSet<Integer>> map_y_candidates = CollectionLiterals.<Integer, HashSet<Integer>>newHashMap();
     IntegerRange _upTo = new IntegerRange((-(max_velocity_y + 1)), max_velocity_y);
     for (final Integer vy : _upTo) {
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer it) {
-          final BiFunction<HashSet<Integer>, HashSet<Integer>, HashSet<Integer>> _function = new BiFunction<HashSet<Integer>, HashSet<Integer>, HashSet<Integer>>() {
-            public HashSet<Integer> apply(final HashSet<Integer> s1, final HashSet<Integer> s2) {
-              HashSet<Integer> _xblockexpression = null;
-              {
-                s1.addAll(s2);
-                _xblockexpression = s1;
-              }
-              return _xblockexpression;
-            }
-          };
-          map_y_candidates.merge(it, CollectionLiterals.<Integer>newHashSet(vy), _function);
-        }
+      final Consumer<Integer> _function = (Integer it) -> {
+        final BiFunction<HashSet<Integer>, HashSet<Integer>, HashSet<Integer>> _function_1 = (HashSet<Integer> s1, HashSet<Integer> s2) -> {
+          HashSet<Integer> _xblockexpression = null;
+          {
+            s1.addAll(s2);
+            _xblockexpression = s1;
+          }
+          return _xblockexpression;
+        };
+        map_y_candidates.merge(it, CollectionLiterals.<Integer>newHashSet(vy), _function_1);
       };
       Launcher.getYCandidateSteps((vy).intValue()).forEach(_function);
     }

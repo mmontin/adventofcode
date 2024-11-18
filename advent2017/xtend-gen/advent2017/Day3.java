@@ -41,11 +41,9 @@ public class Day3 {
       {
         currentPosition = currentPosition.move(currentDirection);
         final HashSet<Coordinate> neighbours = currentPosition.allAroundFilteredNeighbours(coordinates.keySet());
-        final Function2<Integer, Coordinate, Integer> _function = new Function2<Integer, Coordinate, Integer>() {
-          public Integer apply(final Integer acc, final Coordinate e) {
-            Integer _get = coordinates.get(e);
-            return Integer.valueOf(((acc).intValue() + (_get).intValue()));
-          }
+        final Function2<Integer, Coordinate, Integer> _function = (Integer acc, Coordinate e) -> {
+          Integer _get = coordinates.get(e);
+          return Integer.valueOf(((acc).intValue() + (_get).intValue()));
         };
         coordinates.put(currentPosition, IterableExtensions.<Coordinate, Integer>fold(neighbours, Integer.valueOf(0), _function));
         int _size = neighbours.size();

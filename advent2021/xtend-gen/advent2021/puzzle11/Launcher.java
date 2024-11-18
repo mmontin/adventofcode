@@ -22,55 +22,43 @@ public class Launcher {
 
   public static void main(final String[] args) {
     final List<String> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(11)).getInputs();
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer i) {
-        final String line = input.get((i).intValue());
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer j) {
-            Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-            char _charAt = line.charAt((j).intValue());
-            String _plus = (Character.valueOf(_charAt) + "");
-            Launcher.data.put(_coordinate, Integer.valueOf(Integer.parseInt(_plus)));
-          }
-        };
-        new ExclusiveRange(0, 10, true).forEach(_function);
-      }
+    final Consumer<Integer> _function = (Integer i) -> {
+      final String line = input.get((i).intValue());
+      final Consumer<Integer> _function_1 = (Integer j) -> {
+        Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+        char _charAt = line.charAt((j).intValue());
+        String _plus = (Character.valueOf(_charAt) + "");
+        Launcher.data.put(_coordinate, Integer.valueOf(Integer.parseInt(_plus)));
+      };
+      new ExclusiveRange(0, 10, true).forEach(_function_1);
     };
     new ExclusiveRange(0, 10, true).forEach(_function);
     while ((!IterableExtensions.<Integer>toSet(Launcher.data.values()).equals(CollectionLiterals.<Integer>newHashSet(Integer.valueOf(0))))) {
       {
-        final Consumer<Map.Entry<Coordinate, Integer>> _function_1 = new Consumer<Map.Entry<Coordinate, Integer>>() {
-          public void accept(final Map.Entry<Coordinate, Integer> it) {
-            Coordinate _key = it.getKey();
-            Integer _value = it.getValue();
-            int _plus = ((_value).intValue() + 1);
-            Launcher.data.replace(_key, Integer.valueOf(_plus));
-          }
+        final Consumer<Map.Entry<Coordinate, Integer>> _function_1 = (Map.Entry<Coordinate, Integer> it) -> {
+          Coordinate _key = it.getKey();
+          Integer _value = it.getValue();
+          int _plus = ((_value).intValue() + 1);
+          Launcher.data.replace(_key, Integer.valueOf(_plus));
         };
         Launcher.data.entrySet().forEach(_function_1);
         Coordinate c = null;
-        while (((c = IterableExtensions.<Coordinate>findFirst(Launcher.data.keySet(), new Function1<Coordinate, Boolean>() {
-          public Boolean apply(final Coordinate it) {
-            Integer _get = Launcher.data.get(it);
-            return Boolean.valueOf(((_get).intValue() >= 10));
-          }
-        })) != null)) {
+        while (((c = IterableExtensions.<Coordinate>findFirst(Launcher.data.keySet(), ((Function1<Coordinate, Boolean>) (Coordinate it) -> {
+          Integer _get = Launcher.data.get(it);
+          return Boolean.valueOf(((_get).intValue() >= 10));
+        }))) != null)) {
           {
             if ((Launcher.number_of_occurrences < 100)) {
               Launcher.number_of_flashes++;
             }
             Launcher.data.replace(c, Integer.valueOf(0));
-            final Function1<Coordinate, Boolean> _function_2 = new Function1<Coordinate, Boolean>() {
-              public Boolean apply(final Coordinate it) {
-                return Boolean.valueOf((Launcher.data.containsKey(it) && ((Launcher.data.get(it)).intValue() != 0)));
-              }
+            final Function1<Coordinate, Boolean> _function_2 = (Coordinate it) -> {
+              return Boolean.valueOf((Launcher.data.containsKey(it) && ((Launcher.data.get(it)).intValue() != 0)));
             };
-            final Consumer<Coordinate> _function_3 = new Consumer<Coordinate>() {
-              public void accept(final Coordinate it) {
-                Integer _get = Launcher.data.get(it);
-                int _plus = ((_get).intValue() + 1);
-                Launcher.data.replace(it, Integer.valueOf(_plus));
-              }
+            final Consumer<Coordinate> _function_3 = (Coordinate it) -> {
+              Integer _get = Launcher.data.get(it);
+              int _plus = ((_get).intValue() + 1);
+              Launcher.data.replace(it, Integer.valueOf(_plus));
             };
             IterableExtensions.<Coordinate>filter(c.allAroundUnboundedNeighbours(), _function_2).forEach(_function_3);
           }

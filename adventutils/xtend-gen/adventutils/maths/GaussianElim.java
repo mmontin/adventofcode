@@ -1,7 +1,7 @@
 package adventutils.maths;
 
-import com.google.common.base.Objects;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -20,10 +20,8 @@ public class GaussianElim {
       ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, n, true);
       for (final Integer p : _doubleDotLessThan) {
         {
-          final Function1<Integer, Rational> _function = new Function1<Integer, Rational>() {
-            public Rational apply(final Integer it) {
-              return coeffs.get((it).intValue()).get((p).intValue()).abs();
-            }
+          final Function1<Integer, Rational> _function = (Integer it) -> {
+            return coeffs.get((it).intValue()).get((p).intValue()).abs();
           };
           Integer max = IterableExtensions.<Integer, Rational>maxBy(new ExclusiveRange((p).intValue(), n, true), _function);
           final ArrayList<Rational> temp = coeffs.get((p).intValue());
@@ -35,7 +33,7 @@ public class GaussianElim {
           final ArrayList<Rational> p_line = coeffs.get((p).intValue());
           final Rational pivot = p_line.get((p).intValue());
           final Rational res = b.get((p).intValue());
-          boolean _equals = Objects.equal(pivot, Rational.ZERO);
+          boolean _equals = Objects.equals(pivot, Rational.ZERO);
           if (_equals) {
             throw new NumberFormatException();
           }
@@ -62,23 +60,19 @@ public class GaussianElim {
         }
       }
       final ArrayList<Rational> x = CollectionLiterals.<Rational>newArrayList();
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer it) {
-          x.add(Rational.ZERO);
-        }
+      final Consumer<Integer> _function = (Integer it) -> {
+        x.add(Rational.ZERO);
       };
       new ExclusiveRange(0, n, true).forEach(_function);
       IntegerRange _upTo = new IntegerRange((n - 1), 0);
       for (final Integer i : _upTo) {
         {
           final ArrayList<Rational> i_line = coeffs.get((i).intValue());
-          final Function2<Rational, Integer, Rational> _function_1 = new Function2<Rational, Integer, Rational>() {
-            public Rational apply(final Rational acc, final Integer j) {
-              Rational _get = i_line.get((j).intValue());
-              Rational _get_1 = x.get((j).intValue());
-              Rational _multiply = _get.operator_multiply(_get_1);
-              return acc.operator_plus(_multiply);
-            }
+          final Function2<Rational, Integer, Rational> _function_1 = (Rational acc, Integer j) -> {
+            Rational _get = i_line.get((j).intValue());
+            Rational _get_1 = x.get((j).intValue());
+            Rational _multiply = _get.operator_multiply(_get_1);
+            return acc.operator_plus(_multiply);
           };
           Rational sum = IterableExtensions.<Integer, Rational>fold(new ExclusiveRange(((i).intValue() + 1), n, true), Rational.ZERO, _function_1);
           Rational _get = b.get((i).intValue());

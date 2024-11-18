@@ -30,21 +30,15 @@ public class Day21 {
       List<Day21.SetTile> _xblockexpression = null;
       {
         final ArrayList<HashSet<Coordinate>> content_list = CollectionLiterals.<HashSet<Coordinate>>newArrayList();
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            content_list.add(CollectionLiterals.<Coordinate>newHashSet());
-          }
+        final Consumer<Integer> _function = (Integer it) -> {
+          content_list.add(CollectionLiterals.<Coordinate>newHashSet());
         };
         new IntegerRange(0, 7).forEach(_function);
-        final Function1<String, List<String>> _function_1 = new Function1<String, List<String>>() {
-          public List<String> apply(final String it) {
-            final Function1<Character, String> _function = new Function1<Character, String>() {
-              public String apply(final Character it_1) {
-                return it_1.toString();
-              }
-            };
-            return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
-          }
+        final Function1<String, List<String>> _function_1 = (String it) -> {
+          final Function1<Character, String> _function_2 = (Character it_1) -> {
+            return it_1.toString();
+          };
+          return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function_2);
         };
         final List<List<String>> split = ListExtensions.<String, List<String>>map(((List<String>)Conversions.doWrapArray(s.split("/"))), _function_1);
         final int size = split.size();
@@ -104,10 +98,8 @@ public class Day21 {
             }
           }
         }
-        final Function1<HashSet<Coordinate>, Day21.SetTile> _function_2 = new Function1<HashSet<Coordinate>, Day21.SetTile>() {
-          public Day21.SetTile apply(final HashSet<Coordinate> it) {
-            return new Day21.SetTile(it, size);
-          }
+        final Function1<HashSet<Coordinate>, Day21.SetTile> _function_2 = (HashSet<Coordinate> it) -> {
+          return new Day21.SetTile(it, size);
         };
         _xblockexpression = ListExtensions.<HashSet<Coordinate>, Day21.SetTile>map(content_list, _function_2);
       }
@@ -116,15 +108,11 @@ public class Day21 {
 
     public SetTile(final String s) {
       this.content = CollectionLiterals.<Coordinate>newHashSet();
-      final Function1<String, List<String>> _function = new Function1<String, List<String>>() {
-        public List<String> apply(final String it) {
-          final Function1<Character, String> _function = new Function1<Character, String>() {
-            public String apply(final Character it_1) {
-              return it_1.toString();
-            }
-          };
-          return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
-        }
+      final Function1<String, List<String>> _function = (String it) -> {
+        final Function1<Character, String> _function_1 = (Character it_1) -> {
+          return it_1.toString();
+        };
+        return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function_1);
       };
       final List<List<String>> split = ListExtensions.<String, List<String>>map(((List<String>)Conversions.doWrapArray(s.split("/"))), _function);
       this.size = split.size();
@@ -157,19 +145,15 @@ public class Day21 {
             IntegerRange _upTo_1 = new IntegerRange(0, (nb - 1));
             for (final Integer j : _upTo_1) {
               Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-              final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it) {
-                  return Boolean.valueOf((((it.getX() == (2 * (i).intValue())) || (it.getX() == ((2 * (i).intValue()) + 1))) && ((it.getY() == (2 * (j).intValue())) || (it.getY() == ((2 * (j).intValue()) + 1)))));
-                }
+              final Function1<Coordinate, Boolean> _function = (Coordinate it) -> {
+                return Boolean.valueOf((((it.getX() == (2 * (i).intValue())) || (it.getX() == ((2 * (i).intValue()) + 1))) && ((it.getY() == (2 * (j).intValue())) || (it.getY() == ((2 * (j).intValue()) + 1)))));
               };
-              final Function1<Coordinate, Coordinate> _function_1 = new Function1<Coordinate, Coordinate>() {
-                public Coordinate apply(final Coordinate it) {
-                  int _x = it.getX();
-                  int _minus = (_x - (2 * (i).intValue()));
-                  int _y = it.getY();
-                  int _minus_1 = (_y - (2 * (j).intValue()));
-                  return new Coordinate(_minus, _minus_1);
-                }
+              final Function1<Coordinate, Coordinate> _function_1 = (Coordinate it) -> {
+                int _x = it.getX();
+                int _minus = (_x - (2 * (i).intValue()));
+                int _y = it.getY();
+                int _minus_1 = (_y - (2 * (j).intValue()));
+                return new Coordinate(_minus, _minus_1);
               };
               Set<Coordinate> _set = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate, Coordinate>map(IterableExtensions.<Coordinate>filter(this.content, _function), _function_1));
               Day21.SetTile _setTile = new Day21.SetTile(_set, 2);
@@ -184,19 +168,15 @@ public class Day21 {
               IntegerRange _upTo_3 = new IntegerRange(0, (nb_1 - 1));
               for (final Integer j_1 : _upTo_3) {
                 Coordinate _coordinate_1 = new Coordinate((i_1).intValue(), (j_1).intValue());
-                final Function1<Coordinate, Boolean> _function_2 = new Function1<Coordinate, Boolean>() {
-                  public Boolean apply(final Coordinate it) {
-                    return Boolean.valueOf(((((it.getX() >= (3 * (i_1).intValue())) && (it.getX() <= ((3 * (i_1).intValue()) + 2))) && (it.getY() >= (3 * (j_1).intValue()))) && (it.getY() <= ((3 * (j_1).intValue()) + 2))));
-                  }
+                final Function1<Coordinate, Boolean> _function_2 = (Coordinate it) -> {
+                  return Boolean.valueOf(((((it.getX() >= (3 * (i_1).intValue())) && (it.getX() <= ((3 * (i_1).intValue()) + 2))) && (it.getY() >= (3 * (j_1).intValue()))) && (it.getY() <= ((3 * (j_1).intValue()) + 2))));
                 };
-                final Function1<Coordinate, Coordinate> _function_3 = new Function1<Coordinate, Coordinate>() {
-                  public Coordinate apply(final Coordinate it) {
-                    int _x = it.getX();
-                    int _minus = (_x - (3 * (i_1).intValue()));
-                    int _y = it.getY();
-                    int _minus_1 = (_y - (3 * (j_1).intValue()));
-                    return new Coordinate(_minus, _minus_1);
-                  }
+                final Function1<Coordinate, Coordinate> _function_3 = (Coordinate it) -> {
+                  int _x = it.getX();
+                  int _minus = (_x - (3 * (i_1).intValue()));
+                  int _y = it.getY();
+                  int _minus_1 = (_y - (3 * (j_1).intValue()));
+                  return new Coordinate(_minus, _minus_1);
                 };
                 Set<Coordinate> _set_1 = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate, Coordinate>map(IterableExtensions.<Coordinate>filter(this.content, _function_2), _function_3));
                 Day21.SetTile _setTile_1 = new Day21.SetTile(_set_1, 3);
@@ -205,10 +185,8 @@ public class Day21 {
             }
           } else {
             Coordinate _coordinate_2 = new Coordinate(0, 0);
-            final Function1<Coordinate, Coordinate> _function_4 = new Function1<Coordinate, Coordinate>() {
-              public Coordinate apply(final Coordinate it) {
-                return new Coordinate(it);
-              }
+            final Function1<Coordinate, Coordinate> _function_4 = (Coordinate it) -> {
+              return new Coordinate(it);
             };
             Set<Coordinate> _set_2 = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate, Coordinate>map(this.content, _function_4));
             Day21.SetTile _setTile_2 = new Day21.SetTile(_set_2, this.size);
@@ -220,6 +198,7 @@ public class Day21 {
       return _xblockexpression;
     }
 
+    @Override
     public String toString() {
       String _xblockexpression = null;
       {
@@ -248,10 +227,12 @@ public class Day21 {
       return _xblockexpression;
     }
 
+    @Override
     public int hashCode() {
       return this.size;
     }
 
+    @Override
     public boolean equals(final Object other) {
       boolean _switchResult = false;
       boolean _matched = false;
@@ -271,18 +252,14 @@ public class Day21 {
   private static final Day21.SetTile starting_tile = new Day21.SetTile(".#./..#/###");
 
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] split = it.split(" => ");
-        String _get = split[1];
-        final Day21.SetTile target = new Day21.SetTile(_get);
-        final Consumer<Day21.SetTile> _function = new Consumer<Day21.SetTile>() {
-          public void accept(final Day21.SetTile variant) {
-            Day21.mappings.put(variant, target);
-          }
-        };
-        Day21.SetTile.allVariants(split[0]).forEach(_function);
-      }
+    final Consumer<String> _function = (String it) -> {
+      final String[] split = it.split(" => ");
+      String _get = split[1];
+      final Day21.SetTile target = new Day21.SetTile(_get);
+      final Consumer<Day21.SetTile> _function_1 = (Day21.SetTile variant) -> {
+        Day21.mappings.put(variant, target);
+      };
+      Day21.SetTile.allVariants(split[0]).forEach(_function_1);
     };
     new InputLoader(Integer.valueOf(2017), Integer.valueOf(21)).getInputs().forEach(_function);
     InputOutput.<Integer>println(Integer.valueOf(Day21.mappings.size()));
@@ -293,24 +270,20 @@ public class Day21 {
         final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
         final HashMap<Coordinate, Day21.SetTile> splitted = current.split();
         final int next_size = (IterableExtensions.<Day21.SetTile>head(splitted.values()).size + 1);
-        final BiConsumer<Coordinate, Day21.SetTile> _function_1 = new BiConsumer<Coordinate, Day21.SetTile>() {
-          public void accept(final Coordinate k, final Day21.SetTile v) {
-            Day21.SetTile next_tile = Day21.mappings.get(v);
-            final Function1<Coordinate, Coordinate> _function = new Function1<Coordinate, Coordinate>() {
-              public Coordinate apply(final Coordinate it) {
-                int _x = it.getX();
-                int _x_1 = k.getX();
-                int _multiply = (next_size * _x_1);
-                int _plus = (_x + _multiply);
-                int _y = it.getY();
-                int _y_1 = k.getY();
-                int _multiply_1 = (next_size * _y_1);
-                int _plus_1 = (_y + _multiply_1);
-                return new Coordinate(_plus, _plus_1);
-              }
-            };
-            Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function));
-          }
+        final BiConsumer<Coordinate, Day21.SetTile> _function_1 = (Coordinate k, Day21.SetTile v) -> {
+          Day21.SetTile next_tile = Day21.mappings.get(v);
+          final Function1<Coordinate, Coordinate> _function_2 = (Coordinate it) -> {
+            int _x = it.getX();
+            int _x_1 = k.getX();
+            int _multiply = (next_size * _x_1);
+            int _plus = (_x + _multiply);
+            int _y = it.getY();
+            int _y_1 = k.getY();
+            int _multiply_1 = (next_size * _y_1);
+            int _plus_1 = (_y + _multiply_1);
+            return new Coordinate(_plus, _plus_1);
+          };
+          Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function_2));
         };
         splitted.forEach(_function_1);
         double _sqrt = Math.sqrt(splitted.size());
@@ -327,24 +300,20 @@ public class Day21 {
         final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
         final HashMap<Coordinate, Day21.SetTile> splitted = current.split();
         final int next_size = (IterableExtensions.<Day21.SetTile>head(splitted.values()).size + 1);
-        final BiConsumer<Coordinate, Day21.SetTile> _function_1 = new BiConsumer<Coordinate, Day21.SetTile>() {
-          public void accept(final Coordinate k, final Day21.SetTile v) {
-            Day21.SetTile next_tile = Day21.mappings.get(v);
-            final Function1<Coordinate, Coordinate> _function = new Function1<Coordinate, Coordinate>() {
-              public Coordinate apply(final Coordinate it) {
-                int _x = it.getX();
-                int _x_1 = k.getX();
-                int _multiply = (next_size * _x_1);
-                int _plus = (_x + _multiply);
-                int _y = it.getY();
-                int _y_1 = k.getY();
-                int _multiply_1 = (next_size * _y_1);
-                int _plus_1 = (_y + _multiply_1);
-                return new Coordinate(_plus, _plus_1);
-              }
-            };
-            Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function));
-          }
+        final BiConsumer<Coordinate, Day21.SetTile> _function_1 = (Coordinate k, Day21.SetTile v) -> {
+          Day21.SetTile next_tile = Day21.mappings.get(v);
+          final Function1<Coordinate, Coordinate> _function_2 = (Coordinate it) -> {
+            int _x = it.getX();
+            int _x_1 = k.getX();
+            int _multiply = (next_size * _x_1);
+            int _plus = (_x + _multiply);
+            int _y = it.getY();
+            int _y_1 = k.getY();
+            int _multiply_1 = (next_size * _y_1);
+            int _plus_1 = (_y + _multiply_1);
+            return new Coordinate(_plus, _plus_1);
+          };
+          Iterables.<Coordinate>addAll(output, IterableExtensions.<Coordinate, Coordinate>map(next_tile.content, _function_2));
         };
         splitted.forEach(_function_1);
         double _sqrt = Math.sqrt(splitted.size());

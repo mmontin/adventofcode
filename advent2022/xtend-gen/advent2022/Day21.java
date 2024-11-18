@@ -1,7 +1,6 @@
 package advent2022;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -42,24 +41,22 @@ public class Day21 {
                     final Day21.Value right_bis = ((Day21.Value) right);
                     long _switchResult = (long) 0;
                     String _get = ops.get(1);
-                    boolean _matched = false;
-                    if (Objects.equal(_get, "+")) {
-                      _matched=true;
-                      _switchResult = (left_bis.value + right_bis.value);
-                    }
-                    if (!_matched) {
-                      if (Objects.equal(_get, "-")) {
-                        _matched=true;
-                        _switchResult = (left_bis.value - right_bis.value);
+                    if (_get != null) {
+                      switch (_get) {
+                        case "+":
+                          _switchResult = (left_bis.value + right_bis.value);
+                          break;
+                        case "-":
+                          _switchResult = (left_bis.value - right_bis.value);
+                          break;
+                        case "*":
+                          _switchResult = (left_bis.value * right_bis.value);
+                          break;
+                        default:
+                          _switchResult = (left_bis.value / right_bis.value);
+                          break;
                       }
-                    }
-                    if (!_matched) {
-                      if (Objects.equal(_get, "*")) {
-                        _matched=true;
-                        _switchResult = (left_bis.value * right_bis.value);
-                      }
-                    }
-                    if (!_matched) {
+                    } else {
                       _switchResult = (left_bis.value / right_bis.value);
                     }
                     _xblockexpression_2 = new Day21.Value(_switchResult);
@@ -112,11 +109,9 @@ public class Day21 {
   private static final Map<String, List<String>> monkeys = CollectionLiterals.<String, List<String>>newHashMap();
 
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] split1 = it.split(": ");
-        Day21.monkeys.put(split1[0], IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray((split1[1]).split(" ")))));
-      }
+    final Consumer<String> _function = (String it) -> {
+      final String[] split1 = it.split(": ");
+      Day21.monkeys.put(split1[0], IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray((split1[1]).split(" ")))));
     };
     new InputLoader(Integer.valueOf(2022), Integer.valueOf(21)).getInputs().forEach(_function);
     InputOutput.<Long>println(Long.valueOf(Day21.resolve("root")));
@@ -128,75 +123,87 @@ public class Day21 {
         final Day21.Operation left_bis = ((Day21.Operation) left);
         final Day21.Value right_bis = ((Day21.Value) right);
         final String _switchValue = left_bis.op;
-        boolean _matched = false;
-        if (Objects.equal(_switchValue, "+")) {
-          _matched=true;
-          final Day21.Expression x = left_bis.left;
-          boolean _matched_1 = false;
-          if (x instanceof Day21.Value) {
-            _matched_1=true;
-            left = left_bis.right;
-            Day21.Value _value = new Day21.Value((right_bis.value - ((Day21.Value)x).value));
-            right = _value;
-          }
-          if (!_matched_1) {
-            {
-              left = x;
-              Day21.Value _value = new Day21.Value((right_bis.value - ((Day21.Value) left_bis.right).value));
-              right = _value;
-            }
-          }
-        }
-        if (!_matched) {
-          if (Objects.equal(_switchValue, "-")) {
-            _matched=true;
-            final Day21.Expression x_1 = left_bis.left;
-            boolean _matched_2 = false;
-            if (x_1 instanceof Day21.Value) {
-              _matched_2=true;
-              left = left_bis.right;
-              Day21.Value _value = new Day21.Value((((Day21.Value)x_1).value - right_bis.value));
-              right = _value;
-            }
-            if (!_matched_2) {
-              {
-                left = x_1;
-                Day21.Value _value = new Day21.Value((right_bis.value + ((Day21.Value) left_bis.right).value));
+        if (_switchValue != null) {
+          switch (_switchValue) {
+            case "+":
+              final Day21.Expression x = left_bis.left;
+              boolean _matched = false;
+              if (x instanceof Day21.Value) {
+                _matched=true;
+                left = left_bis.right;
+                Day21.Value _value = new Day21.Value((right_bis.value - ((Day21.Value)x).value));
                 right = _value;
               }
-            }
-          }
-        }
-        if (!_matched) {
-          if (Objects.equal(_switchValue, "*")) {
-            _matched=true;
-            final Day21.Expression x_2 = left_bis.left;
-            boolean _matched_3 = false;
-            if (x_2 instanceof Day21.Value) {
-              _matched_3=true;
-              left = left_bis.right;
-              Day21.Value _value = new Day21.Value((right_bis.value / ((Day21.Value)x_2).value));
-              right = _value;
-            }
-            if (!_matched_3) {
-              {
-                left = x_2;
-                Day21.Value _value = new Day21.Value((right_bis.value / ((Day21.Value) left_bis.right).value));
+              if (!_matched) {
+                {
+                  left = x;
+                  Day21.Value _value = new Day21.Value((right_bis.value - ((Day21.Value) left_bis.right).value));
+                  right = _value;
+                }
+              }
+              break;
+            case "-":
+              final Day21.Expression x_1 = left_bis.left;
+              boolean _matched_1 = false;
+              if (x_1 instanceof Day21.Value) {
+                _matched_1=true;
+                left = left_bis.right;
+                Day21.Value _value = new Day21.Value((((Day21.Value)x_1).value - right_bis.value));
                 right = _value;
               }
-            }
+              if (!_matched_1) {
+                {
+                  left = x_1;
+                  Day21.Value _value = new Day21.Value((right_bis.value + ((Day21.Value) left_bis.right).value));
+                  right = _value;
+                }
+              }
+              break;
+            case "*":
+              final Day21.Expression x_2 = left_bis.left;
+              boolean _matched_2 = false;
+              if (x_2 instanceof Day21.Value) {
+                _matched_2=true;
+                left = left_bis.right;
+                Day21.Value _value = new Day21.Value((right_bis.value / ((Day21.Value)x_2).value));
+                right = _value;
+              }
+              if (!_matched_2) {
+                {
+                  left = x_2;
+                  Day21.Value _value = new Day21.Value((right_bis.value / ((Day21.Value) left_bis.right).value));
+                  right = _value;
+                }
+              }
+              break;
+            default:
+              final Day21.Expression x_3 = left_bis.left;
+              boolean _matched_3 = false;
+              if (x_3 instanceof Day21.Value) {
+                _matched_3=true;
+                left = left_bis.right;
+                Day21.Value _value = new Day21.Value((((Day21.Value)x_3).value / right_bis.value));
+                right = _value;
+              }
+              if (!_matched_3) {
+                {
+                  left = x_3;
+                  Day21.Value _value = new Day21.Value((right_bis.value * ((Day21.Value) left_bis.right).value));
+                  right = _value;
+                }
+              }
+              break;
           }
-        }
-        if (!_matched) {
+        } else {
           final Day21.Expression x_3 = left_bis.left;
-          boolean _matched_4 = false;
+          boolean _matched_3 = false;
           if (x_3 instanceof Day21.Value) {
-            _matched_4=true;
+            _matched_3=true;
             left = left_bis.right;
             Day21.Value _value = new Day21.Value((((Day21.Value)x_3).value / right_bis.value));
             right = _value;
           }
-          if (!_matched_4) {
+          if (!_matched_3) {
             {
               left = x_3;
               Day21.Value _value = new Day21.Value((right_bis.value * ((Day21.Value) left_bis.right).value));
@@ -225,24 +232,22 @@ public class Day21 {
           final long right = Day21.resolve(others.get(2));
           long _switchResult = (long) 0;
           String _get = others.get(1);
-          boolean _matched = false;
-          if (Objects.equal(_get, "+")) {
-            _matched=true;
-            _switchResult = (left + right);
-          }
-          if (!_matched) {
-            if (Objects.equal(_get, "-")) {
-              _matched=true;
-              _switchResult = (left - right);
+          if (_get != null) {
+            switch (_get) {
+              case "+":
+                _switchResult = (left + right);
+                break;
+              case "-":
+                _switchResult = (left - right);
+                break;
+              case "*":
+                _switchResult = (left * right);
+                break;
+              default:
+                _switchResult = (left / right);
+                break;
             }
-          }
-          if (!_matched) {
-            if (Objects.equal(_get, "*")) {
-              _matched=true;
-              _switchResult = (left * right);
-            }
-          }
-          if (!_matched) {
+          } else {
             _switchResult = (left / right);
           }
           _xblockexpression_1 = _switchResult;

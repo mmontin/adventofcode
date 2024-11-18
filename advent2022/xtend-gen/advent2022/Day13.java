@@ -2,7 +2,6 @@ package advent2022;
 
 import adventutils.collection.AgdaList;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,32 +26,47 @@ public class Day13 {
       while ((!strings.isEmpty())) {
         String _remove = strings.remove(0);
         final String current = _remove;
-        boolean _matched = false;
-        if (Objects.equal(current, "[")) {
-          _matched=true;
-          Day13.ListPackage _listPackage = new Day13.ListPackage();
-          existing.push(_listPackage);
-        }
-        if (!_matched) {
-          if (Objects.equal(current, "]")) {
-            _matched=true;
-            final Day13.ListPackage finished = existing.pop();
-            int _size = existing.size();
-            boolean _equals = (_size == 0);
-            if (_equals) {
-              return finished;
-            } else {
-              Day13.ListPackage _peek = existing.peek();
-              ((Day13.ListPackage) _peek).packages.add(finished);
-            }
+        if (current != null) {
+          switch (current) {
+            case "[":
+              Day13.ListPackage _listPackage = new Day13.ListPackage();
+              existing.push(_listPackage);
+              break;
+            case "]":
+              final Day13.ListPackage finished = existing.pop();
+              int _size = existing.size();
+              boolean _equals = (_size == 0);
+              if (_equals) {
+                return finished;
+              } else {
+                Day13.ListPackage _peek = existing.peek();
+                ((Day13.ListPackage) _peek).packages.add(finished);
+              }
+              break;
+            case ",":
+              break;
+            default:
+              try {
+                String _get = strings.get(0);
+                String _plus = (current + _get);
+                int full = Integer.parseInt(_plus);
+                Day13.ListPackage _peek_1 = existing.peek();
+                Day13.UnaryPackage _unaryPackage = new Day13.UnaryPackage(full);
+                ((Day13.ListPackage) _peek_1).packages.add(_unaryPackage);
+                strings.remove(0);
+              } catch (final Throwable _t) {
+                if (_t instanceof NumberFormatException) {
+                  Day13.ListPackage _peek_2 = existing.peek();
+                  int _parseInt = Integer.parseInt(current);
+                  Day13.UnaryPackage _unaryPackage_1 = new Day13.UnaryPackage(_parseInt);
+                  ((Day13.ListPackage) _peek_2).packages.add(_unaryPackage_1);
+                } else {
+                  throw Exceptions.sneakyThrow(_t);
+                }
+              }
+              break;
           }
-        }
-        if (!_matched) {
-          if (Objects.equal(current, ",")) {
-            _matched=true;
-          }
-        }
-        if (!_matched) {
+        } else {
           try {
             String _get = strings.get(0);
             String _plus = (current + _get);
@@ -76,6 +90,7 @@ public class Day13 {
       return null;
     }
 
+    @Override
     public int compareTo(final Day13.Package p2) {
       int _switchResult = (int) 0;
       boolean _matched = false;
@@ -152,6 +167,7 @@ public class Day13 {
       this.value = i;
     }
 
+    @Override
     public String toString() {
       String _string = Integer.valueOf(this.value).toString();
       String _plus = ("(UP " + _string);
@@ -186,6 +202,7 @@ public class Day13 {
       return _xblockexpression;
     }
 
+    @Override
     public String toString() {
       String _string = new AgdaList<Day13.Package>(this.packages).toString();
       String _plus = ("(LP " + _string);
@@ -194,6 +211,7 @@ public class Day13 {
   }
 
   private static final Day13.Package div1 = new Function0<Day13.Package>() {
+    @Override
     public Day13.Package apply() {
       Day13.ListPackage _xblockexpression = null;
       {
@@ -209,6 +227,7 @@ public class Day13 {
   }.apply();
 
   private static final Day13.Package div2 = new Function0<Day13.Package>() {
+    @Override
     public Day13.Package apply() {
       Day13.ListPackage _xblockexpression = null;
       {
@@ -229,18 +248,14 @@ public class Day13 {
     final ArrayList<Pair<Day13.Package, Day13.Package>> pairs = CollectionLiterals.<Pair<Day13.Package, Day13.Package>>newArrayList();
     while ((i < inputs.size())) {
       {
-        final Function1<Character, String> _function = new Function1<Character, String>() {
-          public String apply(final Character it) {
-            return (it + "");
-          }
+        final Function1<Character, String> _function = (Character it) -> {
+          return (it + "");
         };
         List<String> _map = ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(inputs.get(i).toCharArray())), _function);
         ArrayList<String> _arrayList = new ArrayList<String>(_map);
         Day13.Package _newPackage = Day13.Package.newPackage(_arrayList);
-        final Function1<Character, String> _function_1 = new Function1<Character, String>() {
-          public String apply(final Character it) {
-            return (it + "");
-          }
+        final Function1<Character, String> _function_1 = (Character it) -> {
+          return (it + "");
         };
         List<String> _map_1 = ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(inputs.get((i + 1)).toCharArray())), _function_1);
         ArrayList<String> _arrayList_1 = new ArrayList<String>(_map_1);
@@ -266,11 +281,9 @@ public class Day13 {
     }
     InputOutput.<Integer>println(Integer.valueOf(sum));
     final ArrayList<Day13.Package> all = CollectionLiterals.<Day13.Package>newArrayList(Day13.div1, Day13.div2);
-    final Consumer<Pair<Day13.Package, Day13.Package>> _function = new Consumer<Pair<Day13.Package, Day13.Package>>() {
-      public void accept(final Pair<Day13.Package, Day13.Package> it) {
-        all.add(it.getKey());
-        all.add(it.getValue());
-      }
+    final Consumer<Pair<Day13.Package, Day13.Package>> _function = (Pair<Day13.Package, Day13.Package> it) -> {
+      all.add(it.getKey());
+      all.add(it.getValue());
     };
     pairs.forEach(_function);
     final List<Day13.Package> sorted = ListExtensions.<Day13.Package>reverse(IterableExtensions.<Day13.Package>sort(all));

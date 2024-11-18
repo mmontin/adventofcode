@@ -1,7 +1,7 @@
 package advent2021.puzzle18;
 
-import com.google.common.base.Objects;
 import java.io.BufferedReader;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
@@ -41,7 +41,7 @@ public class Pair extends SNumber {
 
   public SNumber update(final SNumber previousSN, final SNumber newSN) {
     SNumber _xifexpression = null;
-    boolean _equals = Objects.equal(this.left, previousSN);
+    boolean _equals = Objects.equals(this.left, previousSN);
     if (_equals) {
       _xifexpression = this.left = newSN;
     } else {
@@ -68,6 +68,7 @@ public class Pair extends SNumber {
     return this;
   }
 
+  @Override
   public Singleton findFirstToSplit() {
     Singleton _xblockexpression = null;
     {
@@ -83,6 +84,7 @@ public class Pair extends SNumber {
     return _xblockexpression;
   }
 
+  @Override
   public Pair findFirstToExplode() {
     Pair _xifexpression = null;
     int _numberOfAncestors = this.numberOfAncestors();
@@ -114,7 +116,7 @@ public class Pair extends SNumber {
     } else {
       _xifexpression_1 = this.right;
     }
-    boolean _equals = Objects.equal(nb, _xifexpression_1);
+    boolean _equals = Objects.equals(nb, _xifexpression_1);
     if (_equals) {
       SNumber _xifexpression_2 = null;
       if (b) {
@@ -158,10 +160,12 @@ public class Pair extends SNumber {
     return _xifexpression;
   }
 
+  @Override
   public String toString() {
     return (((("[" + this.left) + ",") + this.right) + "]");
   }
 
+  @Override
   public void updateValue(final boolean r, final int value) {
     if (r) {
       this.right.updateValue(r, value);
@@ -170,6 +174,7 @@ public class Pair extends SNumber {
     }
   }
 
+  @Override
   public int magnitude() {
     int _magnitude = this.left.magnitude();
     int _multiply = (3 * _magnitude);

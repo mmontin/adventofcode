@@ -33,10 +33,12 @@ public class Vector {
     return (_plus + _abs_2);
   }
 
+  @Override
   public int hashCode() {
     return ((this.x + this.y) + this.z);
   }
 
+  @Override
   public String toString() {
     return (((((("[" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ",") + Integer.valueOf(this.z)) + "]");
   }
@@ -119,6 +121,7 @@ public class Vector {
     return _xblockexpression;
   }
 
+  @Override
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {

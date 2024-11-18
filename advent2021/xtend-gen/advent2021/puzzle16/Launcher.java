@@ -1,8 +1,8 @@
 package advent2021.puzzle16;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -16,14 +16,13 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Launcher {
   public static final String input = new Function0<String>() {
+    @Override
     public String apply() {
       try {
-        final Function2<String, Character, String> _function = new Function2<String, Character, String>() {
-          public String apply(final String s, final Character c) {
-            String _plus = (c + "");
-            String _replace = String.format("%4s", Integer.toBinaryString(Integer.parseInt(_plus, 16))).replace(" ", "0");
-            return (s + _replace);
-          }
+        final Function2<String, Character, String> _function = (String s, Character c) -> {
+          String _plus = (c + "");
+          String _replace = String.format("%4s", Integer.toBinaryString(Integer.parseInt(_plus, 16))).replace(" ", "0");
+          return (s + _replace);
         };
         String _fold = IterableExtensions.<Character, String>fold(((Iterable<Character>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2021), Integer.valueOf(16)).getInputReader().readLine().toCharArray())), "", _function);
         return _fold;
@@ -79,28 +78,22 @@ public class Launcher {
             }
           } else {
             int _parseInt_1 = Integer.parseInt(Launcher.input.substring(Launcher.i, Launcher.i = (Launcher.i + 11)), 2);
-            final Consumer<Integer> _function = new Consumer<Integer>() {
-              public void accept(final Integer it) {
-                values.add(Launcher.decodePacket());
-              }
+            final Consumer<Integer> _function = (Integer it) -> {
+              values.add(Launcher.decodePacket());
             };
             new ExclusiveRange(0, _parseInt_1, true).forEach(_function);
           }
           Long _switchResult = null;
           switch (type_id) {
             case 0:
-              final Function2<Long, Long, Long> _function_1 = new Function2<Long, Long, Long>() {
-                public Long apply(final Long x, final Long y) {
-                  return Long.valueOf(((x).longValue() + (y).longValue()));
-                }
+              final Function2<Long, Long, Long> _function_1 = (Long x, Long y) -> {
+                return Long.valueOf(((x).longValue() + (y).longValue()));
               };
               _switchResult = IterableExtensions.<Long>reduce(values, _function_1);
               break;
             case 1:
-              final Function2<Long, Long, Long> _function_2 = new Function2<Long, Long, Long>() {
-                public Long apply(final Long x, final Long y) {
-                  return Long.valueOf(((x).longValue() * (y).longValue()));
-                }
+              final Function2<Long, Long, Long> _function_2 = (Long x, Long y) -> {
+                return Long.valueOf(((x).longValue() * (y).longValue()));
               };
               _switchResult = IterableExtensions.<Long>reduce(values, _function_2);
               break;
@@ -138,7 +131,7 @@ public class Launcher {
               long _xifexpression_3 = (long) 0;
               Long _get_4 = values.get(0);
               Long _get_5 = values.get(1);
-              boolean _equals_1 = Objects.equal(_get_4, _get_5);
+              boolean _equals_1 = Objects.equals(_get_4, _get_5);
               if (_equals_1) {
                 _xifexpression_3 = 1L;
               } else {

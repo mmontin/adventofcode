@@ -1,6 +1,6 @@
 package advent2019;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 
@@ -28,10 +28,10 @@ public class Day4 {
                 {
                   final int x = ((((((n).intValue() + ((m).intValue() * 10)) + ((l).intValue() * 100)) + ((k).intValue() * 1000)) + ((j).intValue() * 10000)) + ((i).intValue() * 100000));
                   if (((x >= Day4.MIN) && (x <= Day4.MAX))) {
-                    if (((((Objects.equal(i, j) || Objects.equal(j, k)) || Objects.equal(k, l)) || Objects.equal(l, m)) || Objects.equal(m, n))) {
+                    if (((((Objects.equals(i, j) || Objects.equals(j, k)) || Objects.equals(k, l)) || Objects.equals(l, m)) || Objects.equals(m, n))) {
                       nb1++;
                     }
-                    if ((((((Objects.equal(i, j) && (!Objects.equal(j, k))) || ((Objects.equal(j, k) && (!Objects.equal(i, j))) && (!Objects.equal(k, l)))) || ((Objects.equal(k, l) && (!Objects.equal(j, k))) && (!Objects.equal(l, m)))) || ((Objects.equal(l, m) && (!Objects.equal(k, l))) && (!Objects.equal(m, n)))) || (Objects.equal(m, n) && (!Objects.equal(l, m))))) {
+                    if ((((((Objects.equals(i, j) && (!Objects.equals(j, k))) || ((Objects.equals(j, k) && (!Objects.equals(i, j))) && (!Objects.equals(k, l)))) || ((Objects.equals(k, l) && (!Objects.equals(j, k))) && (!Objects.equals(l, m)))) || ((Objects.equals(l, m) && (!Objects.equals(k, l))) && (!Objects.equals(m, n)))) || (Objects.equals(m, n) && (!Objects.equals(l, m))))) {
                       nb2++;
                     }
                   }

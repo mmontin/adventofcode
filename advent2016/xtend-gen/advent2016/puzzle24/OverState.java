@@ -26,14 +26,17 @@ public class OverState implements State {
     this.code = _multiply;
   }
 
+  @Override
   public boolean isGoal() {
     return (this.toVisit.isEmpty() && this.currentPosition.equals(Launcher.initial));
   }
 
+  @Override
   public int minToGoal() {
     return this.currentPosition.manhattanDistanceTo(Launcher.initial);
   }
 
+  @Override
   public Iterable<Pair<? extends State, Integer>> neighbours() {
     Iterable<Pair<? extends State, Integer>> _xifexpression = null;
     boolean _equals = this.toVisit.equals(CollectionLiterals.<Coordinate>newHashSet(Launcher.initial));
@@ -44,34 +47,32 @@ public class OverState implements State {
       Pair<State, Integer> _pair = new Pair<State, Integer>(((State) _overState), _get);
       _xifexpression = CollectionLiterals.<Pair<? extends State, Integer>>newArrayList(_pair);
     } else {
-      final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-        public Boolean apply(final Coordinate it) {
-          boolean _equals = it.equals(Launcher.initial);
-          return Boolean.valueOf((!_equals));
-        }
+      final Function1<Coordinate, Boolean> _function = (Coordinate it) -> {
+        boolean _equals_1 = it.equals(Launcher.initial);
+        return Boolean.valueOf((!_equals_1));
       };
-      final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = new Function1<Coordinate, Pair<? extends State, Integer>>() {
-        public Pair<? extends State, Integer> apply(final Coordinate it) {
-          Pair<OverState, Integer> _xblockexpression = null;
-          {
-            final HashSet<Coordinate> newToVisit = new HashSet<Coordinate>(OverState.this.toVisit);
-            newToVisit.remove(it);
-            OverState _overState = new OverState(it, newToVisit);
-            Integer _get = Launcher.distances.get(CollectionLiterals.<Coordinate>newHashSet(it, OverState.this.currentPosition));
-            _xblockexpression = Pair.<OverState, Integer>of(_overState, _get);
-          }
-          return _xblockexpression;
+      final Function1<Coordinate, Pair<? extends State, Integer>> _function_1 = (Coordinate it) -> {
+        Pair<OverState, Integer> _xblockexpression = null;
+        {
+          final HashSet<Coordinate> newToVisit = new HashSet<Coordinate>(this.toVisit);
+          newToVisit.remove(it);
+          OverState _overState_1 = new OverState(it, newToVisit);
+          Integer _get_1 = Launcher.distances.get(CollectionLiterals.<Coordinate>newHashSet(it, this.currentPosition));
+          _xblockexpression = Pair.<OverState, Integer>of(_overState_1, _get_1);
         }
+        return _xblockexpression;
       };
       _xifexpression = IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(IterableExtensions.<Coordinate>filter(this.toVisit, _function), _function_1);
     }
     return _xifexpression;
   }
 
+  @Override
   public int hashCode() {
     return this.code;
   }
 
+  @Override
   public boolean equals(final Object other) {
     boolean _xblockexpression = false;
     {
@@ -81,6 +82,7 @@ public class OverState implements State {
     return _xblockexpression;
   }
 
+  @Override
   public String toString() {
     return this.currentPosition.toString();
   }

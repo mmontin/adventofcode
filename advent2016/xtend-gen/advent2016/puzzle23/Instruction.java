@@ -1,6 +1,5 @@
 package advent2016.puzzle23;
 
-import com.google.common.base.Objects;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -29,30 +28,25 @@ public class Instruction {
     final String[] split = s.split(" ");
     Instruction.InstructionType _switchResult = null;
     String _get = split[0];
-    boolean _matched = false;
-    if (Objects.equal(_get, "cpy")) {
-      _matched=true;
-      _switchResult = Instruction.InstructionType.CPY;
-    }
-    if (!_matched) {
-      if (Objects.equal(_get, "inc")) {
-        _matched=true;
-        _switchResult = Instruction.InstructionType.INC;
+    if (_get != null) {
+      switch (_get) {
+        case "cpy":
+          _switchResult = Instruction.InstructionType.CPY;
+          break;
+        case "inc":
+          _switchResult = Instruction.InstructionType.INC;
+          break;
+        case "dec":
+          _switchResult = Instruction.InstructionType.DEC;
+          break;
+        case "jnz":
+          _switchResult = Instruction.InstructionType.JNZ;
+          break;
+        default:
+          _switchResult = Instruction.InstructionType.TGL;
+          break;
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(_get, "dec")) {
-        _matched=true;
-        _switchResult = Instruction.InstructionType.DEC;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_get, "jnz")) {
-        _matched=true;
-        _switchResult = Instruction.InstructionType.JNZ;
-      }
-    }
-    if (!_matched) {
+    } else {
       _switchResult = Instruction.InstructionType.TGL;
     }
     this.type = _switchResult;
@@ -64,6 +58,7 @@ public class Instruction {
     }
   }
 
+  @Override
   public String toString() {
     String _plus = (this.type + " ");
     String _plus_1 = (_plus + this.arg1);

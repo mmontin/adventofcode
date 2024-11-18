@@ -4,9 +4,9 @@ import adventutils.geometry.Coordinate;
 import adventutils.geometry.Dir;
 import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -155,7 +155,7 @@ public class Day13 {
       {
         it.move();
         final Function1<Day13.Robot, Boolean> _function_2 = (Day13.Robot other) -> {
-          return Boolean.valueOf(((!Objects.equal(other, it)) && other.position.equals(it.position)));
+          return Boolean.valueOf(((!Objects.equals(other, it)) && other.position.equals(it.position)));
         };
         _xblockexpression = IterableExtensions.<Day13.Robot>exists(Day13.robots, _function_2);
       }
@@ -173,7 +173,7 @@ public class Day13 {
       if (_contains) {
         it.move();
         final Function1<Day13.Robot, Boolean> _function_2 = (Day13.Robot other) -> {
-          return Boolean.valueOf(((!Objects.equal(other, it)) && other.position.equals(it.position)));
+          return Boolean.valueOf(((!Objects.equals(other, it)) && other.position.equals(it.position)));
         };
         final Day13.Robot other = IterableExtensions.<Day13.Robot>findFirst(Day13.robots, _function_2);
         if ((other != null)) {

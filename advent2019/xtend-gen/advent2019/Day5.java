@@ -7,7 +7,6 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
@@ -23,12 +22,12 @@ public class Day5 {
     Intcode.ListWrapper _listWrapper_1 = new Intcode.ListWrapper(outputs);
     final Intcode decoder = new Intcode(opcodes, _listWrapper, _listWrapper_1, "");
     decoder.run();
-    InputOutput.<Integer>println(IterableExtensions.<Integer>last(outputs));
+    InputOutput.<Integer>println(outputs.getLast());
     decoder.reset();
     inputs.clear();
     outputs.clear();
     inputs.add(Integer.valueOf(5));
     decoder.run();
-    InputOutput.<Integer>println(IterableExtensions.<Integer>last(outputs));
+    InputOutput.<Integer>println(outputs.getLast());
   }
 }

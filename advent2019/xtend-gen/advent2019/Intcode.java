@@ -1,11 +1,11 @@
 package advent2019;
 
 import adventutils.string.StringUtils;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -23,7 +23,7 @@ public class Intcode implements Runnable {
 
     public ListWrapper(final List<Integer> list_) {
       super(list_);
-      this.lastProduced = IterableExtensions.<Integer>last(list_);
+      this.lastProduced = list_.getLast();
       this.halt = false;
     }
 
@@ -182,7 +182,7 @@ public class Intcode implements Runnable {
               int _xifexpression_1 = (int) 0;
               Integer _resolve_10 = this.resolve(params.get(0));
               Integer _resolve_11 = this.resolve(params.get(1));
-              boolean _equals_1 = Objects.equal(_resolve_10, _resolve_11);
+              boolean _equals_1 = Objects.equals(_resolve_10, _resolve_11);
               if (_equals_1) {
                 _xifexpression_1 = 1;
               } else {

@@ -4,11 +4,11 @@ import adventutils.geometry.Coordinate;
 import adventutils.geometry.Dir;
 import adventutils.geometry.Direction;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -26,34 +26,31 @@ public class Day22 {
   private static final List<String> inputs = new InputLoader(Integer.valueOf(2022), Integer.valueOf(22)).getInputs();
 
   private static final Map<Coordinate, Boolean> tiles = new Function0<Map<Coordinate, Boolean>>() {
+    @Override
     public Map<Coordinate, Boolean> apply() {
       HashMap<Coordinate, Boolean> _xblockexpression = null;
       {
         final HashMap<Coordinate, Boolean> output = CollectionLiterals.<Coordinate, Boolean>newHashMap();
         int _size = Day22.inputs.size();
         int _minus = (_size - 3);
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer i) {
-            final char[] line = Day22.inputs.get((i).intValue()).toCharArray();
-            int _size = ((List<Character>)Conversions.doWrapArray(line)).size();
-            int _minus = (_size - 1);
-            final Consumer<Integer> _function = new Consumer<Integer>() {
-              public void accept(final Integer j) {
-                boolean _equals = Character.valueOf((line[(j).intValue()])).toString().equals("#");
-                if (_equals) {
-                  Coordinate _coordinate = new Coordinate(((i).intValue() + 1), ((j).intValue() + 1));
-                  output.put(_coordinate, Boolean.valueOf(false));
-                } else {
-                  boolean _equals_1 = Character.valueOf((line[(j).intValue()])).toString().equals(".");
-                  if (_equals_1) {
-                    Coordinate _coordinate_1 = new Coordinate(((i).intValue() + 1), ((j).intValue() + 1));
-                    output.put(_coordinate_1, Boolean.valueOf(true));
-                  }
-                }
+        final Consumer<Integer> _function = (Integer i) -> {
+          final char[] line = Day22.inputs.get((i).intValue()).toCharArray();
+          int _size_1 = ((List<Character>)Conversions.doWrapArray(line)).size();
+          int _minus_1 = (_size_1 - 1);
+          final Consumer<Integer> _function_1 = (Integer j) -> {
+            boolean _equals = Character.valueOf((line[(j).intValue()])).toString().equals("#");
+            if (_equals) {
+              Coordinate _coordinate = new Coordinate(((i).intValue() + 1), ((j).intValue() + 1));
+              output.put(_coordinate, Boolean.valueOf(false));
+            } else {
+              boolean _equals_1 = Character.valueOf((line[(j).intValue()])).toString().equals(".");
+              if (_equals_1) {
+                Coordinate _coordinate_1 = new Coordinate(((i).intValue() + 1), ((j).intValue() + 1));
+                output.put(_coordinate_1, Boolean.valueOf(true));
               }
-            };
-            new IntegerRange(0, _minus).forEach(_function);
-          }
+            }
+          };
+          new IntegerRange(0, _minus_1).forEach(_function_1);
         };
         new IntegerRange(0, _minus).forEach(_function);
         _xblockexpression = output;
@@ -71,6 +68,7 @@ public class Day22 {
   private static final int quadruple_face = (4 * Day22.face);
 
   private static final List<String> movements = new Function0<List<String>>() {
+    @Override
     public List<String> apply() {
       ArrayList<String> _xblockexpression = null;
       {
@@ -78,20 +76,16 @@ public class Day22 {
         int _size = Day22.inputs.size();
         int _minus = (_size - 1);
         final String line = Day22.inputs.get(_minus);
-        final Consumer<String> _function = new Consumer<String>() {
-          public void accept(final String subL) {
-            final Consumer<String> _function = new Consumer<String>() {
-              public void accept(final String subR) {
-                output.add(subR);
-                output.add("R");
-              }
-            };
-            ((List<String>)Conversions.doWrapArray(subL.split("R"))).forEach(_function);
-            int _size = output.size();
-            int _minus = (_size - 1);
-            output.remove(_minus);
-            output.add("L");
-          }
+        final Consumer<String> _function = (String subL) -> {
+          final Consumer<String> _function_1 = (String subR) -> {
+            output.add(subR);
+            output.add("R");
+          };
+          ((List<String>)Conversions.doWrapArray(subL.split("R"))).forEach(_function_1);
+          int _size_1 = output.size();
+          int _minus_1 = (_size_1 - 1);
+          output.remove(_minus_1);
+          output.add("L");
         };
         ((List<String>)Conversions.doWrapArray(line.split("L"))).forEach(_function);
         int _size_1 = output.size();
@@ -114,62 +108,46 @@ public class Day22 {
         if (current_orientation != null) {
           switch (current_orientation) {
             case RIGHT:
-              final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it) {
-                  int _x = it.getX();
-                  int _x_1 = current_position.getX();
-                  return Boolean.valueOf((_x == _x_1));
-                }
+              final Function1<Coordinate, Boolean> _function = (Coordinate it) -> {
+                int _x = it.getX();
+                int _x_1 = current_position.getX();
+                return Boolean.valueOf((_x == _x_1));
               };
-              final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-                public Integer apply(final Coordinate it) {
-                  return Integer.valueOf(it.getY());
-                }
+              final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
+                return Integer.valueOf(it.getY());
               };
               _switchResult = IterableExtensions.<Coordinate, Integer>minBy(IterableExtensions.<Coordinate>filter(Day22.tiles.keySet(), _function), _function_1);
               break;
             case LEFT:
-              final Function1<Coordinate, Boolean> _function_2 = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it) {
-                  int _x = it.getX();
-                  int _x_1 = current_position.getX();
-                  return Boolean.valueOf((_x == _x_1));
-                }
+              final Function1<Coordinate, Boolean> _function_2 = (Coordinate it) -> {
+                int _x = it.getX();
+                int _x_1 = current_position.getX();
+                return Boolean.valueOf((_x == _x_1));
               };
-              final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
-                public Integer apply(final Coordinate it) {
-                  return Integer.valueOf(it.getY());
-                }
+              final Function1<Coordinate, Integer> _function_3 = (Coordinate it) -> {
+                return Integer.valueOf(it.getY());
               };
               _switchResult = IterableExtensions.<Coordinate, Integer>maxBy(IterableExtensions.<Coordinate>filter(Day22.tiles.keySet(), _function_2), _function_3);
               break;
             case UP:
-              final Function1<Coordinate, Boolean> _function_4 = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it) {
-                  int _y = it.getY();
-                  int _y_1 = current_position.getY();
-                  return Boolean.valueOf((_y == _y_1));
-                }
+              final Function1<Coordinate, Boolean> _function_4 = (Coordinate it) -> {
+                int _y = it.getY();
+                int _y_1 = current_position.getY();
+                return Boolean.valueOf((_y == _y_1));
               };
-              final Function1<Coordinate, Integer> _function_5 = new Function1<Coordinate, Integer>() {
-                public Integer apply(final Coordinate it) {
-                  return Integer.valueOf(it.getX());
-                }
+              final Function1<Coordinate, Integer> _function_5 = (Coordinate it) -> {
+                return Integer.valueOf(it.getX());
               };
               _switchResult = IterableExtensions.<Coordinate, Integer>maxBy(IterableExtensions.<Coordinate>filter(Day22.tiles.keySet(), _function_4), _function_5);
               break;
             case DOWN:
-              final Function1<Coordinate, Boolean> _function_6 = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it) {
-                  int _y = it.getY();
-                  int _y_1 = current_position.getY();
-                  return Boolean.valueOf((_y == _y_1));
-                }
+              final Function1<Coordinate, Boolean> _function_6 = (Coordinate it) -> {
+                int _y = it.getY();
+                int _y_1 = current_position.getY();
+                return Boolean.valueOf((_y == _y_1));
               };
-              final Function1<Coordinate, Integer> _function_7 = new Function1<Coordinate, Integer>() {
-                public Integer apply(final Coordinate it) {
-                  return Integer.valueOf(it.getX());
-                }
+              final Function1<Coordinate, Integer> _function_7 = (Coordinate it) -> {
+                return Integer.valueOf(it.getX());
               };
               _switchResult = IterableExtensions.<Coordinate, Integer>minBy(IterableExtensions.<Coordinate>filter(Day22.tiles.keySet(), _function_6), _function_7);
               break;
@@ -198,7 +176,7 @@ public class Day22 {
         if (((((next_position.getY() == (Day22.double_face + 1)) && 
           (next_position.getX() >= (Day22.face + 1))) && 
           (next_position.getX() <= Day22.double_face)) && 
-          Objects.equal(current_orientation, Direction.RIGHT))) {
+          Objects.equals(current_orientation, Direction.RIGHT))) {
           int _x = next_position.getX();
           int _plus = (_x + Day22.face);
           Coordinate _coordinate = new Coordinate(Day22.face, _plus);
@@ -208,7 +186,7 @@ public class Day22 {
           if (((((next_position.getX() == (Day22.face + 1)) && 
             (next_position.getY() >= (Day22.double_face + 1))) && 
             (next_position.getY() <= Day22.triple_face)) && 
-            Objects.equal(current_orientation, Direction.DOWN))) {
+            Objects.equals(current_orientation, Direction.DOWN))) {
             int _y = next_position.getY();
             int _minus = (_y - Day22.face);
             Coordinate _coordinate_1 = new Coordinate(_minus, Day22.double_face);
@@ -218,7 +196,7 @@ public class Day22 {
             if (((((next_position.getY() == (Day22.triple_face + 1)) && 
               (next_position.getX() >= 1)) && 
               (next_position.getX() <= Day22.face)) && 
-              Objects.equal(current_orientation, Direction.RIGHT))) {
+              Objects.equals(current_orientation, Direction.RIGHT))) {
               int _x_1 = next_position.getX();
               int _minus_1 = ((Day22.triple_face + 1) - _x_1);
               Coordinate _coordinate_2 = new Coordinate(_minus_1, Day22.double_face);
@@ -228,7 +206,7 @@ public class Day22 {
               if (((((next_position.getY() == (Day22.double_face + 1)) && 
                 (next_position.getX() >= (Day22.double_face + 1))) && 
                 (next_position.getX() <= Day22.triple_face)) && 
-                Objects.equal(current_orientation, Direction.RIGHT))) {
+                Objects.equals(current_orientation, Direction.RIGHT))) {
                 int _x_2 = next_position.getX();
                 int _minus_2 = (_x_2 - Day22.double_face);
                 int _minus_3 = ((Day22.face + 1) - _minus_2);
@@ -239,7 +217,7 @@ public class Day22 {
                 if (((((next_position.getX() == 0) && 
                   (next_position.getY() >= (Day22.double_face + 1))) && 
                   (next_position.getY() <= Day22.triple_face)) && 
-                  Objects.equal(current_orientation, Direction.UP))) {
+                  Objects.equals(current_orientation, Direction.UP))) {
                   int _y_1 = next_position.getY();
                   int _minus_4 = (_y_1 - Day22.double_face);
                   Coordinate _coordinate_4 = new Coordinate(Day22.quadruple_face, _minus_4);
@@ -249,7 +227,7 @@ public class Day22 {
                   if (((((next_position.getX() == (Day22.quadruple_face + 1)) && 
                     (next_position.getY() >= 1)) && 
                     (next_position.getY() <= Day22.face)) && 
-                    Objects.equal(current_orientation, Direction.DOWN))) {
+                    Objects.equals(current_orientation, Direction.DOWN))) {
                     int _y_2 = next_position.getY();
                     int _plus_1 = (_y_2 + Day22.double_face);
                     Coordinate _coordinate_5 = new Coordinate(1, _plus_1);
@@ -259,7 +237,7 @@ public class Day22 {
                     if (((((next_position.getY() == (Day22.face + 1)) && 
                       (next_position.getX() >= (Day22.triple_face + 1))) && 
                       (next_position.getX() <= Day22.quadruple_face)) && 
-                      Objects.equal(current_orientation, Direction.RIGHT))) {
+                      Objects.equals(current_orientation, Direction.RIGHT))) {
                       int _x_3 = next_position.getX();
                       int _minus_5 = (_x_3 - Day22.double_face);
                       Coordinate _coordinate_6 = new Coordinate(Day22.triple_face, _minus_5);
@@ -269,7 +247,7 @@ public class Day22 {
                       if (((((next_position.getX() == (Day22.triple_face + 1)) && 
                         (next_position.getY() >= (Day22.face + 1))) && 
                         (next_position.getY() <= Day22.double_face)) && 
-                        Objects.equal(current_orientation, Direction.DOWN))) {
+                        Objects.equals(current_orientation, Direction.DOWN))) {
                         int _y_3 = next_position.getY();
                         int _plus_2 = (_y_3 + Day22.double_face);
                         Coordinate _coordinate_7 = new Coordinate(_plus_2, Day22.face);
@@ -279,7 +257,7 @@ public class Day22 {
                         if (((((next_position.getY() == Day22.face) && 
                           (next_position.getX() >= (Day22.face + 1))) && 
                           (next_position.getX() <= Day22.double_face)) && 
-                          Objects.equal(current_orientation, Direction.LEFT))) {
+                          Objects.equals(current_orientation, Direction.LEFT))) {
                           int _x_4 = next_position.getX();
                           int _minus_6 = (_x_4 - Day22.face);
                           Coordinate _coordinate_8 = new Coordinate((Day22.double_face + 1), _minus_6);
@@ -289,7 +267,7 @@ public class Day22 {
                           if (((((next_position.getX() == Day22.double_face) && 
                             (next_position.getY() >= 1)) && 
                             (next_position.getY() <= Day22.face)) && 
-                            Objects.equal(current_orientation, Direction.UP))) {
+                            Objects.equals(current_orientation, Direction.UP))) {
                             int _y_4 = next_position.getY();
                             int _plus_3 = (_y_4 + Day22.face);
                             Coordinate _coordinate_9 = new Coordinate(_plus_3, (Day22.face + 1));
@@ -299,7 +277,7 @@ public class Day22 {
                             if (((((next_position.getY() == 0) && 
                               (next_position.getX() >= (Day22.double_face + 1))) && 
                               (next_position.getX() <= Day22.triple_face)) && 
-                              Objects.equal(current_orientation, Direction.LEFT))) {
+                              Objects.equals(current_orientation, Direction.LEFT))) {
                               int _x_5 = next_position.getX();
                               int _minus_7 = (_x_5 - Day22.double_face);
                               int _minus_8 = ((Day22.face + 1) - _minus_7);
@@ -310,7 +288,7 @@ public class Day22 {
                               if (((((next_position.getY() == Day22.face) && 
                                 (next_position.getX() >= 1)) && 
                                 (next_position.getX() <= Day22.face)) && 
-                                Objects.equal(current_orientation, Direction.LEFT))) {
+                                Objects.equals(current_orientation, Direction.LEFT))) {
                                 int _x_6 = next_position.getX();
                                 int _minus_9 = ((Day22.triple_face + 1) - _x_6);
                                 Coordinate _coordinate_11 = new Coordinate(_minus_9, 1);
@@ -320,7 +298,7 @@ public class Day22 {
                                 if (((((next_position.getX() == 0) && 
                                   (next_position.getY() >= (Day22.face + 1))) && 
                                   (next_position.getY() <= Day22.double_face)) && 
-                                  Objects.equal(current_orientation, Direction.UP))) {
+                                  Objects.equals(current_orientation, Direction.UP))) {
                                   int _y_5 = next_position.getY();
                                   int _plus_4 = (_y_5 + Day22.double_face);
                                   Coordinate _coordinate_12 = new Coordinate(_plus_4, 1);
@@ -330,7 +308,7 @@ public class Day22 {
                                   if (((((next_position.getY() == 0) && 
                                     (next_position.getX() >= (Day22.triple_face + 1))) && 
                                     (next_position.getX() <= Day22.quadruple_face)) && 
-                                    Objects.equal(current_orientation, Direction.LEFT))) {
+                                    Objects.equals(current_orientation, Direction.LEFT))) {
                                     int _x_7 = next_position.getX();
                                     int _minus_10 = (_x_7 - Day22.double_face);
                                     Coordinate _coordinate_13 = new Coordinate(1, _minus_10);
@@ -372,40 +350,57 @@ public class Day22 {
   }
 
   public static void main(final String[] args) {
-    final Function2<Coordinate, Boolean, Boolean> _function = new Function2<Coordinate, Boolean, Boolean>() {
-      public Boolean apply(final Coordinate k, final Boolean v) {
-        return Boolean.valueOf(((k.getX() == 1) && (v).booleanValue()));
-      }
+    final Function2<Coordinate, Boolean, Boolean> _function = (Coordinate k, Boolean v) -> {
+      return Boolean.valueOf(((k.getX() == 1) && (v).booleanValue()));
     };
-    final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-      public Integer apply(final Coordinate it) {
-        return Integer.valueOf(it.getY());
-      }
+    final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
+      return Integer.valueOf(it.getY());
     };
     Coordinate current_position = IterableExtensions.<Coordinate, Integer>minBy(MapExtensions.<Coordinate, Boolean>filter(Day22.tiles, _function).keySet(), _function_1);
     Direction current_orientation = Direction.RIGHT;
     Pair<Coordinate, Direction> current_full_position = Pair.<Coordinate, Direction>of(current_position, current_orientation);
     for (final String s : Day22.movements) {
-      boolean _matched = false;
-      if (Objects.equal(s, "L")) {
-        _matched=true;
-        current_orientation = Dir.counterClockWise(current_orientation);
-        Coordinate _key = current_full_position.getKey();
-        Direction _counterClockWise = Dir.counterClockWise(current_full_position.getValue());
-        Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(_key, _counterClockWise);
-        current_full_position = _mappedTo;
-      }
-      if (!_matched) {
-        if (Objects.equal(s, "R")) {
-          _matched=true;
-          current_orientation = Dir.clockWise(current_orientation);
-          Coordinate _key_1 = current_full_position.getKey();
-          Direction _clockWise = Dir.clockWise(current_full_position.getValue());
-          Pair<Coordinate, Direction> _mappedTo_1 = Pair.<Coordinate, Direction>of(_key_1, _clockWise);
-          current_full_position = _mappedTo_1;
+      if (s != null) {
+        switch (s) {
+          case "L":
+            current_orientation = Dir.counterClockWise(current_orientation);
+            Coordinate _key = current_full_position.getKey();
+            Direction _counterClockWise = Dir.counterClockWise(current_full_position.getValue());
+            Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(_key, _counterClockWise);
+            current_full_position = _mappedTo;
+            break;
+          case "R":
+            current_orientation = Dir.clockWise(current_orientation);
+            Coordinate _key_1 = current_full_position.getKey();
+            Direction _clockWise = Dir.clockWise(current_full_position.getValue());
+            Pair<Coordinate, Direction> _mappedTo_1 = Pair.<Coordinate, Direction>of(_key_1, _clockWise);
+            current_full_position = _mappedTo_1;
+            break;
+          default:
+            {
+              final int steps = Integer.parseInt(s);
+              int i = steps;
+              Coordinate next_position = Day22.nextPosition(current_position, current_orientation);
+              while (((i != 0) && (Day22.tiles.get(next_position)).booleanValue())) {
+                {
+                  i--;
+                  current_position = next_position;
+                  next_position = Day22.nextPosition(current_position, current_orientation);
+                }
+              }
+              i = steps;
+              Pair<Coordinate, Direction> next_full_position = Day22.nextPosition2(current_full_position);
+              while (((i != 0) && (Day22.tiles.get(next_full_position.getKey())).booleanValue())) {
+                {
+                  i--;
+                  current_full_position = next_full_position;
+                  next_full_position = Day22.nextPosition2(current_full_position);
+                }
+              }
+            }
+            break;
         }
-      }
-      if (!_matched) {
+      } else {
         {
           final int steps = Integer.parseInt(s);
           int i = steps;

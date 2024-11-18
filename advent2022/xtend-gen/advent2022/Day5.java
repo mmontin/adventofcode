@@ -30,48 +30,38 @@ public class Day5 {
   public static void main(final String[] args) {
     final List<String> inputs = new InputLoader(Integer.valueOf(2022), Integer.valueOf(5)).getInputs();
     Day5.init();
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] els = it.split(" ");
-        final int number = Integer.parseInt(els[1]);
-        int _parseInt = Integer.parseInt(els[3]);
-        final int from = (_parseInt - 1);
-        int _parseInt_1 = Integer.parseInt(els[5]);
-        final int to = (_parseInt_1 - 1);
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer it_1) {
-            Day5.move(from, to);
-          }
-        };
-        new IntegerRange(1, number).forEach(_function);
-      }
+    final Consumer<String> _function = (String it) -> {
+      final String[] els = it.split(" ");
+      final int number = Integer.parseInt(els[1]);
+      int _parseInt = Integer.parseInt(els[3]);
+      final int from = (_parseInt - 1);
+      int _parseInt_1 = Integer.parseInt(els[5]);
+      final int to = (_parseInt_1 - 1);
+      final Consumer<Integer> _function_1 = (Integer it_1) -> {
+        Day5.move(from, to);
+      };
+      new IntegerRange(1, number).forEach(_function_1);
     };
     inputs.forEach(_function);
-    final Function2<String, List<String>, String> _function_1 = new Function2<String, List<String>, String>() {
-      public String apply(final String acc, final List<String> e) {
-        String _get = e.get(0);
-        return (acc + _get);
-      }
+    final Function2<String, List<String>, String> _function_1 = (String acc, List<String> e) -> {
+      String _get = e.get(0);
+      return (acc + _get);
     };
     InputOutput.<String>println(IterableExtensions.<List<String>, String>fold(Day5.distribution, "", _function_1));
     Day5.init();
-    final Consumer<String> _function_2 = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] els = it.split(" ");
-        final int number = Integer.parseInt(els[1]);
-        int _parseInt = Integer.parseInt(els[3]);
-        final int from = (_parseInt - 1);
-        int _parseInt_1 = Integer.parseInt(els[5]);
-        final int to = (_parseInt_1 - 1);
-        Day5.moveSeveral(number, from, to);
-      }
+    final Consumer<String> _function_2 = (String it) -> {
+      final String[] els = it.split(" ");
+      final int number = Integer.parseInt(els[1]);
+      int _parseInt = Integer.parseInt(els[3]);
+      final int from = (_parseInt - 1);
+      int _parseInt_1 = Integer.parseInt(els[5]);
+      final int to = (_parseInt_1 - 1);
+      Day5.moveSeveral(number, from, to);
     };
     inputs.forEach(_function_2);
-    final Function2<String, List<String>, String> _function_3 = new Function2<String, List<String>, String>() {
-      public String apply(final String acc, final List<String> e) {
-        String _get = e.get(0);
-        return (acc + _get);
-      }
+    final Function2<String, List<String>, String> _function_3 = (String acc, List<String> e) -> {
+      String _get = e.get(0);
+      return (acc + _get);
     };
     InputOutput.<String>println(IterableExtensions.<List<String>, String>fold(Day5.distribution, "", _function_3));
   }

@@ -2,10 +2,10 @@ package advent2021.puzzle23;
 
 import adventutils.geometry.Coordinate;
 import adventutils.pathfinding.State;
-import com.google.common.base.Objects;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -83,6 +83,7 @@ public class AmphipodState implements State {
     AmphipodState.hallway0, AmphipodState.hallway1, AmphipodState.hallway3, AmphipodState.hallway5, AmphipodState.hallway7, AmphipodState.hallway9, AmphipodState.hallway10);
 
   private static final Set<Coordinate> rooms = new Function0<Set<Coordinate>>() {
+    @Override
     public Set<Coordinate> apply() {
       HashSet<Coordinate> _xblockexpression = null;
       {
@@ -101,6 +102,7 @@ public class AmphipodState implements State {
     AmphipodState.cantStop2, AmphipodState.cantStop4, AmphipodState.cantStop6, AmphipodState.cantStop8);
 
   private static final Set<Coordinate> all = new Function0<Set<Coordinate>>() {
+    @Override
     public Set<Coordinate> apply() {
       HashSet<Coordinate> _xblockexpression = null;
       {
@@ -114,6 +116,7 @@ public class AmphipodState implements State {
   }.apply();
 
   private static final Map<Coordinate, Integer> init = new Function0<Map<Coordinate, Integer>>() {
+    @Override
     public Map<Coordinate, Integer> apply() {
       HashMap<Coordinate, Integer> _xifexpression = null;
       if ((AmphipodState.roomSize == 2)) {
@@ -183,54 +186,42 @@ public class AmphipodState implements State {
   public AmphipodState(final HashMap<Coordinate, Integer> amphipods_) {
     this.amphipods = amphipods_;
     this.energyToNormalize = this.normalize();
-    final Function2<Integer, Map.Entry<Coordinate, Integer>, Integer> _function = new Function2<Integer, Map.Entry<Coordinate, Integer>, Integer>() {
-      public Integer apply(final Integer v, final Map.Entry<Coordinate, Integer> e) {
-        int _hashCode = e.getKey().hashCode();
-        Integer _value = e.getValue();
-        int _multiply = (_hashCode * (_value).intValue());
-        return Integer.valueOf(((v).intValue() + _multiply));
-      }
+    final Function2<Integer, Map.Entry<Coordinate, Integer>, Integer> _function = (Integer v, Map.Entry<Coordinate, Integer> e) -> {
+      int _hashCode = e.getKey().hashCode();
+      Integer _value = e.getValue();
+      int _multiply = (_hashCode * (_value).intValue());
+      return Integer.valueOf(((v).intValue() + _multiply));
     };
     this.code = (IterableExtensions.<Map.Entry<Coordinate, Integer>, Integer>fold(this.amphipods.entrySet(), Integer.valueOf(0), _function)).intValue();
-    final Function2<Boolean, Map.Entry<Coordinate, Integer>, Boolean> _function_1 = new Function2<Boolean, Map.Entry<Coordinate, Integer>, Boolean>() {
-      public Boolean apply(final Boolean v, final Map.Entry<Coordinate, Integer> e) {
-        return Boolean.valueOf(((v).booleanValue() && AmphipodState.this.isPlaced(e.getKey(), e.getValue())));
-      }
+    final Function2<Boolean, Map.Entry<Coordinate, Integer>, Boolean> _function_1 = (Boolean v, Map.Entry<Coordinate, Integer> e) -> {
+      return Boolean.valueOf(((v).booleanValue() && this.isPlaced(e.getKey(), e.getValue())));
     };
     this.isFinal = (IterableExtensions.<Map.Entry<Coordinate, Integer>, Boolean>fold(this.amphipods.entrySet(), Boolean.valueOf(true), _function_1)).booleanValue();
     final HashSet<Coordinate> used = CollectionLiterals.<Coordinate>newHashSet();
-    final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function_2 = new Function1<Map.Entry<Coordinate, Integer>, Boolean>() {
-      public Boolean apply(final Map.Entry<Coordinate, Integer> it) {
-        boolean _isPlaced = AmphipodState.this.isPlaced(it.getKey(), it.getValue());
-        return Boolean.valueOf((!_isPlaced));
-      }
+    final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function_2 = (Map.Entry<Coordinate, Integer> it) -> {
+      boolean _isPlaced = this.isPlaced(it.getKey(), it.getValue());
+      return Boolean.valueOf((!_isPlaced));
     };
-    final Function2<Integer, Map.Entry<Coordinate, Integer>, Integer> _function_3 = new Function2<Integer, Map.Entry<Coordinate, Integer>, Integer>() {
-      public Integer apply(final Integer v, final Map.Entry<Coordinate, Integer> c) {
-        int _xblockexpression = (int) 0;
-        {
-          final Integer value = c.getValue();
-          final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-            public Boolean apply(final Coordinate it) {
-              return Boolean.valueOf((((it.getY() == (value).intValue()) && ((!AmphipodState.this.amphipods.containsKey(it)) || (!AmphipodState.this.isPlaced(it, AmphipodState.this.amphipods.get(it))))) && 
-                (!used.contains(it))));
-            }
-          };
-          final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-            public Integer apply(final Coordinate it) {
-              int _x = it.getX();
-              return Integer.valueOf((-_x));
-            }
-          };
-          final Coordinate to = IterableExtensions.<Coordinate, Integer>sortBy(IterableExtensions.<Coordinate>filter(AmphipodState.rooms, _function), _function_1).get(0);
-          used.add(to);
-          int _distance = AmphipodState.distance(c.getKey(), to);
-          Integer _get = AmphipodState.numberToEnergy.get(value);
-          int _multiply = (_distance * (_get).intValue());
-          _xblockexpression = ((v).intValue() + _multiply);
-        }
-        return Integer.valueOf(_xblockexpression);
+    final Function2<Integer, Map.Entry<Coordinate, Integer>, Integer> _function_3 = (Integer v, Map.Entry<Coordinate, Integer> c) -> {
+      int _xblockexpression = (int) 0;
+      {
+        final Integer value = c.getValue();
+        final Function1<Coordinate, Boolean> _function_4 = (Coordinate it) -> {
+          return Boolean.valueOf((((it.getY() == (value).intValue()) && ((!this.amphipods.containsKey(it)) || (!this.isPlaced(it, this.amphipods.get(it))))) && 
+            (!used.contains(it))));
+        };
+        final Function1<Coordinate, Integer> _function_5 = (Coordinate it) -> {
+          int _x = it.getX();
+          return Integer.valueOf((-_x));
+        };
+        final Coordinate to = IterableExtensions.<Coordinate, Integer>sortBy(IterableExtensions.<Coordinate>filter(AmphipodState.rooms, _function_4), _function_5).get(0);
+        used.add(to);
+        int _distance = AmphipodState.distance(c.getKey(), to);
+        Integer _get = AmphipodState.numberToEnergy.get(value);
+        int _multiply = (_distance * (_get).intValue());
+        _xblockexpression = ((v).intValue() + _multiply);
       }
+      return Integer.valueOf(_xblockexpression);
     };
     this.minBound = (IterableExtensions.<Map.Entry<Coordinate, Integer>, Integer>fold(IterableExtensions.<Map.Entry<Coordinate, Integer>>filter(this.amphipods.entrySet(), _function_2), Integer.valueOf(0), _function_3)).intValue();
   }
@@ -243,12 +234,12 @@ public class AmphipodState implements State {
     Boolean _switchResult = null;
     int _x = c.getX();
     boolean _matched = false;
-    if (Objects.equal(_x, 0)) {
+    if (Objects.equals(_x, 0)) {
       _matched=true;
       _switchResult = Boolean.valueOf(false);
     }
     if (!_matched) {
-      if (Objects.equal(_x, AmphipodState.roomSize)) {
+      if (Objects.equals(_x, AmphipodState.roomSize)) {
         _matched=true;
         _switchResult = Boolean.valueOf(value.equals(Integer.valueOf(c.getY())));
       }
@@ -256,10 +247,8 @@ public class AmphipodState implements State {
     if (!_matched) {
       int _x_1 = c.getX();
       int _plus = (_x_1 + 1);
-      final Function2<Boolean, Integer, Boolean> _function = new Function2<Boolean, Integer, Boolean>() {
-        public Boolean apply(final Boolean v, final Integer i) {
-          return Boolean.valueOf(((v).booleanValue() && value.equals(AmphipodState.this.amphipods.get(new Coordinate((i).intValue(), c.getY())))));
-        }
+      final Function2<Boolean, Integer, Boolean> _function = (Boolean v, Integer i) -> {
+        return Boolean.valueOf(((v).booleanValue() && value.equals(this.amphipods.get(new Coordinate((i).intValue(), c.getY())))));
       };
       _switchResult = IterableExtensions.<Integer, Boolean>fold(new IntegerRange(_plus, AmphipodState.roomSize), Boolean.valueOf(value.equals(Integer.valueOf(c.getY()))), _function);
     }
@@ -267,19 +256,15 @@ public class AmphipodState implements State {
   }
 
   public void status() {
-    final Consumer<Map.Entry<Coordinate, Integer>> _function = new Consumer<Map.Entry<Coordinate, Integer>>() {
-      public void accept(final Map.Entry<Coordinate, Integer> it) {
-        String _plus = (it + " : ");
-        boolean _isPlaced = AmphipodState.this.isPlaced(it.getKey(), it.getValue());
-        String _plus_1 = (_plus + Boolean.valueOf(_isPlaced));
-        InputOutput.<String>println(_plus_1);
-      }
+    final Consumer<Map.Entry<Coordinate, Integer>> _function = (Map.Entry<Coordinate, Integer> it) -> {
+      String _plus = (it + " : ");
+      boolean _isPlaced = this.isPlaced(it.getKey(), it.getValue());
+      String _plus_1 = (_plus + Boolean.valueOf(_isPlaced));
+      InputOutput.<String>println(_plus_1);
     };
     this.amphipods.entrySet().forEach(_function);
-    final Consumer<Coordinate> _function_1 = new Consumer<Coordinate>() {
-      public void accept(final Coordinate it) {
-        InputOutput.<HashSet<Coordinate>>println(AmphipodState.this.reachableSpots(it));
-      }
+    final Consumer<Coordinate> _function_1 = (Coordinate it) -> {
+      InputOutput.<HashSet<Coordinate>>println(this.reachableSpots(it));
     };
     this.amphipods.keySet().forEach(_function_1);
   }
@@ -288,17 +273,13 @@ public class AmphipodState implements State {
     HashSet<Coordinate> _xblockexpression = null;
     {
       final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
-      final Consumer<Coordinate> _function = new Consumer<Coordinate>() {
-        public void accept(final Coordinate it) {
-          final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-            public Boolean apply(final Coordinate c) {
-              return Boolean.valueOf(((AmphipodState.all.contains(c) && (!AmphipodState.this.amphipods.containsKey(c))) && (!setc.contains(c))));
-            }
-          };
-          final Set<Coordinate> filteredNeighbours = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate>filter(it.noDiagonalUnboundedNeighbours(), _function));
-          setc.addAll(filteredNeighbours);
-          output.addAll(filteredNeighbours);
-        }
+      final Consumer<Coordinate> _function = (Coordinate it) -> {
+        final Function1<Coordinate, Boolean> _function_1 = (Coordinate c) -> {
+          return Boolean.valueOf(((AmphipodState.all.contains(c) && (!this.amphipods.containsKey(c))) && (!setc.contains(c))));
+        };
+        final Set<Coordinate> filteredNeighbours = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate>filter(it.noDiagonalUnboundedNeighbours(), _function_1));
+        setc.addAll(filteredNeighbours);
+        output.addAll(filteredNeighbours);
       };
       newOnes.forEach(_function);
       _xblockexpression = output;
@@ -327,29 +308,21 @@ public class AmphipodState implements State {
       int totalEnergy = 0;
       do {
         {
-          final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function = new Function1<Map.Entry<Coordinate, Integer>, Boolean>() {
-            public Boolean apply(final Map.Entry<Coordinate, Integer> it) {
-              boolean _isPlaced = AmphipodState.this.isPlaced(it.getKey(), it.getValue());
-              return Boolean.valueOf((!_isPlaced));
-            }
+          final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function = (Map.Entry<Coordinate, Integer> it) -> {
+            boolean _isPlaced = this.isPlaced(it.getKey(), it.getValue());
+            return Boolean.valueOf((!_isPlaced));
           };
-          final Function1<Map.Entry<Coordinate, Integer>, Pair<Coordinate, Coordinate>> _function_1 = new Function1<Map.Entry<Coordinate, Integer>, Pair<Coordinate, Coordinate>>() {
-            public Pair<Coordinate, Coordinate> apply(final Map.Entry<Coordinate, Integer> e) {
-              Coordinate _key = e.getKey();
-              final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it) {
-                  return Boolean.valueOf(AmphipodState.this.isPlaced(it, e.getValue()));
-                }
-              };
-              Coordinate _findFirst = IterableExtensions.<Coordinate>findFirst(AmphipodState.this.reachableSpots(e.getKey()), _function);
-              return new Pair<Coordinate, Coordinate>(_key, _findFirst);
-            }
+          final Function1<Map.Entry<Coordinate, Integer>, Pair<Coordinate, Coordinate>> _function_1 = (Map.Entry<Coordinate, Integer> e) -> {
+            Coordinate _key = e.getKey();
+            final Function1<Coordinate, Boolean> _function_2 = (Coordinate it) -> {
+              return Boolean.valueOf(this.isPlaced(it, e.getValue()));
+            };
+            Coordinate _findFirst = IterableExtensions.<Coordinate>findFirst(this.reachableSpots(e.getKey()), _function_2);
+            return new Pair<Coordinate, Coordinate>(_key, _findFirst);
           };
-          final Function1<Pair<Coordinate, Coordinate>, Boolean> _function_2 = new Function1<Pair<Coordinate, Coordinate>, Boolean>() {
-            public Boolean apply(final Pair<Coordinate, Coordinate> it) {
-              Coordinate _value = it.getValue();
-              return Boolean.valueOf((_value != null));
-            }
+          final Function1<Pair<Coordinate, Coordinate>, Boolean> _function_2 = (Pair<Coordinate, Coordinate> it) -> {
+            Coordinate _value = it.getValue();
+            return Boolean.valueOf((_value != null));
           };
           c = IterableExtensions.<Pair<Coordinate, Coordinate>>findFirst(IterableExtensions.<Map.Entry<Coordinate, Integer>, Pair<Coordinate, Coordinate>>map(IterableExtensions.<Map.Entry<Coordinate, Integer>>filter(this.amphipods.entrySet(), _function), _function_1), _function_2);
           if ((c != null)) {
@@ -368,69 +341,62 @@ public class AmphipodState implements State {
     return _xblockexpression;
   }
 
+  @Override
   public boolean isGoal() {
     return this.isFinal;
   }
 
+  @Override
   public int minToGoal() {
     return this.minBound;
   }
 
+  @Override
   public Iterable<Pair<? extends State, Integer>> neighbours() {
     Iterable<Pair<? extends State, Integer>> _xblockexpression = null;
     {
       final HashMap<AmphipodState, Integer> output = CollectionLiterals.<AmphipodState, Integer>newHashMap();
-      final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function = new Function1<Map.Entry<Coordinate, Integer>, Boolean>() {
-        public Boolean apply(final Map.Entry<Coordinate, Integer> it) {
-          return Boolean.valueOf(AmphipodState.rooms.contains(it.getKey()));
-        }
+      final Function1<Map.Entry<Coordinate, Integer>, Boolean> _function = (Map.Entry<Coordinate, Integer> it) -> {
+        return Boolean.valueOf(AmphipodState.rooms.contains(it.getKey()));
       };
-      final Consumer<Map.Entry<Coordinate, Integer>> _function_1 = new Consumer<Map.Entry<Coordinate, Integer>>() {
-        public void accept(final Map.Entry<Coordinate, Integer> e) {
-          final Coordinate from = e.getKey();
-          final Integer value = e.getValue();
-          final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-            public Boolean apply(final Coordinate it) {
-              return Boolean.valueOf(AmphipodState.hallway.contains(it));
-            }
+      final Consumer<Map.Entry<Coordinate, Integer>> _function_1 = (Map.Entry<Coordinate, Integer> e) -> {
+        final Coordinate from = e.getKey();
+        final Integer value = e.getValue();
+        final Function1<Coordinate, Boolean> _function_2 = (Coordinate it) -> {
+          return Boolean.valueOf(AmphipodState.hallway.contains(it));
+        };
+        final Consumer<Coordinate> _function_3 = (Coordinate to) -> {
+          final HashMap<Coordinate, Integer> newMap = new HashMap<Coordinate, Integer>(this.amphipods);
+          newMap.put(to, newMap.remove(from));
+          final AmphipodState newState = new AmphipodState(newMap);
+          int _distance = AmphipodState.distance(from, to);
+          Integer _get = AmphipodState.numberToEnergy.get(value);
+          int _multiply = (_distance * (_get).intValue());
+          final int energy = (_multiply + newState.energyToNormalize);
+          final BiFunction<Integer, Integer, Integer> _function_4 = (Integer u, Integer v) -> {
+            return Integer.valueOf(Math.min((u).intValue(), (v).intValue()));
           };
-          final Consumer<Coordinate> _function_1 = new Consumer<Coordinate>() {
-            public void accept(final Coordinate to) {
-              final HashMap<Coordinate, Integer> newMap = new HashMap<Coordinate, Integer>(AmphipodState.this.amphipods);
-              newMap.put(to, newMap.remove(from));
-              final AmphipodState newState = new AmphipodState(newMap);
-              int _distance = AmphipodState.distance(from, to);
-              Integer _get = AmphipodState.numberToEnergy.get(value);
-              int _multiply = (_distance * (_get).intValue());
-              final int energy = (_multiply + newState.energyToNormalize);
-              final BiFunction<Integer, Integer, Integer> _function = new BiFunction<Integer, Integer, Integer>() {
-                public Integer apply(final Integer u, final Integer v) {
-                  return Integer.valueOf(Math.min((u).intValue(), (v).intValue()));
-                }
-              };
-              output.merge(newState, Integer.valueOf(energy), _function);
-            }
-          };
-          IterableExtensions.<Coordinate>filter(AmphipodState.this.reachableSpots(from), _function).forEach(_function_1);
-        }
+          output.merge(newState, Integer.valueOf(energy), _function_4);
+        };
+        IterableExtensions.<Coordinate>filter(this.reachableSpots(from), _function_2).forEach(_function_3);
       };
       IterableExtensions.<Map.Entry<Coordinate, Integer>>filter(this.amphipods.entrySet(), _function).forEach(_function_1);
-      final Function1<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>> _function_2 = new Function1<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>>() {
-        public Pair<? extends State, Integer> apply(final Map.Entry<AmphipodState, Integer> it) {
-          AmphipodState _key = it.getKey();
-          Integer _value = it.getValue();
-          return Pair.<AmphipodState, Integer>of(_key, _value);
-        }
+      final Function1<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>> _function_2 = (Map.Entry<AmphipodState, Integer> it) -> {
+        AmphipodState _key = it.getKey();
+        Integer _value = it.getValue();
+        return Pair.<AmphipodState, Integer>of(_key, _value);
       };
       _xblockexpression = IterableExtensions.<Map.Entry<AmphipodState, Integer>, Pair<? extends State, Integer>>map(output.entrySet(), _function_2);
     }
     return _xblockexpression;
   }
 
+  @Override
   public boolean equals(final Object other) {
     return this.amphipods.equals(((AmphipodState) other).amphipods);
   }
 
+  @Override
   public int hashCode() {
     return this.code;
   }

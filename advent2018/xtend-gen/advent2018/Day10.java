@@ -4,8 +4,8 @@ import adventutils.geometry.Coordinate;
 import adventutils.geometry.CoordinateSet;
 import adventutils.geometry.Interval;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -66,7 +66,7 @@ public class Day10 {
     Interval _switchResult = null;
     final int x = (vB - vA);
     boolean _matched = false;
-    if (Objects.equal(x, 0)) {
+    if (Objects.equals(x, 0)) {
       _matched=true;
       _switchResult = new Interval(0, Long.MAX_VALUE);
     }

@@ -78,28 +78,20 @@ public class Launcher {
   public static HashSet<Coordinate> step(final Set<Coordinate> input, final int flicker) {
     HashSet<Coordinate> _xblockexpression = null;
     {
-      final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
-        public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.getX());
-        }
+      final Function1<Coordinate, Integer> _function = (Coordinate it) -> {
+        return Integer.valueOf(it.getX());
       };
       int minx = IterableExtensions.<Coordinate, Integer>minBy(input, _function).getX();
-      final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-        public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.getX());
-        }
+      final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
+        return Integer.valueOf(it.getX());
       };
       int maxx = IterableExtensions.<Coordinate, Integer>maxBy(input, _function_1).getX();
-      final Function1<Coordinate, Integer> _function_2 = new Function1<Coordinate, Integer>() {
-        public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.getY());
-        }
+      final Function1<Coordinate, Integer> _function_2 = (Coordinate it) -> {
+        return Integer.valueOf(it.getY());
       };
       int miny = IterableExtensions.<Coordinate, Integer>minBy(input, _function_2).getY();
-      final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
-        public Integer apply(final Coordinate it) {
-          return Integer.valueOf(it.getY());
-        }
+      final Function1<Coordinate, Integer> _function_3 = (Coordinate it) -> {
+        return Integer.valueOf(it.getY());
       };
       int maxy = IterableExtensions.<Coordinate, Integer>maxBy(input, _function_3).getY();
       final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();

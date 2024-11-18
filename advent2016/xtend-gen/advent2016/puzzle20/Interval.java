@@ -28,6 +28,7 @@ public class Interval {
     return _xifexpression;
   }
 
+  @Override
   public String toString() {
     return (((("[" + Long.valueOf(this.leftBound)) + ",") + Long.valueOf(this.rightBound)) + "]");
   }

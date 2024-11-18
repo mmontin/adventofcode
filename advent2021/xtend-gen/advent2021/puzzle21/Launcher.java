@@ -1,7 +1,7 @@
 package advent2021.puzzle21;
 
-import com.google.common.base.Objects;
 import java.math.BigInteger;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IntegerRange;
 
@@ -65,6 +65,7 @@ public class Launcher {
       return _xblockexpression;
     }
 
+    @Override
     public String toString() {
       return (((("(" + this.nb1) + ",") + this.nb2) + ")");
     }
@@ -158,7 +159,7 @@ public class Launcher {
           }
         }
         Launcher.Player _xifexpression = null;
-        boolean _equals = Objects.equal(current, p1);
+        boolean _equals = Objects.equals(current, p1);
         if (_equals) {
           _xifexpression = p2;
         } else {
@@ -169,7 +170,7 @@ public class Launcher {
       }
     } while((current.score < 1000));
     Launcher.Player _xifexpression = null;
-    boolean _equals = Objects.equal(current, p1);
+    boolean _equals = Objects.equals(current, p1);
     if (_equals) {
       _xifexpression = p2;
     } else {

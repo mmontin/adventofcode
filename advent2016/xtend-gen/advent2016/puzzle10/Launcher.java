@@ -15,27 +15,23 @@ public class Launcher {
   private static HashMap<Integer, Bin> bins = CollectionLiterals.<Integer, Bin>newHashMap();
 
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] split = it.split(" ");
-        boolean _equals = (split[0]).equals("value");
-        if (_equals) {
-          Launcher.find_bot(split[5], "bot").addChips(Integer.parseInt(split[1]));
-        } else {
-          Bin _find_bot = Launcher.find_bot(split[1], "bot");
-          ((Bot) _find_bot).putLowHigh(
-            Launcher.find_bot(split[6], split[5]), 
-            Launcher.find_bot(split[11], split[10]));
-        }
+    final Consumer<String> _function = (String it) -> {
+      final String[] split = it.split(" ");
+      boolean _equals = (split[0]).equals("value");
+      if (_equals) {
+        Launcher.find_bot(split[5], "bot").addChips(Integer.parseInt(split[1]));
+      } else {
+        Bin _find_bot = Launcher.find_bot(split[1], "bot");
+        ((Bot) _find_bot).putLowHigh(
+          Launcher.find_bot(split[6], split[5]), 
+          Launcher.find_bot(split[11], split[10]));
       }
     };
     new InputLoader(Integer.valueOf(2016), Integer.valueOf(10)).getInputs().forEach(_function);
     Bot current = null;
-    while (((current = IterableExtensions.<Bot>findFirst(Launcher.bots.values(), new Function1<Bot, Boolean>() {
-      public Boolean apply(final Bot it) {
-        return Boolean.valueOf(it.isFull());
-      }
-    })) != null)) {
+    while (((current = IterableExtensions.<Bot>findFirst(Launcher.bots.values(), ((Function1<Bot, Boolean>) (Bot it) -> {
+      return Boolean.valueOf(it.isFull());
+    }))) != null)) {
       current.giveAll();
     }
     Integer _firstChip = Launcher.bins.get(Integer.valueOf(0)).firstChip();

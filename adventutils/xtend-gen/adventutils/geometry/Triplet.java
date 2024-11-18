@@ -21,11 +21,9 @@ public class Triplet {
   private final int _hashCode;
 
   public Triplet(final String s) {
-    this(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(s.split(","))), new Function1<String, Integer>() {
-      public Integer apply(final String it) {
-        return Integer.valueOf(Integer.parseInt(it));
-      }
-    }));
+    this(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(s.split(","))), ((Function1<String, Integer>) (String it) -> {
+      return Integer.valueOf(Integer.parseInt(it));
+    })));
   }
 
   public Triplet(final List<Integer> input) {
@@ -39,10 +37,12 @@ public class Triplet {
     this._hashCode = this.toString().hashCode();
   }
 
+  @Override
   public String toString() {
     return (((((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ",") + Integer.valueOf(this.z)) + ")");
   }
 
+  @Override
   public boolean equals(final Object other) {
     boolean _switchResult = false;
     boolean _matched = false;
@@ -56,6 +56,7 @@ public class Triplet {
     return _switchResult;
   }
 
+  @Override
   public int hashCode() {
     return this._hashCode;
   }
@@ -99,26 +100,20 @@ public class Triplet {
   public Set<Triplet> line(final Triplet other) {
     Set<Triplet> _xifexpression = null;
     if ((other.x != this.x)) {
-      final Function1<Integer, Triplet> _function = new Function1<Integer, Triplet>() {
-        public Triplet apply(final Integer it) {
-          return new Triplet((it).intValue(), Triplet.this.y, Triplet.this.z);
-        }
+      final Function1<Integer, Triplet> _function = (Integer it) -> {
+        return new Triplet((it).intValue(), this.y, this.z);
       };
       _xifexpression = IterableExtensions.<Triplet>toSet(IterableExtensions.<Integer, Triplet>map(new IntegerRange(other.x, this.x), _function));
     } else {
       Set<Triplet> _xifexpression_1 = null;
       if ((other.y != this.y)) {
-        final Function1<Integer, Triplet> _function_1 = new Function1<Integer, Triplet>() {
-          public Triplet apply(final Integer it) {
-            return new Triplet(Triplet.this.x, (it).intValue(), Triplet.this.z);
-          }
+        final Function1<Integer, Triplet> _function_1 = (Integer it) -> {
+          return new Triplet(this.x, (it).intValue(), this.z);
         };
         _xifexpression_1 = IterableExtensions.<Triplet>toSet(IterableExtensions.<Integer, Triplet>map(new IntegerRange(other.y, this.y), _function_1));
       } else {
-        final Function1<Integer, Triplet> _function_2 = new Function1<Integer, Triplet>() {
-          public Triplet apply(final Integer it) {
-            return new Triplet(Triplet.this.x, Triplet.this.y, (it).intValue());
-          }
+        final Function1<Integer, Triplet> _function_2 = (Integer it) -> {
+          return new Triplet(this.x, this.y, (it).intValue());
         };
         _xifexpression_1 = IterableExtensions.<Triplet>toSet(IterableExtensions.<Integer, Triplet>map(new IntegerRange(other.z, this.z), _function_2));
       }

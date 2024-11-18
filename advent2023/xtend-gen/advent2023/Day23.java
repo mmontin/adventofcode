@@ -201,7 +201,7 @@ public class Day23 {
   public static Optional<Integer> max_path(final List<Coordinate> path) {
     Optional<Integer> _xblockexpression = null;
     {
-      final Coordinate current = IterableExtensions.<Coordinate>last(path);
+      final Coordinate current = path.getLast();
       Optional<Integer> _xifexpression = null;
       boolean _equals = current.equals(Day23.target);
       boolean _not = (!_equals);

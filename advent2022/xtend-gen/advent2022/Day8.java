@@ -18,19 +18,15 @@ public class Day8 {
     final List<String> inputs = new InputLoader(Integer.valueOf(2022), Integer.valueOf(8)).getInputs();
     final int max_i = inputs.size();
     final int max_j = inputs.get(0).length();
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer i) {
-        final char[] line = inputs.get((i).intValue()).toCharArray();
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer j) {
-            Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-            char _get = line[(j).intValue()];
-            String _plus = (Character.valueOf(_get) + "");
-            Day8.trees.put(_coordinate, Integer.valueOf(Integer.parseInt(_plus)));
-          }
-        };
-        new ExclusiveRange(0, max_j, true).forEach(_function);
-      }
+    final Consumer<Integer> _function = (Integer i) -> {
+      final char[] line = inputs.get((i).intValue()).toCharArray();
+      final Consumer<Integer> _function_1 = (Integer j) -> {
+        Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+        char _get = line[(j).intValue()];
+        String _plus = (Character.valueOf(_get) + "");
+        Day8.trees.put(_coordinate, Integer.valueOf(Integer.parseInt(_plus)));
+      };
+      new ExclusiveRange(0, max_j, true).forEach(_function_1);
     };
     new ExclusiveRange(0, max_i, true).forEach(_function);
     final HashSet<Coordinate> visible = CollectionLiterals.<Coordinate>newHashSet();

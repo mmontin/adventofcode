@@ -22,19 +22,17 @@ public class Map {
       int _size = border.size();
       ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _size, true);
       CoordinateSet _coordinateSet = new CoordinateSet();
-      final Function2<CoordinateSet, Integer, CoordinateSet> _function = new Function2<CoordinateSet, Integer, CoordinateSet>() {
-        public CoordinateSet apply(final CoordinateSet set, final Integer i) {
-          CoordinateSet _xblockexpression = null;
-          {
-            final Coordinate left = border.get((i).intValue());
-            int _size = border.size();
-            int _modulo = (((i).intValue() + 1) % _size);
-            final Coordinate right = border.get(_modulo);
-            set.addAll(Coordinate.getAllCoordsOnLine(left, right));
-            _xblockexpression = set;
-          }
-          return _xblockexpression;
+      final Function2<CoordinateSet, Integer, CoordinateSet> _function = (CoordinateSet set, Integer i) -> {
+        CoordinateSet _xblockexpression_1 = null;
+        {
+          final Coordinate left = border.get((i).intValue());
+          int _size_1 = border.size();
+          int _modulo = (((i).intValue() + 1) % _size_1);
+          final Coordinate right = border.get(_modulo);
+          set.addAll(Coordinate.getAllCoordsOnLine(left, right));
+          _xblockexpression_1 = set;
         }
+        return _xblockexpression_1;
       };
       final CoordinateSet border_set = IterableExtensions.<Integer, CoordinateSet>fold(_doubleDotLessThan, _coordinateSet, _function);
       final int minX = border_set.minX;
@@ -49,25 +47,19 @@ public class Map {
           final HashSet<Coordinate> tmp = new HashSet<Coordinate>(frontier);
           reached.addAll(frontier);
           frontier.clear();
-          final Consumer<Coordinate> _function_1 = new Consumer<Coordinate>() {
-            public void accept(final Coordinate it) {
-              final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-                public Boolean apply(final Coordinate it_1) {
-                  boolean _contains = reached.contains(it_1);
-                  return Boolean.valueOf((!_contains));
-                }
-              };
-              Iterables.<Coordinate>addAll(frontier, IterableExtensions.<Coordinate>filter(it.noDiagonalBoundedNeighbours((minX - 1), (maxX + 1), (minY - 1), (maxY + 1)), _function));
-            }
+          final Consumer<Coordinate> _function_1 = (Coordinate it) -> {
+            final Function1<Coordinate, Boolean> _function_2 = (Coordinate it_1) -> {
+              boolean _contains = reached.contains(it_1);
+              return Boolean.valueOf((!_contains));
+            };
+            Iterables.<Coordinate>addAll(frontier, IterableExtensions.<Coordinate>filter(it.noDiagonalBoundedNeighbours((minX - 1), (maxX + 1), (minY - 1), (maxY + 1)), _function_2));
           };
           tmp.forEach(_function_1);
         }
       }
       reached.removeAll(border_set);
-      final Predicate<Coordinate> _function_1 = new Predicate<Coordinate>() {
-        public boolean test(final Coordinate it) {
-          return ((((it.getX() == (minX - 1)) || (it.getX() == (maxX + 1))) || (it.getY() == (minY - 1))) || (it.getY() == (maxY + 1)));
-        }
+      final Predicate<Coordinate> _function_1 = (Coordinate it) -> {
+        return ((((it.getX() == (minX - 1)) || (it.getX() == (maxX + 1))) || (it.getY() == (minY - 1))) || (it.getY() == (maxY + 1)));
       };
       reached.removeIf(_function_1);
       final CoordinateSet outside_set = new CoordinateSet(reached);

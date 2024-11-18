@@ -22,15 +22,14 @@ public class Day9 {
   private static Set<Coordinate> tail_positions = CollectionLiterals.<Coordinate>newHashSet(Day9.tail);
 
   private static ArrayList<Coordinate> rope = new Function0<ArrayList<Coordinate>>() {
+    @Override
     public ArrayList<Coordinate> apply() {
       ArrayList<Coordinate> _xblockexpression = null;
       {
         final ArrayList<Coordinate> ans = CollectionLiterals.<Coordinate>newArrayList();
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            Coordinate _coordinate = new Coordinate();
-            ans.add(_coordinate);
-          }
+        final Consumer<Integer> _function = (Integer it) -> {
+          Coordinate _coordinate = new Coordinate();
+          ans.add(_coordinate);
         };
         new IntegerRange(1, 10).forEach(_function);
         _xblockexpression = ans;
@@ -42,28 +41,22 @@ public class Day9 {
   private static Set<Coordinate> long_tail_positions = CollectionLiterals.<Coordinate>newHashSet(Day9.rope.get(9));
 
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] split = it.split(" ");
-        final Direction direction = Dir.directionFromString(split[0]);
-        int _parseInt = Integer.parseInt(split[1]);
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer i) {
-            Day9.head = Day9.head.move(direction);
-            Day9.tail = Day9.newPosition(Day9.head, Day9.tail);
-            Day9.tail_positions.add(Day9.tail);
-            Day9.rope.set(0, Day9.rope.get(0).move(direction));
-            final Consumer<Integer> _function = new Consumer<Integer>() {
-              public void accept(final Integer j) {
-                Day9.rope.set(((j).intValue() + 1), Day9.newPosition(Day9.rope.get((j).intValue()), Day9.rope.get(((j).intValue() + 1))));
-              }
-            };
-            new ExclusiveRange(0, 9, true).forEach(_function);
-            Day9.long_tail_positions.add(Day9.rope.get(9));
-          }
+    final Consumer<String> _function = (String it) -> {
+      final String[] split = it.split(" ");
+      final Direction direction = Dir.directionFromString(split[0]);
+      int _parseInt = Integer.parseInt(split[1]);
+      final Consumer<Integer> _function_1 = (Integer i) -> {
+        Day9.head = Day9.head.move(direction);
+        Day9.tail = Day9.newPosition(Day9.head, Day9.tail);
+        Day9.tail_positions.add(Day9.tail);
+        Day9.rope.set(0, Day9.rope.get(0).move(direction));
+        final Consumer<Integer> _function_2 = (Integer j) -> {
+          Day9.rope.set(((j).intValue() + 1), Day9.newPosition(Day9.rope.get((j).intValue()), Day9.rope.get(((j).intValue() + 1))));
         };
-        new ExclusiveRange(0, _parseInt, true).forEach(_function);
-      }
+        new ExclusiveRange(0, 9, true).forEach(_function_2);
+        Day9.long_tail_positions.add(Day9.rope.get(9));
+      };
+      new ExclusiveRange(0, _parseInt, true).forEach(_function_1);
     };
     new InputLoader(Integer.valueOf(2022), Integer.valueOf(9)).getInputs().forEach(_function);
     InputOutput.<Integer>println(Integer.valueOf(Day9.tail_positions.size()));

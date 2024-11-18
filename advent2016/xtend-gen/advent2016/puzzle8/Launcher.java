@@ -34,33 +34,27 @@ public class Launcher {
         Launcher.screen.put(_coordinate, Boolean.valueOf(false));
       }
     }
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        Launcher.step(it);
-      }
+    final Consumer<String> _function = (String it) -> {
+      Launcher.step(it);
     };
     new InputLoader(Integer.valueOf(2016), Integer.valueOf(8)).getInputs().forEach(_function);
     ExclusiveRange _doubleDotLessThan_2 = new ExclusiveRange(0, Launcher.height, true);
     for (final Integer i_1 : _doubleDotLessThan_2) {
-      final Function2<String, Integer, String> _function_1 = new Function2<String, Integer, String>() {
-        public String apply(final String v, final Integer j_1) {
-          String _xifexpression = null;
-          Coordinate _coordinate = new Coordinate((j_1).intValue(), (i_1).intValue());
-          Boolean _get = Launcher.screen.get(_coordinate);
-          if ((_get).booleanValue()) {
-            _xifexpression = "Y";
-          } else {
-            _xifexpression = ".";
-          }
-          return (v + _xifexpression);
+      final Function2<String, Integer, String> _function_1 = (String v, Integer j_1) -> {
+        String _xifexpression = null;
+        Coordinate _coordinate_1 = new Coordinate((j_1).intValue(), (i_1).intValue());
+        Boolean _get = Launcher.screen.get(_coordinate_1);
+        if ((_get).booleanValue()) {
+          _xifexpression = "Y";
+        } else {
+          _xifexpression = ".";
         }
+        return (v + _xifexpression);
       };
       InputOutput.<String>println(IterableExtensions.<Integer, String>fold(new ExclusiveRange(0, Launcher.width, true), "", _function_1));
     }
-    final Function1<Boolean, Boolean> _function_2 = new Function1<Boolean, Boolean>() {
-      public Boolean apply(final Boolean it) {
-        return it;
-      }
+    final Function1<Boolean, Boolean> _function_2 = (Boolean it) -> {
+      return it;
     };
     InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.size(IterableExtensions.<Boolean>filter(Launcher.screen.values(), _function_2))));
   }
@@ -70,10 +64,8 @@ public class Launcher {
     int _size = ((List<String>)Conversions.doWrapArray(split)).size();
     boolean _equals = (_size == 2);
     if (_equals) {
-      final Function1<String, Integer> _function = new Function1<String, Integer>() {
-        public Integer apply(final String it) {
-          return Integer.valueOf(Integer.parseInt(it));
-        }
+      final Function1<String, Integer> _function = (String it) -> {
+        return Integer.valueOf(Integer.parseInt(it));
       };
       final List<Integer> size = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray((split[1]).split("x"))), _function);
       Launcher.rectangle((size.get(0)).intValue(), (size.get(1)).intValue());
@@ -100,66 +92,50 @@ public class Launcher {
 
   public static void shift_row(final int y, final int offset) {
     Set<Map.Entry<Coordinate, Boolean>> _entrySet = Launcher.screen.entrySet();
-    final Function1<Map.Entry<Coordinate, Boolean>, Boolean> _function = new Function1<Map.Entry<Coordinate, Boolean>, Boolean>() {
-      public Boolean apply(final Map.Entry<Coordinate, Boolean> it) {
-        int _y = it.getKey().getY();
-        return Boolean.valueOf((_y == y));
-      }
+    final Function1<Map.Entry<Coordinate, Boolean>, Boolean> _function = (Map.Entry<Coordinate, Boolean> it) -> {
+      int _y = it.getKey().getY();
+      return Boolean.valueOf((_y == y));
     };
     final Iterable<Map.Entry<Coordinate, Boolean>> entries = IterableExtensions.<Map.Entry<Coordinate, Boolean>>filter(new HashSet<Map.Entry<Coordinate, Boolean>>(_entrySet), _function);
-    final Function1<Map.Entry<Coordinate, Boolean>, Coordinate> _function_1 = new Function1<Map.Entry<Coordinate, Boolean>, Coordinate>() {
-      public Coordinate apply(final Map.Entry<Coordinate, Boolean> it) {
-        return it.getKey();
-      }
+    final Function1<Map.Entry<Coordinate, Boolean>, Coordinate> _function_1 = (Map.Entry<Coordinate, Boolean> it) -> {
+      return it.getKey();
     };
-    final Consumer<Coordinate> _function_2 = new Consumer<Coordinate>() {
-      public void accept(final Coordinate it) {
-        Launcher.screen.remove(it);
-      }
+    final Consumer<Coordinate> _function_2 = (Coordinate it) -> {
+      Launcher.screen.remove(it);
     };
     IterableExtensions.<Map.Entry<Coordinate, Boolean>, Coordinate>map(entries, _function_1).forEach(_function_2);
-    final Consumer<Map.Entry<Coordinate, Boolean>> _function_3 = new Consumer<Map.Entry<Coordinate, Boolean>>() {
-      public void accept(final Map.Entry<Coordinate, Boolean> it) {
-        int _x = it.getKey().getX();
-        int _plus = (_x + offset);
-        int _modulo = (_plus % Launcher.width);
-        int _y = it.getKey().getY();
-        Coordinate _coordinate = new Coordinate(_modulo, _y);
-        Launcher.screen.put(_coordinate, it.getValue());
-      }
+    final Consumer<Map.Entry<Coordinate, Boolean>> _function_3 = (Map.Entry<Coordinate, Boolean> it) -> {
+      int _x = it.getKey().getX();
+      int _plus = (_x + offset);
+      int _modulo = (_plus % Launcher.width);
+      int _y = it.getKey().getY();
+      Coordinate _coordinate = new Coordinate(_modulo, _y);
+      Launcher.screen.put(_coordinate, it.getValue());
     };
     entries.forEach(_function_3);
   }
 
   public static void shift_column(final int x, final int offset) {
     Set<Map.Entry<Coordinate, Boolean>> _entrySet = Launcher.screen.entrySet();
-    final Function1<Map.Entry<Coordinate, Boolean>, Boolean> _function = new Function1<Map.Entry<Coordinate, Boolean>, Boolean>() {
-      public Boolean apply(final Map.Entry<Coordinate, Boolean> it) {
-        int _x = it.getKey().getX();
-        return Boolean.valueOf((_x == x));
-      }
+    final Function1<Map.Entry<Coordinate, Boolean>, Boolean> _function = (Map.Entry<Coordinate, Boolean> it) -> {
+      int _x = it.getKey().getX();
+      return Boolean.valueOf((_x == x));
     };
     final Iterable<Map.Entry<Coordinate, Boolean>> entries = IterableExtensions.<Map.Entry<Coordinate, Boolean>>filter(new HashSet<Map.Entry<Coordinate, Boolean>>(_entrySet), _function);
-    final Function1<Map.Entry<Coordinate, Boolean>, Coordinate> _function_1 = new Function1<Map.Entry<Coordinate, Boolean>, Coordinate>() {
-      public Coordinate apply(final Map.Entry<Coordinate, Boolean> it) {
-        return it.getKey();
-      }
+    final Function1<Map.Entry<Coordinate, Boolean>, Coordinate> _function_1 = (Map.Entry<Coordinate, Boolean> it) -> {
+      return it.getKey();
     };
-    final Consumer<Coordinate> _function_2 = new Consumer<Coordinate>() {
-      public void accept(final Coordinate it) {
-        Launcher.screen.remove(it);
-      }
+    final Consumer<Coordinate> _function_2 = (Coordinate it) -> {
+      Launcher.screen.remove(it);
     };
     IterableExtensions.<Map.Entry<Coordinate, Boolean>, Coordinate>map(entries, _function_1).forEach(_function_2);
-    final Consumer<Map.Entry<Coordinate, Boolean>> _function_3 = new Consumer<Map.Entry<Coordinate, Boolean>>() {
-      public void accept(final Map.Entry<Coordinate, Boolean> it) {
-        int _x = it.getKey().getX();
-        int _y = it.getKey().getY();
-        int _plus = (_y + offset);
-        int _modulo = (_plus % Launcher.height);
-        Coordinate _coordinate = new Coordinate(_x, _modulo);
-        Launcher.screen.put(_coordinate, it.getValue());
-      }
+    final Consumer<Map.Entry<Coordinate, Boolean>> _function_3 = (Map.Entry<Coordinate, Boolean> it) -> {
+      int _x = it.getKey().getX();
+      int _y = it.getKey().getY();
+      int _plus = (_y + offset);
+      int _modulo = (_plus % Launcher.height);
+      Coordinate _coordinate = new Coordinate(_x, _modulo);
+      Launcher.screen.put(_coordinate, it.getValue());
     };
     entries.forEach(_function_3);
   }

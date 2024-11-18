@@ -20,18 +20,16 @@ public class Day15 {
   private static final Set<Coordinate> beacons = CollectionLiterals.<Coordinate>newHashSet();
 
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        final String[] split = (it + ",").split(" ");
-        int _fromString = Day15.fromString(split[2]);
-        int _fromString_1 = Day15.fromString(split[3]);
-        final Coordinate sensor = new Coordinate(_fromString, _fromString_1);
-        int _fromString_2 = Day15.fromString(split[8]);
-        int _fromString_3 = Day15.fromString(split[9]);
-        final Coordinate beacon = new Coordinate(_fromString_2, _fromString_3);
-        Day15.sensors.put(sensor, Integer.valueOf(sensor.manhattanDistanceTo(beacon)));
-        Day15.beacons.add(beacon);
-      }
+    final Consumer<String> _function = (String it) -> {
+      final String[] split = (it + ",").split(" ");
+      int _fromString = Day15.fromString(split[2]);
+      int _fromString_1 = Day15.fromString(split[3]);
+      final Coordinate sensor = new Coordinate(_fromString, _fromString_1);
+      int _fromString_2 = Day15.fromString(split[8]);
+      int _fromString_3 = Day15.fromString(split[9]);
+      final Coordinate beacon = new Coordinate(_fromString_2, _fromString_3);
+      Day15.sensors.put(sensor, Integer.valueOf(sensor.manhattanDistanceTo(beacon)));
+      Day15.beacons.add(beacon);
     };
     new InputLoader(Integer.valueOf(2022), Integer.valueOf(15)).getInputs().forEach(_function);
     Intervals itvs = Day15.combineRanges(2000000);
@@ -49,37 +47,31 @@ public class Day15 {
     Intervals _xblockexpression = null;
     {
       final Intervals intervals = new Intervals();
-      final Consumer<Map.Entry<Coordinate, Integer>> _function = new Consumer<Map.Entry<Coordinate, Integer>>() {
-        public void accept(final Map.Entry<Coordinate, Integer> it) {
-          int _y = it.getKey().getY();
-          int _minus = (_y - y);
-          int distance_to_line = Math.abs(_minus);
-          Integer _value = it.getValue();
-          final int remaining = ((_value).intValue() - distance_to_line);
-          if ((remaining >= 0)) {
-            int _x = it.getKey().getX();
-            int _minus_1 = (_x - remaining);
-            int _x_1 = it.getKey().getX();
-            int _plus = (_x_1 + remaining);
-            Interval _interval = new Interval(_minus_1, _plus);
-            intervals.addInterval(_interval);
-          }
+      final Consumer<Map.Entry<Coordinate, Integer>> _function = (Map.Entry<Coordinate, Integer> it) -> {
+        int _y = it.getKey().getY();
+        int _minus = (_y - y);
+        int distance_to_line = Math.abs(_minus);
+        Integer _value = it.getValue();
+        final int remaining = ((_value).intValue() - distance_to_line);
+        if ((remaining >= 0)) {
+          int _x = it.getKey().getX();
+          int _minus_1 = (_x - remaining);
+          int _x_1 = it.getKey().getX();
+          int _plus = (_x_1 + remaining);
+          Interval _interval = new Interval(_minus_1, _plus);
+          intervals.addInterval(_interval);
         }
       };
       Day15.sensors.entrySet().forEach(_function);
-      final Function1<Coordinate, Boolean> _function_1 = new Function1<Coordinate, Boolean>() {
-        public Boolean apply(final Coordinate it) {
-          int _y = it.getY();
-          return Boolean.valueOf((_y == y));
-        }
+      final Function1<Coordinate, Boolean> _function_1 = (Coordinate it) -> {
+        int _y = it.getY();
+        return Boolean.valueOf((_y == y));
       };
-      final Consumer<Coordinate> _function_2 = new Consumer<Coordinate>() {
-        public void accept(final Coordinate it) {
-          int _x = it.getX();
-          int _x_1 = it.getX();
-          Interval _interval = new Interval(_x, _x_1);
-          intervals.addInterval(_interval);
-        }
+      final Consumer<Coordinate> _function_2 = (Coordinate it) -> {
+        int _x = it.getX();
+        int _x_1 = it.getX();
+        Interval _interval = new Interval(_x, _x_1);
+        intervals.addInterval(_interval);
       };
       IterableExtensions.<Coordinate>filter(Day15.beacons, _function_1).forEach(_function_2);
       _xblockexpression = intervals;

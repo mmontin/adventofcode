@@ -1,7 +1,7 @@
 package advent2016.puzzle16;
 
-import com.google.common.base.Objects;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -18,18 +18,16 @@ public class Launcher {
 
   public static void main(final String[] args) {
     int _length = Launcher.input.length();
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer i) {
-        boolean _xifexpression = false;
-        char _charAt = Launcher.input.charAt((i).intValue());
-        boolean _equals = ("" + Character.valueOf(_charAt)).equals("1");
-        if (_equals) {
-          _xifexpression = true;
-        } else {
-          _xifexpression = false;
-        }
-        Launcher.data.put(i, Boolean.valueOf(_xifexpression));
+    final Consumer<Integer> _function = (Integer i) -> {
+      boolean _xifexpression = false;
+      char _charAt = Launcher.input.charAt((i).intValue());
+      boolean _equals = ("" + Character.valueOf(_charAt)).equals("1");
+      if (_equals) {
+        _xifexpression = true;
+      } else {
+        _xifexpression = false;
       }
+      Launcher.data.put(i, Boolean.valueOf(_xifexpression));
     };
     new ExclusiveRange(0, _length, true).forEach(_function);
     while ((Launcher.data.size() < Launcher.disk_size)) {
@@ -59,7 +57,7 @@ public class Launcher {
           final int prod = (2 * (i_1).intValue());
           Boolean _get = Launcher.data.get(Integer.valueOf(prod));
           Boolean _get_1 = Launcher.data.get(Integer.valueOf((prod + 1)));
-          final boolean b = Objects.equal(_get, _get_1);
+          final boolean b = Objects.equals(_get, _get_1);
           Launcher.data.remove(Integer.valueOf(prod));
           Launcher.data.remove(Integer.valueOf((prod + 1)));
           Launcher.data.put(i_1, Boolean.valueOf(b));

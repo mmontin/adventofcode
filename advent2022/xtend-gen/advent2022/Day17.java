@@ -82,16 +82,12 @@ public class Day17 {
     public boolean move(final Direction d) {
       boolean _xblockexpression = false;
       {
-        final Function1<Coordinate, Coordinate> _function = new Function1<Coordinate, Coordinate>() {
-          public Coordinate apply(final Coordinate it) {
-            return it.move(d);
-          }
+        final Function1<Coordinate, Coordinate> _function = (Coordinate it) -> {
+          return it.move(d);
         };
         final Set<Coordinate> new_shape = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate, Coordinate>map(this.shape, _function));
-        final Function1<Coordinate, Boolean> _function_1 = new Function1<Coordinate, Boolean>() {
-          public Boolean apply(final Coordinate it) {
-            return Boolean.valueOf((((Day17.filled.contains(it) || (it.getX() <= Day17.left_border)) || (it.getX() >= Day17.right_border)) || (it.getY() <= 0)));
-          }
+        final Function1<Coordinate, Boolean> _function_1 = (Coordinate it) -> {
+          return Boolean.valueOf((((Day17.filled.contains(it) || (it.getX() <= Day17.left_border)) || (it.getX() >= Day17.right_border)) || (it.getY() <= 0)));
         };
         final boolean intersects = IterableExtensions.<Coordinate>exists(new_shape, _function_1);
         if ((!intersects)) {
@@ -106,10 +102,8 @@ public class Day17 {
       int _xblockexpression = (int) 0;
       {
         Day17.filled.addAll(this.shape);
-        final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
-          public Integer apply(final Coordinate it) {
-            return Integer.valueOf(it.getY());
-          }
+        final Function1<Coordinate, Integer> _function = (Coordinate it) -> {
+          return Integer.valueOf(it.getY());
         };
         _xblockexpression = Day17.max_y = Math.max(Day17.max_y, IterableExtensions.<Coordinate, Integer>maxBy(this.shape, _function).getY());
       }
@@ -117,12 +111,10 @@ public class Day17 {
     }
   }
 
-  private static final List<Direction> movements = ListExtensions.<Character, Direction>map(((List<Character>)Conversions.doWrapArray(IterableExtensions.<String>head(new InputLoader(Integer.valueOf(2022), Integer.valueOf(17)).getInputs()).toCharArray())), new Function1<Character, Direction>() {
-    public Direction apply(final Character it) {
-      String _plus = (it + "");
-      return Dir.fromLeftRight(_plus);
-    }
-  });
+  private static final List<Direction> movements = ListExtensions.<Character, Direction>map(((List<Character>)Conversions.doWrapArray(IterableExtensions.<String>head(new InputLoader(Integer.valueOf(2022), Integer.valueOf(17)).getInputs()).toCharArray())), ((Function1<Character, Direction>) (Character it) -> {
+    String _plus = (it + "");
+    return Dir.fromLeftRight(_plus);
+  }));
 
   private static final int movements_size = Day17.movements.size();
 

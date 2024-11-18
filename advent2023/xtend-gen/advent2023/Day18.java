@@ -36,7 +36,7 @@ public class Day18 {
       final String[] split = line.split(" ");
       final Direction dir = Dir.directionFromString(split[0]);
       final int number = Integer.parseInt(split[1]);
-      first_list.add(IterableExtensions.<Coordinate>last(first_list).otherMove(dir, number));
+      first_list.add(first_list.getLast().otherMove(dir, number));
       int _length = (split[2]).length();
       int _minus = (_length - 2);
       final int other_number = Integer.parseInt((split[2]).substring(2, _minus), 16);
@@ -45,7 +45,7 @@ public class Day18 {
       char _charAt = (split[2]).charAt(_minus_1);
       String _plus = (Character.valueOf(_charAt) + "");
       final Direction other_dir = Dir.directionFromStringNb(_plus);
-      second_list.add(IterableExtensions.<Coordinate>last(second_list).otherMove(other_dir, other_number));
+      second_list.add(second_list.getLast().otherMove(other_dir, other_number));
     };
     input.forEach(_function);
     final Pair<CoordinateSet, Pair<CoordinateSet, CoordinateSet>> output = Map.flow(first_list);

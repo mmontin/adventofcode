@@ -54,10 +54,12 @@ public class Singleton extends SNumber {
     return _xifexpression;
   }
 
+  @Override
   public String toString() {
     return (Integer.valueOf(this.value) + "");
   }
 
+  @Override
   public Singleton findFirstToSplit() {
     Singleton _xifexpression = null;
     if ((this.value >= 10)) {
@@ -68,15 +70,18 @@ public class Singleton extends SNumber {
     return _xifexpression;
   }
 
+  @Override
   public Pair findFirstToExplode() {
     return null;
   }
 
+  @Override
   public void updateValue(final boolean right, final int value_) {
     int _value = this.value;
     this.value = (_value + value_);
   }
 
+  @Override
   public int magnitude() {
     return this.value;
   }

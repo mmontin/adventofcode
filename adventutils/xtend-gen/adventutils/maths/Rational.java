@@ -97,6 +97,7 @@ public class Rational implements Comparable<Rational> {
     return new Rational(_abs, this.denominator);
   }
 
+  @Override
   public boolean equals(final Object other) {
     boolean _switchResult = false;
     boolean _matched = false;
@@ -110,10 +111,12 @@ public class Rational implements Comparable<Rational> {
     return _switchResult;
   }
 
+  @Override
   public String toString() {
     return (((("(" + this.numerator) + " / ") + this.denominator) + ")");
   }
 
+  @Override
   public int compareTo(final Rational o) {
     return this.operator_minus(o).signum();
   }

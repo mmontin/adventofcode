@@ -18,10 +18,8 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class Day22 {
   public static void main(final String[] args) {
-    final Function1<String, char[]> _function = new Function1<String, char[]>() {
-      public char[] apply(final String it) {
-        return it.toCharArray();
-      }
+    final Function1<String, char[]> _function = (String it) -> {
+      return it.toCharArray();
     };
     final List<char[]> input = ListExtensions.<String, char[]>map(new InputLoader(Integer.valueOf(2017), Integer.valueOf(22)).getInputs(), _function);
     final HashSet<Coordinate> infected = CollectionLiterals.<Coordinate>newHashSet();
@@ -98,10 +96,8 @@ public class Day22 {
           }
         }
         current_direction = _switchResult;
-        final BiFunction<Integer, Integer, Integer> _function_1 = new BiFunction<Integer, Integer, Integer>() {
-          public Integer apply(final Integer x, final Integer y) {
-            return Integer.valueOf((((x).intValue() + (y).intValue()) % 4));
-          }
+        final BiFunction<Integer, Integer, Integer> _function_1 = (Integer x, Integer y) -> {
+          return Integer.valueOf((((x).intValue() + (y).intValue()) % 4));
         };
         Integer _merge = nodes.merge(current_position, Integer.valueOf(1), _function_1);
         boolean _equals_2 = ((_merge).intValue() == 2);

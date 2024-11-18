@@ -108,16 +108,12 @@ public class Rectangle implements Comparable<Rectangle> {
     HashSet<Coordinate> _xblockexpression = null;
     {
       final HashSet<Coordinate> output = CollectionLiterals.<Coordinate>newHashSet();
-      final Consumer<Integer> _function = new Consumer<Integer>() {
-        public void accept(final Integer i) {
-          final Consumer<Integer> _function = new Consumer<Integer>() {
-            public void accept(final Integer j) {
-              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-              output.add(_coordinate);
-            }
-          };
-          Rectangle.this.y.forEach(_function);
-        }
+      final Consumer<Integer> _function = (Integer i) -> {
+        final Consumer<Integer> _function_1 = (Integer j) -> {
+          Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+          output.add(_coordinate);
+        };
+        this.y.forEach(_function_1);
       };
       this.x.forEach(_function);
       _xblockexpression = output;
@@ -125,10 +121,12 @@ public class Rectangle implements Comparable<Rectangle> {
     return _xblockexpression;
   }
 
+  @Override
   public int hashCode() {
     return ((this.minX * this.maxX) + (this.minY * this.maxY));
   }
 
+  @Override
   public boolean equals(final Object other) {
     boolean _xblockexpression = false;
     {
@@ -138,6 +136,7 @@ public class Rectangle implements Comparable<Rectangle> {
     return _xblockexpression;
   }
 
+  @Override
   public int compareTo(final Rectangle other) {
     int _xblockexpression = (int) 0;
     {

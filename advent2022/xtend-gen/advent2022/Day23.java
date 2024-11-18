@@ -20,11 +20,9 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Day23 {
-  private static final List<char[]> input = ListExtensions.<String, char[]>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(23)).getInputs(), new Function1<String, char[]>() {
-    public char[] apply(final String it) {
-      return it.toCharArray();
-    }
-  });
+  private static final List<char[]> input = ListExtensions.<String, char[]>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(23)).getInputs(), ((Function1<String, char[]>) (String it) -> {
+    return it.toCharArray();
+  }));
 
   private static final Set<Coordinate> elves = CollectionLiterals.<Coordinate>newHashSet();
 
@@ -35,55 +33,41 @@ public class Day23 {
     Day23.propositions.addAll(CollectionLiterals.<Direction>newArrayList(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
     Day23.elves.clear();
     int _size = Day23.input.size();
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer i) {
-        int _size = ((List<Character>)Conversions.doWrapArray(Day23.input.get(0))).size();
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer j) {
-            char _get = Day23.input.get((i).intValue())[(j).intValue()];
-            boolean _equals = (Character.valueOf(_get) + "").equals("#");
-            if (_equals) {
-              Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-              Day23.elves.add(_coordinate);
-            }
-          }
-        };
-        new ExclusiveRange(0, _size, true).forEach(_function);
-      }
+    final Consumer<Integer> _function = (Integer i) -> {
+      int _size_1 = ((List<Character>)Conversions.doWrapArray(Day23.input.get(0))).size();
+      final Consumer<Integer> _function_1 = (Integer j) -> {
+        char _get = Day23.input.get((i).intValue())[(j).intValue()];
+        boolean _equals = (Character.valueOf(_get) + "").equals("#");
+        if (_equals) {
+          Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+          Day23.elves.add(_coordinate);
+        }
+      };
+      new ExclusiveRange(0, _size_1, true).forEach(_function_1);
     };
     new ExclusiveRange(0, _size, true).forEach(_function);
   }
 
   public static void main(final String[] args) {
     Day23.init();
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer it) {
-        Day23.round();
-      }
+    final Consumer<Integer> _function = (Integer it) -> {
+      Day23.round();
     };
     new ExclusiveRange(0, 10, true).forEach(_function);
-    final Function1<Coordinate, Integer> _function_1 = new Function1<Coordinate, Integer>() {
-      public Integer apply(final Coordinate it) {
-        return Integer.valueOf(it.getX());
-      }
+    final Function1<Coordinate, Integer> _function_1 = (Coordinate it) -> {
+      return Integer.valueOf(it.getX());
     };
     final int minX = IterableExtensions.<Coordinate, Integer>minBy(Day23.elves, _function_1).getX();
-    final Function1<Coordinate, Integer> _function_2 = new Function1<Coordinate, Integer>() {
-      public Integer apply(final Coordinate it) {
-        return Integer.valueOf(it.getX());
-      }
+    final Function1<Coordinate, Integer> _function_2 = (Coordinate it) -> {
+      return Integer.valueOf(it.getX());
     };
     final int maxX = IterableExtensions.<Coordinate, Integer>maxBy(Day23.elves, _function_2).getX();
-    final Function1<Coordinate, Integer> _function_3 = new Function1<Coordinate, Integer>() {
-      public Integer apply(final Coordinate it) {
-        return Integer.valueOf(it.getY());
-      }
+    final Function1<Coordinate, Integer> _function_3 = (Coordinate it) -> {
+      return Integer.valueOf(it.getY());
     };
     final int minY = IterableExtensions.<Coordinate, Integer>minBy(Day23.elves, _function_3).getY();
-    final Function1<Coordinate, Integer> _function_4 = new Function1<Coordinate, Integer>() {
-      public Integer apply(final Coordinate it) {
-        return Integer.valueOf(it.getY());
-      }
+    final Function1<Coordinate, Integer> _function_4 = (Coordinate it) -> {
+      return Integer.valueOf(it.getY());
     };
     final int maxY = IterableExtensions.<Coordinate, Integer>maxBy(Day23.elves, _function_4).getY();
     int _size = Day23.elves.size();
@@ -101,41 +85,35 @@ public class Day23 {
     boolean _xblockexpression = false;
     {
       final HashMap<Coordinate, HashSet<Coordinate>> proposals = CollectionLiterals.<Coordinate, HashSet<Coordinate>>newHashMap();
-      final Consumer<Coordinate> _function = new Consumer<Coordinate>() {
-        public void accept(final Coordinate elf) {
-          final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-            public Boolean apply(final Coordinate it) {
-              boolean _contains = Day23.elves.contains(it);
-              return Boolean.valueOf((!_contains));
-            }
-          };
-          final Set<Coordinate> empty_neighbours = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate>filter(elf.allAroundUnboundedNeighbours(), _function));
-          int _size = empty_neighbours.size();
-          boolean _notEquals = (_size != 8);
-          if (_notEquals) {
-            boolean proposition_made = false;
-            int i = 0;
-            while (((!proposition_made) && (i < 4))) {
-              {
-                final Direction current_direction = Day23.propositions.get(i);
-                final Set<Coordinate> current_proposal = elf.directedNeighbours(current_direction);
-                boolean _containsAll = empty_neighbours.containsAll(current_proposal);
-                if (_containsAll) {
-                  proposition_made = true;
-                  final BiFunction<HashSet<Coordinate>, HashSet<Coordinate>, HashSet<Coordinate>> _function_1 = new BiFunction<HashSet<Coordinate>, HashSet<Coordinate>, HashSet<Coordinate>>() {
-                    public HashSet<Coordinate> apply(final HashSet<Coordinate> s1, final HashSet<Coordinate> s2) {
-                      HashSet<Coordinate> _xblockexpression = null;
-                      {
-                        s1.addAll(s2);
-                        _xblockexpression = s1;
-                      }
-                      return _xblockexpression;
-                    }
-                  };
-                  proposals.merge(elf.otherMove(current_direction), CollectionLiterals.<Coordinate>newHashSet(elf), _function_1);
-                }
-                i++;
+      final Consumer<Coordinate> _function = (Coordinate elf) -> {
+        final Function1<Coordinate, Boolean> _function_1 = (Coordinate it) -> {
+          boolean _contains = Day23.elves.contains(it);
+          return Boolean.valueOf((!_contains));
+        };
+        final Set<Coordinate> empty_neighbours = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Coordinate>filter(elf.allAroundUnboundedNeighbours(), _function_1));
+        int _size = empty_neighbours.size();
+        boolean _notEquals = (_size != 8);
+        if (_notEquals) {
+          boolean proposition_made = false;
+          int i = 0;
+          while (((!proposition_made) && (i < 4))) {
+            {
+              final Direction current_direction = Day23.propositions.get(i);
+              final Set<Coordinate> current_proposal = elf.directedNeighbours(current_direction);
+              boolean _containsAll = empty_neighbours.containsAll(current_proposal);
+              if (_containsAll) {
+                proposition_made = true;
+                final BiFunction<HashSet<Coordinate>, HashSet<Coordinate>, HashSet<Coordinate>> _function_2 = (HashSet<Coordinate> s1, HashSet<Coordinate> s2) -> {
+                  HashSet<Coordinate> _xblockexpression_1 = null;
+                  {
+                    s1.addAll(s2);
+                    _xblockexpression_1 = s1;
+                  }
+                  return _xblockexpression_1;
+                };
+                proposals.merge(elf.otherMove(current_direction), CollectionLiterals.<Coordinate>newHashSet(elf), _function_2);
               }
+              i++;
             }
           }
         }

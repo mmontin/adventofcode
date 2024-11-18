@@ -1,7 +1,7 @@
 package advent2015.puzzle21;
 
-import com.google.common.base.Objects;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
@@ -47,7 +47,7 @@ public class Launcher {
               p.addAllItems(CollectionLiterals.<Item>newArrayList(weapon, armor, ring1, ring2));
               Player boss = new Player(100, 8, 2);
               Player _battle = Launcher.battle(p, boss);
-              boolean _equals_1 = Objects.equal(_battle, p);
+              boolean _equals_1 = Objects.equals(_battle, p);
               if (_equals_1) {
                 min_cost = Math.min(min_cost, cost);
               } else {
@@ -70,7 +70,7 @@ public class Launcher {
       while (((!p1.isDead()) && (!p2.isDead()))) {
         {
           Player _xifexpression = null;
-          boolean _equals = Objects.equal(current, p1);
+          boolean _equals = Objects.equals(current, p1);
           if (_equals) {
             _xifexpression = p2;
           } else {

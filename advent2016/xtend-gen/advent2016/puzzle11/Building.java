@@ -1,9 +1,9 @@
 package advent2016.puzzle11;
 
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -32,10 +32,8 @@ public class Building implements Comparable<Building> {
   public Building(final List<Integer> content_, final Integer elevator_, final int distance_) {
     this.content = content_;
     this.elevator = elevator_;
-    final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
-      public Integer apply(final Integer x, final Integer y) {
-        return Integer.valueOf(((x).intValue() + (y).intValue()));
-      }
+    final Function2<Integer, Integer, Integer> _function = (Integer x, Integer y) -> {
+      return Integer.valueOf(((x).intValue() + (y).intValue()));
     };
     this.score = IterableExtensions.<Integer>reduce(this.content, _function);
     int _size = this.content.size();
@@ -45,24 +43,20 @@ public class Building implements Comparable<Building> {
     this.distance = Integer.valueOf(distance_);
     int _size_1 = this.content.size();
     int _divide = (_size_1 / 2);
-    final Function2<ArrayList<String>, Integer, ArrayList<String>> _function_1 = new Function2<ArrayList<String>, Integer, ArrayList<String>>() {
-      public ArrayList<String> apply(final ArrayList<String> l, final Integer i) {
-        ArrayList<String> _xblockexpression = null;
-        {
-          Integer _get = Building.this.content.get((2 * (i).intValue()));
-          String _plus = ("" + _get);
-          Integer _get_1 = Building.this.content.get(((2 * (i).intValue()) + 1));
-          String _plus_1 = (_plus + _get_1);
-          l.add(_plus_1);
-          _xblockexpression = l;
-        }
-        return _xblockexpression;
+    final Function2<ArrayList<String>, Integer, ArrayList<String>> _function_1 = (ArrayList<String> l, Integer i) -> {
+      ArrayList<String> _xblockexpression = null;
+      {
+        Integer _get = this.content.get((2 * (i).intValue()));
+        String _plus = ("" + _get);
+        Integer _get_1 = this.content.get(((2 * (i).intValue()) + 1));
+        String _plus_1 = (_plus + _get_1);
+        l.add(_plus_1);
+        _xblockexpression = l;
       }
+      return _xblockexpression;
     };
-    final Function2<String, String, String> _function_2 = new Function2<String, String, String>() {
-      public String apply(final String s, final String e) {
-        return (s + e);
-      }
+    final Function2<String, String, String> _function_2 = (String s, String e) -> {
+      return (s + e);
     };
     this.normalForm = IterableExtensions.<String>reduce(IterableExtensions.<String>sort(IterableExtensions.<Integer, ArrayList<String>>fold(new ExclusiveRange(0, _divide, true), CollectionLiterals.<String>newArrayList(), _function_1)), _function_2);
     boolean _xblockexpression = false;
@@ -81,7 +75,7 @@ public class Building implements Comparable<Building> {
       final Integer UC = this.content.get(11);
       final Integer VG = this.content.get(12);
       final Integer VC = this.content.get(13);
-      _xblockexpression = (((((((Objects.equal(CC, CG) || (!CollectionLiterals.<Integer>newHashSet(PG, RG, SG, TG, UG, VG).contains(CC))) && (Objects.equal(PC, PG) || (!CollectionLiterals.<Integer>newHashSet(CG, RG, SG, TG, UG, VG).contains(PC)))) && (Objects.equal(RC, RG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, SG, TG, UG, VG).contains(RC)))) && (Objects.equal(SC, SG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, TG, UG, VG).contains(SC)))) && (Objects.equal(TC, TG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, SG, UG, VG).contains(TC)))) && (Objects.equal(UC, UG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, TG, SG, VG).contains(UC)))) && (Objects.equal(VC, VG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, SG, UG, TG).contains(VC))));
+      _xblockexpression = (((((((Objects.equals(CC, CG) || (!CollectionLiterals.<Integer>newHashSet(PG, RG, SG, TG, UG, VG).contains(CC))) && (Objects.equals(PC, PG) || (!CollectionLiterals.<Integer>newHashSet(CG, RG, SG, TG, UG, VG).contains(PC)))) && (Objects.equals(RC, RG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, SG, TG, UG, VG).contains(RC)))) && (Objects.equals(SC, SG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, TG, UG, VG).contains(SC)))) && (Objects.equals(TC, TG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, SG, UG, VG).contains(TC)))) && (Objects.equals(UC, UG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, TG, SG, VG).contains(UC)))) && (Objects.equals(VC, VG) || (!CollectionLiterals.<Integer>newHashSet(CG, PG, RG, SG, UG, TG).contains(VC))));
     }
     this.valid = _xblockexpression;
     int _hashCode = this.normalForm.hashCode();
@@ -123,19 +117,17 @@ public class Building implements Comparable<Building> {
       el.add(Integer.valueOf(((this.elevator).intValue() + 1)));
     }
     int _size = this.content.size();
-    final Function2<ArrayList<Integer>, Integer, ArrayList<Integer>> _function = new Function2<ArrayList<Integer>, Integer, ArrayList<Integer>>() {
-      public ArrayList<Integer> apply(final ArrayList<Integer> s, final Integer i) {
-        ArrayList<Integer> _xblockexpression = null;
-        {
-          Integer _get = Building.this.content.get((i).intValue());
-          boolean _equals = Objects.equal(_get, Building.this.elevator);
-          if (_equals) {
-            s.add(i);
-          }
-          _xblockexpression = s;
+    final Function2<ArrayList<Integer>, Integer, ArrayList<Integer>> _function = (ArrayList<Integer> s, Integer i) -> {
+      ArrayList<Integer> _xblockexpression = null;
+      {
+        Integer _get = this.content.get((i).intValue());
+        boolean _equals = Objects.equals(_get, this.elevator);
+        if (_equals) {
+          s.add(i);
         }
-        return _xblockexpression;
+        _xblockexpression = s;
       }
+      return _xblockexpression;
     };
     final ArrayList<Integer> indices = IterableExtensions.<Integer, ArrayList<Integer>>fold(new ExclusiveRange(0, _size, true), CollectionLiterals.<Integer>newArrayList(), _function);
     final int indices_nb = indices.size();
@@ -149,10 +141,8 @@ public class Building implements Comparable<Building> {
           if (b.valid) {
             boolean _contains = toVisit.contains(b);
             if (_contains) {
-              final Function1<Building, Boolean> _function_1 = new Function1<Building, Boolean>() {
-                public Boolean apply(final Building it) {
-                  return Boolean.valueOf(it.equals(b));
-                }
+              final Function1<Building, Boolean> _function_1 = (Building it) -> {
+                return Boolean.valueOf(it.equals(b));
               };
               final Building c = IterableExtensions.<Building>findFirst(toVisit, _function_1);
               c.updateDistance((this.distance).intValue());
@@ -174,10 +164,8 @@ public class Building implements Comparable<Building> {
               if (a.valid) {
                 boolean _contains_2 = toVisit.contains(a);
                 if (_contains_2) {
-                  final Function1<Building, Boolean> _function_2 = new Function1<Building, Boolean>() {
-                    public Boolean apply(final Building it) {
-                      return Boolean.valueOf(it.equals(a));
-                    }
+                  final Function1<Building, Boolean> _function_2 = (Building it) -> {
+                    return Boolean.valueOf(it.equals(a));
                   };
                   final Building c_1 = IterableExtensions.<Building>findFirst(toVisit, _function_2);
                   c_1.updateDistance((this.distance).intValue());
@@ -196,6 +184,7 @@ public class Building implements Comparable<Building> {
     }
   }
 
+  @Override
   public boolean equals(final Object other) {
     boolean _xblockexpression = false;
     {
@@ -205,17 +194,20 @@ public class Building implements Comparable<Building> {
     return _xblockexpression;
   }
 
+  @Override
   public int hashCode() {
     return (this.hCode).intValue();
   }
 
+  @Override
   public String toString() {
     return ((("Distance : " + this.distance) + " ; Score : ") + this.score);
   }
 
+  @Override
   public int compareTo(final Building other) {
     int _xifexpression = (int) 0;
-    boolean _equals = Objects.equal(other.distance, this.distance);
+    boolean _equals = Objects.equals(other.distance, this.distance);
     if (_equals) {
       _xifexpression = other.score.compareTo(this.score);
     } else {

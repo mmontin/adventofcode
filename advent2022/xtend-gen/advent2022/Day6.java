@@ -19,11 +19,9 @@ public class Day6 {
 
   public static Integer compute(final int nb) {
     int _size = Day6.input.size();
-    final Function1<Integer, Boolean> _function = new Function1<Integer, Boolean>() {
-      public Boolean apply(final Integer it) {
-        int _size = IterableExtensions.<Character>toSet(Day6.input.subList(((it).intValue() - nb), (it).intValue())).size();
-        return Boolean.valueOf((_size == nb));
-      }
+    final Function1<Integer, Boolean> _function = (Integer it) -> {
+      int _size_1 = IterableExtensions.<Character>toSet(Day6.input.subList(((it).intValue() - nb), (it).intValue())).size();
+      return Boolean.valueOf((_size_1 == nb));
     };
     return IterableExtensions.<Integer>findFirst(new IntegerRange(nb, _size), _function);
   }

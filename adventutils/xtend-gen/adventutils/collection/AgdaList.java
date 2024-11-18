@@ -6,6 +6,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class AgdaList<T extends Object> extends ArrayList<T> {
+  @Override
   public String toString() {
     String _xifexpression = null;
     boolean _isEmpty = this.isEmpty();

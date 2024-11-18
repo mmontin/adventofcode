@@ -54,10 +54,8 @@ public class Day19 {
     }
 
     public Boolean contains(final Day19.Resources other) {
-      final Function2<Boolean, Map.Entry<String, Integer>, Boolean> _function = new Function2<Boolean, Map.Entry<String, Integer>, Boolean>() {
-        public Boolean apply(final Boolean acc, final Map.Entry<String, Integer> e) {
-          return Boolean.valueOf(((acc).booleanValue() && (Resources.this.get(e.getKey()).compareTo(e.getValue()) >= 0)));
-        }
+      final Function2<Boolean, Map.Entry<String, Integer>, Boolean> _function = (Boolean acc, Map.Entry<String, Integer> e) -> {
+        return Boolean.valueOf(((acc).booleanValue() && (this.get(e.getKey()).compareTo(e.getValue()) >= 0)));
       };
       return IterableExtensions.<Map.Entry<String, Integer>, Boolean>fold(other.content.entrySet(), Boolean.valueOf(true), _function);
     }
@@ -80,15 +78,13 @@ public class Day19 {
       Day19.Resources _xblockexpression = null;
       {
         final HashMap<String, Integer> output = new HashMap<String, Integer>(this.content);
-        final BiConsumer<String, Integer> _function = new BiConsumer<String, Integer>() {
-          public void accept(final String k, final Integer v) {
-            Integer _get = output.get(k);
-            final int new_val = ((_get).intValue() - (v).intValue());
-            if ((new_val == 0)) {
-              output.remove(k);
-            } else {
-              output.put(k, Integer.valueOf(new_val));
-            }
+        final BiConsumer<String, Integer> _function = (String k, Integer v) -> {
+          Integer _get = output.get(k);
+          final int new_val = ((_get).intValue() - (v).intValue());
+          if ((new_val == 0)) {
+            output.remove(k);
+          } else {
+            output.put(k, Integer.valueOf(new_val));
           }
         };
         other.content.forEach(_function);
@@ -101,15 +97,11 @@ public class Day19 {
       Day19.Resources _xblockexpression = null;
       {
         final HashMap<String, Integer> output = new HashMap<String, Integer>(this.content);
-        final BiConsumer<String, Integer> _function = new BiConsumer<String, Integer>() {
-          public void accept(final String k, final Integer v) {
-            final BiFunction<Integer, Integer, Integer> _function = new BiFunction<Integer, Integer, Integer>() {
-              public Integer apply(final Integer i, final Integer j) {
-                return Integer.valueOf(((i).intValue() + (j).intValue()));
-              }
-            };
-            output.merge(k, v, _function);
-          }
+        final BiConsumer<String, Integer> _function = (String k, Integer v) -> {
+          final BiFunction<Integer, Integer, Integer> _function_1 = (Integer i, Integer j) -> {
+            return Integer.valueOf(((i).intValue() + (j).intValue()));
+          };
+          output.merge(k, v, _function_1);
         };
         other.content.forEach(_function);
         _xblockexpression = new Day19.Resources(output);
@@ -121,10 +113,8 @@ public class Day19 {
       Day19.Resources _xblockexpression = null;
       {
         final HashMap<String, Integer> output = new HashMap<String, Integer>(this.content);
-        final BiFunction<Integer, Integer, Integer> _function = new BiFunction<Integer, Integer, Integer>() {
-          public Integer apply(final Integer i, final Integer j) {
-            return Integer.valueOf(((i).intValue() + (j).intValue()));
-          }
+        final BiFunction<Integer, Integer, Integer> _function = (Integer i, Integer j) -> {
+          return Integer.valueOf(((i).intValue() + (j).intValue()));
         };
         output.merge(s, Integer.valueOf(1), _function);
         _xblockexpression = new Day19.Resources(output);
@@ -136,10 +126,8 @@ public class Day19 {
       Day19.Resources _xblockexpression = null;
       {
         final HashMap<String, Integer> output = CollectionLiterals.<String, Integer>newHashMap();
-        final BiConsumer<String, Integer> _function = new BiConsumer<String, Integer>() {
-          public void accept(final String k, final Integer v) {
-            output.put(k, Integer.valueOf(((v).intValue() * n)));
-          }
+        final BiConsumer<String, Integer> _function = (String k, Integer v) -> {
+          output.put(k, Integer.valueOf(((v).intValue() * n)));
         };
         this.content.forEach(_function);
         _xblockexpression = new Day19.Resources(this.content);
@@ -147,14 +135,17 @@ public class Day19 {
       return _xblockexpression;
     }
 
+    @Override
     public String toString() {
       return this.content.toString();
     }
 
+    @Override
     public int hashCode() {
       return this.content.hashCode();
     }
 
+    @Override
     public boolean equals(final Object other) {
       boolean _switchResult = false;
       boolean _matched = false;
@@ -174,10 +165,8 @@ public class Day19 {
 
     public Blueprint(final String line) {
       this.robots_costs = CollectionLiterals.<String, Day19.Resources>newHashMap();
-      final Function1<String, String[]> _function = new Function1<String, String[]>() {
-        public String[] apply(final String it) {
-          return it.split(" ");
-        }
+      final Function1<String, String[]> _function = (String it) -> {
+        return it.split(" ");
       };
       final List<String[]> split1 = ListExtensions.<String, String[]>map(((List<String>)Conversions.doWrapArray((line.split(": ")[1]).split("\\. "))), _function);
       int _parseInt = Integer.parseInt(split1.get(0)[4]);
@@ -208,6 +197,7 @@ public class Day19 {
       this.robots_costs.put("geode", _resources_3);
     }
 
+    @Override
     public String toString() {
       return this.robots_costs.toString();
     }
@@ -216,21 +206,19 @@ public class Day19 {
       HashMap<String, Pair<Integer, Day19.Resources>> _xblockexpression = null;
       {
         final HashMap<String, Pair<Integer, Day19.Resources>> output = CollectionLiterals.<String, Pair<Integer, Day19.Resources>>newHashMap();
-        final BiConsumer<String, Day19.Resources> _function = new BiConsumer<String, Day19.Resources>() {
-          public void accept(final String key, final Day19.Resources cost) {
-            if ((((cost.lacks("ore") || production.has("ore")) && (cost.lacks("clay") || production.has("clay"))) && (cost.lacks("obsidian") || production.has("obsidian")))) {
-              int i = 0;
-              Day19.Resources current_resources = initial;
-              while ((!(current_resources.contains(cost)).booleanValue())) {
-                {
-                  current_resources = current_resources.add(production);
-                  i++;
-                }
+        final BiConsumer<String, Day19.Resources> _function = (String key, Day19.Resources cost) -> {
+          if ((((cost.lacks("ore") || production.has("ore")) && (cost.lacks("clay") || production.has("clay"))) && (cost.lacks("obsidian") || production.has("obsidian")))) {
+            int i = 0;
+            Day19.Resources current_resources = initial;
+            while ((!(current_resources.contains(cost)).booleanValue())) {
+              {
+                current_resources = current_resources.add(production);
+                i++;
               }
-              Day19.Resources _subtract = current_resources.subtract(cost);
-              Pair<Integer, Day19.Resources> _mappedTo = Pair.<Integer, Day19.Resources>of(Integer.valueOf(i), _subtract);
-              output.put(key, _mappedTo);
             }
+            Day19.Resources _subtract = current_resources.subtract(cost);
+            Pair<Integer, Day19.Resources> _mappedTo = Pair.<Integer, Day19.Resources>of(Integer.valueOf(i), _subtract);
+            output.put(key, _mappedTo);
           }
         };
         this.robots_costs.forEach(_function);
@@ -240,10 +228,8 @@ public class Day19 {
     }
 
     public Integer maxRequested(final String s) {
-      final Function1<Day19.Resources, Integer> _function = new Function1<Day19.Resources, Integer>() {
-        public Integer apply(final Day19.Resources it) {
-          return it.get(s);
-        }
+      final Function1<Day19.Resources, Integer> _function = (Day19.Resources it) -> {
+        return it.get(s);
       };
       return IterableExtensions.<Day19.Resources, Integer>maxBy(this.robots_costs.values(), _function).get(s);
     }
@@ -275,38 +261,35 @@ public class Day19 {
       this(new Day19.Resources(CollectionLiterals.<String, Integer>newHashMap(Pair.<String, Integer>of("ore", Integer.valueOf(1)))), new Day19.Resources(), 0);
     }
 
+    @Override
     public boolean isGoal() {
       return this._isGoal;
     }
 
+    @Override
     public int minToGoal() {
       return this._minToGoal;
     }
 
+    @Override
     public Iterable<Pair<? extends State, Integer>> neighbours() {
       ArrayList<Pair<? extends State, Integer>> _xblockexpression = null;
       {
         final ArrayList<Pair<? extends State, Integer>> output = CollectionLiterals.<Pair<? extends State, Integer>>newArrayList();
         final int remaining_duration = (Day19.MAX_TIME - this.time);
-        final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function = new Function2<String, Pair<Integer, Day19.Resources>, Boolean>() {
-          public Boolean apply(final String k, final Pair<Integer, Day19.Resources> v) {
-            Integer _key = v.getKey();
-            return Boolean.valueOf(((_key).intValue() < remaining_duration));
-          }
+        final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function = (String k, Pair<Integer, Day19.Resources> v) -> {
+          Integer _key = v.getKey();
+          return Boolean.valueOf(((_key).intValue() < remaining_duration));
         };
         Map<String, Pair<Integer, Day19.Resources>> durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(Day19.current_blueprint.durationsToBuild(this.resources, this.robots), _function);
         if ((durations.containsKey("geode") && ((durations.get("geode").getKey()).intValue() == 0))) {
-          final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function_1 = new Function2<String, Pair<Integer, Day19.Resources>, Boolean>() {
-            public Boolean apply(final String k, final Pair<Integer, Day19.Resources> v) {
-              return Boolean.valueOf(k.equals("geode"));
-            }
+          final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function_1 = (String k, Pair<Integer, Day19.Resources> v) -> {
+            return Boolean.valueOf(k.equals("geode"));
           };
           durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_1);
         } else {
-          final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function_2 = new Function2<String, Pair<Integer, Day19.Resources>, Boolean>() {
-            public Boolean apply(final String k, final Pair<Integer, Day19.Resources> v) {
-              return Boolean.valueOf((k.equals("geode") || (Day19.current_blueprint.maxRequested(k).compareTo(RobotState.this.robots.get(k)) > 0)));
-            }
+          final Function2<String, Pair<Integer, Day19.Resources>, Boolean> _function_2 = (String k, Pair<Integer, Day19.Resources> v) -> {
+            return Boolean.valueOf((k.equals("geode") || (Day19.current_blueprint.maxRequested(k).compareTo(this.robots.get(k)) > 0)));
           };
           durations = MapExtensions.<String, Pair<Integer, Day19.Resources>>filter(durations, _function_2);
         }
@@ -320,30 +303,28 @@ public class Day19 {
           Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_sum));
           output.add(_mappedTo);
         } else {
-          final BiConsumer<String, Pair<Integer, Day19.Resources>> _function_3 = new BiConsumer<String, Pair<Integer, Day19.Resources>>() {
-            public void accept(final String k, final Pair<Integer, Day19.Resources> v) {
-              boolean _equals = k.equals("geode");
-              if (_equals) {
-                final Day19.Resources new_robots = new Day19.Resources(RobotState.this.robots.content);
-                final Day19.Resources new_resources = v.getValue().add(new_robots);
-                Integer _key = v.getKey();
-                int _plus = (RobotState.this.time + (_key).intValue());
-                final int new_time = (_plus + 1);
-                Day19.RobotState _robotState = new Day19.RobotState(new_robots, new_resources, new_time);
-                int _sum = Day19.sum((Day19.MAX_TIME - (new_time - 1)), (Day19.MAX_TIME - (RobotState.this.time + 1)));
-                Pair<State, Integer> _mappedTo = Pair.<State, Integer>of(((State) _robotState), Integer.valueOf(_sum));
-                output.add(_mappedTo);
-              } else {
-                final Day19.Resources new_robots_1 = RobotState.this.robots.addRobot(k);
-                final Day19.Resources new_resources_1 = v.getValue().add(RobotState.this.robots);
-                Integer _key_1 = v.getKey();
-                int _plus_1 = (RobotState.this.time + (_key_1).intValue());
-                final int new_time_1 = (_plus_1 + 1);
-                Day19.RobotState _robotState_1 = new Day19.RobotState(new_robots_1, new_resources_1, new_time_1);
-                int _sum_1 = Day19.sum((Day19.MAX_TIME - new_time_1), (Day19.MAX_TIME - (RobotState.this.time + 1)));
-                Pair<State, Integer> _mappedTo_1 = Pair.<State, Integer>of(((State) _robotState_1), Integer.valueOf(_sum_1));
-                output.add(_mappedTo_1);
-              }
+          final BiConsumer<String, Pair<Integer, Day19.Resources>> _function_3 = (String k, Pair<Integer, Day19.Resources> v) -> {
+            boolean _equals = k.equals("geode");
+            if (_equals) {
+              final Day19.Resources new_robots = new Day19.Resources(this.robots.content);
+              final Day19.Resources new_resources = v.getValue().add(new_robots);
+              Integer _key = v.getKey();
+              int _plus = (this.time + (_key).intValue());
+              final int new_time = (_plus + 1);
+              Day19.RobotState _robotState_1 = new Day19.RobotState(new_robots, new_resources, new_time);
+              int _sum_1 = Day19.sum((Day19.MAX_TIME - (new_time - 1)), (Day19.MAX_TIME - (this.time + 1)));
+              Pair<State, Integer> _mappedTo_1 = Pair.<State, Integer>of(((State) _robotState_1), Integer.valueOf(_sum_1));
+              output.add(_mappedTo_1);
+            } else {
+              final Day19.Resources new_robots_1 = this.robots.addRobot(k);
+              final Day19.Resources new_resources_1 = v.getValue().add(this.robots);
+              Integer _key_1 = v.getKey();
+              int _plus_1 = (this.time + (_key_1).intValue());
+              final int new_time_1 = (_plus_1 + 1);
+              Day19.RobotState _robotState_2 = new Day19.RobotState(new_robots_1, new_resources_1, new_time_1);
+              int _sum_2 = Day19.sum((Day19.MAX_TIME - new_time_1), (Day19.MAX_TIME - (this.time + 1)));
+              Pair<State, Integer> _mappedTo_2 = Pair.<State, Integer>of(((State) _robotState_2), Integer.valueOf(_sum_2));
+              output.add(_mappedTo_2);
             }
           };
           durations.forEach(_function_3);
@@ -353,10 +334,12 @@ public class Day19 {
       return _xblockexpression;
     }
 
+    @Override
     public int hashCode() {
       return this._hashCode;
     }
 
+    @Override
     public boolean equals(final Object other) {
       boolean _switchResult = false;
       boolean _matched = false;
@@ -370,6 +353,7 @@ public class Day19 {
       return _switchResult;
     }
 
+    @Override
     public String toString() {
       String _string = this.robots.toString();
       String _plus = ("[[" + _string);
@@ -382,11 +366,9 @@ public class Day19 {
     }
   }
 
-  private static final List<Day19.Blueprint> blueprints = ListExtensions.<String, Day19.Blueprint>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(19)).getInputs(), new Function1<String, Day19.Blueprint>() {
-    public Day19.Blueprint apply(final String it) {
-      return new Day19.Blueprint(it);
-    }
-  });
+  private static final List<Day19.Blueprint> blueprints = ListExtensions.<String, Day19.Blueprint>map(new InputLoader(Integer.valueOf(2022), Integer.valueOf(19)).getInputs(), ((Function1<String, Day19.Blueprint>) (String it) -> {
+    return new Day19.Blueprint(it);
+  }));
 
   private static int MAX_TIME;
 
@@ -407,36 +389,32 @@ public class Day19 {
     final AStar aStar = new AStar();
     Day19.init_max(24);
     int _size = Day19.blueprints.size();
-    final Function2<Integer, Integer, Integer> _function = new Function2<Integer, Integer, Integer>() {
-      public Integer apply(final Integer acc, final Integer v) {
-        int _xblockexpression = (int) 0;
-        {
-          Day19.current_blueprint = Day19.blueprints.get((v).intValue());
-          Day19.RobotState _robotState = new Day19.RobotState();
-          aStar.initialize(_robotState);
-          Integer _minDistance = aStar.run().getMinDistance();
-          int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
-          int _multiply = (_minus * ((v).intValue() + 1));
-          _xblockexpression = ((acc).intValue() + _multiply);
-        }
-        return Integer.valueOf(_xblockexpression);
+    final Function2<Integer, Integer, Integer> _function = (Integer acc, Integer v) -> {
+      int _xblockexpression = (int) 0;
+      {
+        Day19.current_blueprint = Day19.blueprints.get((v).intValue());
+        Day19.RobotState _robotState = new Day19.RobotState();
+        aStar.initialize(_robotState);
+        Integer _minDistance = aStar.run().getMinDistance();
+        int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
+        int _multiply = (_minus * ((v).intValue() + 1));
+        _xblockexpression = ((acc).intValue() + _multiply);
       }
+      return Integer.valueOf(_xblockexpression);
     };
     InputOutput.<Integer>println(IterableExtensions.<Integer, Integer>fold(new ExclusiveRange(0, _size, true), Integer.valueOf(0), _function));
     Day19.init_max(32);
-    final Function2<Integer, Integer, Integer> _function_1 = new Function2<Integer, Integer, Integer>() {
-      public Integer apply(final Integer acc, final Integer v) {
-        int _xblockexpression = (int) 0;
-        {
-          Day19.current_blueprint = Day19.blueprints.get((v).intValue());
-          Day19.RobotState _robotState = new Day19.RobotState();
-          aStar.initialize(_robotState);
-          Integer _minDistance = aStar.run().getMinDistance();
-          int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
-          _xblockexpression = ((acc).intValue() * _minus);
-        }
-        return Integer.valueOf(_xblockexpression);
+    final Function2<Integer, Integer, Integer> _function_1 = (Integer acc, Integer v) -> {
+      int _xblockexpression = (int) 0;
+      {
+        Day19.current_blueprint = Day19.blueprints.get((v).intValue());
+        Day19.RobotState _robotState = new Day19.RobotState();
+        aStar.initialize(_robotState);
+        Integer _minDistance = aStar.run().getMinDistance();
+        int _minus = (Day19.MAX_PRODUCTION - (_minDistance).intValue());
+        _xblockexpression = ((acc).intValue() * _minus);
       }
+      return Integer.valueOf(_xblockexpression);
     };
     InputOutput.<Integer>println(
       IterableExtensions.<Integer, Integer>fold(new IntegerRange(0, 2), Integer.valueOf(1), _function_1));

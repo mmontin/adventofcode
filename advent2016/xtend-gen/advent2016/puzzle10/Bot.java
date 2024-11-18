@@ -38,10 +38,12 @@ public class Bot extends Bin {
     this.chips.clear();
   }
 
+  @Override
   public boolean equals(final Object o) {
     return (this.number == ((Bot) o).number);
   }
 
+  @Override
   public int hashCode() {
     return this.number;
   }

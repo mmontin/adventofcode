@@ -1,7 +1,6 @@
 package advent2017;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +16,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Day23 {
-  private static final List<List<String>> commands = ListExtensions.<String, List<String>>map(new InputLoader(Integer.valueOf(2017), Integer.valueOf(23)).getInputs(), new Function1<String, List<String>>() {
-    public List<String> apply(final String it) {
-      return IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(it.split(" "))));
-    }
-  });
+  private static final List<List<String>> commands = ListExtensions.<String, List<String>>map(new InputLoader(Integer.valueOf(2017), Integer.valueOf(23)).getInputs(), ((Function1<String, List<String>>) (String it) -> {
+    return IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(it.split(" "))));
+  }));
 
   public static void main(final String[] args) {
     final HashMap<String, Long> registers = CollectionLiterals.<String, Long>newHashMap();
@@ -66,33 +63,38 @@ public class Day23 {
       int new_position = (position).intValue();
       boolean is_mul = false;
       String _get = l.get(0);
-      boolean _matched = false;
-      if (Objects.equal(_get, "set")) {
-        _matched=true;
-        registers.put(l.get(1), Day23.getMeAValue(registers, l.get(2)));
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "sub")) {
-          _matched=true;
-          String _get_1 = l.get(1);
-          Long _meAValue = Day23.getMeAValue(registers, l.get(1));
-          Long _meAValue_1 = Day23.getMeAValue(registers, l.get(2));
-          long _minus = ((_meAValue).longValue() - (_meAValue_1).longValue());
-          registers.put(_get_1, Long.valueOf(_minus));
+      if (_get != null) {
+        switch (_get) {
+          case "set":
+            registers.put(l.get(1), Day23.getMeAValue(registers, l.get(2)));
+            break;
+          case "sub":
+            String _get_1 = l.get(1);
+            Long _meAValue = Day23.getMeAValue(registers, l.get(1));
+            Long _meAValue_1 = Day23.getMeAValue(registers, l.get(2));
+            long _minus = ((_meAValue).longValue() - (_meAValue_1).longValue());
+            registers.put(_get_1, Long.valueOf(_minus));
+            break;
+          case "mul":
+            is_mul = true;
+            String _get_2 = l.get(1);
+            Long _meAValue_2 = Day23.getMeAValue(registers, l.get(1));
+            Long _meAValue_3 = Day23.getMeAValue(registers, l.get(2));
+            long _multiply = ((_meAValue_2).longValue() * (_meAValue_3).longValue());
+            registers.put(_get_2, Long.valueOf(_multiply));
+            break;
+          default:
+            Long _meAValue_4 = Day23.getMeAValue(registers, l.get(1));
+            boolean _notEquals = ((_meAValue_4).longValue() != 0);
+            if (_notEquals) {
+              int _new_position = new_position;
+              Long _meAValue_5 = Day23.getMeAValue(registers, l.get(2));
+              long _minus_1 = ((_meAValue_5).longValue() - 1);
+              new_position = (_new_position + ((int) _minus_1));
+            }
+            break;
         }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "mul")) {
-          _matched=true;
-          is_mul = true;
-          String _get_2 = l.get(1);
-          Long _meAValue_2 = Day23.getMeAValue(registers, l.get(1));
-          Long _meAValue_3 = Day23.getMeAValue(registers, l.get(2));
-          long _multiply = ((_meAValue_2).longValue() * (_meAValue_3).longValue());
-          registers.put(_get_2, Long.valueOf(_multiply));
-        }
-      }
-      if (!_matched) {
+      } else {
         Long _meAValue_4 = Day23.getMeAValue(registers, l.get(1));
         boolean _notEquals = ((_meAValue_4).longValue() != 0);
         if (_notEquals) {

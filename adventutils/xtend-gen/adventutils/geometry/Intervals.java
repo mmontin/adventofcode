@@ -81,6 +81,7 @@ public class Intervals {
     return _xifexpression;
   }
 
+  @Override
   public String toString() {
     return this.content.toString();
   }

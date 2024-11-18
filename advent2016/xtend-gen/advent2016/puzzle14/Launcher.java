@@ -20,6 +20,7 @@ public class Launcher {
   private static final String salt = "cuanljph";
 
   private static final MessageDigest md = new Function0<MessageDigest>() {
+    @Override
     public MessageDigest apply() {
       try {
         MessageDigest _instance = MessageDigest.getInstance("MD5");
@@ -51,16 +52,12 @@ public class Launcher {
         boolean _not = (!_equals);
         if (_not) {
           Set<Map.Entry<Integer, String>> _entrySet = data.entrySet();
-          final Function1<Map.Entry<Integer, String>, Boolean> _function = new Function1<Map.Entry<Integer, String>, Boolean>() {
-            public Boolean apply(final Map.Entry<Integer, String> it) {
-              return Boolean.valueOf(myHash.contains(it.getValue()));
-            }
+          final Function1<Map.Entry<Integer, String>, Boolean> _function = (Map.Entry<Integer, String> it) -> {
+            return Boolean.valueOf(myHash.contains(it.getValue()));
           };
-          final Consumer<Map.Entry<Integer, String>> _function_1 = new Consumer<Map.Entry<Integer, String>>() {
-            public void accept(final Map.Entry<Integer, String> it) {
-              keys.add(it.getKey());
-              data.remove(it.getKey());
-            }
+          final Consumer<Map.Entry<Integer, String>> _function_1 = (Map.Entry<Integer, String> it) -> {
+            keys.add(it.getKey());
+            data.remove(it.getKey());
           };
           IterableExtensions.<Map.Entry<Integer, String>>filter(new HashSet<Map.Entry<Integer, String>>(_entrySet), _function).forEach(_function_1);
           data.put(Integer.valueOf(indice), repeat3.repeat(5));

@@ -1,11 +1,11 @@
 package advent2021.puzzle18;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
@@ -27,10 +27,8 @@ public class Launcher {
         }
       }
       br.close();
-      final Function2<SNumber, SNumber, SNumber> _function = new Function2<SNumber, SNumber, SNumber>() {
-        public SNumber apply(final SNumber s1, final SNumber s2) {
-          return new Pair(s1, s2, null).reduce();
-        }
+      final Function2<SNumber, SNumber, SNumber> _function = (SNumber s1, SNumber s2) -> {
+        return new Pair(s1, s2, null).reduce();
       };
       InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.<SNumber>reduce(sNumbers, _function).magnitude()));
       int max_magnitude = 0;
@@ -40,7 +38,7 @@ public class Launcher {
         int _size_1 = sNumbers.size();
         ExclusiveRange _doubleDotLessThan_1 = new ExclusiveRange(0, _size_1, true);
         for (final Integer j : _doubleDotLessThan_1) {
-          boolean _notEquals = (!Objects.equal(i, j));
+          boolean _notEquals = (!Objects.equals(i, j));
           if (_notEquals) {
             List<String> input = il.getInputs();
             String _get = input.get((i).intValue());

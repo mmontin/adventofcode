@@ -41,6 +41,7 @@ public class Day10 {
       return _xblockexpression;
     }
 
+    @Override
     public String toString() {
       return Integer.valueOf(this.value).toString();
     }
@@ -102,18 +103,14 @@ public class Day10 {
     ArrayList<Integer> _xblockexpression = null;
     {
       Day10.init();
-      final Function1<Character, Integer> _function = new Function1<Character, Integer>() {
-        public Integer apply(final Character it) {
-          return Integer.valueOf(((int) (it).charValue()));
-        }
+      final Function1<Character, Integer> _function = (Character it) -> {
+        return Integer.valueOf(((int) (it).charValue()));
       };
       List<Integer> _map = ListExtensions.<Character, Integer>map(((List<Character>)Conversions.doWrapArray(input.toCharArray())), _function);
       final ArrayList<Integer> second_pass = new ArrayList<Integer>(_map);
       second_pass.addAll(CollectionLiterals.<Integer>newArrayList(Integer.valueOf(17), Integer.valueOf(31), Integer.valueOf(73), Integer.valueOf(47), Integer.valueOf(23)));
-      final Consumer<Integer> _function_1 = new Consumer<Integer>() {
-        public void accept(final Integer it) {
-          Day10.round(second_pass);
-        }
+      final Consumer<Integer> _function_1 = (Integer it) -> {
+        Day10.round(second_pass);
       };
       new ExclusiveRange(0, 64, true).forEach(_function_1);
       Day10.Link toPrint = Day10.move(Day10.current_link, Day10.moved);
@@ -139,29 +136,23 @@ public class Day10 {
   }
 
   public static void main(final String[] args) {
-    final Function1<String, Integer> _function = new Function1<String, Integer>() {
-      public Integer apply(final String it) {
-        return Integer.valueOf(Integer.parseInt(it));
-      }
+    final Function1<String, Integer> _function = (String it) -> {
+      return Integer.valueOf(Integer.parseInt(it));
     };
     InputOutput.<Integer>println(Integer.valueOf(Day10.firstPart(ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(Day10.input.split(","))), _function))));
-    final Function1<Integer, String> _function_1 = new Function1<Integer, String>() {
-      public String apply(final Integer it) {
-        return String.format("%02x", it);
-      }
+    final Function1<Integer, String> _function_1 = (Integer it) -> {
+      return String.format("%02x", it);
     };
     InputOutput.<String>println(IterableExtensions.join(ListExtensions.<Integer, String>map(Day10.knotHash(Day10.input), _function_1), ""));
   }
 
   public static void round(final List<Integer> input) {
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer it) {
-        Day10.current_link = Day10.reverse(Day10.current_link, (it).intValue());
-        int _moved = Day10.moved;
-        Day10.moved = (_moved + (((it).intValue() + Day10.skip_size) % Day10.LIST_SIZE));
-        Day10.current_link = Day10.skip(Day10.current_link, Day10.skip_size);
-        Day10.skip_size = ((Day10.skip_size + 1) % Day10.LIST_SIZE);
-      }
+    final Consumer<Integer> _function = (Integer it) -> {
+      Day10.current_link = Day10.reverse(Day10.current_link, (it).intValue());
+      int _moved = Day10.moved;
+      Day10.moved = (_moved + (((it).intValue() + Day10.skip_size) % Day10.LIST_SIZE));
+      Day10.current_link = Day10.skip(Day10.current_link, Day10.skip_size);
+      Day10.skip_size = ((Day10.skip_size + 1) % Day10.LIST_SIZE);
     };
     input.forEach(_function);
   }
@@ -197,12 +188,10 @@ public class Day10 {
       } else {
         Day10.Link _xblockexpression_2 = null;
         {
-          final Consumer<Day10.Link> _function = new Consumer<Day10.Link>() {
-            public void accept(final Day10.Link it) {
-              Day10.Link tmp = it.previous;
-              it.previous = it.next;
-              it.next = tmp;
-            }
+          final Consumer<Day10.Link> _function = (Day10.Link it) -> {
+            Day10.Link tmp = it.previous;
+            it.previous = it.next;
+            it.next = tmp;
           };
           links.forEach(_function);
           _xblockexpression_2 = IterableExtensions.<Day10.Link>head(links);

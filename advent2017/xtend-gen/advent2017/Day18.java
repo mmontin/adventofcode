@@ -1,7 +1,6 @@
 package advent2017;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +16,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 
 @SuppressWarnings("all")
 public class Day18 {
-  private static final List<List<String>> commands = ListExtensions.<String, List<String>>map(new InputLoader(Integer.valueOf(2017), Integer.valueOf(18)).getInputs(), new Function1<String, List<String>>() {
-    public List<String> apply(final String it) {
-      return IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(it.split(" "))));
-    }
-  });
+  private static final List<List<String>> commands = ListExtensions.<String, List<String>>map(new InputLoader(Integer.valueOf(2017), Integer.valueOf(18)).getInputs(), ((Function1<String, List<String>>) (String it) -> {
+    return IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(it.split(" "))));
+  }));
 
   public static void main(final String[] args) {
     final HashMap<String, Long> registers = CollectionLiterals.<String, Long>newHashMap();
@@ -71,58 +68,54 @@ public class Day18 {
       boolean finished = false;
       int new_position = (position).intValue();
       String _get = l.get(0);
-      boolean _matched = false;
-      if (Objects.equal(_get, "snd")) {
-        _matched=true;
-        sent.push(registers.getOrDefault(l.get(1), Long.valueOf(0L)));
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "set")) {
-          _matched=true;
-          registers.put(l.get(1), Day18.getMeAValue(registers, l.get(2)));
+      if (_get != null) {
+        switch (_get) {
+          case "snd":
+            sent.push(registers.getOrDefault(l.get(1), Long.valueOf(0L)));
+            break;
+          case "set":
+            registers.put(l.get(1), Day18.getMeAValue(registers, l.get(2)));
+            break;
+          case "add":
+            String _get_1 = l.get(1);
+            Long _meAValue = Day18.getMeAValue(registers, l.get(1));
+            Long _meAValue_1 = Day18.getMeAValue(registers, l.get(2));
+            long _plus = ((_meAValue).longValue() + (_meAValue_1).longValue());
+            registers.put(_get_1, Long.valueOf(_plus));
+            break;
+          case "mul":
+            String _get_2 = l.get(1);
+            Long _meAValue_2 = Day18.getMeAValue(registers, l.get(1));
+            Long _meAValue_3 = Day18.getMeAValue(registers, l.get(2));
+            long _multiply = ((_meAValue_2).longValue() * (_meAValue_3).longValue());
+            registers.put(_get_2, Long.valueOf(_multiply));
+            break;
+          case "mod":
+            String _get_3 = l.get(1);
+            Long _meAValue_4 = Day18.getMeAValue(registers, l.get(1));
+            Long _meAValue_5 = Day18.getMeAValue(registers, l.get(2));
+            long _modulo = ((_meAValue_4).longValue() % (_meAValue_5).longValue());
+            registers.put(_get_3, Long.valueOf(_modulo));
+            break;
+          case "rcv":
+            Long _peek = sent.peek();
+            boolean _notEquals = ((_peek).longValue() != 0);
+            if (_notEquals) {
+              finished = true;
+            }
+            break;
+          default:
+            Long _meAValue_6 = Day18.getMeAValue(registers, l.get(1));
+            boolean _greaterThan = ((_meAValue_6).longValue() > 0);
+            if (_greaterThan) {
+              int _new_position = new_position;
+              Long _meAValue_7 = Day18.getMeAValue(registers, l.get(2));
+              long _minus = ((_meAValue_7).longValue() - 1);
+              new_position = (_new_position + ((int) _minus));
+            }
+            break;
         }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "add")) {
-          _matched=true;
-          String _get_1 = l.get(1);
-          Long _meAValue = Day18.getMeAValue(registers, l.get(1));
-          Long _meAValue_1 = Day18.getMeAValue(registers, l.get(2));
-          long _plus = ((_meAValue).longValue() + (_meAValue_1).longValue());
-          registers.put(_get_1, Long.valueOf(_plus));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "mul")) {
-          _matched=true;
-          String _get_2 = l.get(1);
-          Long _meAValue_2 = Day18.getMeAValue(registers, l.get(1));
-          Long _meAValue_3 = Day18.getMeAValue(registers, l.get(2));
-          long _multiply = ((_meAValue_2).longValue() * (_meAValue_3).longValue());
-          registers.put(_get_2, Long.valueOf(_multiply));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "mod")) {
-          _matched=true;
-          String _get_3 = l.get(1);
-          Long _meAValue_4 = Day18.getMeAValue(registers, l.get(1));
-          Long _meAValue_5 = Day18.getMeAValue(registers, l.get(2));
-          long _modulo = ((_meAValue_4).longValue() % (_meAValue_5).longValue());
-          registers.put(_get_3, Long.valueOf(_modulo));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "rcv")) {
-          _matched=true;
-          Long _peek = sent.peek();
-          boolean _notEquals = ((_peek).longValue() != 0);
-          if (_notEquals) {
-            finished = true;
-          }
-        }
-      }
-      if (!_matched) {
+      } else {
         Long _meAValue_6 = Day18.getMeAValue(registers, l.get(1));
         boolean _greaterThan = ((_meAValue_6).longValue() > 0);
         if (_greaterThan) {
@@ -142,60 +135,56 @@ public class Day18 {
     {
       int new_position = (position).intValue();
       String _get = l.get(0);
-      boolean _matched = false;
-      if (Objects.equal(_get, "snd")) {
-        _matched=true;
-        sends.add(registers.getOrDefault(l.get(1), Long.valueOf(0L)));
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "set")) {
-          _matched=true;
-          registers.put(l.get(1), Day18.getMeAValue(registers, l.get(2)));
+      if (_get != null) {
+        switch (_get) {
+          case "snd":
+            sends.add(registers.getOrDefault(l.get(1), Long.valueOf(0L)));
+            break;
+          case "set":
+            registers.put(l.get(1), Day18.getMeAValue(registers, l.get(2)));
+            break;
+          case "add":
+            String _get_1 = l.get(1);
+            Long _meAValue = Day18.getMeAValue(registers, l.get(1));
+            Long _meAValue_1 = Day18.getMeAValue(registers, l.get(2));
+            long _plus = ((_meAValue).longValue() + (_meAValue_1).longValue());
+            registers.put(_get_1, Long.valueOf(_plus));
+            break;
+          case "mul":
+            String _get_2 = l.get(1);
+            Long _meAValue_2 = Day18.getMeAValue(registers, l.get(1));
+            Long _meAValue_3 = Day18.getMeAValue(registers, l.get(2));
+            long _multiply = ((_meAValue_2).longValue() * (_meAValue_3).longValue());
+            registers.put(_get_2, Long.valueOf(_multiply));
+            break;
+          case "mod":
+            String _get_3 = l.get(1);
+            Long _meAValue_4 = Day18.getMeAValue(registers, l.get(1));
+            Long _meAValue_5 = Day18.getMeAValue(registers, l.get(2));
+            long _modulo = ((_meAValue_4).longValue() % (_meAValue_5).longValue());
+            registers.put(_get_3, Long.valueOf(_modulo));
+            break;
+          case "rcv":
+            int _size = receives.size();
+            boolean _equals = (_size == 0);
+            if (_equals) {
+              new_position--;
+            } else {
+              registers.put(l.get(1), receives.remove(0));
+            }
+            break;
+          default:
+            Long _meAValue_6 = Day18.getMeAValue(registers, l.get(1));
+            boolean _greaterThan = ((_meAValue_6).longValue() > 0);
+            if (_greaterThan) {
+              int _new_position = new_position;
+              Long _meAValue_7 = Day18.getMeAValue(registers, l.get(2));
+              long _minus = ((_meAValue_7).longValue() - 1);
+              new_position = (_new_position + ((int) _minus));
+            }
+            break;
         }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "add")) {
-          _matched=true;
-          String _get_1 = l.get(1);
-          Long _meAValue = Day18.getMeAValue(registers, l.get(1));
-          Long _meAValue_1 = Day18.getMeAValue(registers, l.get(2));
-          long _plus = ((_meAValue).longValue() + (_meAValue_1).longValue());
-          registers.put(_get_1, Long.valueOf(_plus));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "mul")) {
-          _matched=true;
-          String _get_2 = l.get(1);
-          Long _meAValue_2 = Day18.getMeAValue(registers, l.get(1));
-          Long _meAValue_3 = Day18.getMeAValue(registers, l.get(2));
-          long _multiply = ((_meAValue_2).longValue() * (_meAValue_3).longValue());
-          registers.put(_get_2, Long.valueOf(_multiply));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "mod")) {
-          _matched=true;
-          String _get_3 = l.get(1);
-          Long _meAValue_4 = Day18.getMeAValue(registers, l.get(1));
-          Long _meAValue_5 = Day18.getMeAValue(registers, l.get(2));
-          long _modulo = ((_meAValue_4).longValue() % (_meAValue_5).longValue());
-          registers.put(_get_3, Long.valueOf(_modulo));
-        }
-      }
-      if (!_matched) {
-        if (Objects.equal(_get, "rcv")) {
-          _matched=true;
-          int _size = receives.size();
-          boolean _equals = (_size == 0);
-          if (_equals) {
-            new_position--;
-          } else {
-            registers.put(l.get(1), receives.remove(0));
-          }
-        }
-      }
-      if (!_matched) {
+      } else {
         Long _meAValue_6 = Day18.getMeAValue(registers, l.get(1));
         boolean _greaterThan = ((_meAValue_6).longValue() > 0);
         if (_greaterThan) {

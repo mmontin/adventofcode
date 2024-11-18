@@ -8,11 +8,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 public class MemoryRunner2<I extends Object, I2 extends Object, O extends Object> extends MemoryRunner<Pair<I, I2>, O> {
   public MemoryRunner2(final Function2<I, I2, O> fun) {
     super(
-      new Function<Pair<I, I2>, O>() {
-        public O apply(final Pair<I, I2> it) {
-          return fun.apply(it.getKey(), it.getValue());
-        }
-      });
+      ((Function<Pair<I, I2>, O>) (Pair<I, I2> it) -> {
+        return fun.apply(it.getKey(), it.getValue());
+      }));
   }
 
   public O call(final I par1, final I2 par2) {

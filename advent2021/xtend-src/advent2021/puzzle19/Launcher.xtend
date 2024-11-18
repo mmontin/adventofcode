@@ -48,7 +48,7 @@ class Launcher {
 				!dup.isEmpty
 			]
 			entry.value.retainAll(processed_indices)
-			val pivot = entry.value.last
+			val pivot = entry.value.toList.last
 
 			scanners_positions.add(collapse(data.get(pivot),data_distances.get(pivot),data.get(entry.key),data_distances.get(entry.key)))
 

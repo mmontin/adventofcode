@@ -88,6 +88,7 @@ public class Interval {
     return Pair.<Interval, Interval>of(_interval, _interval_1);
   }
 
+  @Override
   public String toString() {
     return (((("[" + Long.valueOf(this.leftBound)) + ",") + Long.valueOf(this.rightBound)) + "]");
   }

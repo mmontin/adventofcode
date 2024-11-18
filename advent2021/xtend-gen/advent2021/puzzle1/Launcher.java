@@ -10,10 +10,8 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 @SuppressWarnings("all")
 public class Launcher {
   public static void main(final String[] args) {
-    final Function1<String, Integer> _function = new Function1<String, Integer>() {
-      public Integer apply(final String x) {
-        return Integer.valueOf(Integer.parseInt(x));
-      }
+    final Function1<String, Integer> _function = (String x) -> {
+      return Integer.valueOf(Integer.parseInt(x));
     };
     final List<Integer> input = new InputLoader(Integer.valueOf(2021), Integer.valueOf(1)).<Integer>getInputs(_function);
     ArrayList<Integer> _arrayList = new ArrayList<Integer>(input);

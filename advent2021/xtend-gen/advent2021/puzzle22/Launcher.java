@@ -21,15 +21,13 @@ public class Launcher {
         final boolean on = (split[0]).equals("on");
         String _get = split[1];
         final Cuboid cuboid = new Cuboid(_get);
-        final Function2<HashSet<Cuboid>, Cuboid, HashSet<Cuboid>> _function = new Function2<HashSet<Cuboid>, Cuboid, HashSet<Cuboid>>() {
-          public HashSet<Cuboid> apply(final HashSet<Cuboid> set, final Cuboid c) {
-            HashSet<Cuboid> _xblockexpression = null;
-            {
-              set.addAll(c.subtract(cuboid));
-              _xblockexpression = set;
-            }
-            return _xblockexpression;
+        final Function2<HashSet<Cuboid>, Cuboid, HashSet<Cuboid>> _function = (HashSet<Cuboid> set, Cuboid c) -> {
+          HashSet<Cuboid> _xblockexpression = null;
+          {
+            set.addAll(c.subtract(cuboid));
+            _xblockexpression = set;
           }
+          return _xblockexpression;
         };
         cuboids = IterableExtensions.<Cuboid, HashSet<Cuboid>>fold(cuboids, CollectionLiterals.<Cuboid>newHashSet(), _function);
         if (on) {
@@ -37,10 +35,8 @@ public class Launcher {
         }
       }
     }
-    final Function2<BigInteger, Cuboid, BigInteger> _function = new Function2<BigInteger, Cuboid, BigInteger>() {
-      public BigInteger apply(final BigInteger v, final Cuboid c) {
-        return v.add(c.size());
-      }
+    final Function2<BigInteger, Cuboid, BigInteger> _function = (BigInteger v, Cuboid c) -> {
+      return v.add(c.size());
     };
     InputOutput.<BigInteger>println(IterableExtensions.<Cuboid, BigInteger>fold(cuboids, BigInteger.ZERO, _function));
   }

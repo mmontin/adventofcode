@@ -43,7 +43,7 @@ public class Day9 {
       _xifexpression = 0;
     } else {
       int _nextValue = Day9.getNextValue(Day9.getSubList(l));
-      Integer _last = IterableExtensions.<Integer>last(l);
+      Integer _last = l.getLast();
       _xifexpression = (_nextValue + (_last).intValue());
     }
     return _xifexpression;

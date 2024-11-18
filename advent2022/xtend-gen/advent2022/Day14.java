@@ -24,14 +24,13 @@ public class Day14 {
   private static final Set<Coordinate> rocks = CollectionLiterals.<Coordinate>newHashSet();
 
   private static final int max_depth = new Function0<Integer>() {
+    @Override
     public Integer apply() {
       int _xblockexpression = (int) 0;
       {
         Day14.init();
-        final Function1<Coordinate, Integer> _function = new Function1<Coordinate, Integer>() {
-          public Integer apply(final Coordinate it) {
-            return Integer.valueOf(it.getY());
-          }
+        final Function1<Coordinate, Integer> _function = (Coordinate it) -> {
+          return Integer.valueOf(it.getY());
         };
         _xblockexpression = IterableExtensions.<Coordinate, Integer>maxBy(Day14.rocks, _function).getY();
       }
@@ -43,23 +42,17 @@ public class Day14 {
 
   public static void init() {
     Day14.rocks.clear();
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String line) {
-        final Function1<String, Coordinate> _function = new Function1<String, Coordinate>() {
-          public Coordinate apply(final String it) {
-            return new Coordinate(it);
-          }
-        };
-        final List<Coordinate> coords = ListExtensions.<String, Coordinate>map(((List<String>)Conversions.doWrapArray(line.split(" -> "))), _function);
-        int _size = coords.size();
-        int _minus = (_size - 2);
-        final Consumer<Integer> _function_1 = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            Day14.rocks.addAll(Coordinate.getAllCoordsOnLine(coords.get((it).intValue()), coords.get(((it).intValue() + 1))));
-          }
-        };
-        new IntegerRange(0, _minus).forEach(_function_1);
-      }
+    final Consumer<String> _function = (String line) -> {
+      final Function1<String, Coordinate> _function_1 = (String it) -> {
+        return new Coordinate(it);
+      };
+      final List<Coordinate> coords = ListExtensions.<String, Coordinate>map(((List<String>)Conversions.doWrapArray(line.split(" -> "))), _function_1);
+      int _size = coords.size();
+      int _minus = (_size - 2);
+      final Consumer<Integer> _function_2 = (Integer it) -> {
+        Day14.rocks.addAll(Coordinate.getAllCoordsOnLine(coords.get((it).intValue()), coords.get(((it).intValue() + 1))));
+      };
+      new IntegerRange(0, _minus).forEach(_function_2);
     };
     Day14.inputs.forEach(_function);
   }
@@ -112,11 +105,9 @@ public class Day14 {
         final Coordinate down = current.move(Direction.UP);
         final ArrayList<Coordinate> possibilities = CollectionLiterals.<Coordinate>newArrayList(down, down.move(Direction.LEFT), down.move(Direction.RIGHT));
         possibilities.removeAll(Day14.rocks);
-        final Predicate<Coordinate> _function = new Predicate<Coordinate>() {
-          public boolean test(final Coordinate it) {
-            int _y = it.getY();
-            return (_y > (Day14.max_depth + 1));
-          }
+        final Predicate<Coordinate> _function = (Coordinate it) -> {
+          int _y = it.getY();
+          return (_y > (Day14.max_depth + 1));
         };
         possibilities.removeIf(_function);
         int _size = possibilities.size();

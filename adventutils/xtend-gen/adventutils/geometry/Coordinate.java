@@ -156,10 +156,8 @@ public class Coordinate implements Comparable<Coordinate> {
   }
 
   public Set<Coordinate> noDiagonalUnboundedNeighbours() {
-    final Function1<Pair<Coordinate, Direction>, Coordinate> _function = new Function1<Pair<Coordinate, Direction>, Coordinate>() {
-      public Coordinate apply(final Pair<Coordinate, Direction> it) {
-        return it.getKey();
-      }
+    final Function1<Pair<Coordinate, Direction>, Coordinate> _function = (Pair<Coordinate, Direction> it) -> {
+      return it.getKey();
     };
     return IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Direction>, Coordinate>map(this.noDiagonalUnboundedNeighboursWithDirection(), _function));
   }
@@ -206,10 +204,8 @@ public class Coordinate implements Comparable<Coordinate> {
   }
 
   public Iterable<Coordinate> allAroundBoundedNeighbours(final Coordinate upperLeft, final Coordinate bottomRight) {
-    final Function1<Coordinate, Boolean> _function = new Function1<Coordinate, Boolean>() {
-      public Boolean apply(final Coordinate c) {
-        return Boolean.valueOf(((((c.x >= upperLeft.x) && (c.x < bottomRight.x)) && (c.y >= upperLeft.y)) && (c.y < bottomRight.y)));
-      }
+    final Function1<Coordinate, Boolean> _function = (Coordinate c) -> {
+      return Boolean.valueOf(((((c.x >= upperLeft.x) && (c.x < bottomRight.x)) && (c.y >= upperLeft.y)) && (c.y < bottomRight.y)));
     };
     return IterableExtensions.<Coordinate>filter(this.allAroundUnboundedNeighbours(), _function);
   }
@@ -242,10 +238,12 @@ public class Coordinate implements Comparable<Coordinate> {
     return _xblockexpression;
   }
 
+  @Override
   public String toString() {
     return this.representation;
   }
 
+  @Override
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {
@@ -255,6 +253,7 @@ public class Coordinate implements Comparable<Coordinate> {
     return _xblockexpression;
   }
 
+  @Override
   public int hashCode() {
     return this.code;
   }
@@ -364,11 +363,9 @@ public class Coordinate implements Comparable<Coordinate> {
           _xifexpression_1 = coordinate;
         }
         final Coordinate _right = _xifexpression_1;
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            Coordinate _coordinate = new Coordinate(coordinate.x, (it).intValue());
-            output.add(_coordinate);
-          }
+        final Consumer<Integer> _function = (Integer it) -> {
+          Coordinate _coordinate = new Coordinate(coordinate.x, (it).intValue());
+          output.add(_coordinate);
         };
         new IntegerRange(_left.y, _right.y).forEach(_function);
       } else {
@@ -387,11 +384,9 @@ public class Coordinate implements Comparable<Coordinate> {
           _xifexpression_3 = coordinate;
         }
         final Coordinate _down = _xifexpression_3;
-        final Consumer<Integer> _function_1 = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            Coordinate _coordinate = new Coordinate((it).intValue(), coordinate.y);
-            output.add(_coordinate);
-          }
+        final Consumer<Integer> _function_1 = (Integer it) -> {
+          Coordinate _coordinate = new Coordinate((it).intValue(), coordinate.y);
+          output.add(_coordinate);
         };
         new IntegerRange(_up.x, _down.x).forEach(_function_1);
       }
@@ -400,6 +395,7 @@ public class Coordinate implements Comparable<Coordinate> {
     return _xblockexpression;
   }
 
+  @Override
   public int compareTo(final Coordinate other) {
     int _switchResult = (int) 0;
     int _compareTo = Integer.valueOf(this.x).compareTo(Integer.valueOf(other.x));

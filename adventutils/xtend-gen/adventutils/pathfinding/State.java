@@ -10,7 +10,9 @@ public interface State {
 
   Iterable<Pair<? extends State, Integer>> neighbours();
 
+  @Override
   boolean equals(final Object other);
 
+  @Override
   int hashCode();
 }

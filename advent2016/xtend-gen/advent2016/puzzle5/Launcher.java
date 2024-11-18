@@ -14,6 +14,7 @@ public class Launcher {
   private static final String input = "abbhdwsy";
 
   private static final MessageDigest md = new Function0<MessageDigest>() {
+    @Override
     public MessageDigest apply() {
       try {
         MessageDigest _instance = MessageDigest.getInstance("MD5");

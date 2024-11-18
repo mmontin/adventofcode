@@ -34,10 +34,8 @@ public class AStar {
   public Map<State, State> initialize(final State initial_) {
     Map<State, State> _xblockexpression = null;
     {
-      final Comparator<State> _function = new Comparator<State>() {
-        public int compare(final State e1, final State e2) {
-          return Integer.compare((AStar.this.fScore.get(e1)).intValue(), (AStar.this.fScore.get(e2)).intValue());
-        }
+      final Comparator<State> _function = (State e1, State e2) -> {
+        return Integer.compare((this.fScore.get(e1)).intValue(), (this.fScore.get(e2)).intValue());
       };
       PriorityQueue<State> _priorityQueue = new PriorityQueue<State>(_function);
       this.toVisit = _priorityQueue;
@@ -54,22 +52,20 @@ public class AStar {
   private State step() {
     State _xblockexpression = null;
     {
-      final Consumer<Pair<? extends State, Integer>> _function = new Consumer<Pair<? extends State, Integer>>() {
-        public void accept(final Pair<? extends State, Integer> it) {
-          final State state = it.getKey();
-          Integer _get = AStar.this.gScore.get(AStar.this.current);
-          Integer _value = it.getValue();
-          final int newGScore = ((_get).intValue() + (_value).intValue());
-          final Integer currentScore = AStar.this.gScore.get(state);
-          if (((currentScore == null) || (newGScore < (currentScore).intValue()))) {
-            AStar.this.previous.put(state, AStar.this.current);
-            AStar.this.toVisit.remove(state);
-            AStar.this.gScore.put(state, Integer.valueOf(newGScore));
-            int _minToGoal = state.minToGoal();
-            int _plus = (newGScore + _minToGoal);
-            AStar.this.fScore.put(state, Integer.valueOf(_plus));
-            AStar.this.toVisit.add(state);
-          }
+      final Consumer<Pair<? extends State, Integer>> _function = (Pair<? extends State, Integer> it) -> {
+        final State state = it.getKey();
+        Integer _get = this.gScore.get(this.current);
+        Integer _value = it.getValue();
+        final int newGScore = ((_get).intValue() + (_value).intValue());
+        final Integer currentScore = this.gScore.get(state);
+        if (((currentScore == null) || (newGScore < (currentScore).intValue()))) {
+          this.previous.put(state, this.current);
+          this.toVisit.remove(state);
+          this.gScore.put(state, Integer.valueOf(newGScore));
+          int _minToGoal = state.minToGoal();
+          int _plus = (newGScore + _minToGoal);
+          this.fScore.put(state, Integer.valueOf(_plus));
+          this.toVisit.add(state);
         }
       };
       this.current.neighbours().forEach(_function);

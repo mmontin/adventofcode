@@ -45,29 +45,25 @@ public class Launcher {
   public static void main(final String[] args) {
     try {
       final List<String> input = IterableExtensions.<String>toList(((Iterable<String>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2016), Integer.valueOf(1)).getInputReader().readLine().split(", "))));
-      final Function2<ArrayList<Launcher.Instruction>, String, ArrayList<Launcher.Instruction>> _function = new Function2<ArrayList<Launcher.Instruction>, String, ArrayList<Launcher.Instruction>>() {
-        public ArrayList<Launcher.Instruction> apply(final ArrayList<Launcher.Instruction> l, final String v) {
-          ArrayList<Launcher.Instruction> _xblockexpression = null;
-          {
-            Launcher.Instruction _xifexpression = null;
-            boolean _equals = v.substring(0, 1).equals("R");
-            if (_equals) {
-              _xifexpression = Launcher.Instruction.R;
-            } else {
-              _xifexpression = Launcher.Instruction.L;
-            }
-            l.add(_xifexpression);
-            int _parseInt = Integer.parseInt(v.substring(1));
-            final Consumer<Integer> _function = new Consumer<Integer>() {
-              public void accept(final Integer it) {
-                l.add(Launcher.Instruction.A);
-              }
-            };
-            new ExclusiveRange(0, _parseInt, true).forEach(_function);
-            _xblockexpression = l;
+      final Function2<ArrayList<Launcher.Instruction>, String, ArrayList<Launcher.Instruction>> _function = (ArrayList<Launcher.Instruction> l, String v) -> {
+        ArrayList<Launcher.Instruction> _xblockexpression = null;
+        {
+          Launcher.Instruction _xifexpression = null;
+          boolean _equals = v.substring(0, 1).equals("R");
+          if (_equals) {
+            _xifexpression = Launcher.Instruction.R;
+          } else {
+            _xifexpression = Launcher.Instruction.L;
           }
-          return _xblockexpression;
+          l.add(_xifexpression);
+          int _parseInt = Integer.parseInt(v.substring(1));
+          final Consumer<Integer> _function_1 = (Integer it) -> {
+            l.add(Launcher.Instruction.A);
+          };
+          new ExclusiveRange(0, _parseInt, true).forEach(_function_1);
+          _xblockexpression = l;
         }
+        return _xblockexpression;
       };
       final ArrayList<Launcher.Instruction> steps = IterableExtensions.<String, ArrayList<Launcher.Instruction>>fold(input, CollectionLiterals.<Launcher.Instruction>newArrayList(), _function);
       int i = 0;

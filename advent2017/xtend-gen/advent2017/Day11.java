@@ -2,7 +2,6 @@ package advent2017;
 
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.List;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -16,47 +15,32 @@ public class Day11 {
   private static int further = 0;
 
   public static void main(final String[] args) {
-    final Consumer<String> _function = new Consumer<String>() {
-      public void accept(final String it) {
-        Coordinate _switchResult = null;
-        boolean _matched = false;
-        if (Objects.equal(it, "n")) {
-          _matched=true;
-          _switchResult = Day11.current.addY(1);
-        }
-        if (!_matched) {
-          if (Objects.equal(it, "nw")) {
-            _matched=true;
+    final Consumer<String> _function = (String it) -> {
+      Coordinate _switchResult = null;
+      if (it != null) {
+        switch (it) {
+          case "n":
+            _switchResult = Day11.current.addY(1);
+            break;
+          case "nw":
             _switchResult = Day11.current.addY(1).addX((-1));
-          }
-        }
-        if (!_matched) {
-          if (Objects.equal(it, "sw")) {
-            _matched=true;
+            break;
+          case "sw":
             _switchResult = Day11.current.addX((-1));
-          }
-        }
-        if (!_matched) {
-          if (Objects.equal(it, "s")) {
-            _matched=true;
+            break;
+          case "s":
             _switchResult = Day11.current.addY((-1));
-          }
-        }
-        if (!_matched) {
-          if (Objects.equal(it, "se")) {
-            _matched=true;
+            break;
+          case "se":
             _switchResult = Day11.current.addY((-1)).addX(1);
-          }
-        }
-        if (!_matched) {
-          if (Objects.equal(it, "ne")) {
-            _matched=true;
+            break;
+          case "ne":
             _switchResult = Day11.current.addX(1);
-          }
+            break;
         }
-        Day11.current = _switchResult;
-        Day11.further = Math.max(Day11.further, Day11.steps(Day11.current));
       }
+      Day11.current = _switchResult;
+      Day11.further = Math.max(Day11.further, Day11.steps(Day11.current));
     };
     ((List<String>)Conversions.doWrapArray(IterableExtensions.<String>head(new InputLoader(Integer.valueOf(2017), Integer.valueOf(11)).getInputs()).split(","))).forEach(_function);
     InputOutput.<Integer>println(Integer.valueOf(Day11.steps(Day11.current)));

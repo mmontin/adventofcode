@@ -16,10 +16,8 @@ public class Launcher {
   public static void main(final String[] args) {
     String ans1 = "";
     String ans2 = "";
-    final Function1<String, char[]> _function = new Function1<String, char[]>() {
-      public char[] apply(final String it) {
-        return it.toCharArray();
-      }
+    final Function1<String, char[]> _function = (String it) -> {
+      return it.toCharArray();
     };
     final List<char[]> input = new InputLoader(Integer.valueOf(2016), Integer.valueOf(6)).<char[]>getInputs(_function);
     int _size = ((List<Character>)Conversions.doWrapArray(input.get(0))).size();
@@ -30,21 +28,17 @@ public class Launcher {
         int _size_1 = input.size();
         ExclusiveRange _doubleDotLessThan_1 = new ExclusiveRange(0, _size_1, true);
         for (final Integer i : _doubleDotLessThan_1) {
-          final BiFunction<Integer, Integer, Integer> _function_1 = new BiFunction<Integer, Integer, Integer>() {
-            public Integer apply(final Integer u, final Integer v) {
-              return Integer.valueOf(((u).intValue() + (v).intValue()));
-            }
+          final BiFunction<Integer, Integer, Integer> _function_1 = (Integer u, Integer v) -> {
+            return Integer.valueOf(((u).intValue() + (v).intValue()));
           };
           map.merge(Character.valueOf(input.get((i).intValue())[(j).intValue()]), Integer.valueOf(1), _function_1);
         }
-        final Function1<Map.Entry<Character, Integer>, Integer> _function_2 = new Function1<Map.Entry<Character, Integer>, Integer>() {
-          public Integer apply(final Map.Entry<Character, Integer> it) {
-            return it.getValue();
-          }
+        final Function1<Map.Entry<Character, Integer>, Integer> _function_2 = (Map.Entry<Character, Integer> it) -> {
+          return it.getValue();
         };
         final List<Map.Entry<Character, Integer>> ansTmp = IterableExtensions.<Map.Entry<Character, Integer>, Integer>sortBy(map.entrySet(), _function_2);
         String _ans1 = ans1;
-        Character _key = IterableExtensions.<Map.Entry<Character, Integer>>last(ansTmp).getKey();
+        Character _key = ansTmp.getLast().getKey();
         ans1 = (_ans1 + _key);
         String _ans2 = ans2;
         Character _key_1 = ansTmp.get(0).getKey();

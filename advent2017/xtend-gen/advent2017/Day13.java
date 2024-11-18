@@ -14,22 +14,18 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class Day13 {
-  private static final Map<Integer, Integer> firewalls = IterableExtensions.<String, HashMap<Integer, Integer>>fold(new InputLoader(Integer.valueOf(2017), Integer.valueOf(13)).getInputs(), CollectionLiterals.<Integer, Integer>newHashMap(), new Function2<HashMap<Integer, Integer>, String, HashMap<Integer, Integer>>() {
-    public HashMap<Integer, Integer> apply(final HashMap<Integer, Integer> acc, final String line) {
-      HashMap<Integer, Integer> _xblockexpression = null;
-      {
-        final Function1<String, Integer> _function = new Function1<String, Integer>() {
-          public Integer apply(final String it) {
-            return Integer.valueOf(Integer.parseInt(it));
-          }
-        };
-        final List<Integer> split = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(line.split(": "))), _function);
-        acc.put(split.get(0), split.get(1));
-        _xblockexpression = acc;
-      }
-      return _xblockexpression;
+  private static final Map<Integer, Integer> firewalls = IterableExtensions.<String, HashMap<Integer, Integer>>fold(new InputLoader(Integer.valueOf(2017), Integer.valueOf(13)).getInputs(), CollectionLiterals.<Integer, Integer>newHashMap(), ((Function2<HashMap<Integer, Integer>, String, HashMap<Integer, Integer>>) (HashMap<Integer, Integer> acc, String line) -> {
+    HashMap<Integer, Integer> _xblockexpression = null;
+    {
+      final Function1<String, Integer> _function = (String it) -> {
+        return Integer.valueOf(Integer.parseInt(it));
+      };
+      final List<Integer> split = ListExtensions.<String, Integer>map(((List<String>)Conversions.doWrapArray(line.split(": "))), _function);
+      acc.put(split.get(0), split.get(1));
+      _xblockexpression = acc;
     }
-  });
+    return _xblockexpression;
+  }));
 
   private static final int last_layer = (int) IterableExtensions.<Integer>max(Day13.firewalls.keySet());
 
@@ -73,10 +69,8 @@ public class Day13 {
   }
 
   public static boolean valid(final int delay) {
-    final Function2<Boolean, Map.Entry<Integer, Integer>, Boolean> _function = new Function2<Boolean, Map.Entry<Integer, Integer>, Boolean>() {
-      public Boolean apply(final Boolean acc, final Map.Entry<Integer, Integer> firewall) {
-        return Boolean.valueOf(((acc).booleanValue() && (Day13.scanner_depth((firewall.getValue()).intValue(), (delay + (firewall.getKey()).intValue())) != 0)));
-      }
+    final Function2<Boolean, Map.Entry<Integer, Integer>, Boolean> _function = (Boolean acc, Map.Entry<Integer, Integer> firewall) -> {
+      return Boolean.valueOf(((acc).booleanValue() && (Day13.scanner_depth((firewall.getValue()).intValue(), (delay + (firewall.getKey()).intValue())) != 0)));
     };
     return (boolean) IterableExtensions.<Map.Entry<Integer, Integer>, Boolean>fold(Day13.firewalls.entrySet(), Boolean.valueOf(true), _function);
   }

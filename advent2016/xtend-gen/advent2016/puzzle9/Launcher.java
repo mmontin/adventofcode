@@ -27,42 +27,34 @@ public class Launcher {
         int length = Integer.parseInt((split[0]).substring(1));
         int _start = matcher.start();
         int _end = matcher.end();
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            indexes_to_ignore.add(it);
-          }
+        final Consumer<Integer> _function = (Integer it) -> {
+          indexes_to_ignore.add(it);
         };
         new ExclusiveRange(_start, _end, true).forEach(_function);
         int _end_1 = matcher.end();
         int _end_2 = matcher.end();
         int _plus = (_end_2 + length);
-        final Consumer<Integer> _function_1 = new Consumer<Integer>() {
-          public void accept(final Integer it) {
-            int _length = (split[1]).length();
-            int _minus = (_length - 1);
-            final BiFunction<Integer, Integer, Integer> _function = new BiFunction<Integer, Integer, Integer>() {
-              public Integer apply(final Integer u, final Integer v) {
-                return Integer.valueOf(((u).intValue() * (v).intValue()));
-              }
-            };
-            multipliers.merge(it, Integer.valueOf(Integer.parseInt((split[1]).substring(0, _minus))), _function);
-          }
+        final Consumer<Integer> _function_1 = (Integer it) -> {
+          int _length = (split[1]).length();
+          int _minus = (_length - 1);
+          final BiFunction<Integer, Integer, Integer> _function_2 = (Integer u, Integer v) -> {
+            return Integer.valueOf(((u).intValue() * (v).intValue()));
+          };
+          multipliers.merge(it, Integer.valueOf(Integer.parseInt((split[1]).substring(0, _minus))), _function_2);
         };
         new ExclusiveRange(_end_1, _plus, true).forEach(_function_1);
       }
     }
     int _length = toProcess.length();
-    final Function2<Long, Integer, Long> _function = new Function2<Long, Integer, Long>() {
-      public Long apply(final Long sum, final Integer i) {
-        Integer _xifexpression = null;
-        boolean _contains = indexes_to_ignore.contains(i);
-        if (_contains) {
-          _xifexpression = Integer.valueOf(0);
-        } else {
-          _xifexpression = multipliers.getOrDefault(i, Integer.valueOf(1));
-        }
-        return Long.valueOf(((sum).longValue() + (_xifexpression).intValue()));
+    final Function2<Long, Integer, Long> _function = (Long sum, Integer i) -> {
+      Integer _xifexpression = null;
+      boolean _contains = indexes_to_ignore.contains(i);
+      if (_contains) {
+        _xifexpression = Integer.valueOf(0);
+      } else {
+        _xifexpression = multipliers.getOrDefault(i, Integer.valueOf(1));
       }
+      return Long.valueOf(((sum).longValue() + (_xifexpression).intValue()));
     };
     InputOutput.<Long>println(IterableExtensions.<Integer, Long>fold(new ExclusiveRange(0, _length, true), Long.valueOf(0L), _function));
   }

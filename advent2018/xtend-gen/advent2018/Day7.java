@@ -1,12 +1,12 @@
 package advent2018;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -45,7 +45,7 @@ public class Day7 {
         final Function1<String, Boolean> _function_2 = (String step) -> {
           final Function1<Pair<String, String>, Boolean> _function_3 = (Pair<String, String> it) -> {
             String _value = it.getValue();
-            return Boolean.valueOf(Objects.equal(_value, step));
+            return Boolean.valueOf(Objects.equals(_value, step));
           };
           final Function2<Boolean, Pair<String, String>, Boolean> _function_4 = (Boolean acc, Pair<String, String> v) -> {
             return Boolean.valueOf(((acc).booleanValue() && completed.contains(v.getKey())));
@@ -76,7 +76,7 @@ public class Day7 {
         final Function1<String, Boolean> _function_3 = (String step) -> {
           final Function1<Pair<String, String>, Boolean> _function_4 = (Pair<String, String> it) -> {
             String _value = it.getValue();
-            return Boolean.valueOf(Objects.equal(_value, step));
+            return Boolean.valueOf(Objects.equals(_value, step));
           };
           final Function2<Boolean, Pair<String, String>, Boolean> _function_5 = (Boolean acc, Pair<String, String> v) -> {
             return Boolean.valueOf(((acc).booleanValue() && completed_2.contains(v.getKey())));

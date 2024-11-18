@@ -50,11 +50,9 @@ public class ListUtils {
             List<E> _subList = inputs.subList(0, index);
             final ArrayList<E> list2 = new ArrayList<E>(_subList);
             list2.addAll(inputs.subList((index + 1), s1));
-            final Consumer<ArrayList<E>> _function = new Consumer<ArrayList<E>>() {
-              public void accept(final ArrayList<E> it) {
-                it.add(0, elt);
-                result.add(it);
-              }
+            final Consumer<ArrayList<E>> _function = (ArrayList<E> it) -> {
+              it.add(0, elt);
+              result.add(it);
             };
             ListUtils.<E>permute(list2).forEach(_function);
           }

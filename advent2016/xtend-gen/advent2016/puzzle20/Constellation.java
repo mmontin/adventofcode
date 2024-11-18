@@ -65,6 +65,7 @@ public class Constellation {
     }
   }
 
+  @Override
   public String toString() {
     return this.content.toString();
   }
@@ -78,10 +79,8 @@ public class Constellation {
     int _minus = (_size - 1);
     int _size_1 = this.content.size();
     int _minus_1 = (_size_1 - 1);
-    final Function2<Long, Integer, Long> _function = new Function2<Long, Integer, Long>() {
-      public Long apply(final Long sum, final Integer i) {
-        return Long.valueOf(((sum).longValue() + ((Constellation.this.content.get(((i).intValue() + 1)).leftBound - Constellation.this.content.get((i).intValue()).rightBound) - 1)));
-      }
+    final Function2<Long, Integer, Long> _function = (Long sum, Integer i) -> {
+      return Long.valueOf(((sum).longValue() + ((this.content.get(((i).intValue() + 1)).leftBound - this.content.get((i).intValue()).rightBound) - 1)));
     };
     return IterableExtensions.<Integer, Long>fold(new ExclusiveRange(0, _minus, true), Long.valueOf(((this.content.get(0).leftBound + Constellation.max_value) - this.content.get(_minus_1).rightBound)), _function);
   }

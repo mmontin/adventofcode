@@ -1,11 +1,11 @@
 package advent2023;
 
 import adventutils.geometry.Interval;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -36,12 +36,12 @@ public class Rules implements Rule {
   public static Rule createRule(final String s) {
     Rule _switchResult = null;
     boolean _matched = false;
-    if (Objects.equal(s, "R")) {
+    if (Objects.equals(s, "R")) {
       _matched=true;
       _switchResult = new RejectRule();
     }
     if (!_matched) {
-      if (Objects.equal(s, "A")) {
+      if (Objects.equals(s, "A")) {
         _matched=true;
         _switchResult = new AcceptRule();
       }

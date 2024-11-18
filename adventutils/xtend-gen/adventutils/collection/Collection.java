@@ -12,10 +12,8 @@ public class Collection {
   public static <O extends Object, E extends Object, D extends Object> O aggregate(final Iterable<E> input, final Function2<E, O, D> fun, final O init) {
     O _xblockexpression = null;
     {
-      final Consumer<E> _function = new Consumer<E>() {
-        public void accept(final E it) {
-          fun.apply(it, init);
-        }
+      final Consumer<E> _function = (E it) -> {
+        fun.apply(it, init);
       };
       input.forEach(_function);
       _xblockexpression = init;

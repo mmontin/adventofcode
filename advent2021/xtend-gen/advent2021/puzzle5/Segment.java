@@ -42,10 +42,8 @@ public class Segment {
     Point p = this.p1;
     while (p.smaller(this.p2)) {
       {
-        final BiFunction<Integer, Integer, Integer> _function = new BiFunction<Integer, Integer, Integer>() {
-          public Integer apply(final Integer x, final Integer y) {
-            return Integer.valueOf(((x).intValue() + (y).intValue()));
-          }
+        final BiFunction<Integer, Integer, Integer> _function = (Integer x, Integer y) -> {
+          return Integer.valueOf(((x).intValue() + (y).intValue()));
         };
         points.merge(p, Integer.valueOf(1), _function);
         Point _point = new Point(p, this.slopeX, this.slopeY);

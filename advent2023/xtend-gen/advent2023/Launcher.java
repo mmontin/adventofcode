@@ -1,8 +1,8 @@
 package advent2023;
 
-import com.google.common.base.Objects;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -27,7 +27,7 @@ public class Launcher {
       try {
         final Function1<Method, Boolean> _function_2 = (Method it_1) -> {
           String _name = it_1.getName();
-          return Boolean.valueOf(Objects.equal(_name, "main"));
+          return Boolean.valueOf(Objects.equals(_name, "main"));
         };
         final Method meth = IterableExtensions.<Method>findFirst(((Iterable<Method>)Conversions.doWrapArray(it.getMethods())), _function_2);
         InputOutput.<String>println("---------------------------");

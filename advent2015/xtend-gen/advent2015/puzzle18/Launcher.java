@@ -1,9 +1,9 @@
 package advent2015.puzzle18;
 
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -66,7 +66,7 @@ public class Launcher {
                 int _min_1 = Math.min(((j).intValue() + 1), 99);
                 IntegerRange _upTo_3 = new IntegerRange(_max_1, _min_1);
                 for (final Integer l : _upTo_3) {
-                  if (((!Objects.equal(k, i)) || (!Objects.equal(l, j)))) {
+                  if (((!Objects.equals(k, i)) || (!Objects.equals(l, j)))) {
                     int _neighbours = neighbours;
                     Integer _get = input.get((k).intValue()).get((l).intValue());
                     neighbours = (_neighbours + (_get).intValue());

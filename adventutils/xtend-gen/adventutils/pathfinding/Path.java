@@ -37,7 +37,7 @@ public class Path {
   public Path(final List<State> a_path, final Integer distance) {
     ArrayList<State> _arrayList = new ArrayList<State>(a_path);
     this.path = _arrayList;
-    this.current = IterableExtensions.<State>last(this.path);
+    this.current = this.path.getLast();
     this.length = (distance).intValue();
   }
 
@@ -53,6 +53,7 @@ public class Path {
     return this.length;
   }
 
+  @Override
   public String toString() {
     return this.path.toString();
   }
@@ -67,21 +68,17 @@ public class Path {
       _xifexpression = IterableExtensions.<Path>head(min_paths).length;
     }
     final int min_path_length = _xifexpression;
-    final Function1<Pair<? extends State, Integer>, Integer> _function = new Function1<Pair<? extends State, Integer>, Integer>() {
-      public Integer apply(final Pair<? extends State, Integer> it) {
-        Integer _value = it.getValue();
-        int _minToGoal = it.getKey().minToGoal();
-        return Integer.valueOf(((_value).intValue() + _minToGoal));
-      }
+    final Function1<Pair<? extends State, Integer>, Integer> _function = (Pair<? extends State, Integer> it) -> {
+      Integer _value = it.getValue();
+      int _minToGoal = it.getKey().minToGoal();
+      return Integer.valueOf(((_value).intValue() + _minToGoal));
     };
-    final Consumer<Pair<? extends State, Integer>> _function_1 = new Consumer<Pair<? extends State, Integer>>() {
-      public void accept(final Pair<? extends State, Integer> next) {
-        Integer _value = next.getValue();
-        final int length_to_next = (Path.this.length + (_value).intValue());
-        if ((((length_to_next + next.getKey().minToGoal()) <= min_path_length) && 
-          (length_to_next <= (min_distances.getOrDefault(next.getKey(), Integer.valueOf(Integer.MAX_VALUE))).intValue()))) {
-          new Path(Path.this, next).search(min_distances, min_paths);
-        }
+    final Consumer<Pair<? extends State, Integer>> _function_1 = (Pair<? extends State, Integer> next) -> {
+      Integer _value = next.getValue();
+      final int length_to_next = (this.length + (_value).intValue());
+      if ((((length_to_next + next.getKey().minToGoal()) <= min_path_length) && 
+        (length_to_next <= (min_distances.getOrDefault(next.getKey(), Integer.valueOf(Integer.MAX_VALUE))).intValue()))) {
+        new Path(this, next).search(min_distances, min_paths);
       }
     };
     IterableExtensions.<Pair<? extends State, Integer>, Integer>sortBy(this.current.neighbours(), _function).forEach(_function_1);

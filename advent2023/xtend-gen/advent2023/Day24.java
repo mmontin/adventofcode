@@ -3,11 +3,11 @@ package advent2023;
 import adventutils.input.InputLoader;
 import adventutils.maths.GaussianElim;
 import adventutils.maths.Rational;
-import com.google.common.base.Objects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -111,7 +111,7 @@ public class Day24 {
     Optional<Pair<BigDecimal, BigDecimal>> _xifexpression = null;
     Rational _multiply = h1.v.operator_multiply(h0.u);
     Rational _multiply_1 = h0.v.operator_multiply(h1.u);
-    boolean _equals = Objects.equal(_multiply, _multiply_1);
+    boolean _equals = Objects.equals(_multiply, _multiply_1);
     if (_equals) {
       _xifexpression = Optional.<Pair<BigDecimal, BigDecimal>>empty();
     } else {

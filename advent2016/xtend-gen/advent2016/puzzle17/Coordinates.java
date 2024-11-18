@@ -19,6 +19,7 @@ public class Coordinates {
     this.hCode = (this.x + (tmp * tmp));
   }
 
+  @Override
   public boolean equals(final Object o) {
     boolean _xblockexpression = false;
     {
@@ -28,6 +29,7 @@ public class Coordinates {
     return _xblockexpression;
   }
 
+  @Override
   public int hashCode() {
     return this.hCode;
   }
@@ -61,6 +63,7 @@ public class Coordinates {
     return ((this.x == 3) && (this.y == 3));
   }
 
+  @Override
   public String toString() {
     return (((("(" + Integer.valueOf(this.x)) + ",") + Integer.valueOf(this.y)) + ")");
   }

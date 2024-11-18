@@ -23,15 +23,13 @@ public class Board {
       for (final Integer i : _doubleDotLessThan) {
         {
           final ArrayList<Square> s = new ArrayList<Square>(5);
-          final Consumer<String> _function = new Consumer<String>() {
-            public void accept(final String x) {
-              boolean _isEmpty = x.isEmpty();
-              boolean _not = (!_isEmpty);
-              if (_not) {
-                int _parseInt = Integer.parseInt(x);
-                Square _square = new Square(_parseInt);
-                s.add(_square);
-              }
+          final Consumer<String> _function = (String x) -> {
+            boolean _isEmpty = x.isEmpty();
+            boolean _not = (!_isEmpty);
+            if (_not) {
+              int _parseInt = Integer.parseInt(x);
+              Square _square = new Square(_parseInt);
+              s.add(_square);
             }
           };
           ((List<String>)Conversions.doWrapArray(br.readLine().split(" "))).forEach(_function);
@@ -83,21 +81,17 @@ public class Board {
   }
 
   public Integer count() {
-    final Function2<Integer, List<Square>, Integer> _function = new Function2<Integer, List<Square>, Integer>() {
-      public Integer apply(final Integer v, final List<Square> l) {
-        final Function2<Integer, Square, Integer> _function = new Function2<Integer, Square, Integer>() {
-          public Integer apply(final Integer w, final Square x) {
-            int _xifexpression = (int) 0;
-            if (x.called) {
-              _xifexpression = 0;
-            } else {
-              _xifexpression = x.number;
-            }
-            return Integer.valueOf(((w).intValue() + _xifexpression));
-          }
-        };
-        return IterableExtensions.<Square, Integer>fold(l, v, _function);
-      }
+    final Function2<Integer, List<Square>, Integer> _function = (Integer v, List<Square> l) -> {
+      final Function2<Integer, Square, Integer> _function_1 = (Integer w, Square x) -> {
+        int _xifexpression = (int) 0;
+        if (x.called) {
+          _xifexpression = 0;
+        } else {
+          _xifexpression = x.number;
+        }
+        return Integer.valueOf(((w).intValue() + _xifexpression));
+      };
+      return IterableExtensions.<Square, Integer>fold(l, v, _function_1);
     };
     return IterableExtensions.<List<Square>, Integer>fold(this.grid, Integer.valueOf(0), _function);
   }

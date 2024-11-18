@@ -3,10 +3,10 @@ package advent2023;
 import adventutils.geometry.Coordinate;
 import adventutils.geometry.CoordinateSet;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -193,7 +193,7 @@ public class Day13 {
                     final Set<Integer> big_one = _xifexpression_4;
                     Set<Integer> _xifexpression_5 = null;
                     Set<Integer> _key = lines.getKey();
-                    boolean _equals_1 = Objects.equal(big_one, _key);
+                    boolean _equals_1 = Objects.equals(big_one, _key);
                     if (_equals_1) {
                       _xifexpression_5 = lines.getValue();
                     } else {

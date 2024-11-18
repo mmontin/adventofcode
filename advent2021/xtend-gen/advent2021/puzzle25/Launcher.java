@@ -2,7 +2,6 @@ package advent2021.puzzle25;
 
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,30 +23,25 @@ public class Launcher {
   private static Set<Coordinate> south = CollectionLiterals.<Coordinate>newHashSet();
 
   public static void main(final String[] args) {
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer i) {
-        final String line = Launcher.inputStrings.get((i).intValue());
-        final Consumer<Integer> _function = new Consumer<Integer>() {
-          public void accept(final Integer j) {
-            char _charAt = line.charAt((j).intValue());
-            String _plus = ("" + Character.valueOf(_charAt));
-            boolean _matched = false;
-            if (Objects.equal(_plus, ">")) {
-              _matched=true;
+    final Consumer<Integer> _function = (Integer i) -> {
+      final String line = Launcher.inputStrings.get((i).intValue());
+      final Consumer<Integer> _function_1 = (Integer j) -> {
+        char _charAt = line.charAt((j).intValue());
+        String _plus = ("" + Character.valueOf(_charAt));
+        if (_plus != null) {
+          switch (_plus) {
+            case ">":
               Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
               Launcher.east.add(_coordinate);
-            }
-            if (!_matched) {
-              if (Objects.equal(_plus, "v")) {
-                _matched=true;
-                Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue());
-                Launcher.south.add(_coordinate_1);
-              }
-            }
+              break;
+            case "v":
+              Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue());
+              Launcher.south.add(_coordinate_1);
+              break;
           }
-        };
-        new ExclusiveRange(0, Launcher.max_j, true).forEach(_function);
-      }
+        }
+      };
+      new ExclusiveRange(0, Launcher.max_j, true).forEach(_function_1);
     };
     new ExclusiveRange(0, Launcher.max_i, true).forEach(_function);
     int stepNb = 0;

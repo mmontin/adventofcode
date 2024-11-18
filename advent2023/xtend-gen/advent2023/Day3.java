@@ -2,10 +2,10 @@ package advent2023;
 
 import adventutils.geometry.Coordinate;
 import adventutils.input.InputLoader;
-import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -120,7 +120,7 @@ public class Day3 {
         _switchResult = Pair.<Boolean, HashSet<Coordinate>>of(Boolean.valueOf(false), _newHashSet);
       }
       if (!_matched) {
-        if (Objects.equal(cAsInt, 42)) {
+        if (Objects.equals(cAsInt, 42)) {
           _matched=true;
           Coordinate _coordinate = new Coordinate(x, i);
           HashSet<Coordinate> _newHashSet_1 = CollectionLiterals.<Coordinate>newHashSet(_coordinate);

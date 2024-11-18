@@ -33,10 +33,12 @@ public class Point {
     return (p.y - this.y);
   }
 
+  @Override
   public boolean equals(final Object p) {
     return ((((Point) p).x == this.x) && (((Point) p).y == this.y));
   }
 
+  @Override
   public int hashCode() {
     return (this.x + this.y);
   }

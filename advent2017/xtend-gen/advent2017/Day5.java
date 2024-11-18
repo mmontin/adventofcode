@@ -10,10 +10,8 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 @SuppressWarnings("all")
 public class Day5 {
   public static void main(final String[] args) {
-    final Function1<String, Integer> _function = new Function1<String, Integer>() {
-      public Integer apply(final String it) {
-        return Integer.valueOf(Integer.parseInt(it));
-      }
+    final Function1<String, Integer> _function = (String it) -> {
+      return Integer.valueOf(Integer.parseInt(it));
     };
     final List<Integer> inputs = new InputLoader(Integer.valueOf(2017), Integer.valueOf(5)).<Integer>getInputs(_function);
     final int offsets_size = inputs.size();

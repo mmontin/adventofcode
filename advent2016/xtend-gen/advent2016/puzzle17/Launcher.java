@@ -1,6 +1,5 @@
 package advent2016.puzzle17;
 
-import com.google.common.base.Objects;
 import java.security.MessageDigest;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ public class Launcher {
   private static final String input = "rrrbmfta";
 
   private static final MessageDigest md = new Function0<MessageDigest>() {
+    @Override
     public MessageDigest apply() {
       try {
         MessageDigest _instance = MessageDigest.getInstance("MD5");
@@ -53,13 +53,11 @@ public class Launcher {
       }
       Launcher.max_length = Math.max(Launcher.max_length, path.length());
     } else {
-      final Consumer<Map.Entry<String, Coordinates>> _function = new Consumer<Map.Entry<String, Coordinates>>() {
-        public void accept(final Map.Entry<String, Coordinates> it) {
-          Coordinates _value = it.getValue();
-          String _key = it.getKey();
-          String _plus = (path + _key);
-          Launcher.step(_value, _plus);
-        }
+      final Consumer<Map.Entry<String, Coordinates>> _function = (Map.Entry<String, Coordinates> it) -> {
+        Coordinates _value = it.getValue();
+        String _key = it.getKey();
+        String _plus = (path + _key);
+        Launcher.step(_value, _plus);
       };
       current.neighbours(Launcher.hashAndCollect((Launcher.input + path))).entrySet().forEach(_function);
     }
@@ -69,46 +67,28 @@ public class Launcher {
     List<Boolean> _xblockexpression = null;
     {
       Launcher.md.update(s.getBytes());
-      final Function1<Character, String> _function = new Function1<Character, String>() {
-        public String apply(final Character it) {
-          return (it + "");
-        }
+      final Function1<Character, String> _function = (Character it) -> {
+        return (it + "");
       };
-      final Function1<String, Boolean> _function_1 = new Function1<String, Boolean>() {
-        public Boolean apply(final String it) {
-          boolean _switchResult = false;
-          boolean _matched = false;
-          if (Objects.equal(it, "b")) {
-            _matched=true;
+      final Function1<String, Boolean> _function_1 = (String it) -> {
+        boolean _switchResult = false;
+        if (it != null) {
+          switch (it) {
+            case "b":
+            case "c":
+            case "d":
+            case "e":
+            case "f":
+              _switchResult = true;
+              break;
+            default:
+              _switchResult = false;
+              break;
           }
-          if (!_matched) {
-            if (Objects.equal(it, "c")) {
-              _matched=true;
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(it, "d")) {
-              _matched=true;
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(it, "e")) {
-              _matched=true;
-            }
-          }
-          if (!_matched) {
-            if (Objects.equal(it, "f")) {
-              _matched=true;
-            }
-          }
-          if (_matched) {
-            _switchResult = true;
-          }
-          if (!_matched) {
-            _switchResult = false;
-          }
-          return Boolean.valueOf(_switchResult);
+        } else {
+          _switchResult = false;
         }
+        return Boolean.valueOf(_switchResult);
       };
       _xblockexpression = ListExtensions.<String, Boolean>map(ListExtensions.<Character, String>map(IterableExtensions.<Character>toList(((Iterable<Character>)Conversions.doWrapArray(Hex.encodeHexString(Launcher.md.digest()).substring(0, 4).toCharArray()))), _function), _function_1);
     }

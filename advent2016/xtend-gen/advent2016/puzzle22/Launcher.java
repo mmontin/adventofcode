@@ -15,6 +15,7 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 @SuppressWarnings("all")
 public class Launcher {
   public static Map<Coordinate, Node> input = new Function0<Map<Coordinate, Node>>() {
+    @Override
     public Map<Coordinate, Node> apply() {
       try {
         HashMap<Coordinate, Node> _xblockexpression = null;

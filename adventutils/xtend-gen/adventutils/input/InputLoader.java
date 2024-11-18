@@ -28,24 +28,18 @@ public class InputLoader {
   }
 
   public List<List<String>> getChars() {
-    final Function1<String, List<String>> _function = new Function1<String, List<String>>() {
-      public List<String> apply(final String it) {
-        final Function1<Character, String> _function = new Function1<Character, String>() {
-          public String apply(final Character it_1) {
-            return (it_1 + "");
-          }
-        };
-        return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function);
-      }
+    final Function1<String, List<String>> _function = (String it) -> {
+      final Function1<Character, String> _function_1 = (Character it_1) -> {
+        return (it_1 + "");
+      };
+      return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function_1);
     };
     return ListExtensions.<String, List<String>>map(this.getInputs(), _function);
   }
 
   public <T extends Object> List<T> getInputs(final Function1<? super String, ? extends T> f) {
-    final Function1<String, T> _function = new Function1<String, T>() {
-      public T apply(final String x) {
-        return f.apply(x);
-      }
+    final Function1<String, T> _function = (String x) -> {
+      return f.apply(x);
     };
     return ListExtensions.<String, T>map(this.getInputs(), _function);
   }
