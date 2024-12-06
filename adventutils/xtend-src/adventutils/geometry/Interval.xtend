@@ -17,6 +17,10 @@ class Interval {
 	new(String s) {
 		this(Long.parseLong(s.split("-").get(0)), Long.parseLong(s.split("-").get(1)))
 	}
+	
+	def Interval translate(long t) {
+		new Interval(leftBound + t, rightBound + t)
+	}
 
 	def int position(long dot) {
 		if (dot < leftBound)

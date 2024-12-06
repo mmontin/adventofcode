@@ -21,6 +21,10 @@ public class Interval {
     this(Long.parseLong(s.split("-")[0]), Long.parseLong(s.split("-")[1]));
   }
 
+  public Interval translate(final long t) {
+    return new Interval((this.leftBound + t), (this.rightBound + t));
+  }
+
   public int position(final long dot) {
     int _xifexpression = (int) 0;
     if ((dot < this.leftBound)) {

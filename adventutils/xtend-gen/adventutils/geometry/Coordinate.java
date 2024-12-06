@@ -410,4 +410,8 @@ public class Coordinate implements Comparable<Coordinate> {
     }
     return _switchResult;
   }
+
+  public boolean includedIn(final int min_x, final int max_x, final int min_y, final int max_y) {
+    return ((((min_x <= this.x) && (this.x <= max_x)) && (min_y <= this.y)) && (this.y <= max_y));
+  }
 }

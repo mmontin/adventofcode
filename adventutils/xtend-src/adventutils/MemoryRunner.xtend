@@ -6,7 +6,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 class MemoryRunner<I, O> {
 
-	Map<I, O> results
+	public Map<I, O> results
 	Function<I, O> fun
 	int calls_saved
 

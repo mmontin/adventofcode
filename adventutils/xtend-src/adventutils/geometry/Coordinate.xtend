@@ -244,4 +244,8 @@ class Coordinate implements Comparable<Coordinate> {
 			default: value
 		}
 	}
+	
+	def includedIn(int min_x, int max_x, int min_y, int max_y) {
+		min_x <= x && x <= max_x && min_y <= y && y <= max_y
+	}
 }

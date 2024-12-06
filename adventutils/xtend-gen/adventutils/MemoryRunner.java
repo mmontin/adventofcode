@@ -6,7 +6,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
 public class MemoryRunner<I extends Object, O extends Object> {
-  private Map<I, O> results;
+  public Map<I, O> results;
 
   private Function<I, O> fun;
 
