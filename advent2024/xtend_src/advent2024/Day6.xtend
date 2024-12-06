@@ -23,20 +23,17 @@ class Day6 {
 				}
 			}
 		}
-		println(simulate(obstacles, max_i, max_j, guard_position).key)
+		val path = simulate(obstacles, max_i, max_j, guard_position).key
+		println(path.size)
 
-		// TODO we could optimize be only considering positions around the main path
 		var loops = 0
-		for (i : 0 .. max_i) {
-			for (j : 0 .. max_j) {
-				val current_coord = new Coordinate(i, j)
-				if (!guard_position.equals(current_coord) && !obstacles.contains(current_coord)) {
-					obstacles.add(current_coord)
-					if (simulate(obstacles,max_i,max_j,guard_position).value) loops ++
-					obstacles.remove(current_coord)
-				}
+		path.remove(guard_position)
+		for (current_coord : path)
+			if (!obstacles.contains(current_coord)) {
+				obstacles.add(current_coord)
+				if(simulate(obstacles, max_i, max_j, guard_position).value) loops++
+				obstacles.remove(current_coord)
 			}
-		}
 		println(loops)
 	}
 
@@ -53,6 +50,6 @@ class Day6 {
 			else
 				current_position = next_position
 		}
-		visited.map[key].toSet.size -> visited.contains(current_position -> current_direction)
+		visited.map[key].toSet -> visited.contains(current_position -> current_direction)
 	}
 }

@@ -54,30 +54,27 @@ public class Day6 {
         }
       }
     }
-    InputOutput.<Integer>println(Day6.simulate(obstacles, max_i, max_j, guard_position).getKey());
+    final Set<Coordinate> path = Day6.simulate(obstacles, max_i, max_j, guard_position).getKey();
+    InputOutput.<Integer>println(Integer.valueOf(path.size()));
     int loops = 0;
-    IntegerRange _upTo_1 = new IntegerRange(0, max_i);
-    for (final Integer i_1 : _upTo_1) {
-      IntegerRange _upTo_2 = new IntegerRange(0, max_j);
-      for (final Integer j : _upTo_2) {
-        {
-          final Coordinate current_coord = new Coordinate((i_1).intValue(), (j).intValue());
-          if (((!guard_position.equals(current_coord)) && (!obstacles.contains(current_coord)))) {
-            obstacles.add(current_coord);
-            Boolean _value = Day6.simulate(obstacles, max_i, max_j, guard_position).getValue();
-            if ((_value).booleanValue()) {
-              loops++;
-            }
-            obstacles.remove(current_coord);
-          }
+    path.remove(guard_position);
+    for (final Coordinate current_coord : path) {
+      boolean _contains = obstacles.contains(current_coord);
+      boolean _not = (!_contains);
+      if (_not) {
+        obstacles.add(current_coord);
+        Boolean _value = Day6.simulate(obstacles, max_i, max_j, guard_position).getValue();
+        if ((_value).booleanValue()) {
+          loops++;
         }
+        obstacles.remove(current_coord);
       }
     }
     InputOutput.<Integer>println(Integer.valueOf(loops));
   }
 
-  public static Pair<Integer, Boolean> simulate(final Set<Coordinate> obstacles, final int max_i, final int max_j, final Coordinate starting_point) {
-    Pair<Integer, Boolean> _xblockexpression = null;
+  public static Pair<Set<Coordinate>, Boolean> simulate(final Set<Coordinate> obstacles, final int max_i, final int max_j, final Coordinate starting_point) {
+    Pair<Set<Coordinate>, Boolean> _xblockexpression = null;
     {
       final HashSet<Pair<Coordinate, Direction>> visited = CollectionLiterals.<Pair<Coordinate, Direction>>newHashSet();
       Coordinate current_position = starting_point;
@@ -99,10 +96,10 @@ public class Day6 {
       final Function1<Pair<Coordinate, Direction>, Coordinate> _function = (Pair<Coordinate, Direction> it) -> {
         return it.getKey();
       };
-      int _size = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Direction>, Coordinate>map(visited, _function)).size();
+      Set<Coordinate> _set = IterableExtensions.<Coordinate>toSet(IterableExtensions.<Pair<Coordinate, Direction>, Coordinate>map(visited, _function));
       Pair<Coordinate, Direction> _mappedTo = Pair.<Coordinate, Direction>of(current_position, current_direction);
       boolean _contains = visited.contains(_mappedTo);
-      _xblockexpression = Pair.<Integer, Boolean>of(Integer.valueOf(_size), Boolean.valueOf(_contains));
+      _xblockexpression = Pair.<Set<Coordinate>, Boolean>of(_set, Boolean.valueOf(_contains));
     }
     return _xblockexpression;
   }
