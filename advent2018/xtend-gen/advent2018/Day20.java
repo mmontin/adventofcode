@@ -9,6 +9,7 @@ import adventutils.pathfinding.NotInitializedException;
 import adventutils.pathfinding.State;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.Consumer;
@@ -24,11 +25,8 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class Day20 {
   public static class MyCoordinate extends Coordinate implements State {
-    private Set<Day20.MyCoordinate> friends;
-
-    public MyCoordinate(final int x, final int y) {
-      super(x, y);
-      this.friends = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
+    public MyCoordinate(final Coordinate c) {
+      super(c);
     }
 
     @Override
@@ -41,37 +39,23 @@ public class Day20 {
       return 1;
     }
 
-    public boolean addFriend(final Day20.MyCoordinate other) {
-      boolean _xifexpression = false;
-      boolean _add = this.friends.add(other);
-      if (_add) {
-        _xifexpression = other.friends.add(this);
-      }
-      return _xifexpression;
-    }
-
     @Override
     public Iterable<Pair<? extends State, Integer>> neighbours() {
-      final Function1<Day20.MyCoordinate, Pair<? extends State, Integer>> _function = (Day20.MyCoordinate x) -> {
-        return Pair.<State, Integer>of(((State) x), Integer.valueOf(1));
+      final Function1<Coordinate, Pair<? extends State, Integer>> _function = (Coordinate x) -> {
+        Day20.MyCoordinate _myCoordinate = new Day20.MyCoordinate(x);
+        return Pair.<Day20.MyCoordinate, Integer>of(_myCoordinate, Integer.valueOf(1));
       };
-      return IterableExtensions.<Day20.MyCoordinate, Pair<? extends State, Integer>>map(this.friends, _function);
-    }
-
-    @Override
-    public String toString() {
-      String _string = super.toString();
-      String _plus = (_string + " : ");
-      int _size = this.friends.size();
-      return (_plus + Integer.valueOf(_size));
+      return IterableExtensions.<Coordinate, Pair<? extends State, Integer>>map(Day20.adjacency.get(this), _function);
     }
   }
 
+  private static final Coordinate start = new Coordinate(0, 0);
+
+  private static final Map<Coordinate, Set<Coordinate>> adjacency = CollectionLiterals.<Coordinate, Set<Coordinate>>newHashMap(Pair.<Coordinate, Set<Coordinate>>of(Day20.start, CollectionLiterals.<Coordinate>newHashSet()));
+
   public static void main(final String[] args) {
-    final Day20.MyCoordinate start = new Day20.MyCoordinate(0, 0);
-    final List<Day20.MyCoordinate> discovered = CollectionLiterals.<Day20.MyCoordinate>newArrayList(start);
-    final Stack<Set<Day20.MyCoordinate>> current_stack = new Stack<Set<Day20.MyCoordinate>>();
-    current_stack.push(CollectionLiterals.<Day20.MyCoordinate>newHashSet(start));
+    final Stack<Set<Coordinate>> current_stack = new Stack<Set<Coordinate>>();
+    current_stack.push(CollectionLiterals.<Coordinate>newHashSet(Day20.start));
     final Function1<Character, String> _function = (Character it) -> {
       return (it + "");
     };
@@ -79,44 +63,42 @@ public class Day20 {
       if (s != null) {
         switch (s) {
           case "(":
-            final HashSet<Day20.MyCoordinate> new_last = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
-            new_last.addAll(current_stack.peek());
-            current_stack.push(new_last);
+            final Set<Coordinate> current = current_stack.peek();
+            current_stack.push(CollectionLiterals.<Coordinate>newHashSet());
+            HashSet<Coordinate> _hashSet = new HashSet<Coordinate>(current);
+            current_stack.push(_hashSet);
             break;
           case "|":
-            final Set<Day20.MyCoordinate> last = current_stack.pop();
-            final Set<Day20.MyCoordinate> before_last = current_stack.pop();
-            current_stack.push(last);
-            current_stack.push(before_last);
+            final Set<Coordinate> current_branch = current_stack.pop();
+            final Set<Coordinate> already_treated = current_stack.pop();
+            final Set<Coordinate> before_branching = current_stack.pop();
+            current_stack.push(before_branching);
+            already_treated.addAll(current_branch);
+            current_stack.push(already_treated);
+            HashSet<Coordinate> _hashSet_1 = new HashSet<Coordinate>(before_branching);
+            current_stack.push(_hashSet_1);
             break;
           case ")":
-            final Set<Day20.MyCoordinate> last_1 = current_stack.pop();
-            current_stack.peek().addAll(last_1);
+            final Set<Coordinate> current_branch_1 = current_stack.pop();
+            final Set<Coordinate> already_treated_1 = current_stack.pop();
+            current_stack.pop();
+            already_treated_1.addAll(current_branch_1);
+            current_stack.push(already_treated_1);
             break;
           default:
             {
               final Direction direction = Dir.directionFromPole(s);
-              final HashSet<Day20.MyCoordinate> next_coords = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
-              final Consumer<Day20.MyCoordinate> _function_2 = (Day20.MyCoordinate c) -> {
-                final Coordinate next_coord = c.otherMove(direction);
-                final int index = discovered.indexOf(next_coord);
-                Day20.MyCoordinate _xifexpression = null;
-                if ((index == (-1))) {
-                  Day20.MyCoordinate _xblockexpression = null;
-                  {
-                    int _x = next_coord.getX();
-                    int _y = next_coord.getY();
-                    final Day20.MyCoordinate tmp = new Day20.MyCoordinate(_x, _y);
-                    discovered.add(tmp);
-                    _xblockexpression = tmp;
-                  }
-                  _xifexpression = _xblockexpression;
-                } else {
-                  _xifexpression = discovered.get(index);
+              final HashSet<Coordinate> next_coords = CollectionLiterals.<Coordinate>newHashSet();
+              final Consumer<Coordinate> _function_2 = (Coordinate c) -> {
+                final Coordinate next_coord = c.move(direction);
+                boolean _containsKey = Day20.adjacency.containsKey(next_coord);
+                boolean _not = (!_containsKey);
+                if (_not) {
+                  Day20.adjacency.put(next_coord, CollectionLiterals.<Coordinate>newHashSet());
                 }
-                final Day20.MyCoordinate my_next_coord = _xifexpression;
-                my_next_coord.addFriend(c);
-                next_coords.add(my_next_coord);
+                Day20.adjacency.get(c).add(next_coord);
+                Day20.adjacency.get(next_coord).add(c);
+                next_coords.add(next_coord);
               };
               current_stack.pop().forEach(_function_2);
               current_stack.push(next_coords);
@@ -126,27 +108,17 @@ public class Day20 {
       } else {
         {
           final Direction direction = Dir.directionFromPole(s);
-          final HashSet<Day20.MyCoordinate> next_coords = CollectionLiterals.<Day20.MyCoordinate>newHashSet();
-          final Consumer<Day20.MyCoordinate> _function_2 = (Day20.MyCoordinate c) -> {
-            final Coordinate next_coord = c.otherMove(direction);
-            final int index = discovered.indexOf(next_coord);
-            Day20.MyCoordinate _xifexpression = null;
-            if ((index == (-1))) {
-              Day20.MyCoordinate _xblockexpression = null;
-              {
-                int _x = next_coord.getX();
-                int _y = next_coord.getY();
-                final Day20.MyCoordinate tmp = new Day20.MyCoordinate(_x, _y);
-                discovered.add(tmp);
-                _xblockexpression = tmp;
-              }
-              _xifexpression = _xblockexpression;
-            } else {
-              _xifexpression = discovered.get(index);
+          final HashSet<Coordinate> next_coords = CollectionLiterals.<Coordinate>newHashSet();
+          final Consumer<Coordinate> _function_2 = (Coordinate c) -> {
+            final Coordinate next_coord = c.move(direction);
+            boolean _containsKey = Day20.adjacency.containsKey(next_coord);
+            boolean _not = (!_containsKey);
+            if (_not) {
+              Day20.adjacency.put(next_coord, CollectionLiterals.<Coordinate>newHashSet());
             }
-            final Day20.MyCoordinate my_next_coord = _xifexpression;
-            my_next_coord.addFriend(c);
-            next_coords.add(my_next_coord);
+            Day20.adjacency.get(c).add(next_coord);
+            Day20.adjacency.get(next_coord).add(c);
+            next_coords.add(next_coord);
           };
           current_stack.pop().forEach(_function_2);
           current_stack.push(next_coords);
@@ -154,13 +126,17 @@ public class Day20 {
       }
     };
     ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(new InputLoader(Integer.valueOf(2018), Integer.valueOf(20)).getInputs().get(0).toCharArray())), _function).forEach(_function_1);
-    InputOutput.<Integer>println(Integer.valueOf(discovered.size()));
-    final AStar searcher = new AStar(start);
+    Day20.MyCoordinate _myCoordinate = new Day20.MyCoordinate(Day20.start);
+    final AStar searcher = new AStar(_myCoordinate);
     try {
       searcher.run();
     } catch (final Throwable _t) {
       if (_t instanceof NotInitializedException) {
         InputOutput.<Integer>println(IterableExtensions.<Integer>max(searcher.gScore.values()));
+        final Function1<Integer, Boolean> _function_2 = (Integer it) -> {
+          return Boolean.valueOf(((it).intValue() >= 1000));
+        };
+        InputOutput.<Integer>println(Integer.valueOf(IterableExtensions.size(IterableExtensions.<Integer>filter(searcher.gScore.values(), _function_2))));
       } else {
         throw Exceptions.sneakyThrow(_t);
       }
