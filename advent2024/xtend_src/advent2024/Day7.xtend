@@ -9,25 +9,24 @@ class Day7 {
 			val target = el.get(0)
 			val seed = el.get(1)
 			val numbers = el.drop(2)
-			var candidates = numbers.fold(newHashSet(seed)) [total, current |
-				val res = newHashSet
-				total.forEach[
-					res.add(it + current)
-					res.add(it * current)
+			var candidates = numbers.fold(newHashSet(seed)) [ total, current |
+				total.fold(newHashSet) [ acc1, el1 |
+					acc1.addAll(#[el1 + current, el1 * current].filter [
+						el1 <= target
+					])
+					acc1
 				]
-				res
 			]
 			if (candidates.contains(target))
 				acc.key + target -> acc.value
 			else {
-				candidates = numbers.fold(newHashSet(seed)) [total, current |
-					val res = newHashSet
-					total.forEach[
-						res.add(it + current)
-						res.add(it * current)
-						res.add(Long.parseLong("" + it + current))
+				candidates = numbers.fold(newHashSet(seed)) [ total, current |
+					total.fold(newHashSet) [ acc1, el1 |
+						acc1.addAll(#[el1 + current, el1 * current, Long.parseLong("" + el1 + current)].filter [
+							el1 <= target
+						])
+						acc1
 					]
-					res
 				]
 				acc.key -> acc.value + (candidates.contains(target) ? target : 0L)
 			}

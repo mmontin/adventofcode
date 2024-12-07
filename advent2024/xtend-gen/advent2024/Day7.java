@@ -1,9 +1,10 @@
 package advent2024;
 
 import adventutils.input.InputLoader;
+import com.google.common.collect.Iterables;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -31,17 +32,18 @@ public class Day7 {
         final Long seed = el.get(1);
         final Iterable<Long> numbers = IterableExtensions.<Long>drop(el, 2);
         final Function2<HashSet<Long>, Long, HashSet<Long>> _function_2 = (HashSet<Long> total, Long current) -> {
-          HashSet<Long> _xblockexpression_1 = null;
-          {
-            final HashSet<Long> res = CollectionLiterals.<Long>newHashSet();
-            final Consumer<Long> _function_3 = (Long it) -> {
-              res.add(Long.valueOf(((it).longValue() + (current).longValue())));
-              res.add(Long.valueOf(((it).longValue() * (current).longValue())));
-            };
-            total.forEach(_function_3);
-            _xblockexpression_1 = res;
-          }
-          return _xblockexpression_1;
+          final Function2<HashSet<Long>, Long, HashSet<Long>> _function_3 = (HashSet<Long> acc1, Long el1) -> {
+            HashSet<Long> _xblockexpression_1 = null;
+            {
+              final Function1<Long, Boolean> _function_4 = (Long it) -> {
+                return Boolean.valueOf((el1.compareTo(target) <= 0));
+              };
+              Iterables.<Long>addAll(acc1, IterableExtensions.<Long>filter(Collections.<Long>unmodifiableList(CollectionLiterals.<Long>newArrayList(Long.valueOf(((el1).longValue() + (current).longValue())), Long.valueOf(((el1).longValue() * (current).longValue())))), _function_4));
+              _xblockexpression_1 = acc1;
+            }
+            return _xblockexpression_1;
+          };
+          return IterableExtensions.<Long, HashSet<Long>>fold(total, CollectionLiterals.<Long>newHashSet(), _function_3);
         };
         HashSet<Long> candidates = IterableExtensions.<Long, HashSet<Long>>fold(numbers, CollectionLiterals.<Long>newHashSet(seed), _function_2);
         Pair<Long, Long> _xifexpression = null;
@@ -55,18 +57,19 @@ public class Day7 {
           Pair<Long, Long> _xblockexpression_1 = null;
           {
             final Function2<HashSet<Long>, Long, HashSet<Long>> _function_3 = (HashSet<Long> total, Long current) -> {
-              HashSet<Long> _xblockexpression_2 = null;
-              {
-                final HashSet<Long> res = CollectionLiterals.<Long>newHashSet();
-                final Consumer<Long> _function_4 = (Long it) -> {
-                  res.add(Long.valueOf(((it).longValue() + (current).longValue())));
-                  res.add(Long.valueOf(((it).longValue() * (current).longValue())));
-                  res.add(Long.valueOf(Long.parseLong((("" + it) + current))));
-                };
-                total.forEach(_function_4);
-                _xblockexpression_2 = res;
-              }
-              return _xblockexpression_2;
+              final Function2<HashSet<Long>, Long, HashSet<Long>> _function_4 = (HashSet<Long> acc1, Long el1) -> {
+                HashSet<Long> _xblockexpression_2 = null;
+                {
+                  long _parseLong = Long.parseLong((("" + el1) + current));
+                  final Function1<Long, Boolean> _function_5 = (Long it) -> {
+                    return Boolean.valueOf((el1.compareTo(target) <= 0));
+                  };
+                  Iterables.<Long>addAll(acc1, IterableExtensions.<Long>filter(Collections.<Long>unmodifiableList(CollectionLiterals.<Long>newArrayList(Long.valueOf(((el1).longValue() + (current).longValue())), Long.valueOf(((el1).longValue() * (current).longValue())), Long.valueOf(_parseLong))), _function_5));
+                  _xblockexpression_2 = acc1;
+                }
+                return _xblockexpression_2;
+              };
+              return IterableExtensions.<Long, HashSet<Long>>fold(total, CollectionLiterals.<Long>newHashSet(), _function_4);
             };
             candidates = IterableExtensions.<Long, HashSet<Long>>fold(numbers, CollectionLiterals.<Long>newHashSet(seed), _function_3);
             Long _key_1 = acc.getKey();
