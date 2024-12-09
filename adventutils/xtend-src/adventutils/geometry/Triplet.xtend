@@ -76,6 +76,10 @@ class Triplet {
 	def decrY() {
 		new Triplet(x, y - 1, z)
 	}
+	
+	def manhattanDistanceTo(Triplet other) {
+		Math.abs(other.x - x) + Math.abs(other.y - y) + Math.abs(other.z - z)
+	}
 
 	// Here this is assumed that there will only be a single different coordinate
 	def line(Triplet other) {

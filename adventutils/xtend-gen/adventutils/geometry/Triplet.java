@@ -97,6 +97,14 @@ public class Triplet {
     return new Triplet(this.x, (this.y - 1), this.z);
   }
 
+  public int manhattanDistanceTo(final Triplet other) {
+    int _abs = Math.abs((other.x - this.x));
+    int _abs_1 = Math.abs((other.y - this.y));
+    int _plus = (_abs + _abs_1);
+    int _abs_2 = Math.abs((other.z - this.z));
+    return (_plus + _abs_2);
+  }
+
   public Set<Triplet> line(final Triplet other) {
     Set<Triplet> _xifexpression = null;
     if ((other.x != this.x)) {
