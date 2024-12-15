@@ -12,9 +12,9 @@ class Day11 {
 				el.key.next.forEach[acc.merge(it, el.value)[x, y|x + y]]
 				acc
 			]
-			if (i == 25) println(list.values.reduce[x,y | x +y])
+			if(i == 25) println(list.values.reduce[x, y|x + y])
 		}
-		println(list.values.reduce[x,y | x +y])
+		println(list.values.reduce[x, y|x + y])
 	}
 
 	def static next(long l) {

@@ -46,6 +46,10 @@ class Interval {
 			Math.min(this.rightBound, other.rightBound)
 		)
 	}
+	
+	def Interval swapIfNeeded() {
+		new Interval(Math.min(leftBound,rightBound), Math.max(leftBound,rightBound))
+	}
 
 	def length() {
 		rightBound - leftBound

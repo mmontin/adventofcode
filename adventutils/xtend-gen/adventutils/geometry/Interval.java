@@ -60,6 +60,12 @@ public class Interval {
     return new Interval(_max, _min);
   }
 
+  public Interval swapIfNeeded() {
+    long _min = Math.min(this.leftBound, this.rightBound);
+    long _max = Math.max(this.leftBound, this.rightBound);
+    return new Interval(_min, _max);
+  }
+
   public long length() {
     return (this.rightBound - this.leftBound);
   }
