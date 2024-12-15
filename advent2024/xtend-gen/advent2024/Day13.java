@@ -1,19 +1,19 @@
 package advent2024;
 
 import adventutils.geometry.Coordinate;
-import adventutils.geometry.Interval;
 import adventutils.input.InputLoader;
-import adventutils.maths.Arithmetics;
+import adventutils.maths.GaussianElim;
+import adventutils.maths.Rational;
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -54,61 +54,55 @@ public class Day13 {
       this.price = _coordinate_2;
     }
 
-    public Optional<Pair<Integer, Integer>> solve() {
-      Optional<Pair<Integer, Integer>> _xblockexpression = null;
-      {
-        final Optional<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> res1 = Arithmetics.diophantienne(this.x_button.getX(), this.y_button.getX(), this.price.getX());
-        Optional<Pair<Integer, Integer>> _xifexpression = null;
-        boolean _isEmpty = res1.isEmpty();
-        if (_isEmpty) {
-          _xifexpression = Optional.<Pair<Integer, Integer>>empty();
-        } else {
-          Optional<Pair<Integer, Integer>> _xblockexpression_1 = null;
-          {
-            final Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> resultX = res1.get();
-            final Integer coord_1_X_a = resultX.getKey().getValue();
-            final Integer coord_1_X_b = resultX.getKey().getKey();
-            final Interval coord_1_X_itv = new Interval(((-(coord_1_X_b).intValue()) / (coord_1_X_a).intValue()), ((100 - (coord_1_X_b).intValue()) / (coord_1_X_a).intValue())).swapIfNeeded();
-            final Integer coord_2_X_a = resultX.getValue().getValue();
-            final Integer coord_2_X_b = resultX.getValue().getKey();
-            final Interval coord_2_X_itv = new Interval(((-(coord_2_X_b).intValue()) / (coord_2_X_a).intValue()), ((100 - (coord_2_X_b).intValue()) / (coord_2_X_a).intValue())).swapIfNeeded();
-            final Interval coord_X_itv = coord_1_X_itv.intersection(coord_2_X_itv);
-            HashSet<Pair<Integer, Integer>> _xifexpression_1 = null;
-            boolean _isEmpty_1 = coord_X_itv.isEmpty();
-            if (_isEmpty_1) {
-              _xifexpression_1 = CollectionLiterals.<Pair<Integer, Integer>>newHashSet();
-            } else {
-              final Function2<HashSet<Pair<Integer, Integer>>, Integer, HashSet<Pair<Integer, Integer>>> _function = (HashSet<Pair<Integer, Integer>> acc, Integer el) -> {
-                HashSet<Pair<Integer, Integer>> _xblockexpression_2 = null;
-                {
-                  Pair<Integer, Integer> _mappedTo = Pair.<Integer, Integer>of(Integer.valueOf((((coord_1_X_a).intValue() * (el).intValue()) + (coord_1_X_b).intValue())), Integer.valueOf((((coord_2_X_a).intValue() * (el).intValue()) + (coord_2_X_b).intValue())));
-                  acc.add(_mappedTo);
-                  _xblockexpression_2 = acc;
-                }
-                return _xblockexpression_2;
-              };
-              _xifexpression_1 = IterableExtensions.<Integer, HashSet<Pair<Integer, Integer>>>fold(new IntegerRange(((int) coord_X_itv.leftBound), ((int) coord_X_itv.rightBound)), CollectionLiterals.<Pair<Integer, Integer>>newHashSet(), _function);
-            }
-            final HashSet<Pair<Integer, Integer>> possible_pairs = _xifexpression_1;
-            final Function1<Pair<Integer, Integer>, Boolean> _function_1 = (Pair<Integer, Integer> it) -> {
-              int _y = this.x_button.getY();
-              Integer _key = it.getKey();
-              int _multiply = (_y * (_key).intValue());
-              int _y_1 = this.y_button.getY();
-              Integer _value = it.getValue();
-              int _multiply_1 = (_y_1 * (_value).intValue());
-              int _plus = (_multiply + _multiply_1);
-              int _y_2 = this.price.getY();
-              return Boolean.valueOf((_plus == _y_2));
-            };
-            _xblockexpression_1 = Optional.<Pair<Integer, Integer>>ofNullable(
-              IterableExtensions.<Pair<Integer, Integer>>findFirst(possible_pairs, _function_1));
+    public Optional<Pair<BigInteger, BigInteger>> solve(final boolean q2) {
+      Optional<Pair<BigInteger, BigInteger>> _xtrycatchfinallyexpression = null;
+      try {
+        Optional<Pair<BigInteger, BigInteger>> _xblockexpression = null;
+        {
+          int _x = this.x_button.getX();
+          Rational _rational = new Rational(_x);
+          int _x_1 = this.y_button.getX();
+          Rational _rational_1 = new Rational(_x_1);
+          int _y = this.x_button.getY();
+          Rational _rational_2 = new Rational(_y);
+          int _y_1 = this.y_button.getY();
+          Rational _rational_3 = new Rational(_y_1);
+          BigInteger _valueOf = BigInteger.valueOf(this.price.getX());
+          BigInteger _xifexpression = null;
+          if (q2) {
+            _xifexpression = BigInteger.valueOf(10000000000000L);
+          } else {
+            _xifexpression = BigInteger.ZERO;
           }
-          _xifexpression = _xblockexpression_1;
+          BigInteger _add = _valueOf.add(_xifexpression);
+          Rational _rational_4 = new Rational(_add);
+          BigInteger _valueOf_1 = BigInteger.valueOf(this.price.getY());
+          BigInteger _xifexpression_1 = null;
+          if (q2) {
+            _xifexpression_1 = BigInteger.valueOf(10000000000000L);
+          } else {
+            _xifexpression_1 = BigInteger.ZERO;
+          }
+          BigInteger _add_1 = _valueOf_1.add(_xifexpression_1);
+          Rational _rational_5 = new Rational(_add_1);
+          final ArrayList<Rational> res = GaussianElim.solve(
+            CollectionLiterals.<ArrayList<Rational>>newArrayList(
+              CollectionLiterals.<Rational>newArrayList(_rational, _rational_1), 
+              CollectionLiterals.<Rational>newArrayList(_rational_2, _rational_3)), CollectionLiterals.<Rational>newArrayList(_rational_4, _rational_5));
+          BigInteger _bigInteger = res.get(0).toBigInteger();
+          BigInteger _bigInteger_1 = res.get(1).toBigInteger();
+          Pair<BigInteger, BigInteger> _mappedTo = Pair.<BigInteger, BigInteger>of(_bigInteger, _bigInteger_1);
+          _xblockexpression = Optional.<Pair<BigInteger, BigInteger>>of(_mappedTo);
         }
-        _xblockexpression = _xifexpression;
+        _xtrycatchfinallyexpression = _xblockexpression;
+      } catch (final Throwable _t) {
+        if (_t instanceof ArithmeticException) {
+          _xtrycatchfinallyexpression = Optional.<Pair<BigInteger, BigInteger>>empty();
+        } else {
+          throw Exceptions.sneakyThrow(_t);
+        }
       }
-      return _xblockexpression;
+      return _xtrycatchfinallyexpression;
     }
   }
 
@@ -131,27 +125,42 @@ public class Day13 {
         _while = _lessThan_1;
       }
     }
-    final Function1<Day13.Machine, Optional<Pair<Integer, Integer>>> _function = (Day13.Machine it) -> {
-      return it.solve();
-    };
-    final Function2<Integer, Optional<Pair<Integer, Integer>>, Integer> _function_1 = (Integer acc, Optional<Pair<Integer, Integer>> el) -> {
-      int _xifexpression = (int) 0;
-      boolean _isEmpty = el.isEmpty();
-      if (_isEmpty) {
-        _xifexpression = 0;
-      } else {
-        int _xblockexpression = (int) 0;
-        {
-          final Pair<Integer, Integer> res = el.get();
-          Integer _key = res.getKey();
-          int _multiply = ((_key).intValue() * 3);
-          Integer _value = res.getValue();
-          _xblockexpression = (_multiply + (_value).intValue());
+    Pair<BigInteger, BigInteger> _mappedTo = Pair.<BigInteger, BigInteger>of(BigInteger.ZERO, BigInteger.ZERO);
+    final Function2<Pair<BigInteger, BigInteger>, Day13.Machine, Pair<BigInteger, BigInteger>> _function = (Pair<BigInteger, BigInteger> acc, Day13.Machine el) -> {
+      Pair<BigInteger, BigInteger> _xblockexpression = null;
+      {
+        final Optional<Pair<BigInteger, BigInteger>> solve1 = el.solve(false);
+        final Optional<Pair<BigInteger, BigInteger>> solve2 = el.solve(true);
+        BigInteger _xifexpression = null;
+        boolean _isEmpty = solve1.isEmpty();
+        if (_isEmpty) {
+          _xifexpression = BigInteger.ZERO;
+        } else {
+          BigInteger _xblockexpression_1 = null;
+          {
+            final Pair<BigInteger, BigInteger> res = solve1.get();
+            _xblockexpression_1 = res.getKey().multiply(BigInteger.valueOf(3)).add(res.getValue());
+          }
+          _xifexpression = _xblockexpression_1;
         }
-        _xifexpression = _xblockexpression;
+        final BigInteger newKey = acc.getKey().add(_xifexpression);
+        BigInteger _xifexpression_1 = null;
+        boolean _isEmpty_1 = solve2.isEmpty();
+        if (_isEmpty_1) {
+          _xifexpression_1 = BigInteger.ZERO;
+        } else {
+          BigInteger _xblockexpression_2 = null;
+          {
+            final Pair<BigInteger, BigInteger> res = solve2.get();
+            _xblockexpression_2 = res.getKey().multiply(BigInteger.valueOf(3)).add(res.getValue());
+          }
+          _xifexpression_1 = _xblockexpression_2;
+        }
+        final BigInteger newValue = acc.getValue().add(_xifexpression_1);
+        _xblockexpression = Pair.<BigInteger, BigInteger>of(newKey, newValue);
       }
-      return Integer.valueOf(((acc).intValue() + _xifexpression));
+      return _xblockexpression;
     };
-    InputOutput.<Integer>println(IterableExtensions.<Optional<Pair<Integer, Integer>>, Integer>fold(ListExtensions.<Day13.Machine, Optional<Pair<Integer, Integer>>>map(machines, _function), Integer.valueOf(0), _function_1));
+    InputOutput.<Pair<BigInteger, BigInteger>>println(IterableExtensions.<Day13.Machine, Pair<BigInteger, BigInteger>>fold(machines, _mappedTo, _function));
   }
 }

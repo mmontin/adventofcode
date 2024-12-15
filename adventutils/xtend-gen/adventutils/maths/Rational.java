@@ -88,6 +88,28 @@ public class Rational implements Comparable<Rational> {
     return _bigDecimal.divide(_bigDecimal_1, MathContext.DECIMAL128);
   }
 
+  public Integer toInteger() {
+    int _xifexpression = (int) 0;
+    boolean _equals = this.denominator.equals(BigInteger.ONE);
+    if (_equals) {
+      _xifexpression = this.numerator.intValueExact();
+    } else {
+      throw new ArithmeticException();
+    }
+    return Integer.valueOf(_xifexpression);
+  }
+
+  public BigInteger toBigInteger() {
+    BigInteger _xifexpression = null;
+    boolean _equals = this.denominator.equals(BigInteger.ONE);
+    if (_equals) {
+      _xifexpression = this.numerator;
+    } else {
+      throw new ArithmeticException();
+    }
+    return _xifexpression;
+  }
+
   public int signum() {
     return this.numerator.signum();
   }

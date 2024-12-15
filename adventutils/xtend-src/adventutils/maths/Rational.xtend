@@ -68,6 +68,20 @@ class Rational implements Comparable<Rational> {
 		new BigDecimal(numerator) / new BigDecimal(denominator)
 	}
 
+	def Integer toInteger() {
+		if (denominator.equals(BigInteger.ONE))
+			numerator.intValueExact
+		else 
+			throw new ArithmeticException
+	}
+
+	def BigInteger toBigInteger() {
+		if (denominator.equals(BigInteger.ONE))
+			numerator
+		else
+			throw new ArithmeticException
+	}
+
 	def signum() {
 		numerator.signum
 	}
