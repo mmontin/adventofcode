@@ -76,6 +76,15 @@ class Dir {
 		}
 	}
 
+	def static Direction directionFromStringArrows(String s) {
+		switch s {
+			case "^": Direction.UP
+			case "v": Direction.DOWN
+			case ">": Direction.RIGHT
+			default : Direction.LEFT
+		}
+	}
+
 	def static Direction counterClockWise(Direction d) {
 		d.nextDirection
 	}

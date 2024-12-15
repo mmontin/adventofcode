@@ -162,6 +162,29 @@ public class Dir {
     return _switchResult;
   }
 
+  public static Direction directionFromStringArrows(final String s) {
+    Direction _switchResult = null;
+    if (s != null) {
+      switch (s) {
+        case "^":
+          _switchResult = Direction.UP;
+          break;
+        case "v":
+          _switchResult = Direction.DOWN;
+          break;
+        case ">":
+          _switchResult = Direction.RIGHT;
+          break;
+        default:
+          _switchResult = Direction.LEFT;
+          break;
+      }
+    } else {
+      _switchResult = Direction.LEFT;
+    }
+    return _switchResult;
+  }
+
   public static Direction counterClockWise(final Direction d) {
     return Dir.nextDirection(d);
   }
