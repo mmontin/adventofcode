@@ -142,6 +142,10 @@ class Coordinate implements Comparable<Coordinate> {
 		noDiagonalBoundedNeighbours(lowerBound, higherBound, lowerBound, higherBound)
 	}
 	
+	def noDiagonalBoundedNeighbours(Coordinate c1, Coordinate c2) {
+		noDiagonalBoundedNeighbours(c1.x, c2.x, c1.y, c2.y)
+	}
+	
 	def noDiagonalBoundedNeighbours(int min_x, int max_x, int min_y, int max_y) {
 		val output = newHashSet
 		if(x > min_x) output.add(new Coordinate(x - 1, y))

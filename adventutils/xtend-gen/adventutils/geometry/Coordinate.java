@@ -178,6 +178,10 @@ public class Coordinate implements Comparable<Coordinate> {
     return this.noDiagonalBoundedNeighbours(lowerBound, higherBound, lowerBound, higherBound);
   }
 
+  public HashSet<Coordinate> noDiagonalBoundedNeighbours(final Coordinate c1, final Coordinate c2) {
+    return this.noDiagonalBoundedNeighbours(c1.x, c2.x, c1.y, c2.y);
+  }
+
   public HashSet<Coordinate> noDiagonalBoundedNeighbours(final int min_x, final int max_x, final int min_y, final int max_y) {
     HashSet<Coordinate> _xblockexpression = null;
     {
