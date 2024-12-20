@@ -17,19 +17,14 @@ class Day16 {
 	static Set<Coordinate> free_spots = newHashSet
 
 	def static void main(String[] args) {
-		val input = new InputLoader(2024, 16).inputs.map[toCharArray.map[it + ""]]
-		val max_i = input.size - 1
-		val max_j = input.get(0).size - 1
-		for (i : 0 .. max_i) {
-			val line = input.get(i)
-			for (j : 0 .. max_j) {
-				switch (line.get(j)) {
-					case "S": start = new Coordinate(i, j)
-					case "E": finish = new Coordinate(i, j)
-					case ".": free_spots.add(new Coordinate(i, j))
-				}
+
+		new InputLoader(2024, 16).applyOnGrid [s,c|
+			switch s {
+				case "S": start = c
+				case "E": finish = c
+				case ".": free_spots.add(c)
 			}
-		}
+		]
 		free_spots.addAll(#{start, finish})
 
 		val aStar = new AStar(new MyCoordinate(start, Direction.RIGHT)).run

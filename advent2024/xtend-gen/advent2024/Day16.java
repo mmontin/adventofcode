@@ -10,14 +10,11 @@ import adventutils.pathfinding.Path;
 import adventutils.pathfinding.State;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IntegerRange;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -102,43 +99,24 @@ public class Day16 {
   private static Set<Coordinate> free_spots = CollectionLiterals.<Coordinate>newHashSet();
 
   public static void main(final String[] args) {
-    final Function1<String, List<String>> _function = (String it) -> {
-      final Function1<Character, String> _function_1 = (Character it_1) -> {
-        return (it_1 + "");
-      };
-      return ListExtensions.<Character, String>map(((List<Character>)Conversions.doWrapArray(it.toCharArray())), _function_1);
-    };
-    final List<List<String>> input = ListExtensions.<String, List<String>>map(new InputLoader(Integer.valueOf(2024), Integer.valueOf(16)).getInputs(), _function);
-    int _size = input.size();
-    final int max_i = (_size - 1);
-    int _size_1 = input.get(0).size();
-    final int max_j = (_size_1 - 1);
-    IntegerRange _upTo = new IntegerRange(0, max_i);
-    for (final Integer i : _upTo) {
-      {
-        final List<String> line = input.get((i).intValue());
-        IntegerRange _upTo_1 = new IntegerRange(0, max_j);
-        for (final Integer j : _upTo_1) {
-          String _get = line.get((j).intValue());
-          if (_get != null) {
-            switch (_get) {
-              case "S":
-                Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-                Day16.start = _coordinate;
-                break;
-              case "E":
-                Coordinate _coordinate_1 = new Coordinate((i).intValue(), (j).intValue());
-                Day16.finish = _coordinate_1;
-                break;
-              case ".":
-                Coordinate _coordinate_2 = new Coordinate((i).intValue(), (j).intValue());
-                Day16.free_spots.add(_coordinate_2);
-                break;
-            }
-          }
+    final Function2<String, Coordinate, Comparable<?>> _function = (String s, Coordinate c) -> {
+      Comparable<?> _switchResult = null;
+      if (s != null) {
+        switch (s) {
+          case "S":
+            _switchResult = Day16.start = c;
+            break;
+          case "E":
+            _switchResult = Day16.finish = c;
+            break;
+          case ".":
+            _switchResult = Boolean.valueOf(Day16.free_spots.add(c));
+            break;
         }
       }
-    }
+      return _switchResult;
+    };
+    new InputLoader(Integer.valueOf(2024), Integer.valueOf(16)).<Comparable<?>>applyOnGrid(_function);
     Day16.free_spots.addAll(Collections.<Coordinate>unmodifiableSet(CollectionLiterals.<Coordinate>newHashSet(Day16.start, Day16.finish)));
     Day16.MyCoordinate _myCoordinate = new Day16.MyCoordinate(Day16.start, Direction.RIGHT);
     final AStar aStar = new AStar(_myCoordinate).run();
