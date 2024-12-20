@@ -13,8 +13,22 @@ public class MemoryRunner<I extends Object, O extends Object> {
   private int calls_saved;
 
   public MemoryRunner(final Function<I, O> fun_) {
+    this();
+    this.bind(fun_);
+  }
+
+  public MemoryRunner() {
     this.results = CollectionLiterals.<I, O>newHashMap();
-    this.fun = fun_;
+    this.calls_saved = 0;
+  }
+
+  public MemoryRunner<I, O> bind(final Function<I, O> fun_) {
+    MemoryRunner<I, O> _xblockexpression = null;
+    {
+      this.fun = fun_;
+      _xblockexpression = this;
+    }
+    return _xblockexpression;
   }
 
   public O call(final I param) {

@@ -11,8 +11,18 @@ class MemoryRunner<I, O> {
 	int calls_saved
 
 	new(Function<I, O> fun_) {
+		this()
+		bind(fun_)
+	}
+
+	new() {
 		results = newHashMap
+		calls_saved = 0
+	}
+
+	def bind(Function<I, O> fun_) {
 		fun = fun_
+		this
 	}
 
 	def O call(I param) {
@@ -25,7 +35,7 @@ class MemoryRunner<I, O> {
 			res
 		}
 	}
-	
+
 	def protected obtain(I param) {
 		results.get(param)
 	}

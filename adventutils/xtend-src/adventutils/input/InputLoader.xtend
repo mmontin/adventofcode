@@ -46,5 +46,6 @@ class InputLoader {
 			for (j : 0 .. max_j)
 				f.apply(line.get(j), new Coordinate(i, j))
 		}
+		new Coordinate(max_i,max_j)
 	}
 }

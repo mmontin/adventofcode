@@ -8,27 +8,23 @@ class Day19 {
 
 	static List<String> inputs = new InputLoader(2024, 19).inputs
 	static List<String> patterns = inputs.get(0).split(", ")
-	static String regexp = "(" + patterns.join("|") + ")*"
 
 	def static void main(String[] args) {
 
-		val possible_targets = inputs.drop(2).filter[it.matches(regexp)]
-
-		println(possible_targets.size)
-		println(possible_targets.fold(0L)[acc, el|acc + el.solve])
+		val res = inputs.drop(2).map[solver.call(it)].filter[it != 0]
+		println(res.size)
+		println(res.reduce[x, y|x + y])
 	}
 
-	static final MemoryRunner<String, Long> runner = new MemoryRunner[solve(it)]
-
-	static def long solve(String s) {
-		if (s.isEmpty)
-			1L
-		else
-			patterns.fold(0L) [ acc, el |
-				if (s.startsWith(el))
-					acc + runner.call(s.substring(el.length))
-				else
-					acc
-			]
+	static final MemoryRunner<String, Long> solver = {
+		val MemoryRunner<String, Long> res = new MemoryRunner
+		res.bind [ s |
+			if (s.isEmpty)
+				1L
+			else
+				patterns.fold(0L) [ acc, el |
+					acc + (s.startsWith(el) ? res.call(s.substring(el.length)) : 0)
+				]
+		]
 	}
 }

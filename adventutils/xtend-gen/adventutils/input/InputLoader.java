@@ -65,23 +65,28 @@ public class InputLoader {
     }
   }
 
-  public <T extends Object> void applyOnGrid(final Function2<? super String, Coordinate, T> f) {
-    final List<List<String>> input = this.getChars();
-    int _size = input.size();
-    final int max_i = (_size - 1);
-    int _size_1 = input.get(0).size();
-    final int max_j = (_size_1 - 1);
-    IntegerRange _upTo = new IntegerRange(0, max_i);
-    for (final Integer i : _upTo) {
-      {
-        final List<String> line = input.get((i).intValue());
-        IntegerRange _upTo_1 = new IntegerRange(0, max_j);
-        for (final Integer j : _upTo_1) {
-          String _get = line.get((j).intValue());
-          Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
-          f.apply(_get, _coordinate);
+  public <T extends Object> Coordinate applyOnGrid(final Function2<? super String, Coordinate, T> f) {
+    Coordinate _xblockexpression = null;
+    {
+      final List<List<String>> input = this.getChars();
+      int _size = input.size();
+      final int max_i = (_size - 1);
+      int _size_1 = input.get(0).size();
+      final int max_j = (_size_1 - 1);
+      IntegerRange _upTo = new IntegerRange(0, max_i);
+      for (final Integer i : _upTo) {
+        {
+          final List<String> line = input.get((i).intValue());
+          IntegerRange _upTo_1 = new IntegerRange(0, max_j);
+          for (final Integer j : _upTo_1) {
+            String _get = line.get((j).intValue());
+            Coordinate _coordinate = new Coordinate((i).intValue(), (j).intValue());
+            f.apply(_get, _coordinate);
+          }
         }
       }
+      _xblockexpression = new Coordinate(max_i, max_j);
     }
+    return _xblockexpression;
   }
 }
