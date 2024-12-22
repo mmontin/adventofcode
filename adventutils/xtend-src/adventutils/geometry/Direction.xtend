@@ -48,7 +48,7 @@ class Dir {
 			default: Direction.RIGHT
 		}
 	}
-	
+
 	def static Direction directionFromStringNb(String s) {
 		switch s {
 			case "0": Direction.RIGHT
@@ -81,7 +81,16 @@ class Dir {
 			case "^": Direction.UP
 			case "v": Direction.DOWN
 			case ">": Direction.RIGHT
-			default : Direction.LEFT
+			default: Direction.LEFT
+		}
+	}
+
+	def static String directionToStringArrows(Direction d) {
+		switch d {
+			case UP: "^"
+			case RIGHT: ">"
+			case DOWN: "v"
+			case LEFT: "<"
 		}
 	}
 
