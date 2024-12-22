@@ -1,10 +1,15 @@
 package adventutils.collection;
 
+import com.google.common.collect.Iterables;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class ListUtils {
@@ -63,5 +68,50 @@ public class ListUtils {
       }
     }
     return result;
+  }
+
+  public static <T extends Object> Set<List<T>> intertwine(final List<T> l1, final List<T> l2) {
+    HashSet<List<T>> _xifexpression = null;
+    boolean _isEmpty = l1.isEmpty();
+    if (_isEmpty) {
+      _xifexpression = CollectionLiterals.<List<T>>newHashSet(l2);
+    } else {
+      HashSet<List<T>> _xifexpression_1 = null;
+      boolean _isEmpty_1 = l2.isEmpty();
+      if (_isEmpty_1) {
+        _xifexpression_1 = CollectionLiterals.<List<T>>newHashSet(l1);
+      } else {
+        HashSet<List<T>> _xblockexpression = null;
+        {
+          final T head1 = IterableExtensions.<T>head(l1);
+          final List<T> tail1 = IterableExtensions.<T>toList(IterableExtensions.<T>tail(l1));
+          final T head2 = IterableExtensions.<T>head(l2);
+          final List<T> tail2 = IterableExtensions.<T>toList(IterableExtensions.<T>tail(l2));
+          final HashSet<List<T>> res = CollectionLiterals.<List<T>>newHashSet();
+          final Function1<List<T>, List<T>> _function = (List<T> it) -> {
+            List<T> _xblockexpression_1 = null;
+            {
+              it.add(0, head1);
+              _xblockexpression_1 = it;
+            }
+            return _xblockexpression_1;
+          };
+          Iterables.<List<T>>addAll(res, IterableExtensions.<List<T>, List<T>>map(ListUtils.<T>intertwine(tail1, l2), _function));
+          final Function1<List<T>, List<T>> _function_1 = (List<T> it) -> {
+            List<T> _xblockexpression_1 = null;
+            {
+              it.add(0, head2);
+              _xblockexpression_1 = it;
+            }
+            return _xblockexpression_1;
+          };
+          Iterables.<List<T>>addAll(res, IterableExtensions.<List<T>, List<T>>map(ListUtils.<T>intertwine(l1, tail2), _function_1));
+          _xblockexpression = res;
+        }
+        _xifexpression_1 = _xblockexpression;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
   }
 }

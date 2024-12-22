@@ -2,6 +2,7 @@ package adventutils.collection
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Set
 
 class ListUtils {
 
@@ -43,5 +44,23 @@ class ListUtils {
 		}
 
 		return result;
+	}
+	
+	// Intertwine elements from two lists in all possible ways
+	def static <T> Set<List<T>> intertwine(List<T> l1, List<T> l2) {
+		if (l1.isEmpty)
+			newHashSet(l2)
+		else if (l2.isEmpty)
+			newHashSet(l1)
+		else {
+			val head1 = l1.head
+			val tail1 = l1.tail.toList
+			val head2 = l2.head
+			val tail2 = l2.tail.toList
+			val res = newHashSet
+			res.addAll(intertwine(tail1, l2).map[it.add(0, head1); it])
+			res.addAll(intertwine(l1, tail2).map[it.add(0, head2); it])
+			res
+		}
 	}
 }
