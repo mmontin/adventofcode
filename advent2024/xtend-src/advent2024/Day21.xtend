@@ -4,10 +4,10 @@ import adventutils.geometry.Coordinate
 import adventutils.geometry.Dir
 import adventutils.geometry.Direction
 import java.util.ArrayList
+import java.util.HashMap
 import java.util.HashSet
 import java.util.List
 import java.util.Map
-import java.util.Set
 
 class Day21 {
 
@@ -54,40 +54,51 @@ class Day21 {
 					res.put(new Coordinate(i, j), pad_directional.get(i).get(j))
 		res
 	}
-	static final Set<Coordinate> pad_keys = pad_directional_map.keySet
 
 	static final Coordinate forbidden_pad_directional = new Coordinate(0, 0)
 
-	static final Set<String> chunks = {
-		val res = newHashSet
-		for (c1 : pad_keys) {
-			for (c2 : pad_keys) {
-				val x = treat_code(
-					newArrayList(
-						pad_directional_map.get(c1) + "",
-						pad_directional_map.get(c2) + ""
-					),
-					false
-				).map[it.head.join].head
-				res.add(x)
-			}
-		}
-		res
-	}
+	static final Map<Pair<String, String>, List<Pair<String,String>>> letters = newHashMap(
+		("A" -> "A") -> newArrayList("A" -> "A"),
+		("A" -> "^") -> newArrayList("A" -> "<", "<" ->"A"),
+		("A" -> "v") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "A"),
+		("A" -> ">") -> newArrayList("A" -> "v", "v" -> "A"),
+		("A" -> "<") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "<", "<" -> "A"),
+		("^" -> "A") -> newArrayList("A" -> ">", ">" -> "A"),
+		("^" -> "^") -> newArrayList("A" -> "A"),
+		("^" -> "v") -> newArrayList("A" -> "v", "v" -> "A"),
+		("^" -> ">") -> newArrayList("A" -> "v", "v" -> ">", ">" -> "A"),
+		("^" -> "<") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "A"),
+		("v" -> "A") -> newArrayList("A" -> ">", ">" -> "^", "^" -> "A"),
+		("v" -> "^") -> newArrayList("A" -> "^", "^" -> "A"),
+		("v" -> "v") -> newArrayList("A" -> "A"),
+		("v" -> ">") -> newArrayList("A" -> ">", ">" -> "A"),
+		("v" -> "<") -> newArrayList("A" -> "<", "<" -> "A"),
+		(">" -> "A") -> newArrayList("A" -> "^", "^" -> "A"),
+		(">" -> "^") -> newArrayList("A" -> "<", "<" -> "^", "^" -> "A"),
+		(">" -> "v") -> newArrayList("A" -> "<", "<" -> "A"),
+		(">" -> ">") -> newArrayList("A" -> "A"),
+		(">" -> "<") -> newArrayList("A" -> "<", "<" -> "<", "<" -> "A"),
+		("<" -> "A") -> newArrayList("A" -> ">", ">" -> ">", ">" -> "^", "^" -> "A"),
+		("<" -> "^") -> newArrayList("A" -> ">", ">" -> "^", "^" -> "A"),
+		("<" -> "v") -> newArrayList("A" -> ">", ">" -> "A"),
+		("<" -> ">") -> newArrayList("A" -> ">", ">" -> ">", ">" -> "A"),
+		("<" -> "<") -> newArrayList("A" -> "A")
+	)
 
 	def static void main(String[] args) {
+
 		println(inputs.fold(0L) [ acc, el |
-			acc + compute(el, 1) * Integer.parseInt(el.subList(1, el.size - 1).join)
+			acc + compute(el, 2) * Integer.parseInt(el.subList(1, el.size - 1).join)
 		])
 		
 		println(inputs.fold(0L) [ acc, el |
-			acc + compute(el, 24) * Integer.parseInt(el.subList(1, el.size - 1).join)
+			acc + compute(el, 25) * Integer.parseInt(el.subList(1, el.size - 1).join)
 		])
 	}
 
 	def static compute(List<String> code, int occurrences) {
 
-		val first_layer_codes = code.treat_code(true).fold(newArrayList(newArrayList("A"))) [ acc, el |
+		val first_layer_codes = code.treat_code(true).fold(newArrayList(newArrayList)) [ acc, el |
 			val res = newArrayList
 			acc.forEach [ ac |
 				el.forEach [ e |
@@ -101,31 +112,23 @@ class Day21 {
 		]
 
 		first_layer_codes.map [ first_layer_code |
+			first_layer_code.add(0,"A")
+			
+			var layer_map = newHashMap
+			for (i : 0..first_layer_code.size-2) 
+				layer_map.merge(first_layer_code.get(i) -> first_layer_code.get(i + 1),1L)[x,y|x+y]
 
-			val first_layer_treated = first_layer_code.treat_code(false).map [
-				it.findFirst[chunks.contains(it.join)]
-			].map[join]
+			for (i : 1 .. occurrences) {
+				val HashMap<Pair<String,String>, Long> new_layer_map = newHashMap
+				for (entry : layer_map.entrySet)
+					letters.get(entry.key).forEach [
+						new_layer_map.merge(it, entry.value)[x, y|x + y]
+					]
+				layer_map = new_layer_map
+			}
 
-			var layer_map = first_layer_treated.fold(newHashMap)[acc, el|acc.merge(el, 1L)[x, y|x + y]; acc]
-
-			for (i : 1 .. occurrences)
-				layer_map = transform_chunk(layer_map)
-
-			layer_map.entrySet.fold(0L) [ acc, el |
-				acc + el.key.length * el.value
-			]
+			layer_map.values.reduce[x, y|x + y]
 		].min
-	}
-
-	def static transform_chunk(Map<String, Long> layer_map) {
-		layer_map.entrySet.fold(newHashMap) [ acc, el |
-			val code = new ArrayList(el.key.toCharArray.map[it + ""])
-			code.add(0, "A")
-			code.treat_code(false).map[it.findFirst[chunks.contains(it.join)]].map[join].forEach [
-				acc.merge(it, el.value)[x, y|x + y]
-			]
-			acc
-		]
 	}
 
 	// Takes a code to be typed by a robot on a given pad (decided by is_numeric)
