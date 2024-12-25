@@ -27,13 +27,30 @@ class Day24 {
 			treated_rules.put(rule.result, rule)
 		}
 
-		println(Long.parseLong(valuations.entrySet.filter [
+		val x = Long.parseLong(valuations.entrySet.filter [
+			it.key.startsWith("x")
+		].sortBy [
+			-Integer.parseInt(key.substring(1))
+		].map[value.toString].join,2)
+				
+		val y = Long.parseLong(valuations.entrySet.filter [
+			it.key.startsWith("y")
+		].sortBy [
+			-Integer.parseInt(key.substring(1))
+		].map[value.toString].join,2)
+		
+		val z = Long.parseLong(valuations.entrySet.filter [
 			it.key.startsWith("z")
 		].sortBy [
 			-Integer.parseInt(key.substring(1))
-		].map[value.toString].join, 2))
-
-		println(treated_rules.get("z01"))
+		].map[value.toString].join,2)
+		
+		println(z)
+		println(x + y)
+		
+		println(Long.toBinaryString(x).length)
+		println(Long.toBinaryString(z))
+		println(Long.toBinaryString(x+y))
 	}
 
 	static class Link {
