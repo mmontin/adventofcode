@@ -26,55 +26,63 @@ class Day21 {
 //+---+---+---+
 //| < | v | > |
 //+---+---+---+
-	static final List<String> example = newArrayList("A", "0", "2", "9", "A")
-	static final List<ArrayList<String>> examples = newArrayList("A029A", "A980A", "A179A", "A456A", "A379A").map [
-		new ArrayList(toCharArray.map[it + ""])
-	]
+
 	static final List<ArrayList<String>> inputs = newArrayList("A129A", "A176A", "A169A", "A805A", "A208A").map [
 		new ArrayList(toCharArray.map[it + ""])
 	]
 
-	static final Map<Coordinate, String> pad_numeric_map = {
-		val res = newHashMap
-		val pad_numeric = #["789", "456", "123", " 0A"].map[toCharArray.map[it + ""]]
-		for (i : 0 .. pad_numeric.size - 1)
-			for (j : 0 .. pad_numeric.get(0).size - 1)
-				if (pad_numeric.get(i).get(j) != " ")
-					res.put(new Coordinate(i, j), pad_numeric.get(i).get(j))
-		res
-	}
-	static final Coordinate forbidden_pad_numeric = new Coordinate(3, 0)
+	static final Map<Coordinate, String> pad_numeric_map = newHashMap(
+		new Coordinate(0, 0) -> "7",
+		new Coordinate(0, 1) -> "8",
+		new Coordinate(0, 2) -> "9",
+		new Coordinate(1, 0) -> "4",
+		new Coordinate(1, 1) -> "5",
+		new Coordinate(1, 2) -> "6",
+		new Coordinate(2, 0) -> "1",
+		new Coordinate(2, 1) -> "2",
+		new Coordinate(2, 2) -> "3",
+		new Coordinate(3, 1) -> "0",
+		new Coordinate(3, 2) -> "A"
+	)
 
-	static final Map<Coordinate, String> pad_directional_map = {
-		val res = newHashMap
-		val pad_directional = #[" ^A", "<v>"].map[toCharArray.map[it + ""]]
-		for (i : 0 .. pad_directional.size - 1)
-			for (j : 0 .. pad_directional.get(0).size - 1)
-				if (pad_directional.get(i).get(j) != " ")
-					res.put(new Coordinate(i, j), pad_directional.get(i).get(j))
-		res
-	}
+	static final Map<Coordinate, String> pad_directional_map = newHashMap(
+		new Coordinate(0, 1) -> "^",
+		new Coordinate(0, 2) -> "A",
+		new Coordinate(1, 0) -> "<",
+		new Coordinate(1, 1) -> ">",
+		new Coordinate(1, 2) -> "v"
+	)
 
-	static final Coordinate forbidden_pad_directional = new Coordinate(0, 0)
-
-	static final Map<Pair<String, String>, List<Pair<String,String>>> letters = newHashMap(
+	static final Map<Pair<String, String>, List<Pair<String, String>>> letters = newHashMap(
 		("A" -> "A") -> newArrayList("A" -> "A"),
-		("A" -> "^") -> newArrayList("A" -> "<", "<" ->"A"),
-		("A" -> "v") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "A"),
+		("A" -> "^") -> newArrayList("A" -> "<", "<" -> "A"),
+		
+		("A" -> "v") -> newArrayList("A" -> "<", "<" -> "v", "v" -> "A"),
+		//("A" -> "v") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "A"),
+		
 		("A" -> ">") -> newArrayList("A" -> "v", "v" -> "A"),
 		("A" -> "<") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "<", "<" -> "A"),
 		("^" -> "A") -> newArrayList("A" -> ">", ">" -> "A"),
 		("^" -> "^") -> newArrayList("A" -> "A"),
 		("^" -> "v") -> newArrayList("A" -> "v", "v" -> "A"),
+		
 		("^" -> ">") -> newArrayList("A" -> "v", "v" -> ">", ">" -> "A"),
+		//("^" -> ">") -> newArrayList("A" -> ">", ">" -> "v", "v" -> "A"),
+		
 		("^" -> "<") -> newArrayList("A" -> "v", "v" -> "<", "<" -> "A"),
-		("v" -> "A") -> newArrayList("A" -> ">", ">" -> "^", "^" -> "A"),
+		
+		//("v" -> "A") -> newArrayList("A" -> ">", ">" -> "^", "^" -> "A"),
+		("v" -> "A") -> newArrayList("A" -> "^", "^" -> ">", ">" -> "A"),
+		
 		("v" -> "^") -> newArrayList("A" -> "^", "^" -> "A"),
 		("v" -> "v") -> newArrayList("A" -> "A"),
 		("v" -> ">") -> newArrayList("A" -> ">", ">" -> "A"),
 		("v" -> "<") -> newArrayList("A" -> "<", "<" -> "A"),
 		(">" -> "A") -> newArrayList("A" -> "^", "^" -> "A"),
+		
 		(">" -> "^") -> newArrayList("A" -> "<", "<" -> "^", "^" -> "A"),
+		//(">" -> "^") -> newArrayList("A" -> "^", "^" -> "<", "<" -> "A"),
+		
 		(">" -> "v") -> newArrayList("A" -> "<", "<" -> "A"),
 		(">" -> ">") -> newArrayList("A" -> "A"),
 		(">" -> "<") -> newArrayList("A" -> "<", "<" -> "<", "<" -> "A"),
@@ -90,7 +98,7 @@ class Day21 {
 		println(inputs.fold(0L) [ acc, el |
 			acc + compute(el, 2) * Integer.parseInt(el.subList(1, el.size - 1).join)
 		])
-		
+
 		println(inputs.fold(0L) [ acc, el |
 			acc + compute(el, 25) * Integer.parseInt(el.subList(1, el.size - 1).join)
 		])
@@ -112,14 +120,14 @@ class Day21 {
 		]
 
 		first_layer_codes.map [ first_layer_code |
-			first_layer_code.add(0,"A")
-			
+			first_layer_code.add(0, "A")
+
 			var layer_map = newHashMap
-			for (i : 0..first_layer_code.size-2) 
-				layer_map.merge(first_layer_code.get(i) -> first_layer_code.get(i + 1),1L)[x,y|x+y]
+			for (i : 0 .. first_layer_code.size - 2)
+				layer_map.merge(first_layer_code.get(i) -> first_layer_code.get(i + 1), 1L)[x, y|x + y]
 
 			for (i : 1 .. occurrences) {
-				val HashMap<Pair<String,String>, Long> new_layer_map = newHashMap
+				val HashMap<Pair<String, String>, Long> new_layer_map = newHashMap
 				for (entry : layer_map.entrySet)
 					letters.get(entry.key).forEach [
 						new_layer_map.merge(it, entry.value)[x, y|x + y]
@@ -146,7 +154,7 @@ class Day21 {
 		(0 .. coordinates.size - 2).map [
 			val paths = treat_pair(coordinates.get(it), coordinates.get(it + 1)).replay_and_trim(
 				coordinates.get(it),
-				is_numeric ? forbidden_pad_numeric : forbidden_pad_directional
+				is_numeric ? new Coordinate(3, 0) : new Coordinate(0, 0)
 			)
 			val ans = newArrayList
 			paths.forEach [
@@ -158,7 +166,7 @@ class Day21 {
 		]
 	}
 
-	// Takes 2 coordinates and returns the set off all possibles directs 
+	// Takes 2 coordinates and returns the set of all possibles directs 
 	// paths from the former to the latter within the rectangle they create 
 	def static treat_pair(Coordinate c1, Coordinate c2) {
 		val x_moves = switch (diff_x : c2.x - c1.x) {
