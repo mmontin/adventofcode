@@ -36,20 +36,23 @@ class Day24 {
 			-Integer.parseInt(key.substring(1))
 		].map[value.toString].join, 2))
 
+		val wrong_signals = #["z08","thm","wss","wrm","hwq","z22","gbs","z29"]
+
 		val edges = valuations.keySet.fold(newArrayList) [ acc, el |
 			val left_node = treated_rules.values.findFirst[result == el]
 			val left_node_name = left_node === null ? el : left_node.operator + "_" + left_node.id
 			val right_nodes = treated_rules.values.filter[left == el || right == el].map[operator + "_" + id + ""]
 			val right_nodes_names = right_nodes.size == 0 ? #[el] : right_nodes
-			right_nodes_names.forEach[acc.add(left_node_name + " -> " + it + " [label=\"" + el + "\"]")]
+			val color = wrong_signals.contains(el) ? "red" : "black"
+			right_nodes_names.forEach[acc.add(left_node_name + "->" + it + "[label=\"" + el + "\" color=\"" + color + "\"]")]
 			acc
 		]
 
-		val graph = edges.fold("digraph {\n")[acc, el|acc + "\t" + el + ";\n"] + "}"
+		val graph = edges.fold("digraph{")[acc, el|acc + el + ";"] + "}"
 
-		new ProcessBuilder("/bin/sh", "-c", "echo \"" + graph + "\"> ./xtend-src/advent2024/graph.svg").start
+		new ProcessBuilder("/bin/sh", "-c", "echo \"" + graph + "\"| dot -Tsvg > ./xtend-src/advent2024/Day24-graph.svg").start
 
-		println(#["z08","thm","wss","wrm","hwq","z22","gbs","z29"].sort.join(","))
+		println(wrong_signals.sort.join(","))
 	}
 
 	static class Link {
