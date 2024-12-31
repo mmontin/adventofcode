@@ -28,6 +28,10 @@ class MiniLang {
 	protected List<Integer> registry
 
 	new(List<Integer> _registry) {
+		reset(_registry)
+	}
+	
+	def reset(List<Integer> _registry) {
 		registry = new ArrayList(_registry)
 	}
 
