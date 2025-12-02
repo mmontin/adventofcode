@@ -1,37 +1,35 @@
 package advent2018
 
+import adventutils.input.InputLoader
+
 class Day21 {
-	
-//                    222211111111110000000000
-//                    321098765432109876543210	
-// 6  d = e | 65536  (000000010000000000000000)
-// 7  e = 16098955   (111101011010011010001011)
-// 
-// 9  e += d & 255   (000000000000000011111111)
-// 10 e &= 16777215  (111111111111111111111111)
-// 11 e *= 65899     (000000010000000101101011)
-// 12 e &= 16777215  (111111111111111111111111)
-// 13 f = 256 > d ? 1 : 0
-// 14 b += f
-// 15 b ++
-// 16 b = 27
-// 17 f = 0
-// 18 c = f + 1
-// 19 c *= 256
-// 20 c = c > d ? 1 : 0
-// 21 b += c
-// 22 b ++
-// 23 b = 25
-// 24 f ++
-// 25 b = 17
-// 26 d = f
-// 27 b = 7
-// 28 f = e == a ? 1 : 0
-// 29 b += f
-// 30 b = 5
-	
-	
+
 	def static void main(String[] args) {
-		println(123.bitwiseAnd(456))
+
+		val inputs = new InputLoader(2018, 21).inputs
+		val instructions = inputs.subList(1, inputs.size)
+		val engine = new MiniLang(#[0, 0, 0, 0, 0, 0])
+		
+		val possible_values = newHashSet
+		var repeated = false
+		var Integer last_added = null
+
+		// Unoptimized (takes 12 minutes to run)
+		while (engine.registry.get(1) >= 0 && engine.registry.get(1) < instructions.size && !repeated) {
+			if (engine.registry.get(1) == 28) {
+				val current_value = engine.registry.get(4)
+				if (possible_values.isEmpty) println(current_value)
+				if (possible_values.contains(current_value))
+					repeated = true
+				else {
+					last_added = current_value
+					possible_values.add(current_value)
+				}	
+			}
+			engine.execute(instructions.get(engine.registry.get(1)))
+			engine.registry.set(1, engine.registry.get(1) + 1)
+		}
+
+		println(last_added)
 	}
 }
