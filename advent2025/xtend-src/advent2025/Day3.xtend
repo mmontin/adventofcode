@@ -14,16 +14,12 @@ class Day3 {
 		println("Part2: " + input.map[processLine(12)].reduce[x,y|x+y])
 	}
 
-	def static int maxIn(List<Integer> il, int left, int offsetRight) {
-		val sub = il.subList(left + 1, il.size - offsetRight)
-		left + 1 + sub.indexOf(sub.max)
-	}
-	
 	def static long processLine(List<Integer> il, int seed) {
 		var left = -1
 		var ans = 0L
 		for (i : 0 .. seed - 1) {
-			left = maxIn(il, left, seed - i - 1)
+			val sub = il.subList(left + 1, il.size - seed + i + 1)
+			left = left + 1 + sub.indexOf(sub.max)
 			ans += il.get(left) * Math.pow(10,seed - i - 1) as long
 		}
 		ans
