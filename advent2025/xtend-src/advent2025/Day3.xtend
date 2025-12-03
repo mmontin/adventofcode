@@ -10,8 +10,8 @@ class Day3 {
 	]
 
 	def static void main(String[] args) {
-		println("Part1: " + input.map[processLine(2)].reduce[x,y|x+y])
-		println("Part2: " + input.map[processLine(12)].reduce[x,y|x+y])
+		println("Part1: " + input.map[processLine(2)].reduce[x, y|x + y])
+		println("Part2: " + input.map[processLine(12)].reduce[x, y|x + y])
 	}
 
 	def static long processLine(List<Integer> il, int seed) {
@@ -20,7 +20,7 @@ class Day3 {
 		for (i : 0 .. seed - 1) {
 			val sub = il.subList(left + 1, il.size - seed + i + 1)
 			left = left + 1 + sub.indexOf(sub.max)
-			ans += il.get(left) * Math.pow(10,seed - i - 1) as long
+			ans += il.get(left) * Math.pow(10, seed - i - 1) as long
 		}
 		ans
 	}
