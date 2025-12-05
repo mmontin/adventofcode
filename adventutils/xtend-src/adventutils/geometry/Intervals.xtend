@@ -9,6 +9,11 @@ class Intervals {
 	new() {
 		content = newArrayList
 	}
+	
+	new(List<Interval> content_) {
+		this()
+		content_.forEach[addInterval(it)]
+	}
 
 	def addInterval(Interval itv) {
 
@@ -52,6 +57,10 @@ class Intervals {
 			content.get(index).rightBound = content.get(index + 1).rightBound
 			content.remove(index + 1)
 		}
+	}
+
+	def long nbOfElements() {
+		content.fold(0L)[acc , el | acc + el.nbOfElements]
 	}
 
 	override toString() {

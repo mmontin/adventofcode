@@ -54,6 +54,10 @@ class Interval {
 	def length() {
 		rightBound - leftBound
 	}
+	
+	def nbOfElements() {
+		length + 1
+	}
 
 	def isUnity() {
 		length == 0
