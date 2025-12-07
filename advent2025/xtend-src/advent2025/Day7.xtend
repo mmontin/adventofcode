@@ -9,18 +9,16 @@ class Day7 {
 		val splitters = newHashSet
 		val beams = newHashSet
 		val Map<Coordinate, Long> quantum_beams = newHashMap
-		val inputs = new InputLoader(2025, 7).applyOnGrid [ s, c |
+		val max_coord = new InputLoader(2025, 7).applyOnGrid [ s, c |
 			if (s == "S") {
 				beams.add(c)
 				quantum_beams.put(c, 1L)
 			} else if (s == "^")
 				splitters.add(c)
 		]
-		val max_i = splitters.maxBy[x].x
-		val max_j = splitters.maxBy[y].y
 		var count = 0
-		for (i : 1 .. max_i) {
-			for (j : -1 .. max_j + 1) {
+		for (i : 1 .. max_coord.x) {
+			for (j : -1 .. max_coord.y + 1) {
 				val father = new Coordinate(i - 1, j)
 				val father_count = quantum_beams.getOrDefault(father, 0L)
 				val current = new Coordinate(i, j)
@@ -41,6 +39,6 @@ class Day7 {
 			}
 		}
 		println("Part1: " + count)
-		println("Part2: " + quantum_beams.entrySet.filter[e|e.key.x == max_i].map[it.value].reduce[x, y|x + y])
+		println("Part2: " + quantum_beams.entrySet.filter[it.key.x == max_coord.x].map[it.value].reduce[x, y|x + y])
 	}
 }
