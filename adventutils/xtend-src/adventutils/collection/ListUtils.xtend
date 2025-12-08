@@ -3,6 +3,8 @@ package adventutils.collection
 import java.util.ArrayList
 import java.util.List
 import java.util.Set
+import java.util.Collection
+import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 class ListUtils {
 
@@ -19,6 +21,19 @@ class ListUtils {
 			input.add(value)
 			value
 		}
+	}
+
+	// Generates all pairs of elements in the input list (does not generate both (a,b) and (b,a))
+	// while applying a certain function on the pair, collecting all results in a given collection 
+	def static <E, R, C extends Collection<R>> C pairs(List<E> inputs, C whereTo, Function2<E, E, R> fun) {
+		(0 ..< inputs.size).forEach [ i |
+			val first = inputs.get(i)
+			(i + 1 ..< inputs.size).forEach [ j |
+				val second = inputs.get(j)
+				whereTo.add(fun.apply(first, second))
+			]
+		]
+		whereTo
 	}
 
 	def static <E> List<ArrayList<E>> permute(List<E> inputs) {
@@ -45,7 +60,7 @@ class ListUtils {
 
 		return result;
 	}
-	
+
 	// Intertwine elements from two lists in all possible ways
 	def static <T> Set<List<T>> intertwine(List<T> l1, List<T> l2) {
 		if (l1.isEmpty)
