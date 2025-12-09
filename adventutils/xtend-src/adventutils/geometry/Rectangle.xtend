@@ -36,6 +36,30 @@ class Rectangle implements Comparable<Rectangle> {
 	new(Coordinate fst, Coordinate snd) {
 		this(fst.x, snd.x, fst.y, snd.y)
 	}
+	
+	def height() {
+		maxX - minX
+	}
+	
+	def width() {
+		maxY - minY
+	}
+
+	def hasInterior() {
+		height >= 1 && width >= 1
+	}
+
+	// Returns the rectangle exactly contained in this rectangle
+	// Will throw an exception if the rectangle is too small
+	def subRectangle() {
+		if (!hasInterior) throw new RuntimeException("Rectangle too small to contain a sub rectangle")
+		new Rectangle(top_left.addX(1).addY(1), bot_right.addX(-1).addY(-1))
+	}
+	
+	def pick() {
+		if (!hasInterior) throw new RuntimeException("Rectangle too small to pick an element in its interior")
+		top_left.addX(1).addY(1)
+	}
 
 	def area() {
 		(BigInteger.valueOf(maxY + 1) - BigInteger.valueOf(minY)) *
@@ -53,6 +77,19 @@ class Rectangle implements Comparable<Rectangle> {
 
 	def strictlyContains(Coordinate c) {
 		minX < c.x && c.x < maxX && minY < c.y && c.y < maxY
+	}
+	
+	def segments() {
+		newArrayList(
+			new Segment(top_left,top_right),
+			new Segment(top_right,bot_right),
+			new Segment(bot_right,bot_left),
+			new Segment(bot_left,top_left)
+		)
+	}
+
+	def intersectsWith(Segment s) {
+		segments.exists[it.intersect(s)]
 	}
 
 	def borders() {
@@ -95,7 +132,7 @@ class Rectangle implements Comparable<Rectangle> {
 		else
 			one
 	}
-	
+
 	override toString() {
 		"[" + top_left + " ; " + bot_right + "]"
 	}
