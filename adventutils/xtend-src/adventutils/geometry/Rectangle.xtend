@@ -33,6 +33,10 @@ class Rectangle implements Comparable<Rectangle> {
 		bot_right = new Coordinate(maxX, maxY)
 	}
 
+	new(Coordinate fst, Coordinate snd) {
+		this(fst.x, snd.x, fst.y, snd.y)
+	}
+
 	def area() {
 		(BigInteger.valueOf(maxY + 1) - BigInteger.valueOf(minY)) *
 			(BigInteger.valueOf(maxX + 1) - BigInteger.valueOf(minX))
@@ -90,5 +94,9 @@ class Rectangle implements Comparable<Rectangle> {
 			bot_right.compareTo(other.bot_right)
 		else
 			one
+	}
+	
+	override toString() {
+		"[" + top_left + " ; " + bot_right + "]"
 	}
 }
