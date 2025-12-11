@@ -3,10 +3,21 @@ package adventutils.collection
 import java.util.List
 import java.util.Map
 import java.util.Set
+import java.util.Collection
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
-class Collection {
+class CollectionUtils {
 
+	static def <T, L extends Collection<T>> L cons(T e, L l) {
+		l.add(e)
+		l
+	}
+	
+	static def <T , L extends Collection<T>, M extends Collection<T>> L consAll(M els, L l) {
+		l.addAll(els)
+		l
+	}
+	
 	static def <O, E, D> O aggregate(Iterable<E> input, Function2<E, O, D> fun, O init) {
 		input.forEach [
 			fun.apply(it, init)

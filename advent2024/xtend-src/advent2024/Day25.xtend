@@ -1,6 +1,6 @@
 package advent2024
 
-import adventutils.collection.ListUtils
+import adventutils.collection.CollectionUtils
 import adventutils.input.InputLoader
 import java.util.List
 
@@ -14,7 +14,7 @@ class Day25 {
 		for (var i = 0; i < input.size; i += 8) {
 			val subl = input.subList(i, i + 7)
 			(subl.get(0).join == "....." ? locks : keys).add((0 .. 4).fold(newArrayList) [ acc, j |
-				ListUtils.cons((0 .. 6).filter[subl.get(it).get(j) == "#"].size, acc)
+				CollectionUtils.cons((0 .. 6).filter[subl.get(it).get(j) == "#"].size, acc)
 			])
 		}
 

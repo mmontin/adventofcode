@@ -1,6 +1,6 @@
 package advent2023
 
-import adventutils.collection.Collection
+import adventutils.collection.CollectionUtils
 import adventutils.geometry.Coordinate
 import adventutils.geometry.Direction
 import adventutils.input.InputLoader
@@ -13,7 +13,7 @@ class Day16 {
 	static final List<List<String>> chars = new InputLoader(2023, 16).chars
 	static final int max_x = chars.size - 1
 	static final int max_y = chars.get(0).size - 1
-	static final Map<Coordinate, String> walls = Collection.aggregateToMap((0 .. max_x)) [ i, walls |
+	static final Map<Coordinate, String> walls = CollectionUtils.aggregateToMap((0 .. max_x)) [ i, walls |
 		val current_line = chars.get(i)
 		(0 .. max_y).forEach [ j |
 			if (!current_line.get(j).equals("."))
@@ -31,12 +31,12 @@ class Day16 {
 
 		val initials = newHashSet;
 		(0 .. max_x).forEach [
-			initials.add(new Coordinate(it, -1)->Direction.RIGHT)
-			initials.add(new Coordinate(it, max_y + 1)->Direction.LEFT)
+			initials.add(new Coordinate(it, -1) -> Direction.RIGHT)
+			initials.add(new Coordinate(it, max_y + 1) -> Direction.LEFT)
 		]
 		(0 .. max_y).forEach [
-			initials.add(new Coordinate(-1, it)->Direction.DOWN)
-			initials.add(new Coordinate(max_x + 1, it)->Direction.UP)
+			initials.add(new Coordinate(-1, it) -> Direction.DOWN)
+			initials.add(new Coordinate(max_x + 1, it) -> Direction.UP)
 		]
 		println(initials.map [
 			process(newHashSet(it))
@@ -45,7 +45,7 @@ class Day16 {
 			ret
 		].max)
 	}
-	
+
 	def static void process(Set<Pair<Coordinate, Direction>> current) {
 		current.forEach[process(nextCoords)]
 	}

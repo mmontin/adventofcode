@@ -1,7 +1,7 @@
 package advent2023
 
+import adventutils.collection.CollectionUtils
 import adventutils.input.InputLoader
-import adventutils.collection.ListUtils
 import java.util.List
 
 class Day9 {
@@ -22,7 +22,7 @@ class Day9 {
 	def static List<Integer> getSubList(List<Integer> l) {
 		if (l.size > 1)
 			(0 .. l.size - 2).fold(newArrayList) [ acc, el |
-				ListUtils.cons(l.get(el + 1) - l.get(el), acc)
+				CollectionUtils.cons(l.get(el + 1) - l.get(el), acc)
 			]
 		else
 			newArrayList

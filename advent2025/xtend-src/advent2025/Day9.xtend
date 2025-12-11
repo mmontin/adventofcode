@@ -1,5 +1,6 @@
 package advent2025
 
+import adventutils.collection.CollectionUtils
 import adventutils.collection.ListUtils
 import adventutils.geometry.Coordinate
 import adventutils.geometry.Rectangle
@@ -13,7 +14,7 @@ class Day9 {
 		val List<Coordinate> coords = new ArrayList(new InputLoader(2025, 9).inputs.map[new Coordinate(it)])
 		val rectangles = ListUtils.pairs(coords, newArrayList)[e1, e2|new Rectangle(e1, e2)]
 		val segments = (0 ..< coords.size).fold(newArrayList) [ acc, el |
-			ListUtils.cons(new Segment(coords.get(el), coords.get((el + 1) % coords.size)), acc)
+			CollectionUtils.cons(new Segment(coords.get(el), coords.get((el + 1) % coords.size)), acc)
 		]
 		val maxY = coords.maxBy[y].y
 		println("Part1: " + rectangles.maxBy[area].area)

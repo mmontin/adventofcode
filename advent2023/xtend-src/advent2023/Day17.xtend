@@ -1,6 +1,6 @@
 package advent2023
 
-import adventutils.collection.Collection
+import adventutils.collection.CollectionUtils
 import adventutils.geometry.Coordinate
 import adventutils.geometry.Dir
 import adventutils.geometry.Direction
@@ -16,7 +16,7 @@ class Day17 {
 	static final int max_x = chars.size - 1
 	static final int max_y = chars.get(0).size - 1
 	// FIXME : we should not need 0
-	static final Map<Coordinate, Integer> heat = Collection.aggregateToMap(0 .. max_x) [ i, heat |
+	static final Map<Coordinate, Integer> heat = CollectionUtils.aggregateToMap(0 .. max_x) [ i, heat |
 		val current_line = chars.get(i)
 		(0 .. max_y).forEach [ j |
 			heat.put(new Coordinate(i, j), Integer.parseInt(current_line.get(j)))

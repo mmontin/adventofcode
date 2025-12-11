@@ -1,8 +1,7 @@
 package advent2025
 
-import adventutils.collection.ListUtils
+import adventutils.collection.CollectionUtils
 import adventutils.input.InputLoader
-import adventutils.maths.Rational
 import adventutils.pathfinding.AStar
 import adventutils.pathfinding.State
 import java.util.ArrayList
@@ -18,8 +17,8 @@ class Day10 {
 			val split = it.split(" ")
 			val target_state = split.get(0).toCharArray.map[it + ""].fold(newArrayList) [ acc, el |
 				switch el {
-					case ".": ListUtils.cons(false, acc)
-					case "#": ListUtils.cons(true, acc)
+					case ".": CollectionUtils.cons(false, acc)
+					case "#": CollectionUtils.cons(true, acc)
 					default: acc
 				}
 			]
@@ -44,102 +43,32 @@ class Day10 {
 		println("Part 2: " + res.value)
 	}
 
-	static class Equation {
-		Set<Integer> variables
-		Integer value
-
-		new(Set<Integer> variables_, Integer value_) {
-			variables = variables_
-			value = value_
-		}
-
-		def reduceWith(Equation other) {
-			if (variables.containsAll(other.variables)) {
-				variables.removeAll(other.variables)
-				value = value - other.value
-				true
-			} else
-				false
-		}
-
-		def solved() {
-			variables.size == 1
-		}
-
-		override toString() {
-			variables.toString + " = " + value
-		}
-
-		def isEmpty() {
-			variables.isEmpty
-		}
-
-		def getCoefficients(int max_variable) {
-			val size = max_variable + 1
-			val res = new ArrayList(size)
-			(0 ..< size).forEach[i|res.add(variables.contains(i) ? Rational.ONE : Rational.ZERO)]
-			res
-		}
-
-		override hashCode() {
-			variables.hashCode + value.hashCode
-		}
-
-		override equals(Object other) {
-			switch other {
-				Equation: other.variables == variables && other.value == value
-				default: false
-			}
-		}
-	}
-
 	static class Machine2 {
 		// We maintain the invariant that these equations are not empty 
 		// and cannot be reduced by one another
-		Set<Equation> equations
+		List<Pair<ArrayList<Integer>, Integer>> equations
 
 		new(List<Integer> target_voltages, Set<HashSet<Integer>> available_buttons) {
-			equations = newHashSet;
-			(0 ..< target_voltages.size).forEach [ i |
-				val new_equation = (0 ..< available_buttons.size).fold(newHashSet) [ s, j |
-					if (available_buttons.get(j).contains(i))
-						s.add(j)
-					s
+			equations = (0 ..< target_voltages.size).fold(newArrayList) [ acc, i |
+				val new_equation = (0 ..< available_buttons.size).fold(newArrayList) [ l, j |
+					if(available_buttons.get(j).contains(i)) l.add(j)
+					l
 				]
-				addEquation(new Equation(new_equation, target_voltages.get(i)))
+				CollectionUtils.cons(new_equation -> target_voltages.get(i), acc)
 			]
-		}
-
-		new(Set<Equation> equations_) {
-			equations = new HashSet(equations_)
-		}
-
-		def void addEquation(Equation nEq) {
-			if (!nEq.isEmpty) {
-				val new_equations = newHashSet
-				val new_equations_reduced = newHashSet
-				val nEq_reduced = equations.fold(false) [ acc, eq |
-					(eq.reduceWith(nEq) ? new_equations_reduced : new_equations).add(eq)
-					acc || nEq.reduceWith(eq)
-				]
-				(nEq_reduced ? new_equations_reduced : new_equations).add(nEq)
-				equations = new_equations
-				new_equations_reduced.forEach[this.addEquation(it)]
-			}
 		}
 
 		def int solve() {
 			val model = new ExpressionsBasedModel
 			val Variable[] variables = equations.fold(newHashSet) [ acc, el |
-				acc.addAll(el.variables);
-				acc
-			].map[model.addVariable("x" + it).lower(0).integer(true).weight(1)].toList
+				CollectionUtils.consAll(el.key, acc)
+			].map[model.addVariable.lower(0).integer(true).weight(1)].toList
 			equations.forEach [ eq |
 				val expression = model.addExpression.level(eq.value)
-				eq.variables.forEach[v|expression.set(variables.get(v), 1)]
+				eq.key.forEach[v|expression.set(variables.get(v), 1)]
 			]
 			val result = model.minimise;
-			(0 ..< variables.size).fold(0)[acc, i | acc + Math.round(result.get(i).doubleValue) as int]
+			(0 ..< variables.size).fold(0)[acc, i|acc + Math.round(result.get(i).doubleValue) as int]
 		}
 	}
 

@@ -1,16 +1,16 @@
 package advent2023
 
 import adventutils.advanced.Map
-import adventutils.collection.ListUtils
+import adventutils.collection.CollectionUtils
 import adventutils.geometry.Coordinate
 import adventutils.geometry.Dir
 import adventutils.geometry.Rectangle
 import adventutils.input.InputLoader
 import java.math.BigInteger
 import java.util.ArrayList
+import java.util.Arrays
 import java.util.List
 import java.util.Set
-import java.util.Arrays
 
 class Day18 {
 
@@ -44,7 +44,7 @@ class Day18 {
 		val ys = second_list.map[y].toSet.sort
 
 		val second_list_shrinked = second_list.fold(new ArrayList) [ l, c |
-			ListUtils.cons(new Coordinate(xs.indexOf(c.x) * 2, ys.indexOf(c.y) * 2), l)
+			CollectionUtils.cons(new Coordinate(xs.indexOf(c.x) * 2, ys.indexOf(c.y) * 2), l)
 		]
 
 		val output_2 = Map.flow(second_list_shrinked)

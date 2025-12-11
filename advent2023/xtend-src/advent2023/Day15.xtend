@@ -1,6 +1,6 @@
 package advent2023
 
-import adventutils.collection.Collection
+import adventutils.collection.CollectionUtils
 import adventutils.input.InputLoader
 import java.util.function.Function
 
@@ -16,7 +16,7 @@ class Day15 {
 		val codes = new InputLoader(2023, 15).inputs.get(0).split(",")
 		println(codes.fold(0)[acc, el|acc + decode.apply(el)])
 
-		val boxes = Collection.aggregateToMap(codes)[el,boxes|
+		val boxes = CollectionUtils.aggregateToMap(codes)[el,boxes|
 			if (el.contains("=")) {
 				val split = el.split("=")
 				val label = split.get(0)
