@@ -31,7 +31,7 @@ class Day14 {
 
 		val init_2 = new CoordinateSet
 		init_2.addAll(rolling)
-		val output_2 = PatternRunner.executeAndFindState(init_2, 1000000000)[cycle]
+		val output_2 = new PatternRunner(init_2)[cycle].getStateAt(1000000000)
 		println(load(output_2))
 	}
 

@@ -20,8 +20,9 @@ class Day9 {
 
 		println("Part2: " + rectangles.filter [ rec |
 			!rec.hasInterior || (segments.forall[seg|!rec.subRectangle.intersectsWith(seg)] && {
-				val segment_right = new Segment(rec.pick, new Coordinate(rec.pick.x, maxY))
-				segments.filter[it.intersect(segment_right)].size % 2 == 1
+				segments.filter [
+					it.intersect(new Segment(rec.pick, new Coordinate(rec.pick.x, maxY)))
+				].size % 2 == 1
 			})
 		].maxBy[area].area)
 	}
