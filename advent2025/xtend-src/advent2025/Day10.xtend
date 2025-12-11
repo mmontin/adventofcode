@@ -34,10 +34,8 @@ class Day10 {
 			val target_voltages = split.last.substring(1, split.last.length - 1).split(",").map[Integer.parseInt(it)]
 			new Machine1(target_state, available_buttons) -> new Machine2(target_voltages, available_buttons)
 		]
-		val res = machines.fold(0 -> 0) [ acc, el |
-			val left = acc.key + new AStar(el.key).run.minDistance
-			val right = acc.value + el.value.solve
-			left -> right
+		val res = machines.fold(0 -> 0L) [ acc, el |
+			acc.key + new AStar(el.key).run.minDistance -> acc.value + el.value.solve
 		]
 		println("Part 1: " + res.key)
 		println("Part 2: " + res.value)
@@ -58,7 +56,7 @@ class Day10 {
 			]
 		}
 
-		def int solve() {
+		def solve() {
 			val model = new ExpressionsBasedModel
 			val Variable[] variables = equations.fold(newHashSet) [ acc, el |
 				CollectionUtils.consAll(el.key, acc)
@@ -68,7 +66,7 @@ class Day10 {
 				eq.key.forEach[v|expression.set(variables.get(v), 1)]
 			]
 			val result = model.minimise;
-			(0 ..< variables.size).fold(0)[acc, i|acc + Math.round(result.get(i).doubleValue) as int]
+			(0 ..< variables.size).fold(0L)[acc, i|acc + Math.round(result.get(i).doubleValue)]
 		}
 	}
 
