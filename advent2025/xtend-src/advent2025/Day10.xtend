@@ -42,8 +42,6 @@ class Day10 {
 	}
 
 	static class Machine2 {
-		// We maintain the invariant that these equations are not empty 
-		// and cannot be reduced by one another
 		List<Pair<ArrayList<Integer>, Integer>> equations
 
 		new(List<Integer> target_voltages, Set<HashSet<Integer>> available_buttons) {

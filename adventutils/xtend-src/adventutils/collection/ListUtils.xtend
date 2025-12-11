@@ -1,9 +1,10 @@
 package adventutils.collection
 
 import java.util.ArrayList
+import java.util.Collection
 import java.util.List
 import java.util.Set
-import java.util.Collection
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 class ListUtils {
@@ -16,6 +17,10 @@ class ListUtils {
 			input.add(value)
 			value
 		}
+	}
+	
+	def static <T, U extends List<T>> void modify(U input, int i, Function1<T,T> modifier) {
+		input.set(i, modifier.apply(input.get(i)))
 	}
 
 	// Generates all pairs of elements in the input list (does not generate both (a,b) and (b,a))
