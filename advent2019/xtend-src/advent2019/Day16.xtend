@@ -16,12 +16,12 @@ class Day16 {
 
 	def static void main(String[] args) {
 		println((0..<8).map[computeRunner.call(nb_of_phases,it).toString].join)
-		current_size = mega_size
-		patternRunner.reset
-		computeRunner.reset
-		intervalRunner.reset
-		val offset = Integer.parseInt(seed.take(7).map[toString].join)
-		println((offset..<offset+8).map[computeRunner.call(nb_of_phases,it).toString].join)
+//		current_size = mega_size
+//		patternRunner.reset
+//		computeRunner.reset
+//		intervalRunner.reset
+//		val offset = Integer.parseInt(seed.take(7).map[toString].join)
+//		println((offset..<offset+8).map[computeRunner.call(nb_of_phases,it).toString].join)
 	}
 
 	static final MemoryRunner<Integer, Pair<List<Interval>, List<Interval>>> patternRunner = new MemoryRunner [ int pos |
